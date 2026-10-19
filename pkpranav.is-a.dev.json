@@ -1,0 +1,10 @@
+{
+  "description": "Domain configuration for pkpranav.is-a.dev",
+  "owner": {
+    "username": "pkpranav-projects",
+    "email": "pk.pranav7685@gmail.com"
+  },
+  "record": {
+    "CNAME": "pranav-practice-java.onrender.com"
+  }
+}

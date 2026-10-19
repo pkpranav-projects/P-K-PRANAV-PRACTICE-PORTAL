@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+/* Custom smooth scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.7);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(75, 85, 99, 0.5);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(107, 114, 128, 0.8);
+}
+
+/* Hide scrollbar for dragscroll rows */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* LeetCode Card Background Gradients */
+.lc-gradient-algo { background: linear-gradient(135deg, #167af4, #00c1de); }
+.lc-gradient-java { background: linear-gradient(135deg, #ea2d2e, #f89c90); }
+.lc-gradient-purple { background: linear-gradient(135deg, #9f70ff, #7732ff); }
+.lc-gradient-green { background: linear-gradient(135deg, #7ce2b3, #2ec995); }
+.lc-gradient-orange { background: linear-gradient(135deg, #f98c57, #fc7355); }
+.lc-gradient-blue { background: linear-gradient(135deg, #4dc9ff, #058bf7); }
+.lc-gradient-sql { background: linear-gradient(135deg, #72a800, #b9d635); }
+.lc-gradient-crimson { background: linear-gradient(135deg, #ff3527, #ea2d2e); }
+.lc-gradient-amber { background: linear-gradient(135deg, #ffd952, #ffb800); }
+.lc-gradient-dark { background: linear-gradient(135deg, #2a3539, #4f5e73); }
+
+/* Monaco container helper */
+.monaco-editor, .monaco-editor .overflow-guard {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+/* OLED Black Theme Overrides - Pure Pitch Black #000000 */
+html.oled,
+html.oled body {
+  background-color: #000000 !important;
+  color: #ededed !important;
+}
+
+html.oled .bg-\[\#1a1a1a\],
+html.oled .dark\:bg-\[\#1a1a1a\],
+html.oled .dark\:bg-\[\#121212\],
+html.oled [class*="bg-slate-50 dark:bg-[#121212]"],
+html.oled [class*="dark:bg-[#1a1a1a]"] {
+  background-color: #000000 !important;
+}
+
+html.oled nav,
+html.oled .bg-\[\#282828\],
+html.oled .dark\:bg-\[\#282828\] {
+  background-color: #070707 !important;
+  border-color: #1a1a1a !important;
+}
+
+html.oled aside,
+html.oled aside > div {
+  background-color: #000000 !important;
+  border-color: #181818 !important;
+}
+
+html.oled .bg-\[\#262626\],
+html.oled .dark\:bg-\[\#262626\],
+html.oled .bg-\[\#222222\],
+html.oled .dark\:bg-\[\#222222\],
+html.oled .bg-\[\#202020\],
+html.oled .dark\:bg-\[\#202020\],
+html.oled .bg-\[\#242424\],
+html.oled .dark\:bg-\[\#242424\],
+html.oled .bg-sd-card {
+  background-color: #080808 !important;
+  border-color: #1c1c1c !important;
+}
+
+html.oled .border-\[\#383838\],
+html.oled .border-\[\#2e2e2e\],
+html.oled .border-\[\#333333\],
+html.oled .border-neutral-800,
+html.oled .dark\:border-\[\#282828\],
+html.oled .dark\:border-\[\#333333\],
+html.oled .border-sd-border {
+  border-color: #191919 !important;
+}
+
+html.oled table {
+  background-color: #000000 !important;
+}
+
+html.oled thead tr,
+html.oled .bg-slate-50\/70 {
+  background-color: #070707 !important;
+}
+
+html.oled tbody tr:hover {
+  background-color: #0c0c0c !important;
+}
+
+html.oled .monaco-editor,
+html.oled .monaco-editor-background,
+html.oled .monaco-editor .margin {
+  background-color: #000000 !important;
+}
+

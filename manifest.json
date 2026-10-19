@@ -1,0 +1,22 @@
+{
+  "totalScreenshotsDiscovered": 801,
+  "screenshotLocations": [
+    {
+      "path": "c:/Users/P K PRANAV/Pictures/javapractice/questions",
+      "count": 78,
+      "description": "Primary collection of Neo Portal exam & lab question screenshots"
+    },
+    {
+      "path": "c:/Users/P K PRANAV/Pictures/Screenshots",
+      "count": 723,
+      "relevantCount": 124,
+      "description": "Historical screenshots including earlier assessments and live test captures"
+    }
+  ],
+  "totalRelevantScreenshots": 78,
+  "totalQuestionsExtracted": 30,
+  "duplicatesIdentified": 48,
+  "questionsRequiringManualReview": 0,
+  "questionsSuccessfullyImported": 30,
+  "extractionStatus": "all_verified_and_tested"
+}

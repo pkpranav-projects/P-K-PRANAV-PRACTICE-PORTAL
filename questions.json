@@ -1,0 +1,1196 @@
+[
+  {
+    "id": "java-001",
+    "title": "Substring Insertion at Position",
+    "description": "Ashok is developing a text-processing utility that inserts a substring into an original string at a specified position. The program reads the original string, the substring to insert, and the index at which the substring should be inserted, then prints the resulting string.\n\nThe substring is inserted before the character currently at the given index. For example, inserting at index 0 places the substring at the very beginning, and inserting at an index equal to the original string's length appends the substring at the end.",
+    "inputFormat": "The first line contains the original string.\nThe second line contains the substring to insert.\nThe third line contains an integer \u2014 the index position at which to insert the substring (indexing starts from 0).\n\nNote: A string may contain spaces, so each string must be read as a full line of input.",
+    "outputFormat": "Print the modified string after inserting the substring.\nRefer to the sample output for formatting specifications.",
+    "constraints": [
+      "1 <= length of original string <= 100",
+      "1 <= length of substring to insert <= 50",
+      "0 <= index position <= length of original string"
+    ],
+    "sampleInput": "HelloWorld\nNew\n6",
+    "sampleOutput": "HelloWNeworld",
+    "testCases": [
+      {
+        "input": "HelloWorld\nNew\n6",
+        "expectedOutput": "HelloWNeworld",
+        "isHidden": false
+      },
+      {
+        "input": "Hello\nWorld\n0",
+        "expectedOutput": "WorldHello",
+        "isHidden": false
+      },
+      {
+        "input": "This is an place\namazing \n11",
+        "expectedOutput": "This is an amazing place",
+        "isHidden": false
+      },
+      {
+        "input": "Code\nJava\n4",
+        "expectedOutput": "CodeJava",
+        "isHidden": true
+      },
+      {
+        "input": "Examly Portal\nNeo \n7",
+        "expectedOutput": "Examly Neo Portal",
+        "isHidden": true
+      }
+    ],
+    "topic": "Strings",
+    "difficulty": "Easy",
+    "sourceScreenshot": "Screenshot (159).png - Screenshot (162).png",
+    "explanation": "Use string slicing with substring(0, index) and substring(index) or a StringBuilder to insert the new string at the designated index.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLine()) return;\n        String str = sc.nextLine();\n        String sub = sc.nextLine();\n        int index = Integer.parseInt(sc.nextLine().trim());\n        String result = str.substring(0, index) + sub + str.substring(index);\n        System.out.println(result);\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-002",
+    "title": "Even and Odd Number Classifier",
+    "description": "Design an Object-Oriented Java program using a class named NumberClassifier that classifies an array of integers into even and odd numbers.\\n\\nThe NumberClassifier class must contain:\\n- An array to store input integers\\n- Two arrays to store even and odd numbers\\n- Methods: initializeArrays(int size), setInputValues(int[] arr), classifyNumbers(), printEvenNumbers(), and printOddNumbers().\\n\\nThe main method reads the size of the array, then the array elements, classifies them, and prints the even numbers followed by the odd numbers.",
+    "inputFormat": "The first line contains an integer size representing the number of elements.\\nThe second line contains size space-separated integers.",
+    "outputFormat": "The first line prints 'Even numbers: ' followed by the space-separated even numbers.\\nThe second line prints 'Odd numbers: ' followed by the space-separated odd numbers.",
+    "constraints": [
+      "1 <= size <= 100",
+      "-1000 <= array element <= 1000"
+    ],
+    "sampleInput": "8\n6 2 4 3 7 13 11 10",
+    "sampleOutput": "Even numbers: 6 2 4 10\nOdd numbers: 3 7 13 11",
+    "testCases": [
+      {
+        "input": "8\n6 2 4 3 7 13 11 10",
+        "expectedOutput": "Even numbers: 6 2 4 10\nOdd numbers: 3 7 13 11",
+        "isHidden": false
+      },
+      {
+        "input": "5\n1 2 3 4 5",
+        "expectedOutput": "Even numbers: 2 4\nOdd numbers: 1 3 5",
+        "isHidden": false
+      },
+      {
+        "input": "4\n2 4 6 8",
+        "expectedOutput": "Even numbers: 2 4 6 8\nOdd numbers:",
+        "isHidden": true
+      },
+      {
+        "input": "3\n1 3 5",
+        "expectedOutput": "Even numbers:\nOdd numbers: 1 3 5",
+        "isHidden": true
+      }
+    ],
+    "topic": "Classes and Objects",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (163).png - Screenshot (166).png",
+    "explanation": "Create a NumberClassifier class to store input and split it into even and odd collections based on modulo 2 arithmetic.",
+    "referenceSolution": "import java.util.Scanner;\n\nclass NumberClassifier {\n    private int[] input;\n    private int[] even;\n    private int[] odd;\n    private int evenCount = 0;\n    private int oddCount = 0;\n\n    public void initializeArrays(int size) {\n        even = new int[size];\n        odd = new int[size];\n    }\n\n    public void setInputValues(int[] arr) {\n        this.input = arr;\n    }\n\n    public void classifyNumbers() {\n        for (int x : input) {\n            if (x % 2 == 0) {\n                even[evenCount++] = x;\n            } else {\n                odd[oddCount++] = x;\n            }\n        }\n    }\n\n    public void printEvenNumbers() {\n        System.out.print(\"Even numbers:\");\n        for (int i = 0; i < evenCount; i++) {\n            System.out.print(\" \" + even[i]);\n        }\n        System.out.println();\n    }\n\n    public void printOddNumbers() {\n        System.out.print(\"Odd numbers:\");\n        for (int i = 0; i < oddCount; i++) {\n            System.out.print(\" \" + odd[i]);\n        }\n        System.out.println();\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        if (!scanner.hasNextInt()) return;\n        int size = scanner.nextInt();\n        NumberClassifier obj = new NumberClassifier();\n        obj.initializeArrays(size);\n        int[] inputArr = new int[size];\n        for (int i = 0; i < size; i++) {\n            inputArr[i] = scanner.nextInt();\n        }\n        obj.setInputValues(inputArr);\n        obj.classifyNumbers();\n        obj.printEvenNumbers();\n        obj.printOddNumbers();\n        scanner.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\nclass NumberClassifier {\n    // Implement methods here\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        // Write your solution here\n        scanner.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-003",
+    "title": "Alphabetically Sorted Substrings",
+    "description": "Consider a scenario where you are tasked with organizing all possible substrings of a word into sorted order. You are given a string, and your goal is to find and display all the contiguous substrings of that string.\n\nFor instance, if the input string is 'fun', the output should list all possible substrings in alphabetically sorted order: f, fu, fun, n, u, un.\n\nThe total number of substrings for a string of length n is n * (n + 1) / 2. Write a program that generates all contiguous substrings of the given string and prints each one on a separate line in alphabetical order.",
+    "inputFormat": "The first line of input contains a string representing the input string.",
+    "outputFormat": "The program should print all substrings of the input string in alphabetical order. Each substring should be printed on a separate line.",
+    "constraints": [
+      "1 <= length of string <= 200",
+      "The string contains only lowercase characters."
+    ],
+    "sampleInput": "examly",
+    "sampleOutput": "a\nam\naml\namly\ne\nex\nexa\nexam\nexaml\nexamly\nl\nly\nm\nml\nmly\nx\nxa\nxam\nxaml\nxamly\ny",
+    "testCases": [
+      {
+        "input": "examly",
+        "expectedOutput": "a\nam\naml\namly\ne\nex\nexa\nexam\nexaml\nexamly\nl\nly\nm\nml\nmly\nx\nxa\nxam\nxaml\nxamly\ny",
+        "isHidden": false
+      },
+      {
+        "input": "fun",
+        "expectedOutput": "f\nfu\nfun\nn\nu\nun",
+        "isHidden": false
+      },
+      {
+        "input": "aba",
+        "expectedOutput": "a\na\nab\naba\nb\nba",
+        "isHidden": true
+      }
+    ],
+    "topic": "Strings",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (166).png - Screenshot (169).png",
+    "explanation": "Iterate with nested loops (i from 0 to len, j from i+1 to len+1) to generate all substrings, store them in a List, sort with Collections.sort(), and print.",
+    "referenceSolution": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLine()) return;\n        String s = sc.nextLine().trim();\n        List<String> list = new ArrayList<>();\n        for (int i = 0; i < s.length(); i++) {\n            for (int j = i + 1; j <= s.length(); j++) {\n                list.add(s.substring(i, j));\n            }\n        }\n        Collections.sort(list);\n        for (String sub : list) {\n            System.out.println(sub);\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-004",
+    "title": "Case-Insensitive Anagram Checker",
+    "description": "Sarah wants to build a tool that checks whether two strings are anagrams of each other. Before comparing, the tool removes all spaces and treats letters case-insensitively. Two strings are anagrams if, after this processing, they contain exactly the same characters with the same frequency.\\n\\nProcessing rules:\\n- Ignore only the space character (' '). All other characters \u2014 letters, digits, and special characters \u2014 are kept and compared.\\n- Letters are compared case-insensitively (for example, 'B' and 'b' are the same).\\n- Digits and special characters must match in both count and value.\\n\\nPrint 'Anagrams' if the two strings are anagrams, and 'Not Anagrams' otherwise.",
+    "inputFormat": "The first line contains the first string.\\nThe second line contains the second string.\\n\\nNote: A string may contain spaces, so the entire line must be read as input.",
+    "outputFormat": "Print 'Anagrams' if the two strings are anagrams. Print 'Not Anagrams' if they are not.",
+    "constraints": [
+      "1 <= length of each input string <= 100 characters.",
+      "Each string may contain uppercase letters, lowercase letters, digits, special characters, and spaces."
+    ],
+    "sampleInput": "OpenAI\niApNeo",
+    "sampleOutput": "Anagrams",
+    "testCases": [
+      {
+        "input": "OpenAI\niApNeo",
+        "expectedOutput": "Anagrams",
+        "isHidden": false
+      },
+      {
+        "input": "BAT @123\ntab123 @",
+        "expectedOutput": "Anagrams",
+        "isHidden": false
+      },
+      {
+        "input": "Hello\nWorld",
+        "expectedOutput": "Not Anagrams",
+        "isHidden": true
+      },
+      {
+        "input": "Silent\nListen",
+        "expectedOutput": "Anagrams",
+        "isHidden": true
+      }
+    ],
+    "topic": "Strings",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (170).png - Screenshot (171).png",
+    "explanation": "Strip spaces from both strings, convert uppercase letters to lowercase, and check if character frequency arrays or sorted char arrays are identical.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLine()) return;\n        String s1 = sc.nextLine();\n        String s2 = sc.nextLine();\n        int[] count = new int[256];\n\n        for (char c : s1.toCharArray()) {\n            if (c == ' ') continue;\n            if (Character.isLetter(c)) c = Character.toLowerCase(c);\n            count[c]++;\n        }\n\n        for (char c : s2.toCharArray()) {\n            if (c == ' ') continue;\n            if (Character.isLetter(c)) c = Character.toLowerCase(c);\n            count[c]--;\n        }\n\n        boolean isAnagram = true;\n        for (int val : count) {\n            if (val != 0) {\n                isAnagram = false;\n                break;\n            }\n        }\n\n        if (isAnagram) {\n            System.out.println(\"Anagrams\");\n        } else {\n            System.out.println(\"Not Anagrams\");\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-005",
+    "title": "Fibonacci Number and Properties",
+    "description": "Paul, a mathematics teacher, wants to help his students analyze Fibonacci numbers. Design a program using a class named FibonacciCalculator that performs the following operations for a given position n:\\n\\n1. fibonacci(int n): Computes and returns the nth Fibonacci number (fib(0)=0, fib(1)=1, fib(2)=1, fib(3)=2, fib(4)=3, fib(5)=5, fib(6)=8, fib(7)=13, ...).\\n2. checkEvenOdd(long num): Returns 'Even' if the number is even, and 'Odd' if the number is odd.\\n3. digitSum(long num): Calculates and returns the sum of the digits of the Fibonacci number.\\n\\nThe main method reads n, creates an instance of FibonacciCalculator, computes the Fibonacci number, and prints:\\n'Fibonacci number at position n: [fib]'\\n'[Even/Odd], Digit Sum: [sum]'",
+    "inputFormat": "The input consists of an integer n representing the position in the Fibonacci sequence (indexing starts from 0 or 1 per problem; position 7 is 13, position 3 is 2).",
+    "outputFormat": "The first line displays 'Fibonacci number at position n: [fib]'\\nThe second line displays '[Even/Odd], Digit Sum: [sum]'",
+    "constraints": [
+      "0 <= n <= 50"
+    ],
+    "sampleInput": "7",
+    "sampleOutput": "Fibonacci number at position 7: 13\nOdd, Digit Sum: 4",
+    "testCases": [
+      {
+        "input": "7",
+        "expectedOutput": "Fibonacci number at position 7: 13\nOdd, Digit Sum: 4",
+        "isHidden": false
+      },
+      {
+        "input": "3",
+        "expectedOutput": "Fibonacci number at position 3: 2\nEven, Digit Sum: 2",
+        "isHidden": false
+      },
+      {
+        "input": "6",
+        "expectedOutput": "Fibonacci number at position 6: 8\nEven, Digit Sum: 8",
+        "isHidden": true
+      },
+      {
+        "input": "10",
+        "expectedOutput": "Fibonacci number at position 10: 55\nOdd, Digit Sum: 10",
+        "isHidden": true
+      }
+    ],
+    "topic": "Classes and Objects",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (172).png - Screenshot (174).png",
+    "explanation": "Compute fibonacci using iterative dynamic programming up to n. Check if fib % 2 == 0. Compute digit sum using modulo and division by 10.",
+    "referenceSolution": "import java.util.Scanner;\n\nclass FibonacciCalculator {\n    public long fibonacci(int n) {\n        if (n <= 0) return 0;\n        if (n == 1) return 1;\n        long a = 0, b = 1;\n        for (int i = 2; i <= n; i++) {\n            long c = a + b;\n            a = b;\n            b = c;\n        }\n        return b;\n    }\n\n    public String checkEvenOdd(long num) {\n        return (num % 2 == 0) ? \"Even\" : \"Odd\";\n    }\n\n    public int digitSum(long num) {\n        int sum = 0;\n        while (num > 0) {\n            sum += num % 10;\n            num /= 10;\n        }\n        return sum;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        FibonacciCalculator obj = new FibonacciCalculator();\n        long fib = obj.fibonacci(n);\n        System.out.println(\"Fibonacci number at position \" + n + \": \" + fib);\n        System.out.println(obj.checkEvenOdd(fib) + \", Digit Sum: \" + obj.digitSum(fib));\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\nclass FibonacciCalculator {\n    // Implement fibonacci, checkEvenOdd, digitSum\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-006",
+    "title": "Autoboxing and Unboxing Demonstration",
+    "description": "Design a Java program to demonstrate the use of autoboxing (converting primitive types to their corresponding wrapper classes) and unboxing (converting wrapper classes back to primitive types).\\n\\nThe system should perform the following operations:\\n- Convert primitive types (int, double, char, boolean) to their wrapper class objects (Integer, Double, Character, Boolean).\\n- Extract the primitive values back from the wrapper objects.\\n\\nDisplay the wrapper objects under an 'Autoboxing:' heading, and display the unboxed primitives under an 'Unboxing:' heading.",
+    "inputFormat": "The first line contains an integer value.\\nThe second line contains a double value.\\nThe third line contains a character value.\\nThe fourth line contains a boolean value.",
+    "outputFormat": "The first output displays:\\nAutoboxing:\\nInteger wrapper: <boxed integer value>\\nDouble wrapper: <boxed double value>\\nCharacter wrapper: <boxed character value>\\nBoolean wrapper: <boxed boolean value>\\n\\nThe second output displays:\\nUnboxing:\\nPrimitive int: <unboxed integer value>\\nPrimitive double: <unboxed double value>\\nPrimitive char: <unboxed character value>\\nPrimitive boolean: <unboxed boolean value>",
+    "constraints": [
+      "-10^6 <= integer <= 10^6",
+      "Valid double precision range"
+    ],
+    "sampleInput": "42\n3.14\nA\ntrue",
+    "sampleOutput": "Autoboxing:\nInteger wrapper: 42\nDouble wrapper: 3.14\nCharacter wrapper: A\nBoolean wrapper: true\nUnboxing:\nPrimitive int: 42\nPrimitive double: 3.14\nPrimitive char: A\nPrimitive boolean: true",
+    "testCases": [
+      {
+        "input": "42\n3.14\nA\ntrue",
+        "expectedOutput": "Autoboxing:\nInteger wrapper: 42\nDouble wrapper: 3.14\nCharacter wrapper: A\nBoolean wrapper: true\nUnboxing:\nPrimitive int: 42\nPrimitive double: 3.14\nPrimitive char: A\nPrimitive boolean: true",
+        "isHidden": false
+      },
+      {
+        "input": "-100\n0.001\nz\nfalse",
+        "expectedOutput": "Autoboxing:\nInteger wrapper: -100\nDouble wrapper: 0.001\nCharacter wrapper: z\nBoolean wrapper: false\nUnboxing:\nPrimitive int: -100\nPrimitive double: 0.001\nPrimitive char: z\nPrimitive boolean: false",
+        "isHidden": false
+      }
+    ],
+    "topic": "Wrapper Class",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (175).png - Screenshot (179).png",
+    "explanation": "Read primitive values, assign to wrapper class references (autoboxing), print wrapper values, then assign wrapper references to primitive variables (unboxing) and print.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int i = sc.nextInt();\n        double d = sc.nextDouble();\n        char c = sc.next().charAt(0);\n        boolean b = sc.nextBoolean();\n\n        // Autoboxing\n        Integer integerWrapper = i;\n        Double doubleWrapper = d;\n        Character characterWrapper = c;\n        Boolean booleanWrapper = b;\n\n        System.out.println(\"Autoboxing:\");\n        System.out.println(\"Integer wrapper: \" + integerWrapper);\n        System.out.println(\"Double wrapper: \" + doubleWrapper);\n        System.out.println(\"Character wrapper: \" + characterWrapper);\n        System.out.println(\"Boolean wrapper: \" + booleanWrapper);\n\n        // Unboxing\n        int primitiveInt = integerWrapper;\n        double primitiveDouble = doubleWrapper;\n        char primitiveChar = characterWrapper;\n        boolean primitiveBoolean = booleanWrapper;\n\n        System.out.println(\"Unboxing:\");\n        System.out.println(\"Primitive int: \" + primitiveInt);\n        System.out.println(\"Primitive double: \" + primitiveDouble);\n        System.out.println(\"Primitive char: \" + primitiveChar);\n        System.out.println(\"Primitive boolean: \" + primitiveBoolean);\n\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-007",
+    "title": "Decimal to Roman Numerals Converter",
+    "description": "Robin is fascinated by ancient Roman numerals and wants to create a program to convert decimal numbers to Roman numerals. He needs your help to complete the program.\\n\\nRoman numerals are represented using the standard symbols: M (1000), CM (900), D (500), CD (400), C (100), XC (90), L (50), XL (40), X (10), IX (9), V (5), IV (4), I (1).\\n\\nGiven an integer n, convert it into its Roman numeral equivalent.",
+    "inputFormat": "The input consists of an integer, n.",
+    "outputFormat": "The output prints the Roman numeral of the given integer.",
+    "constraints": [
+      "1 <= n <= 3999"
+    ],
+    "sampleInput": "111",
+    "sampleOutput": "CXI",
+    "testCases": [
+      {
+        "input": "111",
+        "expectedOutput": "CXI",
+        "isHidden": false
+      },
+      {
+        "input": "145",
+        "expectedOutput": "CXLV",
+        "isHidden": false
+      },
+      {
+        "input": "1999",
+        "expectedOutput": "MCMXCIX",
+        "isHidden": true
+      },
+      {
+        "input": "4",
+        "expectedOutput": "IV",
+        "isHidden": true
+      }
+    ],
+    "topic": "Strings",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (180).png - Screenshot (182).png",
+    "explanation": "Iterate through predefined integer values and Roman numeral symbols in descending order, subtracting values and appending symbols while n >= value.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner obj = new Scanner(System.in);\n        if (!obj.hasNextInt()) return;\n        int n = obj.nextInt();\n        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};\n        String[] symbols = {\"M\", \"CM\", \"D\", \"CD\", \"C\", \"XC\", \"L\", \"XL\", \"X\", \"IX\", \"V\", \"IV\", \"I\"};\n        StringBuilder result = new StringBuilder();\n        for (int i = 0; i < values.length; i++) {\n            while (n >= values[i]) {\n                result.append(symbols[i]);\n                n -= values[i];\n            }\n        }\n        System.out.println(result.toString());\n        obj.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-008",
+    "title": "Number Operations with Wrapper Class",
+    "description": "Aman wants to create a simple calculator that accepts a single numerical value as a String, converts it into an Integer using Java's Wrapper Class, and performs the following operations:\\n1. Square of the number\\n2. Cube of the number\\n3. Square root of the number (rounded to 2 decimal places)\\n\\nPrint the square, cube, and square root separated by single spaces.",
+    "inputFormat": "The first line of input consists of a single String value representing an integer number.",
+    "outputFormat": "The output displays three space-separated values:\\n<Square of number (integer)> <Cube of number (integer)> <Square root of number (double rounded to 2 decimal places)>",
+    "constraints": [
+      "1 <= number <= 1000",
+      "The input is always a valid integer in String format."
+    ],
+    "sampleInput": "25",
+    "sampleOutput": "625 15625 5.00",
+    "testCases": [
+      {
+        "input": "25",
+        "expectedOutput": "625 15625 5.00",
+        "isHidden": false
+      },
+      {
+        "input": "4",
+        "expectedOutput": "16 64 2.00",
+        "isHidden": false
+      },
+      {
+        "input": "9",
+        "expectedOutput": "81 729 3.00",
+        "isHidden": true
+      },
+      {
+        "input": "2",
+        "expectedOutput": "4 8 1.41",
+        "isHidden": true
+      }
+    ],
+    "topic": "Wrapper Class",
+    "difficulty": "Easy",
+    "sourceScreenshot": "Screenshot (183).png - Screenshot (185).png",
+    "explanation": "Use Integer.valueOf(input) to parse String to Integer wrapper. Calculate square (num*num), cube (num*num*num), and Math.sqrt(num) formatted with String.format('%.2f').",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        if (!scanner.hasNextLine()) return;\n        String input = scanner.nextLine().trim();\n        Integer number = Integer.valueOf(input);\n        int square = number * number;\n        int cube = number * number * number;\n        double squareRoot = Math.sqrt(number);\n        System.out.printf(\"%d %d %.2f\\n\", square, cube, squareRoot);\n        scanner.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        // Write your solution here\n        scanner.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-009",
+    "title": "Text Replacement Engine using StringBuilder",
+    "description": "Nick is tasked with developing a Text Replacement Engine that replaces all occurrences of a specified substring in a given text. The engine should take the original text, the substring to be replaced, and the replacement string as input and output the modified text after performing the replacement.\\n\\nHelp Nick complete the task using the StringBuilder class.\\n\\nPrint the original string on the first line, followed by the modified string on the second line.",
+    "inputFormat": "The first line of input contains a string that represents the original string.\\nThe second line contains a string that represents the substring to replace.\\nThe third line contains a string that represents the replacement string.",
+    "outputFormat": "The first line of output prints a string representing the original string.\\nThe second line prints a string representing the modified string after replacement.",
+    "constraints": [
+      "1 <= length of original string <= 500",
+      "1 <= length of substring to replace <= 100",
+      "1 <= length of replacement string <= 100",
+      "The original string may contain lowercase letters, uppercase letters, digits, special characters, and spaces."
+    ],
+    "sampleInput": "Hello, world! Hello, Java!\nHello\nHi",
+    "sampleOutput": "Hello, world! Hello, Java!\nHi, world! Hi, Java!",
+    "testCases": [
+      {
+        "input": "Hello, world! Hello, Java!\nHello\nHi",
+        "expectedOutput": "Hello, world! Hello, Java!\nHi, world! Hi, Java!",
+        "isHidden": false
+      },
+      {
+        "input": "Programming is fun!\nfun\nexciting",
+        "expectedOutput": "Programming is fun!\nProgramming is exciting!",
+        "isHidden": false
+      },
+      {
+        "input": "apple banana apple\napple\norange",
+        "expectedOutput": "apple banana apple\norange banana orange",
+        "isHidden": true
+      }
+    ],
+    "topic": "Strings",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (186).png - Screenshot (188).png",
+    "explanation": "Create a StringBuilder with originalString, repeatedly find index of target substring using indexOf and replace with sb.replace(index, index + toReplace.length(), replacement). Print original string then modified string.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void replaceText(String originalString, String toReplace, String replacement) {\n        StringBuilder sb = new StringBuilder(originalString);\n        int index = sb.indexOf(toReplace);\n        while (index != -1) {\n            sb.replace(index, index + toReplace.length(), replacement);\n            index = sb.indexOf(toReplace, index + replacement.length());\n        }\n        System.out.println(originalString);\n        System.out.println(sb.toString());\n    }\n\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        if (!scanner.hasNextLine()) return;\n        String originalString = scanner.nextLine();\n        String toReplace = scanner.nextLine();\n        String replacement = scanner.nextLine();\n        replaceText(originalString, toReplace, replacement);\n        scanner.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    // Implement replaceText method\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        // Write your solution here\n        scanner.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-010",
+    "title": "Pythagorean Triple Validator",
+    "description": "Laura is learning about Pythagorean triples in her math class. She wants to create a program to determine whether a set of three integers forms a Pythagorean triple. Implement a program using the PythagoreanCalculator class to input the sides of a triangle and determine if it is a Pythagorean triple or not.\\n\\nThe condition for the Pythagorean triple is:\\na^2 + b^2 = c^2 (or) a^2 + c^2 = b^2 (or) b^2 + c^2 = a^2",
+    "inputFormat": "The input consists of three space-separated integers a, b, and c representing the sides of a triangle.",
+    "outputFormat": "The output prints 'The numbers a, b, c form a Pythagorean triple' or 'The numbers a, b, c do not form a Pythagorean triple' based on the inputs.",
+    "constraints": [
+      "1 <= a, b, c <= 100"
+    ],
+    "sampleInput": "3 4 5",
+    "sampleOutput": "The numbers 3, 4, 5 form a Pythagorean triple",
+    "testCases": [
+      {
+        "input": "3 4 5",
+        "expectedOutput": "The numbers 3, 4, 5 form a Pythagorean triple",
+        "isHidden": false
+      },
+      {
+        "input": "1 100 95",
+        "expectedOutput": "The numbers 1, 100, 95 do not form a Pythagorean triple",
+        "isHidden": false
+      },
+      {
+        "input": "8 15 17",
+        "expectedOutput": "The numbers 8, 15, 17 form a Pythagorean triple",
+        "isHidden": false
+      },
+      {
+        "input": "5 12 13",
+        "expectedOutput": "The numbers 5, 12, 13 form a Pythagorean triple",
+        "isHidden": true
+      }
+    ],
+    "topic": "Classes and Objects",
+    "difficulty": "Easy",
+    "sourceScreenshot": "Screenshot (189).png - Screenshot (194).png",
+    "explanation": "Create PythagoreanCalculator class with boolean isPythagoreanTriple(int a, int b, int c) checking if any pair of squares sums to the third square.",
+    "referenceSolution": "import java.util.Scanner;\n\nclass PythagoreanCalculator {\n    public boolean isPythagoreanTriple(int a, int b, int c) {\n        return (a * a + b * b == c * c) || (a * a + c * c == b * b) || (b * b + c * c == a * a);\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int a = sc.nextInt();\n        int b = sc.nextInt();\n        int c = sc.nextInt();\n        PythagoreanCalculator calculator = new PythagoreanCalculator();\n        boolean result = calculator.isPythagoreanTriple(a, b, c);\n        if (result) {\n            System.out.println(\"The numbers \" + a + \", \" + b + \", \" + c + \" form a Pythagorean triple\");\n        } else {\n            System.out.println(\"The numbers \" + a + \", \" + b + \", \" + c + \" do not form a Pythagorean triple\");\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\nclass PythagoreanCalculator {\n    // Implement isPythagoreanTriple\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-011",
+    "title": "Power of Two Checker",
+    "description": "Meera is a software intern at a networking firm. While studying binary addressing, she noticed that memory block sizes in computers are always powers of two (1, 2, 4, 8, 16, ...). Her team lead asked her to write a utility program that checks whether a given positive integer is a power of two.\\n\\nA number N is a power of two if there exists a non-negative integer k such that N = 2^k.\\n\\nThe program uses a user-defined function checkPowerOfTwo() that accepts a long/integer N and returns the appropriate string. The main function reads the input, calls checkPowerOfTwo(), and prints the result.\\n\\nNote: A number N is a power of two if and only if N > 0 and (N & (N - 1)) == 0.",
+    "inputFormat": "The first line of input consists of an integer N representing the number to be checked.",
+    "outputFormat": "The first line of output consists of a string 'Power of Two' if the number is a power of two, or 'Not a Power of Two' otherwise.",
+    "constraints": [
+      "1 <= N <= 1000000000",
+      "Note: N = 1 is considered a power of two (2^0 = 1)."
+    ],
+    "sampleInput": "16",
+    "sampleOutput": "Power of Two",
+    "testCases": [
+      {
+        "input": "16",
+        "expectedOutput": "Power of Two",
+        "isHidden": false
+      },
+      {
+        "input": "2",
+        "expectedOutput": "Power of Two",
+        "isHidden": false
+      },
+      {
+        "input": "18",
+        "expectedOutput": "Not a Power of Two",
+        "isHidden": false
+      },
+      {
+        "input": "1",
+        "expectedOutput": "Power of Two",
+        "isHidden": true
+      },
+      {
+        "input": "1024",
+        "expectedOutput": "Power of Two",
+        "isHidden": true
+      }
+    ],
+    "topic": "Methods",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (195).png",
+    "explanation": "Check if (N > 0) && ((N & (N - 1)) == 0). If true, return 'Power of Two', else 'Not a Power of Two'.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static String checkPowerOfTwo(long n) {\n        if (n > 0 && (n & (n - 1)) == 0) {\n            return \"Power of Two\";\n        } else {\n            return \"Not a Power of Two\";\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLong()) return;\n        long n = sc.nextLong();\n        System.out.println(checkPowerOfTwo(n));\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static String checkPowerOfTwo(long n) {\n        // Write your logic here\n        return \"\";\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your code here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-012",
+    "title": "Digit Sum Calculation",
+    "description": "Arjun is a mathematics teacher who gives his students a warm-up exercise every morning. One of his favourite exercises involves finding the digit sum of a number \u2014 that is, the sum of all individual digits of a non-negative integer. For example, the digit sum of 253 is 2 + 5 + 3 = 10.\\n\\nArjun wants to automate this exercise using a program. Help him build a program that reads a non-negative integer and prints its digit sum.\\n\\nThe program uses a user-defined function digitSum() that accepts an integer N and returns the sum of its digits by repeatedly extracting the last digit using the modulo operator and dividing the number by 10 until it becomes 0. The main function reads the input, calls digitSum(), and prints the result.\\n\\nNote: If the input is 0, the digit sum is 0.",
+    "inputFormat": "The first line of input consists of an integer N representing the non-negative number whose digit sum is to be computed.",
+    "outputFormat": "The first line of output consists of an integer representing the digit sum of the given number.",
+    "constraints": [
+      "0 <= N <= 1000000000"
+    ],
+    "sampleInput": "253",
+    "sampleOutput": "10",
+    "testCases": [
+      {
+        "input": "253",
+        "expectedOutput": "10",
+        "isHidden": false
+      },
+      {
+        "input": "456",
+        "expectedOutput": "15",
+        "isHidden": false
+      },
+      {
+        "input": "0",
+        "expectedOutput": "0",
+        "isHidden": true
+      },
+      {
+        "input": "9999",
+        "expectedOutput": "36",
+        "isHidden": true
+      }
+    ],
+    "topic": "Methods",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (196).png - Screenshot (197).png",
+    "explanation": "Iterate while n > 0, sum += n % 10, n /= 10. Return sum.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static int digitSum(int n) {\n        int sum = 0;\n        while (n > 0) {\n            sum += n % 10;\n            n /= 10;\n        }\n        return sum;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        System.out.println(digitSum(n));\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static int digitSum(int n) {\n        // Implement logic\n        return 0;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-013",
+    "title": "Student Test Scores Sum and Average",
+    "description": "Divya is a class teacher who maintains her students' test scores in a list. At the end of each exam cycle, she needs to quickly find the total marks scored by all students and the class average. Divya wants a program that takes the number of students and their scores, then prints the sum and the average rounded to 2 decimal places.",
+    "inputFormat": "The first line contains an integer N representing the number of students.\\nThe second line contains N space-separated numbers representing the scores of the students.",
+    "outputFormat": "Print two lines:\\nSum: <total sum of scores>\\nAverage: <average score formatted to 2 decimal places>",
+    "constraints": [
+      "1 <= N <= 100",
+      "0.0 <= score <= 100.0"
+    ],
+    "sampleInput": "5\n80 85 90 95 100",
+    "sampleOutput": "Sum: 450.00\nAverage: 90.00",
+    "testCases": [
+      {
+        "input": "5\n80 85 90 95 100",
+        "expectedOutput": "Sum: 450.00\nAverage: 90.00",
+        "isHidden": false
+      },
+      {
+        "input": "3\n10 20 25",
+        "expectedOutput": "Sum: 55.00\nAverage: 18.33",
+        "isHidden": false
+      },
+      {
+        "input": "1\n98.5",
+        "expectedOutput": "Sum: 98.50\nAverage: 98.50",
+        "isHidden": true
+      }
+    ],
+    "topic": "Arrays",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (198).png - Screenshot (199).png",
+    "explanation": "Read student count N, sum the double scores, compute average = sum / N, and format with %.2f.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        double sum = 0.0;\n        for (int i = 0; i < n; i++) {\n            sum += sc.nextDouble();\n        }\n        double avg = (n > 0) ? sum / n : 0.0;\n        System.out.printf(\"Sum: %.2f\\n\", sum);\n        System.out.printf(\"Average: %.2f\\n\", avg);\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-014",
+    "title": "Second Highest Contest Score",
+    "description": "Rahul is organising a coding contest at his college. After the results are announced, the prize committee wants to award the second highest unique score with a silver medal. However, if all participants have the same score, no silver medal can be awarded.\\n\\nWrite a program that takes the scores of all participants and determines the second highest unique score. If there is no second unique score, print 'No second highest score'.",
+    "inputFormat": "The first line contains an integer N representing the number of participants.\\nThe second line contains N space-separated integers representing the scores.",
+    "outputFormat": "Print the second highest unique score, or 'No second highest score' if all participants achieved the same score.",
+    "constraints": [
+      "1 <= N <= 1000",
+      "0 <= score <= 10000"
+    ],
+    "sampleInput": "5\n100 90 90 80 70",
+    "sampleOutput": "90",
+    "testCases": [
+      {
+        "input": "5\n100 90 90 80 70",
+        "expectedOutput": "90",
+        "isHidden": false
+      },
+      {
+        "input": "4\n50 50 50 50",
+        "expectedOutput": "No second highest score",
+        "isHidden": false
+      },
+      {
+        "input": "6\n45 67 89 89 23 67",
+        "expectedOutput": "67",
+        "isHidden": true
+      },
+      {
+        "input": "1\n100",
+        "expectedOutput": "No second highest score",
+        "isHidden": true
+      }
+    ],
+    "topic": "Arrays",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (200).png - Screenshot (202).png",
+    "explanation": "Collect unique scores into a sorted collection or find max1 and max2 distinct values. If max2 does not exist, print 'No second highest score'.",
+    "referenceSolution": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        TreeSet<Integer> set = new TreeSet<>(Collections.reverseOrder());\n        for (int i = 0; i < n; i++) {\n            set.add(sc.nextInt());\n        }\n        if (set.size() < 2) {\n            System.out.println(\"No second highest score\");\n        } else {\n            Iterator<Integer> it = set.iterator();\n            it.next(); // highest\n            System.out.println(it.next()); // second highest\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-015",
+    "title": "Prime Numbers Generator and Counter",
+    "description": "Deepa is a mathematics professor preparing a worksheet for her advanced class. She needs a program that, given a positive integer N, finds and prints all prime numbers from 2 up to N (inclusive) on the first line separated by spaces, and on the second line prints the total count of primes found in that range.",
+    "inputFormat": "A single integer N.",
+    "outputFormat": "The first line displays space-separated prime numbers from 2 up to N.\\nThe second line displays 'Total count of prime numbers: <count>'",
+    "constraints": [
+      "2 <= N <= 1000"
+    ],
+    "sampleInput": "10",
+    "sampleOutput": "2 3 5 7\nTotal count of prime numbers: 4",
+    "testCases": [
+      {
+        "input": "10",
+        "expectedOutput": "2 3 5 7\nTotal count of prime numbers: 4",
+        "isHidden": false
+      },
+      {
+        "input": "20",
+        "expectedOutput": "2 3 5 7 11 13 17 19\nTotal count of prime numbers: 8",
+        "isHidden": false
+      },
+      {
+        "input": "2",
+        "expectedOutput": "2\nTotal count of prime numbers: 1",
+        "isHidden": true
+      }
+    ],
+    "topic": "Control Flow",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (203).png - Screenshot (204).png",
+    "explanation": "Test primality for each integer from 2 up to N. Print primes space-separated, accumulate count, and print count.",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class Main {\n    public static boolean isPrime(int num) {\n        if (num < 2) return false;\n        for (int i = 2; i * i <= num; i++) {\n            if (num % i == 0) return false;\n        }\n        return true;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        List<Integer> primes = new ArrayList<>();\n        for (int i = 2; i <= n; i++) {\n            if (isPrime(i)) {\n                primes.add(i);\n            }\n        }\n        for (int i = 0; i < primes.size(); i++) {\n            System.out.print(primes.get(i) + (i == primes.size() - 1 ? \"\" : \" \"));\n        }\n        System.out.println();\n        System.out.println(\"Total count of prime numbers: \" + primes.size());\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-016",
+    "title": "Array Sorting and Median Calculation",
+    "description": "Kavitha is a data science student analysing sensor readings for her project. She needs a program that arranges a given array of integers in ascending order and then computes the median value.\\n\\nThe median is the middle value when the array is sorted. If the number of elements is odd, the median is the middle element. If the number of elements is even, the median is the average of the two middle elements formatted to 1 decimal place.\\n\\nPrint the sorted array on the first line and the median on the second line.",
+    "inputFormat": "The first line contains an integer N representing the size of the array.\\nThe second line contains N space-separated integers.",
+    "outputFormat": "The first line displays 'Sorted array: ' followed by the space-separated sorted numbers.\\nThe second line displays 'Median: <median value formatted to 1 decimal place>'",
+    "constraints": [
+      "1 <= N <= 1000",
+      "-10000 <= array element <= 10000"
+    ],
+    "sampleInput": "5\n7 2 1 6 4",
+    "sampleOutput": "Sorted array: 1 2 4 6 7\nMedian: 4.0",
+    "testCases": [
+      {
+        "input": "5\n7 2 1 6 4",
+        "expectedOutput": "Sorted array: 1 2 4 6 7\nMedian: 4.0",
+        "isHidden": false
+      },
+      {
+        "input": "6\n12 3 5 7 19 1",
+        "expectedOutput": "Sorted array: 1 3 5 7 12 19\nMedian: 6.0",
+        "isHidden": false
+      },
+      {
+        "input": "1\n42",
+        "expectedOutput": "Sorted array: 42\nMedian: 42.0",
+        "isHidden": true
+      }
+    ],
+    "topic": "Arrays",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (205).png - Screenshot (206).png",
+    "explanation": "Sort the array using Arrays.sort(). If N is odd, median = arr[N/2]. If even, median = (arr[N/2 - 1] + arr[N/2]) / 2.0.",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) {\n            arr[i] = sc.nextInt();\n        }\n        Arrays.sort(arr);\n        System.out.print(\"Sorted array:\");\n        for (int x : arr) {\n            System.out.print(\" \" + x);\n        }\n        System.out.println();\n        double median = (n % 2 != 0) ? arr[n / 2] : (arr[n / 2 - 1] + arr[n / 2]) / 2.0;\n        System.out.printf(\"Median: %.1f\\n\", median);\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-017",
+    "title": "Leaders in an Array",
+    "description": "Suresh is a team lead at a logistics company who reviews delivery time records. He defines a 'leader' as a delivery time that is strictly greater than all delivery times that appear after it in the list.\\n\\nNote that the rightmost element in the array is always a leader since there are no elements to its right.\\n\\nWrite a program that takes an array of integers and displays all leaders in the order they appear from left to right.",
+    "inputFormat": "The first line contains an integer N representing the size of the array.\\nThe second line contains N space-separated integers.",
+    "outputFormat": "Print all leaders separated by spaces in their original left-to-right order.",
+    "constraints": [
+      "1 <= N <= 1000",
+      "1 <= array element <= 10000"
+    ],
+    "sampleInput": "6\n16 17 4 3 5 2",
+    "sampleOutput": "17 5 2",
+    "testCases": [
+      {
+        "input": "6\n16 17 4 3 5 2",
+        "expectedOutput": "17 5 2",
+        "isHidden": false
+      },
+      {
+        "input": "5\n1 2 3 4 5",
+        "expectedOutput": "5",
+        "isHidden": false
+      },
+      {
+        "input": "5\n5 4 3 2 1",
+        "expectedOutput": "5 4 3 2 1",
+        "isHidden": true
+      }
+    ],
+    "topic": "Arrays",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (207).png",
+    "explanation": "Scan from right to left tracking max seen so far. An element is a leader if it is greater than the max to its right. Reverse collected leaders to restore original order.",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.List;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) {\n            arr[i] = sc.nextInt();\n        }\n        List<Integer> leaders = new ArrayList<>();\n        int maxRight = Integer.MIN_VALUE;\n        for (int i = n - 1; i >= 0; i--) {\n            if (arr[i] > maxRight) {\n                leaders.add(arr[i]);\n                maxRight = arr[i];\n            }\n        }\n        Collections.reverse(leaders);\n        for (int i = 0; i < leaders.size(); i++) {\n            System.out.print(leaders.get(i) + (i == leaders.size() - 1 ? \"\" : \" \"));\n        }\n        System.out.println();\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-018",
+    "title": "Maximum Contiguous Subarray Sum",
+    "description": "Rohan is a stock market analyst who records daily price changes (gains and losses) for a stock. He wants to find the maximum total gain achievable from any contiguous sequence of days \u2014 that is, the contiguous subarray with the largest possible sum.\\n\\nEven if all values are negative, the answer is the single least-negative element (the best single day).\\n\\nThe program uses a user-defined function maxSubarraySum() that accepts the array and size N. It implements Kadane's algorithm to compute and return the maximum contiguous sum.",
+    "inputFormat": "The first line contains an integer N representing the number of days.\\nThe second line contains N space-separated integers representing the price changes.",
+    "outputFormat": "Print the maximum contiguous subarray sum.",
+    "constraints": [
+      "1 <= N <= 1000",
+      "-10000 <= array element <= 10000"
+    ],
+    "sampleInput": "8\n-2 -3 4 -1 -2 1 5 -3",
+    "sampleOutput": "7",
+    "testCases": [
+      {
+        "input": "8\n-2 -3 4 -1 -2 1 5 -3",
+        "expectedOutput": "7",
+        "isHidden": false
+      },
+      {
+        "input": "4\n-1 -2 -3 -4",
+        "expectedOutput": "-1",
+        "isHidden": false
+      },
+      {
+        "input": "5\n1 2 3 4 5",
+        "expectedOutput": "15",
+        "isHidden": true
+      }
+    ],
+    "topic": "Algorithms",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (208).png - Screenshot (210).png",
+    "explanation": "Kadane's algorithm: maintain currentSum = Math.max(arr[i], currentSum + arr[i]) and maxSum = Math.max(maxSum, currentSum).",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static long maxSubarraySum(int[] arr, int n) {\n        long maxSoFar = arr[0];\n        long currMax = arr[0];\n        for (int i = 1; i < n; i++) {\n            currMax = Math.max((long)arr[i], currMax + arr[i]);\n            maxSoFar = Math.max(maxSoFar, currMax);\n        }\n        return maxSoFar;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) {\n            arr[i] = sc.nextInt();\n        }\n        System.out.println(maxSubarraySum(arr, n));\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static long maxSubarraySum(int[] arr, int n) {\n        // Implement Kadane's algorithm here\n        return 0;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-019",
+    "title": "Password Key Extraction via File Streams",
+    "description": "Arjun is a security engineer at a research lab that uses temporary access keys for entry into restricted zones. Each key is a combination of letters, digits, and special symbols. For audit purposes, the security system analyzes these keys to identify structural patterns \u2014 uppercase letters indicate authorization levels and digits represent zone identifiers.\\n\\nYour task is to:\\n1. Accept a password (access key) string from the user.\\n2. Write the input into a file named password.txt using FileOutputStream.\\n3. Read the file back using FileInputStream.\\n4. Extract all uppercase letters and all digits in the order they appear in the key.\\n5. Write the result into a file named extracted.txt.\\n6. Display the contents of extracted.txt.",
+    "inputFormat": "A single string representing the access key containing letters, digits, and special characters.",
+    "outputFormat": "The extracted string containing only uppercase letters and digits in original order.",
+    "constraints": [
+      "1 <= length of access key <= 100",
+      "At least one uppercase letter or digit is guaranteed in the input."
+    ],
+    "sampleInput": "aB3!c0$D",
+    "sampleOutput": "B30D",
+    "testCases": [
+      {
+        "input": "aB3!c0$D",
+        "expectedOutput": "B30D",
+        "isHidden": false
+      },
+      {
+        "input": "Hello@world2024",
+        "expectedOutput": "H2024",
+        "isHidden": false
+      },
+      {
+        "input": "secret#123*KEY",
+        "expectedOutput": "123KEY",
+        "isHidden": true
+      }
+    ],
+    "topic": "File Handling",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (211).png",
+    "explanation": "Use FileOutputStream to write string bytes to password.txt, FileInputStream to read bytes back, filter Character.isUpperCase(c) or Character.isDigit(c), write to extracted.txt, and print result.",
+    "referenceSolution": "import java.io.*;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLine()) return;\n        String key = sc.nextLine();\n        \n        try {\n            // Write to password.txt\n            FileOutputStream fos = new FileOutputStream(\"password.txt\");\n            fos.write(key.getBytes());\n            fos.close();\n\n            // Read from password.txt\n            FileInputStream fis = new FileInputStream(\"password.txt\");\n            StringBuilder sb = new StringBuilder();\n            int ch;\n            while ((ch = fis.read()) != -1) {\n                char c = (char) ch;\n                if (Character.isUpperCase(c) || Character.isDigit(c)) {\n                    sb.append(c);\n                }\n            }\n            fis.close();\n\n            // Write to extracted.txt\n            FileOutputStream outFos = new FileOutputStream(\"extracted.txt\");\n            outFos.write(sb.toString().getBytes());\n            outFos.close();\n\n            // Display extracted.txt\n            System.out.println(sb.toString());\n        } catch (IOException e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.io.*;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-020",
+    "title": "Robust Calculator Addition with Exception Handling",
+    "description": "Imagine you are building a calculator application that allows users to enter two numbers and get their sum. You must handle the case where the user enters a non-numeric input by displaying an error message.\\n\\nWrite a program to calculate the sum of two numbers using the addition operator and handle invalid input using exception handling.\\n\\nNotes:\\n- Use a try-catch block to handle invalid input (such as NumberFormatException or InputMismatchException).\\n- Ensure that the sum does not exceed the limits of long.\\n- If the input is valid, print: 'The sum is: <sum>'\\n- If any input is invalid, print: 'Invalid input. Please enter valid numbers.'",
+    "inputFormat": "A single line containing two tokens separated by space, or two values on separate lines.",
+    "outputFormat": "Print 'The sum is: <sum>' or 'Invalid input. Please enter valid numbers.'",
+    "constraints": [
+      "0 <= num1, num2 <= 10000000000",
+      "Datatype to be used: long"
+    ],
+    "sampleInput": "25 35",
+    "sampleOutput": "The sum is: 60",
+    "testCases": [
+      {
+        "input": "25 35",
+        "expectedOutput": "The sum is: 60",
+        "isHidden": false
+      },
+      {
+        "input": "25 five",
+        "expectedOutput": "Invalid input. Please enter valid numbers.",
+        "isHidden": false
+      },
+      {
+        "input": "1000000000 2000000000",
+        "expectedOutput": "The sum is: 3000000000",
+        "isHidden": true
+      }
+    ],
+    "topic": "Exception Handling",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (212).png - Screenshot (213).png",
+    "explanation": "Wrap Long.parseLong() in a try-catch catching NumberFormatException. Print sum on success or error message on exception.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) {\n            System.out.println(\"Invalid input. Please enter valid numbers.\");\n            return;\n        }\n        String token1 = sc.next();\n        if (!sc.hasNext()) {\n            System.out.println(\"Invalid input. Please enter valid numbers.\");\n            return;\n        }\n        String token2 = sc.next();\n        try {\n            long a = Long.parseLong(token1);\n            long b = Long.parseLong(token2);\n            long sum = a + b;\n            System.out.println(\"The sum is: \" + sum);\n        } catch (NumberFormatException e) {\n            System.out.println(\"Invalid input. Please enter valid numbers.\");\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-021",
+    "title": "Person Age Serialization and Deserialization",
+    "description": "Mary wants to create a program that takes her age as input, serializes the information into a file named person.ser, and modifies the age by adding 5 years during the serialization process. After serialization, read and deserialize the object and display the modified age.",
+    "inputFormat": "A single integer representing the age.",
+    "outputFormat": "Print 'Deserialized Age: <modified age>'",
+    "constraints": [
+      "1 <= age <= 120"
+    ],
+    "sampleInput": "20",
+    "sampleOutput": "Deserialized Age: 25",
+    "testCases": [
+      {
+        "input": "20",
+        "expectedOutput": "Deserialized Age: 25",
+        "isHidden": false
+      },
+      {
+        "input": "35",
+        "expectedOutput": "Deserialized Age: 40",
+        "isHidden": false
+      },
+      {
+        "input": "15",
+        "expectedOutput": "Deserialized Age: 20",
+        "isHidden": true
+      }
+    ],
+    "topic": "File Handling",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (214).png - Screenshot (215).png",
+    "explanation": "Create a serializable Person class with age attribute. Instantiate with age + 5, serialize to person.ser, deserialize with ObjectInputStream and display modified age.",
+    "referenceSolution": "import java.io.*;\nimport java.util.Scanner;\n\nclass Person implements Serializable {\n    private static final long serialVersionUID = 1L;\n    int age;\n\n    public Person(int age) {\n        this.age = age;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int age = sc.nextInt();\n        try {\n            Person p = new Person(age + 5);\n            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(\"person.ser\"));\n            oos.writeObject(p);\n            oos.close();\n\n            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(\"person.ser\"));\n            Person deserialized = (Person) ois.readObject();\n            ois.close();\n\n            System.out.println(\"Deserialized Age: \" + deserialized.age);\n        } catch (Exception e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.io.*;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-022",
+    "title": "Days Between Two Dates with Leap Years",
+    "description": "Priya, a software developer, is working on a project that involves calculating the number of days between two dates while accounting for leap years. She needs to create a program that takes two dates formatted as YYYY-MM-DD and computes the absolute difference in days between them.",
+    "inputFormat": "The first line contains the start date (YYYY-MM-DD).\\nThe second line contains the end date (YYYY-MM-DD).",
+    "outputFormat": "Print 'Number of days: <days>'",
+    "constraints": [
+      "Valid dates between 1900-01-01 and 2100-12-31."
+    ],
+    "sampleInput": "2024-01-01\n2024-01-10",
+    "sampleOutput": "Number of days: 9",
+    "testCases": [
+      {
+        "input": "2024-01-01\n2024-01-10",
+        "expectedOutput": "Number of days: 9",
+        "isHidden": false
+      },
+      {
+        "input": "2024-02-28\n2024-03-01",
+        "expectedOutput": "Number of days: 2",
+        "isHidden": false
+      },
+      {
+        "input": "2023-01-01\n2023-01-02",
+        "expectedOutput": "Number of days: 1",
+        "isHidden": true
+      }
+    ],
+    "topic": "Classes and Objects",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (216).png - Screenshot (218).png",
+    "explanation": "Use java.time.LocalDate and java.time.temporal.ChronoUnit.DAYS.between(d1, d2) or Math.abs to compute day difference.",
+    "referenceSolution": "import java.util.Scanner;\nimport java.time.LocalDate;\nimport java.time.temporal.ChronoUnit;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLine()) return;\n        String d1 = sc.nextLine().trim();\n        String d2 = sc.nextLine().trim();\n        LocalDate date1 = LocalDate.parse(d1);\n        LocalDate date2 = LocalDate.parse(d2);\n        long days = Math.abs(ChronoUnit.DAYS.between(date1, date2));\n        System.out.println(\"Number of days: \" + days);\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-023",
+    "title": "Temperature Converter using Inner Classes",
+    "description": "Eva, a curious programmer, wants to create a program that performs various temperature conversions. To deepen her understanding of inner classes, she decides to organize her code such that the conversion logic is encapsulated within an inner class named Converter inside TemperatureConverter.\\n\\nImplement the methods:\\n- toFahrenheit(double celsius): returns celsius * 9/5 + 32\\n- toKelvin(double celsius): returns celsius + 273.15\\n\\nPrint the converted temperatures formatted to 2 decimal places.",
+    "inputFormat": "A single double value representing the temperature in Celsius.",
+    "outputFormat": "Print two lines:\\nFahrenheit: <value formatted to 2 decimal places>\\nKelvin: <value formatted to 2 decimal places>",
+    "constraints": [
+      "-273.15 <= Celsius <= 1000.0"
+    ],
+    "sampleInput": "25.0",
+    "sampleOutput": "Fahrenheit: 77.00\nKelvin: 298.15",
+    "testCases": [
+      {
+        "input": "25.0",
+        "expectedOutput": "Fahrenheit: 77.00\nKelvin: 298.15",
+        "isHidden": false
+      },
+      {
+        "input": "0.0",
+        "expectedOutput": "Fahrenheit: 32.00\nKelvin: 273.15",
+        "isHidden": false
+      },
+      {
+        "input": "100.0",
+        "expectedOutput": "Fahrenheit: 212.00\nKelvin: 373.15",
+        "isHidden": true
+      }
+    ],
+    "topic": "Classes and Objects",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (219).png - Screenshot (220).png",
+    "explanation": "Create TemperatureConverter with an inner class Converter providing conversion methods. Call from main and print formatted with %.2f.",
+    "referenceSolution": "import java.util.Scanner;\n\nclass TemperatureConverter {\n    class Converter {\n        public double toFahrenheit(double celsius) {\n            return (celsius * 9.0 / 5.0) + 32.0;\n        }\n\n        public double toKelvin(double celsius) {\n            return celsius + 273.15;\n        }\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextDouble()) return;\n        double c = sc.nextDouble();\n        TemperatureConverter tc = new TemperatureConverter();\n        TemperatureConverter.Converter conv = tc.new Converter();\n        System.out.printf(\"Fahrenheit: %.2f\\n\", conv.toFahrenheit(c));\n        System.out.printf(\"Kelvin: %.2f\\n\", conv.toKelvin(c));\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\nclass TemperatureConverter {\n    // Define inner class Converter\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-024",
+    "title": "Health Record Tracker and BMI Calculator",
+    "description": "Melvin is focused on maintaining a healthy lifestyle and wants to create a program to track his health records, specifically his weight (in kg), height (in meters), and a target BMI he aims to achieve.\\n\\nDesign a class named HealthRecord with attributes weight, height, and targetBMI. Implement methods to:\\n1. computeCurrentBMI(): weight / (height * height)\\n2. computeBMIDifference(): Math.abs(currentBMI - targetBMI)\\n\\nPrint current BMI and BMI difference rounded to 2 decimal places.",
+    "inputFormat": "Three space-separated double values: weight (kg), height (m), and target BMI.",
+    "outputFormat": "Print two lines:\\nCurrent BMI: <BMI rounded to 2 decimal places>\\nBMI Difference: <difference rounded to 2 decimal places>",
+    "constraints": [
+      "10.0 <= weight <= 300.0",
+      "0.5 <= height <= 2.5",
+      "10.0 <= target BMI <= 50.0"
+    ],
+    "sampleInput": "70.0 1.75 22.0",
+    "sampleOutput": "Current BMI: 22.86\nBMI Difference: 0.86",
+    "testCases": [
+      {
+        "input": "70.0 1.75 22.0",
+        "expectedOutput": "Current BMI: 22.86\nBMI Difference: 0.86",
+        "isHidden": false
+      },
+      {
+        "input": "65.0 1.70 21.5",
+        "expectedOutput": "Current BMI: 22.49\nBMI Difference: 0.99",
+        "isHidden": false
+      },
+      {
+        "input": "80.0 1.80 24.69",
+        "expectedOutput": "Current BMI: 24.69\nBMI Difference: 0.00",
+        "isHidden": true
+      }
+    ],
+    "topic": "Classes and Objects",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (221).png - Screenshot (222).png",
+    "explanation": "Create HealthRecord class to encapsulate weight, height, targetBMI, calculate BMI = weight / (height*height), and difference = Math.abs(current - target).",
+    "referenceSolution": "import java.util.Scanner;\n\nclass HealthRecord {\n    double weight;\n    double height;\n    double targetBMI;\n\n    public HealthRecord(double weight, double height, double targetBMI) {\n        this.weight = weight;\n        this.height = height;\n        this.targetBMI = targetBMI;\n    }\n\n    public double computeCurrentBMI() {\n        return weight / (height * height);\n    }\n\n    public double computeBMIDifference() {\n        return Math.abs(computeCurrentBMI() - targetBMI);\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextDouble()) return;\n        double w = sc.nextDouble();\n        double h = sc.nextDouble();\n        double t = sc.nextDouble();\n        HealthRecord record = new HealthRecord(w, h, t);\n        System.out.printf(\"Current BMI: %.2f\\n\", record.computeCurrentBMI());\n        System.out.printf(\"BMI Difference: %.2f\\n\", record.computeBMIDifference());\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\nclass HealthRecord {\n    // Define fields, constructor, and methods\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-025",
+    "title": "Satellite Thermal Grid Diagonal and Max Analyzer",
+    "description": "A space research organization is monitoring the thermal distribution across a satellite's external panel. The panel is divided into an n * n grid, where each cell represents the temperature recorded by a sensor. Due to transmission constraints, the sensor readings must be stored in a file named thermal.txt.\\n\\nYour task is to:\\n1. Write the grid data into thermal.txt.\\n2. Read the file and compute:\\n   - The sum of temperatures along the primary diagonal (top-left to bottom-right).\\n   - The sum of temperatures along the secondary diagonal (top-right to bottom-left).\\n   - The maximum temperature recorded across the entire grid.\\n3. Store the computed results in a file named analysis.txt.\\n4. Display the contents of analysis.txt.",
+    "inputFormat": "The first line contains an integer n representing the grid size.\\nThe following n lines contain n space-separated double/float values representing the temperature grid.",
+    "outputFormat": "Display three lines:\\nPrimary Diagonal Sum: <sum formatted to 1 decimal place>\\nSecondary Diagonal Sum: <sum formatted to 1 decimal place>\\nMaximum Temperature: <max temp formatted to 1 decimal place>",
+    "constraints": [
+      "2 <= n <= 10",
+      "-100.0 <= temperature <= 150.0",
+      "The grid is always square (n * n)."
+    ],
+    "sampleInput": "3\n10 20 30\n40 50 60\n70 80 90",
+    "sampleOutput": "Primary Diagonal Sum: 150.0\nSecondary Diagonal Sum: 150.0\nMaximum Temperature: 90.0",
+    "testCases": [
+      {
+        "input": "3\n10 20 30\n40 50 60\n70 80 90",
+        "expectedOutput": "Primary Diagonal Sum: 150.0\nSecondary Diagonal Sum: 150.0\nMaximum Temperature: 90.0",
+        "isHidden": false
+      },
+      {
+        "input": "2\n1.5 2.5\n3.5 5.5",
+        "expectedOutput": "Primary Diagonal Sum: 7.0\nSecondary Diagonal Sum: 6.0\nMaximum Temperature: 5.5",
+        "isHidden": false
+      },
+      {
+        "input": "3\n-10.0 5.0 20.0\n30.0 40.0 15.0\n25.0 35.0 -5.0",
+        "expectedOutput": "Primary Diagonal Sum: 25.0\nSecondary Diagonal Sum: 85.0\nMaximum Temperature: 40.0",
+        "isHidden": true
+      }
+    ],
+    "topic": "File Handling",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (223).png - Screenshot (226).png, (228).png",
+    "explanation": "Write input matrix to thermal.txt using FileWriter/PrintWriter. Read file using Scanner/BufferedReader. Compute primary diagonal sum (grid[i][i]), secondary diagonal sum (grid[i][n-1-i]), and max element. Write to analysis.txt and print.",
+    "referenceSolution": "import java.io.*;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        double[][] grid = new double[n][n];\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < n; j++) {\n                grid[i][j] = sc.nextDouble();\n            }\n        }\n        try {\n            // Write to thermal.txt\n            PrintWriter pw = new PrintWriter(new FileWriter(\"thermal.txt\"));\n            pw.println(n);\n            for (int i = 0; i < n; i++) {\n                for (int j = 0; j < n; j++) {\n                    pw.print(grid[i][j] + (j == n - 1 ? \"\" : \" \"));\n                }\n                pw.println();\n            }\n            pw.close();\n\n            // Read from thermal.txt\n            Scanner fileSc = new Scanner(new File(\"thermal.txt\"));\n            int size = fileSc.nextInt();\n            double pSum = 0.0;\n            double sSum = 0.0;\n            double maxTemp = Double.NEGATIVE_INFINITY;\n            for (int i = 0; i < size; i++) {\n                for (int j = 0; j < size; j++) {\n                    double val = fileSc.nextDouble();\n                    if (i == j) pSum += val;\n                    if (i + j == size - 1) sSum += val;\n                    if (val > maxTemp) maxTemp = val;\n                }\n            }\n            fileSc.close();\n\n            // Write to analysis.txt and print\n            PrintWriter outPw = new PrintWriter(new FileWriter(\"analysis.txt\"));\n            String l1 = String.format(\"Primary Diagonal Sum: %.1f\", pSum);\n            String l2 = String.format(\"Secondary Diagonal Sum: %.1f\", sSum);\n            String l3 = String.format(\"Maximum Temperature: %.1f\", maxTemp);\n            outPw.println(l1);\n            outPw.println(l2);\n            outPw.println(l3);\n            outPw.close();\n\n            System.out.println(l1);\n            System.out.println(l2);\n            System.out.println(l3);\n        } catch (IOException e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.io.*;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-026",
+    "title": "Retail Store Product Validation",
+    "description": "Mithun is working on a program to manage a list of products in a retail store. He has created a Product class with attributes such as product name, price, and quantity in stock.\\n\\nThe program should take input for products and perform basic validations on the input data:\\n- Price must be greater than 0.0\\n- Quantity must be greater than or equal to 0\\n\\nIf inputs are valid, print: 'Product: <name>, Price: <price formatted to 2 dec>, Quantity: <qty>'\\nIf invalid, print: 'Invalid price or quantity'",
+    "inputFormat": "A single line containing product name (String), price (double), and quantity (int).",
+    "outputFormat": "Print 'Product: <name>, Price: <price>, Quantity: <qty>' or 'Invalid price or quantity'",
+    "constraints": [
+      "1 <= name length <= 50",
+      "Price > 0.0 and Quantity >= 0 for validity"
+    ],
+    "sampleInput": "Mouse 25.50 10",
+    "sampleOutput": "Product: Mouse, Price: 25.50, Quantity: 10",
+    "testCases": [
+      {
+        "input": "Mouse 25.50 10",
+        "expectedOutput": "Product: Mouse, Price: 25.50, Quantity: 10",
+        "isHidden": false
+      },
+      {
+        "input": "Keyboard -10.0 5",
+        "expectedOutput": "Invalid price or quantity",
+        "isHidden": false
+      },
+      {
+        "input": "Monitor 150.0 0",
+        "expectedOutput": "Product: Monitor, Price: 150.00, Quantity: 0",
+        "isHidden": true
+      }
+    ],
+    "topic": "Classes and Objects",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (227).png",
+    "explanation": "Create Product class with validation logic. If price <= 0 or quantity < 0, output error message; otherwise print formatted details.",
+    "referenceSolution": "import java.util.Scanner;\n\nclass Product {\n    String name;\n    double price;\n    int quantity;\n\n    public Product(String name, double price, int quantity) {\n        this.name = name;\n        this.price = price;\n        this.quantity = quantity;\n    }\n\n    public boolean isValid() {\n        return price > 0 && quantity >= 0;\n    }\n\n    public void display() {\n        if (isValid()) {\n            System.out.printf(\"Product: %s, Price: %.2f, Quantity: %d\\n\", name, price, quantity);\n        } else {\n            System.out.println(\"Invalid price or quantity\");\n        }\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String name = sc.next();\n        double price = sc.nextDouble();\n        int quantity = sc.nextInt();\n        Product p = new Product(name, price, quantity);\n        p.display();\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\nclass Product {\n    // Define Product class\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-027",
+    "title": "Soil Sensor Log Consecutive Duplicate Remover",
+    "description": "A smart agriculture system deploys soil sensors across multiple fields to monitor moisture levels. These sensors transmit readings periodically to a central logging system. However, due to intermittent signal issues, the system often records duplicate consecutive readings, which represent noise rather than actual changes in soil conditions.\\n\\nTo ensure accurate analysis, the system must clean the log by removing only consecutive duplicate entries, while preserving legitimate repeated values that occur non-consecutively.\\n\\nYour task is to:\\n1. Accept multiple sensor readings from the user, one per line, until a line with 'END' is reached.\\n2. Write these readings into a file named sensor_log.txt.\\n3. Read the file and remove only consecutive duplicate lines \u2014 if the same reading appears multiple times in a row, keep only the first occurrence. If the same reading appears again later non-consecutively, retain it.\\n4. Write the cleaned data into a file named cleaned_log.txt.\\n5. Display the contents of cleaned_log.txt.",
+    "inputFormat": "Multiple lines of sensor readings, ending with a line containing 'END'.",
+    "outputFormat": "Print the cleaned readings line by line.",
+    "constraints": [
+      "1 <= number of readings <= 30",
+      "Each line length <= 100 characters",
+      "At least one valid reading is guaranteed before END."
+    ],
+    "sampleInput": "45.2\n45.2\n50.1\n45.2\nEND",
+    "sampleOutput": "45.2\n50.1\n45.2",
+    "testCases": [
+      {
+        "input": "45.2\n45.2\n50.1\n45.2\nEND",
+        "expectedOutput": "45.2\n50.1\n45.2",
+        "isHidden": false
+      },
+      {
+        "input": "wet\nwet\nwet\ndry\nwet\nEND",
+        "expectedOutput": "wet\ndry\nwet",
+        "isHidden": false
+      },
+      {
+        "input": "23.5\n23.5\nEND",
+        "expectedOutput": "23.5",
+        "isHidden": true
+      }
+    ],
+    "topic": "File Handling",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (229).png - Screenshot (230).png",
+    "explanation": "Write incoming lines to sensor_log.txt. Read back line by line, comparing each line to the previous line. Keep and write only lines that differ from the immediately preceding line to cleaned_log.txt, then display.",
+    "referenceSolution": "import java.io.*;\nimport java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        List<String> raw = new ArrayList<>();\n        while (sc.hasNextLine()) {\n            String line = sc.nextLine();\n            if (line.equals(\"END\")) break;\n            raw.add(line);\n        }\n        try {\n            // Write to sensor_log.txt\n            PrintWriter pw = new PrintWriter(new FileWriter(\"sensor_log.txt\"));\n            for (String r : raw) {\n                pw.println(r);\n            }\n            pw.close();\n\n            // Read from sensor_log.txt and filter consecutive duplicates\n            BufferedReader br = new BufferedReader(new FileReader(\"sensor_log.txt\"));\n            List<String> cleaned = new ArrayList<>();\n            String prev = null;\n            String cur;\n            while ((cur = br.readLine()) != null) {\n                if (!cur.equals(prev)) {\n                    cleaned.add(cur);\n                    prev = cur;\n                }\n            }\n            br.close();\n\n            // Write to cleaned_log.txt\n            PrintWriter cpw = new PrintWriter(new FileWriter(\"cleaned_log.txt\"));\n            for (String c : cleaned) {\n                cpw.println(c);\n            }\n            cpw.close();\n\n            // Display contents of cleaned_log.txt\n            for (String c : cleaned) {\n                System.out.println(c);\n            }\n        } catch (IOException e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.io.*;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-028",
+    "title": "Safe Arithmetic Modulus with Exception Handling",
+    "description": "Samantha is a software developer tasked with creating a Java program to perform arithmetic operations on two operands, specifically the modulus operator (a % b). She is concerned about two possible runtime issues: division/modulus by zero, and non-integer inputs.\\n\\nHelp Samantha build a robust program that:\\n- Reads two operands.\\n- If the second operand is zero, catch ArithmeticException and print 'Cannot divide by zero'.\\n- If an operand cannot be parsed as an integer, catch NumberFormatException and print 'Invalid input! Please enter integer operands.'\\n- Otherwise, compute and print the result of a % b.",
+    "inputFormat": "A single line consisting of two tokens representing the two operands.",
+    "outputFormat": "Print the integer result of the modulus operation, or the appropriate error message.",
+    "constraints": [
+      "-10^6 <= operand <= 10^6"
+    ],
+    "sampleInput": "10 3",
+    "sampleOutput": "1",
+    "testCases": [
+      {
+        "input": "10 3",
+        "expectedOutput": "1",
+        "isHidden": false
+      },
+      {
+        "input": "10 0",
+        "expectedOutput": "Cannot divide by zero",
+        "isHidden": false
+      },
+      {
+        "input": "10 abc",
+        "expectedOutput": "Invalid input! Please enter integer operands.",
+        "isHidden": false
+      },
+      {
+        "input": "25 5",
+        "expectedOutput": "0",
+        "isHidden": true
+      }
+    ],
+    "topic": "Exception Handling",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (231).png",
+    "explanation": "Use Integer.parseInt() inside try block. Catch NumberFormatException first, then ArithmeticException for b == 0.",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) {\n            System.out.println(\"Invalid input! Please enter integer operands.\");\n            return;\n        }\n        String op1 = sc.next();\n        if (!sc.hasNext()) {\n            System.out.println(\"Invalid input! Please enter integer operands.\");\n            return;\n        }\n        String op2 = sc.next();\n        try {\n            int a = Integer.parseInt(op1);\n            int b = Integer.parseInt(op2);\n            int res = a % b;\n            System.out.println(res);\n        } catch (NumberFormatException e) {\n            System.out.println(\"Invalid input! Please enter integer operands.\");\n        } catch (ArithmeticException e) {\n            System.out.println(\"Cannot divide by zero\");\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-029",
+    "title": "Product Object Collection Serialization",
+    "description": "Alex runs a small online store and needs to keep track of various products and their costs. To simplify the process, he decides to serialize the product details (ID, name, and cost) into a file named products.dat.\\n\\nWrite a program that:\\n1. Reads the number of products N.\\n2. For each product, reads product_id (int), product_name (String), and cost (double).\\n3. Serializes the collection of Product objects into products.dat.\\n4. Deserializes the objects back from products.dat.\\n5. Prints:\\n   Serialized <N> products to products.dat\\n   Followed by each deserialized product in format: [Product ID: <id>, Name: <name>, Cost: <cost formatted to 1 dec>]",
+    "inputFormat": "The first line contains an integer N.\\nThe following N lines each contain product_id, product_name, and cost.",
+    "outputFormat": "Serialized <N> products to products.dat\\nFollowed by each product on a new line: [Product ID: <id>, Name: <name>, Cost: <cost>]",
+    "constraints": [
+      "1 <= N <= 10",
+      "1 <= product_id <= 1000",
+      "1 <= length of name <= 100",
+      "1.0 <= cost <= 1000000.0"
+    ],
+    "sampleInput": "1\n101 Laptop 45000.0",
+    "sampleOutput": "Serialized 1 products to products.dat\n[Product ID: 101, Name: Laptop, Cost: 45000.0]",
+    "testCases": [
+      {
+        "input": "1\n101 Laptop 45000.0",
+        "expectedOutput": "Serialized 1 products to products.dat\n[Product ID: 101, Name: Laptop, Cost: 45000.0]",
+        "isHidden": false
+      },
+      {
+        "input": "2\n201 Bottle 100.0\n202 Water 300.0",
+        "expectedOutput": "Serialized 2 products to products.dat\n[Product ID: 201, Name: Bottle, Cost: 100.0]\n[Product ID: 202, Name: Water, Cost: 300.0]",
+        "isHidden": false
+      }
+    ],
+    "topic": "File Handling",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (232).png - Screenshot (233).png",
+    "explanation": "Create serializable Product class. Store in an ArrayList<Product>, serialize with ObjectOutputStream, deserialize with ObjectInputStream, and print.",
+    "referenceSolution": "import java.io.*;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Scanner;\n\nclass Product implements Serializable {\n    private static final long serialVersionUID = 1L;\n    int id;\n    String name;\n    double cost;\n\n    public Product(int id, String name, double cost) {\n        this.id = id;\n        this.name = name;\n        this.cost = cost;\n    }\n\n    public String toString() {\n        return String.format(\"[Product ID: %d, Name: %s, Cost: %.1f]\", id, name, cost);\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        ArrayList<Product> list = new ArrayList<>();\n        for (int i = 0; i < n; i++) {\n            int id = sc.nextInt();\n            String name = sc.next();\n            double cost = sc.nextDouble();\n            list.add(new Product(id, name, cost));\n        }\n        try {\n            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(\"products.dat\"));\n            oos.writeObject(list);\n            oos.close();\n\n            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(\"products.dat\"));\n            @SuppressWarnings(\"unchecked\")\n            ArrayList<Product> deserialized = (ArrayList<Product>) ois.readObject();\n            ois.close();\n\n            System.out.println(\"Serialized \" + n + \" products to products.dat\");\n            for (Product p : deserialized) {\n                System.out.println(p);\n            }\n        } catch (Exception e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        }\n        sc.close();\n    }\n}",
+    "starterCode": "import java.io.*;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        sc.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  },
+  {
+    "id": "java-030",
+    "title": "Annual Percentage Yield (APY) Calculator with Inner Class",
+    "description": "Sophie, an investment enthusiast, is eager to develop a program for calculating the Annual Percentage Yield (APY) based on different interest rates and compounding frequencies.\\n\\nYour task is to design and write a class named APYCalculator that utilizes an inner class calculateAPY for the APY calculation. The program should prompt Sophie to input the interest rate and compounding frequency, then dynamically calculate and display the APY rounded to two decimal places.\\n\\nFormula:\\nAPY = ((1 + interestRate / compoundingFrequency)^compoundingFrequency - 1) * 100",
+    "inputFormat": "The first line of input consists of a double value representing the interest rate (e.g. 0.05 for 5%).\\nThe second line consists of an integer representing the compounding frequency (e.g. 12 for monthly).",
+    "outputFormat": "Print 'Annual Percentage Yield (APY): <calculated APY rounded to 2 decimal places>%'",
+    "constraints": [
+      "0.01 <= interest rate <= 1.00",
+      "1 <= compounding frequency <= 365"
+    ],
+    "sampleInput": "0.05\n12",
+    "sampleOutput": "Annual Percentage Yield (APY): 5.12%",
+    "testCases": [
+      {
+        "input": "0.05\n12",
+        "expectedOutput": "Annual Percentage Yield (APY): 5.12%",
+        "isHidden": false
+      },
+      {
+        "input": "0.08\n4",
+        "expectedOutput": "Annual Percentage Yield (APY): 8.24%",
+        "isHidden": false
+      },
+      {
+        "input": "0.10\n1",
+        "expectedOutput": "Annual Percentage Yield (APY): 10.00%",
+        "isHidden": true
+      }
+    ],
+    "topic": "Classes and Objects",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (234).png - Screenshot (236).png",
+    "explanation": "Define class APYCalculator with inner class calculateAPY containing method compute(double rate, int freq). Formula: (Math.pow(1 + rate/freq, freq) - 1) * 100. Format to 2 decimal places with %.",
+    "referenceSolution": "import java.util.Scanner;\n\nclass APYCalculator {\n    class calculateAPY {\n        public double compute(double rate, int frequency) {\n            double apy = (Math.pow(1 + rate / frequency, frequency) - 1) * 100;\n            return apy;\n        }\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        if (!scanner.hasNextDouble()) return;\n        double rate = scanner.nextDouble();\n        int frequency = scanner.nextInt();\n        APYCalculator calculator = new APYCalculator();\n        APYCalculator.calculateAPY apyCalc = calculator.new calculateAPY();\n        double apy = apyCalc.compute(rate, frequency);\n        System.out.printf(\"Annual Percentage Yield (APY): %.2f%%\\n\", apy);\n        scanner.close();\n    }\n}",
+    "starterCode": "import java.util.Scanner;\n\nclass APYCalculator {\n    // Define inner class calculateAPY\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        // Write your solution here\n        scanner.close();\n    }\n}",
+    "extractionStatus": "verified",
+    "bank": "bank1"
+  }
+]
