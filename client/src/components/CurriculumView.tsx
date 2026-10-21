@@ -55,6 +55,17 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
     load();
   }, []);
 
+  // Lock body scroll when modal is active
+  useEffect(() => {
+    if (activeModalDoc) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [activeModalDoc]);
+
   // Handle ESC key to close modal
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -204,7 +215,7 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
     <div className="space-y-6 pb-16 animate-fadeIn max-w-6xl mx-auto">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900/95 backdrop-blur-md text-white border border-slate-700 shadow-2xl text-xs font-mono flex items-center gap-2 animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 text-white border border-slate-700 shadow-2xl text-xs font-mono flex items-center gap-2 animate-bounce [isolation:isolate]">
           <Globe className="w-4 h-4 text-sky-400" />
           <span>{toastMessage}</span>
         </div>
@@ -212,7 +223,7 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
 
       {/* In-App Interactive Document Viewer Modal */}
       {activeModalDoc && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 animate-fadeIn">
+        <div className="fixed inset-0 z-50 bg-slate-950/90 flex items-center justify-center p-2 sm:p-4 animate-fadeIn [isolation:isolate]">
           <div
             className={`bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-200 ${
               isFullscreen

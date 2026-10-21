@@ -240,6 +240,13 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
     return ['All', ...Array.from(set).sort()];
   }, [bankScopedQuestions]);
 
+  // Auto-reset selectedTopic if switching banks to one that does not contain that topic
+  useEffect(() => {
+    if (selectedTopic !== 'All' && !topics.includes(selectedTopic)) {
+      setSelectedTopic('All');
+    }
+  }, [topics, selectedTopic]);
+
   // Filter and sort questions
   const filteredQuestions = useMemo(() => {
     return bankScopedQuestions.filter((q) => {

@@ -133,6 +133,13 @@ const DEFAULT_CODE: Record<SupportedLanguage, string> = {
   sql: `-- Write your SQL / MySQL Trigger or Stored Procedure here\n-- Ready for instant execution\n`
 };
 
+// Clean terminal ANSI escape sequences from execution diagnostics
+function stripAnsi(text: string | undefined | null): string {
+  if (!text) return '';
+  // eslint-disable-next-line no-control-regex
+  return text.replace(/\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])/g, '');
+}
+
 // Offline lightweight Code Beautifier & Indentation Formatter
 function formatSourceCode(source: string, lang: SupportedLanguage): string {
   if (lang === 'python' || lang === 'sql') {
@@ -312,6 +319,9 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   const [showTemplateMenu, setShowTemplateMenu] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const workspaceContainerRef = useRef<HTMLDivElement>(null);
+  const editorContainerRef = useRef<HTMLDivElement>(null);
+  const autoSaveTimeoutRef = useRef<any>(null);
+  const isSwitchingLanguageRef = useRef<boolean>(false);
 
   // Toggle Zen Focus Mode (Code Only Fullscreen)
   const toggleZenMode = useCallback(() => {
@@ -338,7 +348,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [toggleZenMode]);
 
-  // Recalculate Monaco layout on window resize
+  // Recalculate Monaco layout on window resize & container resize (resolves zoom & split layout lag)
   useEffect(() => {
     const handleResize = () => {
       if (editorRef.current) {
@@ -346,7 +356,23 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       }
     };
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.visualViewport?.addEventListener('resize', handleResize);
+
+    let ro: ResizeObserver | null = null;
+    if (editorContainerRef.current && typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(() => {
+        if (editorRef.current) {
+          editorRef.current.layout();
+        }
+      });
+      ro.observe(editorContainerRef.current);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.visualViewport?.removeEventListener('resize', handleResize);
+      if (ro) ro.disconnect();
+    };
   }, []);
 
   // Split pane horizontal resize handler
@@ -449,7 +475,13 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   const handleLanguageChange = async (newLang: SupportedLanguage) => {
     if (newLang === selectedLanguage) return;
 
-    // 1. Save draft for current language if code exists
+    // 1. Cancel pending auto-save timeout and set switching guard
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current);
+    }
+    isSwitchingLanguageRef.current = true;
+
+    // 2. Save draft for current language if code exists
     if (code.trim()) {
       try {
         await api.saveDraft(questionId, code, selectedLanguage);
@@ -460,11 +492,14 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
 
     setSelectedLanguage(newLang);
 
-    // 2. Fetch or restore code for the selected new language
+    // 3. Fetch or restore code for the selected new language
     try {
       const draft = await api.getDraft(questionId, newLang);
       if (draft.draftCode && draft.draftCode.trim()) {
         setCode(draft.draftCode);
+        setTimeout(() => {
+          isSwitchingLanguageRef.current = false;
+        }, 150);
         return;
       }
     } catch (err) {}
@@ -474,6 +509,10 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     } else {
       setCode(DEFAULT_CODE[newLang]);
     }
+
+    setTimeout(() => {
+      isSwitchingLanguageRef.current = false;
+    }, 150);
   };
 
   // Upload local file to editor
@@ -568,9 +607,13 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
 
   // Debounced auto-save draft code
   useEffect(() => {
-    if (!question || loading || !code) return;
+    if (!question || loading || !code || isSwitchingLanguageRef.current) return;
 
-    const timeout = setTimeout(async () => {
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current);
+    }
+
+    autoSaveTimeoutRef.current = setTimeout(async () => {
       try {
         setIsSavingDraft(true);
         await api.saveDraft(questionId, code, selectedLanguage);
@@ -582,12 +625,16 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       }
     }, 1500);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current);
+      }
+    };
   }, [code, questionId, question, loading, selectedLanguage]);
 
   // Run code against custom or sample input
   const handleRun = useCallback(async () => {
-    if (isRunning || !code) return;
+    if (isRunning || isSubmitting || !code) return;
     try {
       soundManager.playRun();
       setIsRunning(true);
@@ -609,11 +656,11 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     } finally {
       setIsRunning(false);
     }
-  }, [isRunning, code, customInput, selectedLanguage]);
+  }, [isRunning, isSubmitting, code, customInput, selectedLanguage, questionId]);
 
   // Submit code for full test-case evaluation
   const handleSubmit = useCallback(async () => {
-    if (isSubmitting || !code) return;
+    if (isRunning || isSubmitting || !code) return;
     try {
       soundManager.playRun();
       setIsSubmitting(true);
@@ -645,9 +692,9 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [isSubmitting, code, questionId, selectedLanguage, question, onQuestionSolved]);
+  }, [isRunning, isSubmitting, code, questionId, selectedLanguage, question, onQuestionSolved]);
 
-  // Keyboard shortcuts (Ctrl+Enter to Run, Ctrl+Shift+Enter to Submit, Alt+F to format, Alt+R to reset)
+  // Keyboard shortcuts (Ctrl+Enter to Run, Ctrl+Shift+Enter to Submit, Alt+F to format, Alt+R to reset, Esc to step back)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
@@ -664,7 +711,18 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         e.preventDefault();
         setShowResetConfirm(true);
       } else if (e.key === 'Escape' && !showSolutionModal && !showScreenshot && !showResetConfirm && !showTemplateMenu) {
-        if (onBack) {
+        if (isZenMode) {
+          e.preventDefault();
+          setIsZenMode(false);
+        } else if (isFullscreen) {
+          e.preventDefault();
+          setIsFullscreen(false);
+        } else if (isAbsoluteFullscreen) {
+          e.preventDefault();
+          if (onToggleAbsoluteFullscreen) {
+            onToggleAbsoluteFullscreen();
+          }
+        } else if (onBack) {
           e.preventDefault();
           onBack();
         }
@@ -1344,7 +1402,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             </div>
 
             {/* Monaco Editor Container */}
-            <div className={`w-full transition-all duration-200 ${isZenMode ? 'h-[calc(100vh-270px)] min-h-[500px]' : activeFullscreen ? 'h-[520px]' : 'h-[430px]'}`}>
+            <div ref={editorContainerRef} className={`w-full ${isZenMode ? 'h-[calc(100vh-270px)] min-h-[500px]' : activeFullscreen ? 'h-[520px]' : 'h-[430px]'}`}>
               <Editor
                 height="100%"
                 language={selectedLanguage === 'cpp' ? 'cpp' : selectedLanguage === 'python' ? 'python' : selectedLanguage === 'sql' ? 'sql' : 'java'}
@@ -1536,9 +1594,9 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                       <pre className="w-full h-24 p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-emerald-400 overflow-auto whitespace-pre-wrap">
                         {runResult ? (
                           runResult.stderr ? (
-                            <span className="text-rose-400">{runResult.stderr}</span>
+                            <span className="text-rose-400">{stripAnsi(runResult.stderr)}</span>
                           ) : (
-                            runResult.stdout || <span className="text-slate-600">(no output)</span>
+                            stripAnsi(runResult.stdout) || <span className="text-slate-600">(no output)</span>
                           )
                         ) : (
                           <span className="text-slate-600">Click &quot;Run Code&quot; to execute your {selectedLanguage.toUpperCase()} solution.</span>
@@ -1603,7 +1661,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                           </div>
 
                           <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs font-mono text-rose-300 overflow-x-auto whitespace-pre-wrap leading-relaxed">
-                            {submitResult.errorMessage}
+                            {stripAnsi(submitResult.errorMessage)}
                           </div>
 
                           <div className="text-[11px] text-slate-300 space-y-1 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">
@@ -1737,7 +1795,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
 
       {/* Reset Confirmation Modal */}
       {showResetConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 [isolation:isolate]">
           <div className="bg-white dark:bg-slate-900 rounded-xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
             <div className="flex items-center gap-3 text-amber-500">
               <AlertTriangle className="w-6 h-6" />

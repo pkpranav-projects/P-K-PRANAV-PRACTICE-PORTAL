@@ -28,24 +28,36 @@ export const ExamModeView: React.FC<ExamModeViewProps> = ({
   const [selectedExamQuestions, setSelectedExamQuestions] = useState<QuestionSummary[]>([]);
   const [examFinished, setExamFinished] = useState(false);
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
+  const endTimeRef = React.useRef<number | null>(null);
+
+  // Sync remaining seconds against real clock timestamp to eliminate browser tab throttle drift
+  const syncTimer = React.useCallback(() => {
+    if (!endTimeRef.current) return;
+    const remaining = Math.max(0, Math.round((endTimeRef.current - Date.now()) / 1000));
+    setTimeLeftSeconds(remaining);
+    if (remaining <= 0) {
+      handleFinishExam();
+    }
+  }, []);
 
   // Timer countdown
   useEffect(() => {
     if (!examActive || examFinished) return;
 
-    const interval = setInterval(() => {
-      setTimeLeftSeconds((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          handleFinishExam();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    const interval = setInterval(syncTimer, 1000);
 
-    return () => clearInterval(interval);
-  }, [examActive, examFinished]);
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        syncTimer();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [examActive, examFinished, syncTimer]);
 
   const handleStartExam = () => {
     // Pick 3 balanced questions (1 Easy, 1 Medium, 1 Hard or 3 Medium/Hard)
@@ -64,13 +76,16 @@ export const ExamModeView: React.FC<ExamModeViewProps> = ({
       if (!chosen.find((c) => c.id === q.id)) chosen.push(q);
     }
 
+    const durationSec = examDurationMinutes * 60;
+    endTimeRef.current = Date.now() + durationSec * 1000;
     setSelectedExamQuestions(chosen);
-    setTimeLeftSeconds(examDurationMinutes * 60);
+    setTimeLeftSeconds(durationSec);
     setExamActive(true);
     setExamFinished(false);
   };
 
   const handleFinishExam = () => {
+    endTimeRef.current = null;
     setExamActive(false);
     setExamFinished(true);
     setShowSubmitConfirm(false);
@@ -94,7 +109,7 @@ export const ExamModeView: React.FC<ExamModeViewProps> = ({
           </div>
           <div>
             <h1 className="text-xl font-bold tracking-tight text-white m-0">
-              Pranav Lab Exam Simulator
+              PRANAV Practice Portal · Lab Exam Simulator
             </h1>
             <p className="text-xs text-amber-200/80 mt-0.5">
               Simulate actual university lab exams: timed execution, no hints, strict test evaluation.
@@ -306,7 +321,7 @@ export const ExamModeView: React.FC<ExamModeViewProps> = ({
 
       {/* Confirmation Modal */}
       {showSubmitConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 [isolation:isolate]">
           <div className="bg-white dark:bg-slate-900 rounded-xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
             <div className="flex items-center gap-3 text-rose-500">
               <AlertTriangle className="w-6 h-6" />

@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { LeetCodeTab } from './LeetCodeNavbar';
 import { SystemHealth } from '../types';
+import { PranavJavaSymbol } from './PranavJavaSymbol';
 
 interface LeetCodeDrawerProps {
   isOpen: boolean;
@@ -99,7 +100,7 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
       {/* Semi-transparent Backdrop Overlay */}
       <div
         onClick={onClose}
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 ease-in-out ${
+        className={`fixed inset-0 bg-black/75 z-50 transition-opacity duration-300 ease-in-out [isolation:isolate] ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         aria-hidden="true"
@@ -114,11 +115,9 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
         {/* Drawer Header */}
         <div className="h-14 px-5 flex items-center justify-between border-b border-slate-200 dark:border-[#282828]">
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center text-white font-extrabold text-xs shadow-sm">
-              ☕
-            </div>
-            <span className="font-bold text-base tracking-tight text-slate-900 dark:text-white">
-              JavaArena Navigation
+            <PranavJavaSymbol size="sm" />
+            <span className="font-bold text-sm tracking-tight text-slate-900 dark:text-white">
+              PRANAV Practice Portal
             </span>
           </div>
 

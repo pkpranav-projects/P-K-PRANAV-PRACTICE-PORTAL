@@ -74,7 +74,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
   const categories = ['Editor', 'Workspace', 'Global'] as const;
 
   return (
-    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/75 animate-in fade-in duration-150 [isolation:isolate]">
       <div
         className="relative w-full max-w-lg bg-[#1e1e1e] border border-[#383838] rounded-xl shadow-2xl overflow-hidden text-[#eff1f6bf]"
         onClick={(e) => e.stopPropagation()}

@@ -19,7 +19,6 @@ import {
   Layers,
   FileText
 } from 'lucide-react';
-import { PranavJavaSymbol } from './PranavJavaSymbol';
 import { DashboardStats, QuestionSummary } from '../types';
 
 export interface ExploreCardData {
@@ -68,20 +67,20 @@ const ExploreSection: React.FC<ExploreSectionProps> = ({
       <div
         key={card.id}
         onClick={card.onClick}
-        className="rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-neutral-800 hover:border-amber-400 dark:hover:border-amber-500/60 overflow-hidden cursor-pointer group flex flex-col justify-between select-none"
+        className="rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-150 bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-neutral-800 hover:border-amber-400 dark:hover:border-amber-500/60 overflow-hidden cursor-pointer group flex flex-col justify-between select-none [isolation:isolate] [backface-visibility:hidden] [transform:translateZ(0)]"
       >
         {/* Card Top: Gradient Banner with Title & Badge */}
-        <div className={`relative p-4 flex flex-col justify-between min-h-[100px] ${card.gradientClass}`}>
+        <div className={`relative p-4 flex flex-col justify-between min-h-[105px] ${card.gradientClass}`}>
           <div className="flex items-start justify-between gap-2 z-10">
-            <h4 className="text-[15px] font-bold text-white leading-snug drop-shadow line-clamp-1 group-hover:translate-x-0.5 transition-transform">
+            <h4 className="text-[15px] font-bold text-white leading-snug line-clamp-2">
               {card.title}
             </h4>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/25 text-white backdrop-blur-sm border border-white/20 whitespace-nowrap shadow-sm">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/40 text-white border border-white/25 whitespace-nowrap shadow-sm shrink-0">
               {card.badge}
             </span>
           </div>
 
-          <p className="text-xs text-white/85 line-clamp-1 mt-1 drop-shadow-sm">
+          <p className="text-xs text-white/90 line-clamp-2 mt-1.5 leading-relaxed">
             {card.description}
           </p>
         </div>
@@ -143,7 +142,7 @@ const ExploreSection: React.FC<ExploreSectionProps> = ({
 
       {/* Render Cards according to chosen layout mode */}
       {layoutMode === 'grid' ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {cards.map((card) => renderCard(card))}
         </div>
       ) : (
@@ -407,28 +406,16 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
 
   return (
     <div className="w-full pb-16">
-      {/* Header Banner: Clean Brand Typography + On-Point Summary */}
-      <div className="mb-8 p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#202020] border border-slate-200 dark:border-neutral-800 shadow-sm transition-colors">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-3">
-              <PranavJavaSymbol className="h-7 w-7 flex-shrink-0" />
-              <div className="flex items-baseline gap-2">
-                <span className="text-slate-900 dark:text-white font-extrabold text-xl tracking-tight">
-                  PRANAV
-                </span>
-                <span className="text-slate-600 dark:text-neutral-300 font-medium text-lg">
-                  Practice
-                </span>
-                <span className="text-[#FFA116] font-bold text-lg">
-                  Portal
-                </span>
-              </div>
-            </div>
-            <p className="text-xs text-slate-500 dark:text-neutral-400 mt-1 max-w-xl">
-              145 problems across 5 banks • Java, C++, Python & SQL • Instant test runner
-            </p>
-          </div>
+      {/* Header Banner: Concise Overview & Live Progress */}
+      <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#202020] border border-slate-200 dark:border-neutral-800 shadow-sm transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white m-0">
+            Developer Practice Arena
+          </h2>
+          <p className="text-xs text-slate-500 dark:text-neutral-400 mt-0.5">
+            145 challenges across 5 banks • Java, C++, Python & SQL • Sub-20ms test runner
+          </p>
+        </div>
 
           {/* Quick Metrics & View Toggle */}
           <div className="flex items-center gap-3">
@@ -470,7 +457,6 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
             </div>
           </div>
         </div>
-      </div>
 
       {/* Section 1: Practice Tracks */}
       <ExploreSection

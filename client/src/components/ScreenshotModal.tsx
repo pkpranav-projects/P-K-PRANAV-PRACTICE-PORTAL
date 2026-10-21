@@ -92,7 +92,7 @@ export const ScreenshotModal: React.FC<ScreenshotModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 animate-fadeIn [isolation:isolate]"
       onClick={onClose}
     >
       <div 

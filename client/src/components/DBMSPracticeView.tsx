@@ -313,7 +313,7 @@ export const DBMSPracticeView: React.FC<DBMSPracticeViewProps> = ({
           </div>
 
           {/* Stat Tile */}
-          <div className="flex flex-col sm:flex-row lg:flex-col gap-4 bg-black/40 backdrop-blur-md p-5 rounded-2xl border border-white/10 min-w-[240px]">
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-4 bg-black/60 p-5 rounded-2xl border border-white/10 min-w-[240px] [isolation:isolate]">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <span className="text-xs text-slate-400 font-medium">Lab Completion</span>

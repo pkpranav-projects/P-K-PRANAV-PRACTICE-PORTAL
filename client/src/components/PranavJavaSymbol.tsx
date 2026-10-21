@@ -2,14 +2,24 @@ import React from 'react';
 
 interface PranavJavaSymbolProps {
   className?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
 export const PranavJavaSymbol: React.FC<PranavJavaSymbolProps> = ({
-  className = 'h-6 w-6'
+  className,
+  size
 }) => {
+  const sizeClasses = {
+    sm: 'h-6 w-6',
+    md: 'h-8 w-8',
+    lg: 'h-10 w-10',
+    xl: 'h-12 w-12'
+  };
+  const resolvedClass = className || (size ? sizeClasses[size] : 'h-6 w-6');
+
   return (
     <svg
-      className={className}
+      className={resolvedClass}
       viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

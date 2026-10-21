@@ -339,15 +339,29 @@ export const App: React.FC = () => {
     handleSelectQuestion(randomQ.id);
   };
 
-  // Toggle bookmark
+  // Toggle bookmark with optimistic local update
   const handleToggleBookmark = async (id: string) => {
-    await api.toggleBookmark(id);
+    setQuestions((prev) =>
+      prev.map((q) => (q.id === id ? { ...q, isBookmarked: !q.isBookmarked } : q))
+    );
+    try {
+      await api.toggleBookmark(id);
+    } catch (err) {
+      console.error('Failed to toggle bookmark:', err);
+    }
     refreshStats();
   };
 
-  // Toggle revision
+  // Toggle revision with optimistic local update
   const handleToggleRevision = async (id: string) => {
-    await api.toggleRevision(id);
+    setQuestions((prev) =>
+      prev.map((q) => (q.id === id ? { ...q, isRevision: !q.isRevision } : q))
+    );
+    try {
+      await api.toggleRevision(id);
+    } catch (err) {
+      console.error('Failed to toggle revision:', err);
+    }
     refreshStats();
   };
 
@@ -555,7 +569,7 @@ export const App: React.FC = () => {
 
       {/* Absolute Fullscreen Floating Exit Pill */}
       {isAbsoluteFullscreen && (
-        <div className="fixed top-2.5 right-4 z-[999] flex items-center gap-2 bg-[#181818]/95 backdrop-blur-md border border-[#383838] px-3.5 py-1.5 rounded-full shadow-2xl text-xs text-neutral-300">
+        <div className="fixed top-2.5 right-4 z-[999] flex items-center gap-2 bg-[#181818] border border-[#383838] px-3.5 py-1.5 rounded-full shadow-2xl text-xs text-neutral-300 [isolation:isolate]">
           <span className="w-2 h-2 rounded-full bg-[#FFA116] animate-pulse" />
           <span className="font-semibold text-white hidden sm:inline">Absolute Fullscreen</span>
           <button

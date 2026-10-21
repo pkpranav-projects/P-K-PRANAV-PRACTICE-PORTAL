@@ -82,30 +82,34 @@ html.dark body {
 
 /* Card Tile Appearance & Crisp Visible Outline */
 .arena-card-tile {
-  border: 1.5px solid #e2e8f0;
+  border: 1px solid #e2e8f0;
   background-color: #ffffff;
   border-radius: 1rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  isolation: isolate;
 }
 
 .arena-card-tile:hover {
   border-color: #f59e0b;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.15), 0 8px 10px -6px rgba(245, 158, 11, 0.1);
+  box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.15), 0 4px 6px -2px rgba(245, 158, 11, 0.1);
 }
 
 .dark .arena-card-tile {
-  border: 1.5px solid #383838;
+  border: 1px solid #383838;
   background-color: #212121;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  isolation: isolate;
 }
 
 .dark .arena-card-tile:hover {
   border-color: #FFA116;
   background-color: #262626;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(255, 161, 22, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 20px -4px rgba(255, 161, 22, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
 }
 
 /* OLED Black Theme Overrides - Pure Pitch Black #000000 */
@@ -123,7 +127,7 @@ html.oled .dark\:bg-\[\#121212\] {
 
 /* OLED Card Tiles: Keep Distinct Outline and Elevation */
 html.oled .arena-card-tile {
-  border: 1.5px solid #3a3a3a !important;
+  border: 1px solid #3a3a3a !important;
   background-color: #0c0c0c !important;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 4px 16px rgba(0, 0, 0, 0.8) !important;
 }
@@ -131,7 +135,6 @@ html.oled .arena-card-tile {
 html.oled .arena-card-tile:hover {
   border-color: #FFA116 !important;
   background-color: #141414 !important;
-  transform: translateY(-2px);
   box-shadow: 0 0 18px rgba(255, 161, 22, 0.25) !important;
 }
 
