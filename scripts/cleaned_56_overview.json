@@ -1,0 +1,992 @@
+[
+  {
+    "index": 1,
+    "label": "Q1",
+    "session": "Day 8 COD",
+    "shots": "Screenshot",
+    "title": "Day 8 COD - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "consists of N space-separated integers representing the prices of the products in the same order. Output Format Print N lines. Each line consists of a product name followed by a space and its price, sorted in descending order of price. Code Constraints In this scenario, the test cases fall under the following constraints: 1 S N s 20 1 price 10000 Product names are single words with no spaces Sample Test Cases case I I",
+        "expectedOutput": "Laptop 50000 Phone 30000 Watch 8000 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "label": "Q2",
+    "session": "Day 8 COD",
+    "shots": "Screenshot",
+    "title": "Day 8 COD - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 3,
+    "label": "Q3",
+    "session": "Day 8 COD",
+    "shots": "Screenshot",
+    "title": "Day 8 COD - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 4,
+    "label": "Q4",
+    "session": "Day 8 COD",
+    "shots": "Screenshot",
+    "title": "Day 8 COD - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "4 11 22 33 44 Case 2 Summary 0/4 Output 11 22 33 44 Count: 4 Java (11) 1 Sample Tests Submissions Custom I",
+        "expectedOutput": "11 22 33 44 Count: 4 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "label": "Q1",
+    "session": "Day 8 CY",
+    "shots": "Screenshot",
+    "title": "Day 8 CY - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s 0 01:39:49 \u2022 Answered \u2022 Bookmarked \u2022 Skipped 4 + 30 Print N lines. Each line consists of an employee name followed by a space and their salary, sorted by ascending salary and alphabetically by name for equal salaries. Code Constraints In this scenario, the test cases fall under the following constraints: 10000 salary 200000 Narnes are single words with no spaces Sample Test Cases case I I",
+        "expectedOutput": "Lina 45000 Nora 45000 Mark 65000 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "label": "Q2",
+    "session": "Day 8 CY",
+    "shots": "Screenshot",
+    "title": "Day 8 CY - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 7,
+    "label": "Q3",
+    "session": "Day 8 CY",
+    "shots": "Screenshot",
+    "title": "Day 8 CY - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 8,
+    "label": "Q4",
+    "session": "Day 8 CY",
+    "shots": "Screenshot",
+    "title": "Day 8 CY - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s 0 01:39:29 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 Print N lines. Each line contains one word, sorted by ascending word length and alphabetically for equal-length words. Code Constraints In this scenario, the test cases fall under the following constraints: 1 word length 20 All words are lowercase with no spaces Sample Test Cases case I I",
+        "expectedOutput": "oak Pine rose tulip O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 9,
+    "label": "Q1",
+    "session": "Day 8 PAH",
+    "shots": "Screenshot",
+    "title": "Day 8 PAH - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 10,
+    "label": "Q2",
+    "session": "Day 8 PAH",
+    "shots": "Screenshot",
+    "title": "Day 8 PAH - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 11,
+    "label": "Q3",
+    "session": "Day 8 PAH",
+    "shots": "Screenshot",
+    "title": "Day 8 PAH - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s Click \"Compile' to test against sample test cases 0 01:39:44 \u2022 Answered \u2022 Bookmarked \u2022 Skipped CODE + 30 The first line of i",
+        "expectedOutput": "Max: 80 Min: 10 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 12,
+    "label": "Q4",
+    "session": "Day 8 PAH",
+    "shots": "Screenshot",
+    "title": "Day 8 PAH - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 13,
+    "label": "Q1",
+    "session": "Day 9 COD",
+    "shots": "Screenshot",
+    "title": "Day 9 COD - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "3 Laptop 10000.0 250.0 Light Summary 0/4 Output Name Laptop Light Fan Deposit 10000.0 1000.0 1000.0 Cost Per 250.0 50.0 100.0 6 7 8 9 public static void args) { \u2014 new Scanner(System.in) Scanner sc \u2014 InventoryManager . processlnventory(sc sc.close() Previous Bookmark ubmit Te Not Viewed ext",
+        "expectedOutput": "Name Laptop Light Fan O",
+        "isHidden": false
+      },
+      {
+        "input": "5 P K Pranav CB.SC.U4CYS25037 1 Sections 4 Questions FC143 cbsc.u4cys25037@cb.students.amrita.edu -o Amrita_24CYS204_Advance Prgramming_Day 9_COD 2 3 0 01:39:50 \u2022 Answered \u2022 Bookmarked \u2022 Skipped CODE 4 Output Name + 30 Cost Per 15.0 5.0 40.0 70.0 60.0 Header Snippet 1 2 3 import java. util . ArrayList; import java. util.List; import java. util . Scanner; Deposit Headphones 300.0 15.0 Mouse 100.0 5.0 Desk 800.0 40.0 Printer 1500.0 70.0 Speakers 1200.0 60.0 Note Headphones 300.0 Mouse Desk Printer Speakers 100.0 800.0 1500.0 1200.0 Java (11) 4 Footer Snippet The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program output will result in the failure of the test cases. Summary 0/4 5 6 7 8 9 public class Main public static void args) { \u2014 new Scanner(System.in) Scanner sc \u2014 InventoryManager . processlnventory(sc sc.close() Previous Bookmark ubmit Te Not Viewed ext",
+        "expectedOutput": "Name Deposit + 30 Cost Per 15.0 5.0 40.0 70.0 60.0 Headphones 300.0 15.0 Mouse 100.0 5.0 Desk 800.0 40.0 Printer 1500.0 70.0 Speakers 1200.0 60.0 Note Headphones 300.0 Mouse Desk Printer Speakers 100.0 800.0 1500.0 1200.0 Java (11) 4 Footer Snippet 5 6 7 8 9 11 The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 14,
+    "label": "Q2",
+    "session": "Day 9 COD",
+    "shots": "Screenshot",
+    "title": "Day 9 COD - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "5 KA01AB1234 John Car MH02CD5678 Alice Bike DL03EF9012 Bob Truck Summary 0/4 > Output TN04GH3456 Mike Car KA01AB1234 John Car MH02CD5678 Alice Bike DL03EF9012 Bob Truck Java (11) 1 Sample Tests Submissions Custom I",
+        "expectedOutput": "TN04GH3456 Mike Car KA01AB1234 John Car MH02CD5678 Alice Bike DL03EF9012 Bob Truck O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 15,
+    "label": "Q3",
+    "session": "Day 9 COD",
+    "shots": "Screenshot",
+    "title": "Day 9 COD - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 16,
+    "label": "Q4",
+    "session": "Day 9 COD",
+    "shots": "Screenshot",
+    "title": "Day 9 COD - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "4 JavaCore James 500 SpringBoot Mark 450 Summary 0/4 > Output Sorted Book List: PythonBasics by John - 300 SpringBoot by Mark - 450 Custom I",
+        "expectedOutput": "Sorted Book List: PythonBasics by John - 300 SpringBoot by Mark - 450 DataStructures by Alice - 500 JavaCore by James - 500 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 17,
+    "label": "Q1",
+    "session": "Day 9 CY",
+    "shots": "Screenshot",
+    "title": "Day 9 CY - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "Format P K Pranav CB.SC.U4CYS25037 1 Sections 4 Questions B4DOE cbsc.u4cys25037@cb.students.amrita.edu -o Amrita_24CYS204_Advance Prgramming_ Day 9_cy 2 3 4 S @ 01:39:54 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 Header Snippet 1 2 3 import java. util . Scanner; import java. util . ArrayList; The first line of the i",
+        "expectedOutput": "Format The o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 18,
+    "label": "Q2",
+    "session": "Day 9 CY",
+    "shots": "Screenshot",
+    "title": "Day 9 CY - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 19,
+    "label": "Q3",
+    "session": "Day 9 CY",
+    "shots": "Screenshot",
+    "title": "Day 9 CY - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "3 P K Pranav CB.SC.U4CYS25037 B4DOE cbsc.u4cys25037@cb.students.amrita.edu -o Amrita_24CYS204_Advance Prgramming_ Day 9_cy 1 Sections 4 Questions Header Snippet 1 import j ava. util.* Java (11) 2 Footer Snippet 3 public class Main 0 01:39:36 \u2022 Answered \u2022 Bookmarked \u2022 Skipped CODE + 30 1234 JavaCompleteGuide JohnDoe 5678 PythonBasics JaneDoe 9012 DataStructures AliceSmith 5679 case 2 I",
+        "expectedOutput": "1 Sections 4 Questions Footer Snippet 3 public class Main ISBN: 1234, Title. \u2022 JavaCompleteGuide, ISBN: 5678, Title: PythonBasics, Author ISBN: 9012, Title: DataStructures, Auth O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 20,
+    "label": "Q4",
+    "session": "Day 9 CY",
+    "shots": "Screenshot",
+    "title": "Day 9 CY - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "5 Arun 90 120 Bhavna 95 110 Charan 90 100 Deepa 95 130 Eshan 80 90 case 2 I",
+        "expectedOutput": "Final Leaderboard: Ravi 92 200 Anita 85140 Kiran 85150 Meena 70 100 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 21,
+    "label": "Q1",
+    "session": "Day 9 PAH",
+    "shots": "Screenshot",
+    "title": "Day 9 PAH - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "5 Alice Bob Ankit Alice Prajit 2 case 2 Summary 0/4 Output Element at index 2: Ankit 4 5 6 7 8 10 11 12 13 14 15 16 17 public class Main public static void main(String[] args) { new Scanner (System. in) Scanner sc = NameManager manager = new NameManager(); sc.nextlnt(); int n = o; sc . nextLine for (int i = 0; i < n; i++) { manager . addName( sc . nextLine( ) ) \u2014 sc.nextlnt(); int index - manager . printNameAtIndex(index) ; o; sc.close Sample Tests Submissions Custom I",
+        "expectedOutput": "Invalid index + 30 1 Sections 4 Questions Footer Snippet White List (Allowed libraries & functions) ArrayList Note The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 22,
+    "label": "Q2",
+    "session": "Day 9 PAH",
+    "shots": "Screenshot",
+    "title": "Day 9 PAH - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s Click \"Compile' to test against sample test cases 0 01:39:41 \u2022 Answered \u2022 Bookmarked \u2022 Skipped 4 + 30 Refer to the sample output for formatting specifications. Code Constraints The given test cases fall under the following constraints: roll_no (Integer, 1 roll_no 1000) -4 Unique student roll nurnber. name (String, 1 length 50) -+ Student's name (only letters). Attendance count starts at O when a student is added. A student cannot be added twice (ignore duplicate adds). Marking attendance for a non-existent student is ignored. Sample Test Cases case I I",
+        "expectedOutput": "101 Alice 2 102 Bob O O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 23,
+    "label": "Q3",
+    "session": "Day 9 PAH",
+    "shots": "Screenshot",
+    "title": "Day 9 PAH - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "5 12345 3 235 case 2 I",
+        "expectedOutput": "YES -3 2 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 24,
+    "label": "Q4",
+    "session": "Day 9 PAH",
+    "shots": "Screenshot",
+    "title": "Day 9 PAH - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": ". Each word is printed on a new line. Refer to the sample output for the formatting specifications. Code Constraints In this scenario, the test cases will fall under the following constraints: IS NS15 Each word consists of lowercase English letters only. The length of each word is between 1 and 50 characters. Sample Test Cases case I I",
+        "expectedOutput": "O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 25,
+    "label": "Q1",
+    "session": "Day 10 COD",
+    "shots": "Screenshot",
+    "title": "Day 10 COD - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "1 10 1 20 1 30 1 40 1 50 2 2 3 4 case 2 I",
+        "expectedOutput": "Node is Inserted Node is Inserted Popped Element: 20 Popped Element: IO EMPTY STACK O",
+        "isHidden": false
+      },
+      {
+        "input": "1 10 2 3 4 Case 4 I",
+        "expectedOutput": "Node is Inserted Popped Element: IO EMPTY STACK O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 26,
+    "label": "Q2",
+    "session": "Day 10 COD",
+    "shots": "Screenshot",
+    "title": "Day 10 COD - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "10 88 3 2 3 case 2 I",
+        "expectedOutput": "+ 30 Header Snippet Order ID 10 is inserted in the queue Order ID 88 is inserted in the queue Order IDs in the queue are: 10 88 Processed Order ID: 10 Order IDs in the queue are: 88 O",
+        "isHidden": false
+      },
+      {
+        "input": "10 20 30 40 50 60 Note P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu -o Amrita_24CYS204_Advance Prgramming_Day IO_COD 1 Sections 4 Questions F2023 3 0 01:39:38 \u2022 Answered \u2022 Bookmarked \u2022 Skipped CODE 4 Queue is empty Invalid option Output + 30 Header Snippet 1 2 3 4 5 6 7 8 #include <stdio.h> #include <stdlib.h> #define max 5 struct Queue int orderlDs[max]; int front, rear; Order ID 10 is inserted in the queue Order ID 20 is inserted in the queue Order ID 30 is inserted in the queue Order ID 40 is inserted in the queue Order ID 50 is inserted in the queue Queue is full c (17) 9 Footer Snippet The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program output will result in the failure of the test cases. Summary 0/4 10 int main Previous Bookmark ubmit Te Not Viewed ext",
+        "expectedOutput": "+ 30 Footer Snippet int main 10 Order ID 10 is inserted in the queue Order ID 20 is inserted in the queue Order ID 30 is inserted in the queue Order ID 40 is inserted in the queue Order ID 50 is inserted in the queue Queue is full 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 struct Queue orderQueue; int orderlD; int option; initializeQueue(&orderQueue) while (1) { if (scanf( \"%d\", &option) break ; switch (option) { case 1: if (scanf( \"%d\", &orderID) != 1) break ; if (insertq(&orderQueue, orderlD) == printf(\"Queue is full\\n\"); else S 0 01:39:36 \u2022 Answered \u2022 Bookmarked \u2022 Skipped 0) The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      },
+      {
+        "input": "10 20 30 40 50 60 Note P K Pranav CB.SC.U4CYS25037 1 Sections F2023 cbsc.u4cys25037@cb.students.amrita.edu -o Amrita_24CYS204_Advance Prgramming_Day IO_COD 3 4 Queue is empty Invalid option Output + 30 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 41 42 43 45 46 4 Questions while (1) if (scanf( \"%d\", &option) break ; switch (option) { case 1: if (scanf( \"%d\", &orderID) != 1) break ; if (insertq(&orderQueue, orderlD) == printf(\"Queue is full\\n\"); else S 0 01:39:35 \u2022 Answered \u2022 Bookmarked \u2022 Skipped 0) Order ID 10 is inserted in the queue Order ID 20 is inserted in the queue Order ID 30 is inserted in the queue Order ID 40 is inserted in the queue Order ID 50 is inserted in the queue Queue is full The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program output will result in the failure of the test cases. Summary 0/4 printf(\"Order ID %d is inserted in the queue\\n\" , break ; case 2: if (delq(&orderQueue, &orderID) == printf(\"Queue is empty\\n\"); } else printf(\"Processed Order ID: %d\\n\" , orderlD) ; break ; case 3: display(&orderQueue) break ; defaul t : printf(\"lnvalid option\\n\"); break ; return 0; Previous orderlD) ; Bookmark ubmit Te Not Viewed ext",
+        "expectedOutput": "+ 30 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 41 42 43 45 46 4 Questions switch (option) { case 1: if (scanf( \"%d\", &orderID) != 1) break ; if (insertq(&orderQueue, orderlD) == printf(\"Queue is full\\n\"); else 0 01:39:34 \u2022 Answered \u2022 Bookmarked \u2022 Skipped 0) printf(\"Order ID %d is inserted in the queue\\n\" , break ; case 2: if (delq(&orderQueue, &orderID) == printf(\"Queue is empty\\n\"); } else Order ID 10 is inserted in the queue Order ID 20 is inserted in the queue Order ID 30 is inserted in the queue Order ID 40 is inserted in the queue Order ID 50 is inserted in the queue Queue is full printf(\"Processed Order ID: %d\\n\" , break ; case 3: display(&orderQueue) break ; defaul t : printf(\"lnvalid option\\n\"); break ; return 0; The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 27,
+    "label": "Q3",
+    "session": "Day 10 COD",
+    "shots": "Screenshot",
+    "title": "Day 10 COD - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s = 6 1 element value 10000 Sample Test Cases case I I",
+        "expectedOutput": "103 201 101 102 202 204 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 28,
+    "label": "Q4",
+    "session": "Day 10 COD",
+    "shots": "Screenshot",
+    "title": "Day 10 COD - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "{Off} case 2 I",
+        "expectedOutput": "O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 29,
+    "label": "Q1",
+    "session": "Day 10 CY",
+    "shots": "Screenshot",
+    "title": "Day 10 CY - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s S @ 01:39:47 \u2022 Answered \u2022 Bookmarked \u2022 Skipped +30 -o arrive. The program should move the customer from the front to the back of the waitlist. Display Waitlist: At any time, the host/hostess can view the current waitlist. The program should display the names and party sizes of all customers on the waitlist, starting from the front to the back. Your solution should utilize a double-ended queue to implement the waitlist functionality. The program should prompt the user for the required actions and perform the corresponding operations on the waitlist. It should also display appropriate messages to notify the host/hostess about the status of the waitlist and any changes made. Note: This is a sample question asked in a HCL interview. I",
+        "expectedOutput": "Format The o",
+        "isHidden": false
+      },
+      {
+        "input": "Alice Bob 3 2 4 5 case 2 I",
+        "expectedOutput": "Alice has been added to the waitlist. Alice has been removed from the waitli Error: Waitlist is empty Current waitlist: Empty Exiting O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 30,
+    "label": "Q2",
+    "session": "Day 10 CY",
+    "shots": "Screenshot",
+    "title": "Day 10 CY - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s 0 01:39:36 \u2022 Answered \u2022 Bookmarked \u2022 Skipped 4 + 30 The fifth line prints \"Number of odd elernents: \" followed by the count of odd sensor readings. Refer to the sample output for the formatting specifications. Code Constraints The given test cases fall under the following constraints: 1SnSIO 1 sensors 100 Sample Test Cases case I I",
+        "expectedOutput": "Averages of pairs: 1.5 2.5 3.5 4.5 3.0 Sum of all elements: 15 Number of even elements: 2 Number of odd elements: 3 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 31,
+    "label": "Q3",
+    "session": "Day 10 CY",
+    "shots": "Screenshot",
+    "title": "Day 10 CY - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s 0 01:39:25 \u2022 Answered \u2022 Bookmarked \u2022 Skipped CODE + 30 Code Constraints 1 Length of string 50 Sample Test Cases case I I",
+        "expectedOutput": "- False O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 32,
+    "label": "Q4",
+    "session": "Day 10 CY",
+    "shots": "Screenshot",
+    "title": "Day 10 CY - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s S 0 01:39:09 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 case I I",
+        "expectedOutput": "Stack UnderFlow in Stackl Popped element from Stackl is: 5 Stack UnderFlow in Stackl O",
+        "isHidden": false
+      },
+      {
+        "input": "6 3 4 1 100 3 4 5 Case 5 I",
+        "expectedOutput": "Invalid choice! Please choose again Popped element from Stackl is: 5 Popped element from Stack2 is: 10 Stack UnderFlow in Stackl Stack UnderFlow in Stack2 C++ ( 17) v 1 Sample Tests The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 33,
+    "label": "Q1",
+    "session": "Day 10 PAH",
+    "shots": "Screenshot",
+    "title": "Day 10 PAH - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "5 12345 2 case 2 I",
+        "expectedOutput": "The front element is 5. After deletion, the front element becor O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 34,
+    "label": "Q2",
+    "session": "Day 10 PAH",
+    "shots": "Screenshot",
+    "title": "Day 10 PAH - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "10 20 3 2 3 Summary 0/4 Output Customer ID 10 is enqueued Customer ID 20 is enqueued Customer IDs in the queue are: 10 20 Dequeued customer ID: 10 Customer IDs in the queue are: 20 C++ ( 17) v 1 Sample Tests Submissions Custom I",
+        "expectedOutput": "No customers in line Customer ID 3 is enqueued Invalid option O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 35,
+    "label": "Q3",
+    "session": "Day 10 PAH",
+    "shots": "Screenshot",
+    "title": "Day 10 PAH - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "consists of a string where representing the a valid expression S without any white spaces. Output Format The output prints \"Yes\" if the expression contains redundant braces. The output prints \"No\" if the expression does not contain redundant braces. Refer to the sample output for formatting specifications. Code Constraints The expression is valid and fully parenthesized. Length of the expression 100. Sample Test Cases case I I",
+        "expectedOutput": "No O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 36,
+    "label": "Q4",
+    "session": "Day 10 PAH",
+    "shots": "Screenshot",
+    "title": "Day 10 PAH - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 37,
+    "label": "Q1",
+    "session": "Day 11 COD",
+    "shots": "Screenshot",
+    "title": "Day 11 COD - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "3 Alice 85 Bob 90 Charlie 78 2 Bob Summary 0/4 Output Bob: 90 David: Not found Footer Snippet 8 9 11 12 public static void args) { o; Main obj = new Main obj . processData(); Previous Bookmark ubmit Te Not Viewed ext",
+        "expectedOutput": "Format P K Pranav CB.SC.U4CYS25037 7AD92 cbsc.u4cys25037@cb.students.amrita.edu -o Amrita_24CYS204_Advance Prgramming_Day II_COD 2 3 4 1 Sections 4 Questions 3 4 public class Main Java (11) 0 01:39:55 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 For each query, print name: grade if found, or name: Not found if not. Refer to the sample o",
+        "isHidden": false
+      },
+      {
+        "input": "3 Alice 85 Bob 90 Charlie 78 2 Bob David case 2 I",
+        "expectedOutput": "Meena: 88 Arjun: Not found Priya: 95 + 30 1 Sections 4 Questions 3 4 public class Main Java (11) class TopKFrequent { //Enter Your code here 6 7 White List (Allowed libraries & functions) HashMap Note The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 38,
+    "label": "Q2",
+    "session": "Day 11 COD",
+    "shots": "Screenshot",
+    "title": "Day 11 COD - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s Click \"Compile' to test against sample test cases 0 01:39:48 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 Refer to the sample output for formatting specifications. Code Constraints IS Ng 50 Sample Test Cases case I I",
+        "expectedOutput": "2 Fizz 4 Custom Inputs Click \"Compile' to test against sample test cases Summary 0/4 Previous Bookmark ubmit Te Not Viewed ext",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 39,
+    "label": "Q3",
+    "session": "Day 11 COD",
+    "shots": "Screenshot",
+    "title": "Day 11 COD - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s Click \"Compile' to test against sample test cases 0 01:39:42 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 The output should display an integer representing the number of occurrences of the specified elernent in the array in the following format: \"Occurrences of <elernentToCount>: <count>\". Refer to the sample output for formatting specifications. Code Constraints 1 sizes 100. 1 SelementSIOO. ISelernentToCountSIOO. Sample Test Cases case I I",
+        "expectedOutput": "Occurrences of 3: 1 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 40,
+    "label": "Q4",
+    "session": "Day 11 COD",
+    "shots": "Screenshot",
+    "title": "Day 11 COD - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "5 09:00 TeamMeeting 13:30 LunchBreak 11:00 ProjectUpdate 09:00 Standup 15:00 ClientCall case 2 I",
+        "expectedOutput": "Scheduled Events: 09:00 - TeamMeeting 11:00 - ProjectUpdate 13:30 - LunchBreak 15:00 - ClientCall O",
+        "isHidden": false
+      },
+      {
+        "input": "4 10:00 CallClient 09:00 MorningBrief 12:00 Lunch 09:00 DuplicateEvent P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu -o EventManager manager = new EventManager(); Amrita_24CYS204_Advance Prgramming_Day II_COD 7AD92 1 Sections 4 Questions Header Snippet 1 import j ava. util . Java (11) 0 01:39:30 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 11:00 - proJectupaate 13:30 - LunchBreak 15:00 - ClientCall Output Scheduled Events: 09:00 - MorningBrief 10:00 - CallClient 12:00 - Lunch 3 4 elass EventManager { // Type your code here White List (Allowed libraries & functions) TreeMap Note The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program output will result in the failure of the test cases. Summary 0/4 Footer Snippet 5 public class Main 6 7 8 10 11 12 public static void main(String[] args) { new Scanner (System. in) Scanner sc = Integer . parselnt(sc . nextLine()) int n = for (int i = 0; i < n Previous Bookmark ubmit Te Not Viewed Next",
+        "expectedOutput": "Scheduled Events: 09:00 10:00 12:00 - MorningBrief - CallClient - Lunch 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 public class Main public static void main(String[] args) { new Scanner (System. in) Scanner sc = \u2014 Integer . parselnt(sc.nextLine()) int n \u2014 EventManager manager = new EventManager(); for (int i = 0; i < n; i++) { o; String line = sc . nextLine int spacelndex = line . indexOf( line. substring(\u00d8, spacelndex); String time = String desc = line. substring(spacelndex + 1); manager . addEvent(time, desc) manager . printSchedu1e() ; The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 41,
+    "label": "Q1",
+    "session": "Day 11 CY",
+    "shots": "Screenshot",
+    "title": "Day 11 CY - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "3 hall Summary 0/4 Output SDH hall 12345 12000.0 Jane YI hall Isnnnn 7 8 10 11 12 13 public static void main(String[] args) { new Scanner (System. in) Scanner sc = Integer . parselnt(sc . nextLine()) int n = Hall [ ] halls = new Hall [n]; for (int i = 0; i < n; i++) { o; String name = sc.nextLine o; String contact = sc.nextLine Previous Bookmark ubmit Te Not Viewed ext",
+        "expectedOutput": "+ 30 1 Sections 4 Questions Header Snippet 1 import j ava. util.* Java (11) Sample Test Cases case I Input 3 SDH hall 12345 12000.0 Jane XUV hall 24680 15000.0 Jack SRT hall 13579 20000.0 John case 2 Input 2 Bliss hall 54321 18000.0 Rachel Summary 0/4 class Hall inplenents Comparable<Ha11> { // Type your code here.. . 3 4 5 SDH hall 12345 12000.0 Jane XUV hall 2468015000.0 Jack SRT hall 13579 20000.0 John O",
+        "isHidden": false
+      },
+      {
+        "input": "2 Bliss hall 54321 18000.0 Rachel Luxe hall 98765 22000.0 Michael Note P K Pranav CB.SC.U4CYS25037 9CA6C cbsc.u4cys25037@cb.students.amrita.edu -o Amrita_24CYS204_Advance Prgramming_Day II_CY 2 3 0 01:38:32 \u2022 Answered \u2022 Bookmarked \u2022 Skipped CODE 4 Output + 30 1 Sections 4 Questions Header Snippet 1 import j ava. util.* Java (11) class Hall inplenents Comparable<Ha11> { // Type your code here.. . 3 4 5 Bliss hall 54321 18000.0 Rachel Luxe hall 98765 22000.0 Michael Footer Snippet 6 public class Main The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program output will result in the failure of the test cases. Summary 0/4 7 8 10 11 12 13 public static void main(String[] args) { new Scanner (System. in) Scanner sc = Integer . parselnt(sc . nextLine()) int n = Hall [ ] halls = new Hall [n]; for (int i = 0; i < n; i++) { o; String name = sc.nextLine o; String contact = sc.nextLine Previous Bookmark ubmit Te Not Viewed ext",
+        "expectedOutput": "+ 30 1 Sections 4 Questions Footer Snippet 6 public class Main Bliss hall 54321 18000.0 Rachel Luxe hall 98765 22000.0 Michael 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 } public static void main(String[] args) { new Scanner (System. in) Scanner sc = \u2014 Integer . parselnt(sc.nextLine()) int n \u2014 Hall [ ] halls = new Hall [n]; for (int i = 0; i < n; i++) { o; String name = sc.nextLine o; String contact = sc.nextLine double cost = Double. parseDoub1e(sc.nextLine()) o; String owner = sc.nextLine halls[i] \u2014 new Hall (name, contact, cost, owner) Arrays . sort(halls); for (int i = 0; i < n; i++) { System. out . o; sc.close The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 42,
+    "label": "Q2",
+    "session": "Day 11 CY",
+    "shots": "Screenshot",
+    "title": "Day 11 CY - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 43,
+    "label": "Q3",
+    "session": "Day 11 CY",
+    "shots": "Screenshot",
+    "title": "Day 11 CY - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s Click \"Compile' to test against sample test cases S 0 01:38:11 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 Groups thernselves should also be sorted alphabetically, based on their first word. Refer to the sample output for formatting specifications. Code Constraints 1 s N 100 1 Length of each word 20 Words contain only lowercase English letters (a-z) Sample Test Cases case I I",
+        "expectedOutput": "elites enlist inlets listen silent O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 44,
+    "label": "Q4",
+    "session": "Day 11 CY",
+    "shots": "Screenshot",
+    "title": "Day 11 CY - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "2 Hello World Java case 2 I",
+        "expectedOutput": "Character Frequency: c: The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 45,
+    "label": "Q1",
+    "session": "Day 11 PAH",
+    "shots": "Screenshot",
+    "title": "Day 11 PAH - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "3 142 case 2 I",
+        "expectedOutput": "Format The o",
+        "isHidden": false
+      },
+      {
+        "input": "3 142 case 2 I",
+        "expectedOutput": "7 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 46,
+    "label": "Q2",
+    "session": "Day 11 PAH",
+    "shots": "Screenshot",
+    "title": "Day 11 PAH - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 47,
+    "label": "Q3",
+    "session": "Day 11 PAH",
+    "shots": "Screenshot",
+    "title": "Day 11 PAH - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "7 2212223 case 2 I",
+        "expectedOutput": "2 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 48,
+    "label": "Q4",
+    "session": "Day 11 PAH",
+    "shots": "Screenshot",
+    "title": "Day 11 PAH - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "5 dog deer cat cow camel Case 2 Summary 0/4 Output Grouped Words by Starting Letter: c: cat cow camel d: dog deer 5 6 7 8 10 11 12 13 14 15 16 17 18 public class Main public static void main(String[] args) { new Scanner (System. in) Scanner sc = Integer . parselnt(sc . nextLine()) int n = List<String> words = new ArrayList<>(); for (int i = 0; i < n; i++) { words . add(sc . nextLine( ) ) WordC1assifier classifier = new WordC1assifier() classifier . classifyWords (words) ; Sample Tests Submissions Custom I",
+        "expectedOutput": "Grouped Words by Starting Letter: c: cat cow camel d: dog deer O",
+        "isHidden": false
+      },
+      {
+        "input": "6 apple banana apricot berry cherry avocado P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu -o Amrita_24CYS204_Advance Prgramming_Day II_PAH 1 Sections 4 Questions 3FBB4 S 0 01:39:20 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 Output Grouped Words by Starting Letter: a: apple apricot avocado b: banana berry c: cherry Footer Snippet White List (Allowed libraries & functions) TreeMap Note The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program output will result in the failure of the test cases. Summary 0/4 5 6 7 8 10 11 12 13 14 15 16 17 18 public class Main public static void main(String[] args) { new Scanner (System. in) Scanner sc = Integer . parselnt(sc . nextLine()) int n = List<String> words = new ArrayList<>(); for (int i = 0; i < n; i++) { words . add(sc . nextLine( ) ) WordC1assifier classifier = new WordC1assifier() classifier . classifyWords (words) ; Sample Tests Submissions Custom I",
+        "expectedOutput": "Grouped Words by Starting Letter: a: apple apricot avocado b: banana berry c: cherry 3 4 elass WordC1assifier // Type your code here White List (Allowed libraries & functions) TreeMap Note The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 49,
+    "label": "Q1",
+    "session": "Day 12 COD",
+    "shots": "Screenshot",
+    "title": "Day 12 COD - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "5 Summary 0/4 Output Square: 1 Cube: 8 Square: 9 Cube: 64 Square: 25 Java (11) 1 Sample Tests Submissions Custom I",
+        "expectedOutput": "Square: 1 Cube: 8 Square: 9 Cube: 64 Square: 25 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 50,
+    "label": "Q2",
+    "session": "Day 12 COD",
+    "shots": "Screenshot",
+    "title": "Day 12 COD - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "7 case 2 Summary 0/4 Output Java (11) 1 Sample Tests Submissions Custom I",
+        "expectedOutput": "O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 51,
+    "label": "Q3",
+    "session": "Day 12 COD",
+    "shots": "Screenshot",
+    "title": "Day 12 COD - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "10 case 2 I",
+        "expectedOutput": "ABE CIDOFUGAHEJIKOLUM O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 52,
+    "label": "Q4",
+    "session": "Day 12 COD",
+    "shots": "Screenshot",
+    "title": "Day 12 COD - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "Central Plaza 10 15 case 2 I",
+        "expectedOutput": "Name - Central Plaza 1011 12 13 14 15 O",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 53,
+    "label": "Q1",
+    "session": "Day 12 PAH",
+    "shots": "Screenshot",
+    "title": "Day 12 PAH - Problem Q1",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": []
+  },
+  {
+    "index": 54,
+    "label": "Q2",
+    "session": "Day 12 PAH",
+    "shots": "Screenshot",
+    "title": "Day 12 PAH - Problem Q2",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "I love java very much case 2 Summary 0/4 Output Thread 1: I Thread 2: love : java Thread 1 Thread 2: very Thread 1: much Java (11) 1 Sample Tests Submissions Custom I",
+        "expectedOutput": "Thread 1: Java Thread 2: is Thread 1: fun The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 55,
+    "label": "Q3",
+    "session": "Day 12 PAH",
+    "shots": "Screenshot",
+    "title": "Day 12 PAH - Problem Q3",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "s Click \"Compile' to test against sample test cases 0 01:39:34 \u2022 Answered \u2022 Bookmarked \u2022 Skipped + 30 Final Balance: <final_balance> where final_balance rounded to 1 decimal place. Refer to the sample output for formatting specifications. Code Constraints The given test cases fall under the following constraints: 10 amount 104 Sample Test Cases case I I",
+        "expectedOutput": "Deposited: 400.0, New Balance: 1600.( Withdrew: 200.0, New Balance: 1400.C Withdrew: 100.0, New Balance: 1300.0 Deposited: 300.0, New Balance: 1600.( Final Balance: 1600.0 White List (Allowed libraries & functions) Thread synchronized Note The program will be evaluated only after the \"Submit\" button is clicked. Extra spaces and new line characters in the program o",
+        "isHidden": false
+      }
+    ]
+  },
+  {
+    "index": 56,
+    "label": "Q4",
+    "session": "Day 12 PAH",
+    "shots": "Screenshot",
+    "title": "Day 12 PAH - Problem Q4",
+    "description": "",
+    "inputFormat": "",
+    "outputFormat": "",
+    "constraints": [],
+    "testCases": [
+      {
+        "input": "Summary 0/4 Output Java (11) 1 Sample Tests Submissions Custom I",
+        "expectedOutput": "Processor-I processed order 1 Processor-2 processed order 2 Processor-I processed order 3 Final order count: 3 O",
+        "isHidden": false
+      },
+      {
+        "input": "6 Case 3 I\n--- Screenshot 2026-10-20 154643.png ---",
+        "expectedOutput": "Format First line: \"Sorted Array:\" Second line: n space-separated integers representing the sorted array. Refer to the sample o\n--- Screenshot 2026-10-20 154634.png ---",
+        "isHidden": false
+      }
+    ]
+  }
+]

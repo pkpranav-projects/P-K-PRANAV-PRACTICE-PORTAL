@@ -15,25 +15,180 @@ import {
   CheckCircle2,
   XCircle,
   AlertTriangle,
-  Clock,
-  Terminal,
   FileCode,
-  HelpCircle,
   Eye,
   Check,
-  Copy,
-  Columns
+  Columns,
+  Download,
+  Upload,
+  Wand2,
+  FileText
 } from 'lucide-react';
 import {
   QuestionDetail,
   QuestionSolution,
   RunResult,
   SubmissionRecord,
-  SubmitResult
+  SubmitResult,
+  SupportedLanguage
 } from '../types';
 import { api } from '../services/api';
+import { soundManager } from '../services/sound';
 import { ScreenshotModal } from './ScreenshotModal';
 import { SolutionModal } from './SolutionModal';
+
+interface BoilerplateTemplate {
+  name: string;
+  description: string;
+  code: string;
+}
+
+// Pre-configured Multi-Language Boilerplate Templates
+const TEMPLATES_BY_LANGUAGE: Record<SupportedLanguage, BoilerplateTemplate[]> = {
+  java: [
+    {
+      name: 'Scanner (Standard I/O)',
+      description: 'Basic Scanner template for standard input and output',
+      code: `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        // Write your solution here\n        \n        scanner.close();\n    }\n}\n`
+    },
+    {
+      name: 'Fast I/O (BufferedReader)',
+      description: 'High-performance input reading for large inputs',
+      code: `import java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.io.IOException;\nimport java.util.StringTokenizer;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = null;\n        \n        String line;\n        while ((line = br.readLine()) != null) {\n            st = new StringTokenizer(line);\n            // Process tokens here\n        }\n    }\n}\n`
+    },
+    {
+      name: 'OOP & Modular Solution',
+      description: 'Separation of concerns with a Solution class',
+      code: `import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        Solution solution = new Solution();\n        \n        // Read input and invoke solution\n        \n        scanner.close();\n    }\n}\n\nclass Solution {\n    // Add modular methods here\n}\n`
+    },
+    {
+      name: 'Array & Math Utilities',
+      description: 'Pre-imported Arrays, Math, Collections for contest solving',
+      code: `import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        \n        // Write your logic here\n        \n        sc.close();\n    }\n}\n`
+    }
+  ],
+  python: [
+    {
+      name: 'Standard sys.stdin.read',
+      description: 'Fast whole-stream input parsing for competitive coding',
+      code: `import sys\n\ndef main():\n    input_data = sys.stdin.read().split()\n    if not input_data:\n        return\n    \n    # Write your solution here\n\nif __name__ == '__main__':\n    main()\n`
+    },
+    {
+      name: 'Line-by-Line (sys.stdin)',
+      description: 'Iterates through standard input line by line',
+      code: `import sys\n\ndef main():\n    for line in sys.stdin:\n        line = line.strip()\n        if not line:\n            continue\n        # Process line\n\nif __name__ == '__main__':\n    main()\n`
+    },
+    {
+      name: 'Modular Solution Class',
+      description: 'Object-oriented Solution class pattern',
+      code: `import sys\n\nclass Solution:\n    def solve(self, data):\n        # Implement logic\n        pass\n\ndef main():\n    input_data = sys.stdin.read().split()\n    if not input_data:\n        return\n    sol = Solution()\n    sol.solve(input_data)\n\nif __name__ == '__main__':\n    main()\n`
+    },
+    {
+      name: 'Math & Data Structures',
+      description: 'Pre-imported math, collections, heapq, itertools',
+      code: `import sys\nimport math\nfrom collections import defaultdict, deque, Counter\nimport heapq\nimport itertools\n\ndef main():\n    input_data = sys.stdin.read().split()\n    if not input_data:\n        return\n    # Logic here\n\nif __name__ == '__main__':\n    main()\n`
+    }
+  ],
+  cpp: [
+    {
+      name: 'Fast I/O & Standard STL',
+      description: 'Optimized cin/cout with vector, string, algorithm',
+      code: `#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    \n    // Write your solution here\n    \n    return 0;\n}\n`
+    },
+    {
+      name: 'Multi-Testcase Runner',
+      description: 'Reads number of test cases t and loops',
+      code: `#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nvoid solve() {\n    // Solve single testcase\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    \n    int t = 1;\n    if (cin >> t) {\n        while (t--) {\n            solve();\n        }\n    }\n    return 0;\n}\n`
+    },
+    {
+      name: 'Competitive STL Collection',
+      description: 'Header with map, set, queue, cmath and vector',
+      code: `#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\n#include <cmath>\n#include <map>\n#include <set>\n#include <queue>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    \n    // Write solution\n    \n    return 0;\n}\n`
+    }
+  ],
+  sql: [
+    {
+      name: 'MySQL Trigger (BEFORE/AFTER)',
+      description: 'Trigger template with delimiter and NEW/OLD qualifiers',
+      code: `DELIMITER //\nCREATE TRIGGER check_condition\nBEFORE INSERT ON table_name\nFOR EACH ROW\nBEGIN\n    -- Your trigger logic here\nEND //\nDELIMITER ;\n`
+    },
+    {
+      name: 'MySQL Stored Procedure',
+      description: 'Stored Procedure with IN/OUT parameters',
+      code: `DELIMITER //\nCREATE PROCEDURE ProcessData(IN p_id INT, OUT p_result INT)\nBEGIN\n    -- Your procedure logic here\nEND //\nDELIMITER ;\n`
+    },
+    {
+      name: 'Standard SQL Query (SELECT/JOIN)',
+      description: 'Standard SQL select query with filtering and aggregation',
+      code: `SELECT \n    column1, \n    COUNT(*) AS total\nFROM table_name\nWHERE condition\nGROUP BY column1\nORDER BY total DESC;\n`
+    }
+  ]
+};
+
+const DEFAULT_CODE: Record<SupportedLanguage, string> = {
+  java: `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        // Write your solution here\n        \n        scanner.close();\n    }\n}\n`,
+  python: `import sys\n\ndef main():\n    input_data = sys.stdin.read().split()\n    if not input_data:\n        return\n    \n    # Write your solution here\n\nif __name__ == '__main__':\n    main()\n`,
+  cpp: `#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    \n    // Write your solution here\n    \n    return 0;\n}\n`,
+  sql: `-- Write your SQL / MySQL Trigger or Stored Procedure here\n-- Ready for instant execution\n`
+};
+
+// Offline lightweight Code Beautifier & Indentation Formatter
+function formatSourceCode(source: string, lang: SupportedLanguage): string {
+  if (lang === 'python' || lang === 'sql') {
+    return source.split(/\r?\n/).map(l => l.trimEnd()).join('\n');
+  }
+
+  const lines = source.split(/\r?\n/);
+  let indentLevel = 0;
+  const formatted: string[] = [];
+
+  for (const rawLine of lines) {
+    const trimmed = rawLine.trim();
+    if (!trimmed) {
+      formatted.push('');
+      continue;
+    }
+
+    // Check if line starts with closing braces
+    let leadingCloses = 0;
+    for (const char of trimmed) {
+      if (char === '}') leadingCloses++;
+      else if (char !== ' ' && char !== '\t') break;
+    }
+
+    const currentIndent = Math.max(0, indentLevel - leadingCloses);
+    formatted.push('    '.repeat(currentIndent) + trimmed);
+
+    // Count braces outside string literals & comments
+    let opens = 0;
+    let closes = 0;
+    let inString = false;
+    let stringChar = '';
+
+    for (let i = 0; i < trimmed.length; i++) {
+      const ch = trimmed[i];
+      const prev = i > 0 ? trimmed[i - 1] : '';
+
+      if ((ch === '"' || ch === '\'') && prev !== '\\') {
+        if (!inString) {
+          inString = true;
+          stringChar = ch;
+        } else if (stringChar === ch) {
+          inString = false;
+        }
+      }
+      if (!inString) {
+        if (ch === '/' && trimmed[i + 1] === '/') break;
+        if (ch === '{') opens++;
+        if (ch === '}') closes++;
+      }
+    }
+
+    indentLevel = Math.max(0, indentLevel + opens - closes);
+  }
+
+  return formatted.join('\n');
+}
 
 interface ProblemWorkspaceViewProps {
   questionId: string;
@@ -57,6 +212,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   // Data states
   const [question, setQuestion] = useState<QuestionDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>('java');
   const [code, setCode] = useState('');
   const [customInput, setCustomInput] = useState('');
   const [isSavingDraft, setIsSavingDraft] = useState(false);
@@ -68,6 +224,26 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   const [fontSize, setFontSize] = useState<number>(14);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isZenMode, setIsZenMode] = useState(false);
+
+  // Split pane horizontal resizing: width percentage for left panel
+  const [splitPercent, setSplitPercent] = useState<number>(() => {
+    const saved = localStorage.getItem('arena_split_percent');
+    return saved ? Math.min(75, Math.max(22, parseFloat(saved))) : 42;
+  });
+  const [isDraggingSplit, setIsDraggingSplit] = useState(false);
+
+  // Bottom drawer vertical resizing: height in pixels
+  const [drawerHeight, setDrawerHeight] = useState<number>(() => {
+    const saved = localStorage.getItem('arena_drawer_height');
+    return saved ? Math.min(600, Math.max(120, parseInt(saved, 10))) : 260;
+  });
+  const [isDraggingDrawer, setIsDraggingDrawer] = useState(false);
+
+  // Monaco and code features
+  const [isMinimapEnabled, setIsMinimapEnabled] = useState(false);
+  const [showTemplateMenu, setShowTemplateMenu] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const workspaceContainerRef = useRef<HTMLDivElement>(null);
 
   // Toggle Zen Focus Mode (Code Only Fullscreen)
   const toggleZenMode = useCallback(() => {
@@ -94,6 +270,159 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [toggleZenMode]);
 
+  // Recalculate Monaco layout on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (editorRef.current) {
+        editorRef.current.layout();
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Split pane horizontal resize handler
+  const startSplitResize = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDraggingSplit(true);
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      if (!workspaceContainerRef.current) return;
+      const rect = workspaceContainerRef.current.getBoundingClientRect();
+      const newPercent = ((moveEvent.clientX - rect.left) / rect.width) * 100;
+      const clamped = Math.min(75, Math.max(22, newPercent));
+      setSplitPercent(clamped);
+      if (editorRef.current) {
+        editorRef.current.layout();
+      }
+    };
+
+    const onMouseUp = () => {
+      setIsDraggingSplit(false);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      setSplitPercent((curr) => {
+        localStorage.setItem('arena_split_percent', curr.toFixed(1));
+        return curr;
+      });
+      if (editorRef.current) {
+        setTimeout(() => editorRef.current?.layout(), 50);
+      }
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }, []);
+
+  // Bottom drawer vertical resize handler
+  const startDrawerResize = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDraggingDrawer(true);
+    const startY = e.clientY;
+    const startH = drawerHeight;
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const delta = startY - moveEvent.clientY; // upward drag increases height
+      const newH = Math.min(600, Math.max(120, startH + delta));
+      setDrawerHeight(newH);
+      if (editorRef.current) {
+        editorRef.current.layout();
+      }
+    };
+
+    const onMouseUp = () => {
+      setIsDraggingDrawer(false);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      setDrawerHeight((curr) => {
+        localStorage.setItem('arena_drawer_height', curr.toString());
+        return curr;
+      });
+      if (editorRef.current) {
+        setTimeout(() => editorRef.current?.layout(), 50);
+      }
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  }, [drawerHeight]);
+
+  // Format code
+  const handleFormatCode = useCallback(() => {
+    if (!code) return;
+    const formatted = formatSourceCode(code, selectedLanguage);
+    setCode(formatted);
+  }, [code, selectedLanguage]);
+
+  // Apply template
+  const handleApplyTemplate = (templateCode: string) => {
+    setCode(templateCode);
+    setShowTemplateMenu(false);
+  };
+
+  // Download code with extension based on active language
+  const handleDownloadCode = () => {
+    const filename =
+      selectedLanguage === 'java' ? 'Main.java' :
+      selectedLanguage === 'python' ? 'solution.py' :
+      selectedLanguage === 'cpp' ? 'solution.cpp' : 'solution.sql';
+    const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  // Switch programming language (Java, C++, Python, SQL) with draft auto-saving & restoring
+  const handleLanguageChange = async (newLang: SupportedLanguage) => {
+    if (newLang === selectedLanguage) return;
+
+    // 1. Save draft for current language if code exists
+    if (code.trim()) {
+      try {
+        await api.saveDraft(questionId, code, selectedLanguage);
+      } catch (err) {
+        console.warn('Auto-save on language switch failed:', err);
+      }
+    }
+
+    setSelectedLanguage(newLang);
+
+    // 2. Fetch or restore code for the selected new language
+    try {
+      const draft = await api.getDraft(questionId, newLang);
+      if (draft.draftCode && draft.draftCode.trim()) {
+        setCode(draft.draftCode);
+        return;
+      }
+    } catch (err) {}
+
+    if ((newLang === 'java' || newLang === 'sql') && question?.starterCode) {
+      setCode(question.starterCode);
+    } else {
+      setCode(DEFAULT_CODE[newLang]);
+    }
+  };
+
+  // Upload local file to editor
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result;
+      if (typeof text === 'string') {
+        setCode(text);
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
+
   // Execution states
   const [isRunning, setIsRunning] = useState(false);
   const [runResult, setRunResult] = useState<RunResult | null>(null);
@@ -116,7 +445,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     theme === 'dark' ||
     theme === 'oled' ||
     (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const editorTheme = theme === 'oled' ? 'oled-black' : isDark ? 'vs-dark' : 'light';
+  const editorTheme = theme === 'oled' ? 'oled-black' : isDark ? 'vs-dark' : 'vs';
 
   // Load question details
   const loadQuestion = useCallback(async () => {
@@ -125,8 +454,30 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       const q = await api.getQuestion(questionId);
       setQuestion(q);
       
-      // Initialize code: userDraft > starterCode > default template
-      const initialCode = q.userDraft || q.starterCode || `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        // Write your solution here\n        \n    }\n}\n`;
+      const rec = (q.recommendedLanguage || 'Java').toLowerCase();
+      const defaultLang: SupportedLanguage =
+        rec.includes('sql') || q.bank === 'dbms' || q.id.startsWith('dbms-') ? 'sql' :
+        rec.includes('c++') || rec.includes('cpp') ? 'cpp' :
+        rec.includes('python') || rec.includes('py') ? 'python' : 'java';
+      setSelectedLanguage(defaultLang);
+
+      // Check if draft exists for this language
+      let initialCode = '';
+      try {
+        const draft = await api.getDraft(questionId, defaultLang);
+        if (draft.draftCode && draft.draftCode.trim()) {
+          initialCode = draft.draftCode;
+        }
+      } catch (e) {}
+
+      if (!initialCode) {
+        if (defaultLang === 'sql' || defaultLang === 'java') {
+          initialCode = q.userDraft || q.starterCode || DEFAULT_CODE[defaultLang];
+        } else {
+          initialCode = DEFAULT_CODE[defaultLang];
+        }
+      }
+
       setCode(initialCode);
       setCustomInput(q.sampleInput || '');
       setRunResult(null);
@@ -154,7 +505,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     const timeout = setTimeout(async () => {
       try {
         setIsSavingDraft(true);
-        await api.saveDraft(questionId, code);
+        await api.saveDraft(questionId, code, selectedLanguage);
         setDraftSavedAt(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
       } catch (err) {
         console.error('Auto-save error:', err);
@@ -164,33 +515,22 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     }, 1500);
 
     return () => clearTimeout(timeout);
-  }, [code, questionId, question, loading]);
-
-  // Keyboard shortcuts (Ctrl+Enter to Run, Ctrl+Shift+Enter to Submit)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        e.preventDefault();
-        if (e.shiftKey) {
-          handleSubmit();
-        } else {
-          handleRun();
-        }
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [code, customInput, questionId]);
+  }, [code, questionId, question, loading, selectedLanguage]);
 
   // Run code against custom or sample input
-  const handleRun = async () => {
+  const handleRun = useCallback(async () => {
     if (isRunning || !code) return;
     try {
+      soundManager.playRun();
       setIsRunning(true);
       setBottomTab('run');
-      const res = await api.runCode(code, customInput);
+      const res = await api.runCode(code, customInput, selectedLanguage, questionId);
       setRunResult(res);
+      if (res.exitCode !== 0 || res.stderr) {
+        soundManager.playError();
+      }
     } catch (err: any) {
+      soundManager.playError();
       setRunResult({
         status: 'Error',
         stdout: '',
@@ -201,26 +541,31 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     } finally {
       setIsRunning(false);
     }
-  };
+  }, [isRunning, code, customInput, selectedLanguage]);
 
   // Submit code for full test-case evaluation
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (isSubmitting || !code) return;
     try {
+      soundManager.playRun();
       setIsSubmitting(true);
       setBottomTab('submit');
-      const res = await api.submitCode(questionId, code);
+      const res = await api.submitCode(questionId, code, selectedLanguage);
       setSubmitResult(res);
 
       if (res.status === 'Accepted') {
+        soundManager.playSuccess();
         setQuestion((prev) => prev ? { ...prev, solved: true } : null);
         if (onQuestionSolved) onQuestionSolved();
+      } else {
+        soundManager.playError();
       }
 
       // Refresh history
       const subs = await api.getSubmissions(questionId, 10);
       setHistory(subs);
     } catch (err: any) {
+      soundManager.playError();
       setSubmitResult({
         status: 'Internal Execution Error',
         passedCount: 0,
@@ -232,7 +577,29 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [isSubmitting, code, questionId, selectedLanguage, question, onQuestionSolved]);
+
+  // Keyboard shortcuts (Ctrl+Enter to Run, Ctrl+Shift+Enter to Submit, Alt+F to format, Alt+R to reset)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (e.shiftKey) {
+          handleSubmit();
+        } else {
+          handleRun();
+        }
+      } else if (e.altKey && (e.key === 'f' || e.key === 'F')) {
+        e.preventDefault();
+        handleFormatCode();
+      } else if (e.altKey && (e.key === 'r' || e.key === 'R')) {
+        e.preventDefault();
+        setShowResetConfirm(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleRun, handleSubmit, handleFormatCode]);
 
   // Toggle Bookmark
   const handleToggleBookmark = async () => {
@@ -264,8 +631,11 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   // Reset code to starter template
   const handleResetCode = () => {
     if (!question) return;
-    const starter = question.starterCode || `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        \n    }\n}\n`;
-    setCode(starter);
+    if ((selectedLanguage === 'java' || selectedLanguage === 'sql') && question.starterCode) {
+      setCode(question.starterCode);
+    } else {
+      setCode(DEFAULT_CODE[selectedLanguage]);
+    }
     setShowResetConfirm(false);
   };
 
@@ -327,6 +697,18 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             {question.difficulty}
           </span>
 
+          {/* Recommended Language Badge */}
+          <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full border shadow-sm ${
+            (question.recommendedLanguage || 'Java') === 'Python'
+              ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/30'
+              : (question.recommendedLanguage || 'Java') === 'C++'
+              ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30'
+              : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
+          }`}>
+            <span className="opacity-70 font-normal">Recommended:</span>
+            <span className="font-bold">{question.recommendedLanguage || 'Java'}</span>
+          </span>
+
           <span className="hidden sm:inline-block text-[10px] font-medium px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
             {question.topic}
           </span>
@@ -341,8 +723,23 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
 
         {/* Right: Action Buttons & Controls */}
         <div className="flex items-center gap-2">
-          {/* View Screenshot button (Bank 1 only) or Bank 2 Badge */}
-          {question.sourceScreenshot && question.sourceScreenshot.includes('.png') ? (
+          {/* Bank Badge */}
+          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-semibold border ${
+            question.bank === 'bank3' || question.id.startsWith('bank3-')
+              ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30'
+              : question.bank === 'bank2' || question.id.startsWith('bank2-')
+              ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30'
+              : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
+          }`}>
+            {question.bank === 'bank3' || question.id.startsWith('bank3-')
+              ? 'Bank 3 (Lab Tests)'
+              : question.bank === 'bank2' || question.id.startsWith('bank2-')
+              ? 'Bank 2 (Modern)'
+              : 'Bank 1 (Photos)'}
+          </span>
+
+          {/* View Screenshot button (Bank 1 and Bank 3) */}
+          {question.sourceScreenshot && question.sourceScreenshot.includes('.png') && (
             <button
               onClick={() => setShowScreenshot(true)}
               className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
@@ -351,11 +748,6 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
               <Image className="w-3.5 h-3.5 text-indigo-500" />
               <span className="hidden sm:inline">Screenshot</span>
             </button>
-          ) : (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-              <Sparkles className="w-3 h-3 text-cyan-400" />
-              <span className="hidden sm:inline">Bank 2 Masterclass</span>
-            </span>
           )}
 
           {/* Bookmark Button */}
@@ -431,12 +823,20 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         </div>
       </div>
 
-      {/* Main Workspace Split Grid */}
-      <div className={`grid gap-4 ${isZenMode ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-12'}`}>
+      {/* Main Workspace Split Container */}
+      <div
+        ref={workspaceContainerRef}
+        className={`w-full flex flex-col lg:flex-row items-stretch relative ${
+          isDraggingSplit || isDraggingDrawer ? 'select-none pointer-events-auto' : ''
+        }`}
+      >
         
-        {/* Left Column: Problem Specs, Examples, Hints (5 cols - hidden in Zen Mode) */}
+        {/* Left Column: Problem Specs, Examples, Hints (Hidden in Zen Mode) */}
         {!isZenMode && (
-          <div className="lg:col-span-5 bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-col h-[700px] overflow-hidden">
+          <div
+            style={{ width: `${splitPercent}%` }}
+            className="w-full lg:w-auto bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-col h-[740px] overflow-hidden flex-shrink-0"
+          >
           {/* Sub-tabs header */}
           <div className="flex items-center border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50 dark:bg-[#090d16] px-2 pt-2">
             <button
@@ -660,34 +1060,152 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         </div>
       )}
 
+        {/* Draggable Vertical Splitter Handle (Desktop) */}
+        {!isZenMode && (
+          <div
+            onMouseDown={startSplitResize}
+            onDoubleClick={() => setSplitPercent(42)}
+            className="hidden lg:flex w-2.5 mx-1 cursor-col-resize items-center justify-center group relative z-20 hover:bg-[#FFA116]/20 active:bg-[#FFA116]/40 transition-colors rounded select-none flex-shrink-0"
+            title="Drag to resize problem / editor split (Double-click to reset to 42%)"
+          >
+            <div className="w-1 h-12 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-[#FFA116] group-active:bg-[#FFA116] transition-colors" />
+          </div>
+        )}
+
         {/* Right Column: Code Editor & Execution Drawers (Full width in Zen Mode) */}
-        <div className={`${isZenMode ? 'w-full flex flex-col space-y-4' : 'lg:col-span-7 flex flex-col space-y-4'}`}>
+        <div
+          style={{ width: isZenMode ? '100%' : `calc(${100 - splitPercent}% - 14px)` }}
+          className="w-full lg:w-auto flex flex-col space-y-3 flex-1 min-w-0"
+        >
+          {/* Hidden File Input for code upload */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            accept=".java,.py,.cpp,.cc,.cxx,.sql,.txt"
+            className="hidden"
+          />
           
           {/* Editor Header Bar */}
           <div className="bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col">
-            <div className="flex items-center justify-between px-4 py-2 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50 dark:bg-[#090d16]">
-              <div className="flex items-center gap-2">
-                <FileCode className="w-4 h-4 text-indigo-500" />
-                <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
-                  Main.java
+            <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50 dark:bg-[#090d16] flex-wrap gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                {/* Language Switcher Dropdown */}
+                <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-neutral-800 rounded-lg px-2 py-1 border border-slate-200 dark:border-neutral-700">
+                  <FileCode className="w-3.5 h-3.5 text-amber-500" />
+                  <select
+                    value={selectedLanguage}
+                    onChange={(e) => handleLanguageChange(e.target.value as SupportedLanguage)}
+                    className="bg-transparent text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none cursor-pointer"
+                    title="Switch active coding language (Java, C++, Python, SQL)"
+                  >
+                    <option value="java" className="bg-white dark:bg-[#1a1a1a]">
+                      Java {(question.recommendedLanguage || 'Java') === 'Java' ? '★ (Recommended)' : ''}
+                    </option>
+                    <option value="cpp" className="bg-white dark:bg-[#1a1a1a]">
+                      C++ {question.recommendedLanguage === 'C++' ? '★ (Recommended)' : ''}
+                    </option>
+                    <option value="python" className="bg-white dark:bg-[#1a1a1a]">
+                      Python {question.recommendedLanguage === 'Python' ? '★ (Recommended)' : ''}
+                    </option>
+                    <option value="sql" className="bg-white dark:bg-[#1a1a1a]">
+                      SQL / MySQL {question.recommendedLanguage === 'SQL' ? '★ (Recommended)' : ''}
+                    </option>
+                  </select>
+                </div>
+
+                <span className="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 hidden sm:inline">
+                  {selectedLanguage === 'java' ? 'Main.java' : selectedLanguage === 'python' ? 'solution.py' : selectedLanguage === 'cpp' ? 'solution.cpp' : 'query.sql'}
                 </span>
+
                 {isSavingDraft ? (
                   <span className="text-[10px] text-amber-500 animate-pulse font-mono">
-                    Saving draft...
+                    Saving...
                   </span>
                 ) : draftSavedAt ? (
-                  <span className="text-[10px] text-slate-400 font-mono">
+                  <span className="text-[10px] text-slate-400 font-mono hidden md:inline">
                     Saved {draftSavedAt}
                   </span>
                 ) : null}
               </div>
 
-              {/* Editor controls: Font size, Zen Focus, Reset */}
-              <div className="flex items-center gap-3">
+              {/* Editor controls: Templates, Format, Minimap, Download, Upload, Font, Zen, Reset */}
+              <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap">
+                {/* Boilerplate Templates Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowTemplateMenu((prev) => !prev)}
+                    className="px-2 py-1 rounded text-xs transition-colors flex items-center gap-1 text-slate-600 dark:text-neutral-300 hover:text-white bg-slate-100 dark:bg-neutral-800 hover:bg-slate-200 dark:hover:bg-neutral-700 cursor-pointer"
+                    title="Code Boilerplate Templates"
+                  >
+                    <FileText className="w-3.5 h-3.5 text-amber-500" />
+                    <span className="hidden md:inline">Templates</span>
+                  </button>
+
+                  {showTemplateMenu && (
+                    <div className="absolute right-0 top-full mt-1.5 w-64 bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#383838] rounded-xl shadow-2xl py-1.5 z-50 text-xs">
+                      <div className="px-3 py-1 font-semibold text-[10px] uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-neutral-800">
+                        {selectedLanguage.toUpperCase()} Boilerplate Templates
+                      </div>
+                      {TEMPLATES_BY_LANGUAGE[selectedLanguage].map((tmpl, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleApplyTemplate(tmpl.code)}
+                          className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-neutral-800 flex flex-col gap-0.5 transition-colors cursor-pointer"
+                        >
+                          <span className="font-semibold text-slate-800 dark:text-white">{tmpl.name}</span>
+                          <span className="text-[10px] text-slate-500 dark:text-neutral-400 leading-tight">{tmpl.description}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Auto Format Code (Alt+F) */}
+                <button
+                  onClick={handleFormatCode}
+                  className="px-2 py-1 rounded text-xs transition-colors flex items-center gap-1 text-slate-600 dark:text-neutral-300 hover:text-white bg-slate-100 dark:bg-neutral-800 hover:bg-slate-200 dark:hover:bg-neutral-700 cursor-pointer"
+                  title="Auto-format Java code indentation (Alt + F)"
+                >
+                  <Wand2 className="w-3.5 h-3.5 text-indigo-400" />
+                  <span className="hidden xl:inline">Format</span>
+                </button>
+
+                {/* Minimap Toggle */}
+                <button
+                  onClick={() => setIsMinimapEnabled((prev) => !prev)}
+                  className={`p-1.5 rounded transition-colors cursor-pointer ${
+                    isMinimapEnabled
+                      ? 'text-[#FFA116] bg-[#FFA116]/10 ring-1 ring-[#FFA116]/30'
+                      : 'text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-neutral-800'
+                  }`}
+                  title={isMinimapEnabled ? 'Hide Monaco Minimap' : 'Show Monaco Minimap'}
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                </button>
+
+                {/* Download Main.java */}
+                <button
+                  onClick={handleDownloadCode}
+                  className="p-1.5 rounded text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                  title="Download code as Main.java"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                </button>
+
+                {/* Upload .java file */}
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="p-1.5 rounded text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                  title="Upload local .java or .txt file into editor"
+                >
+                  <Upload className="w-3.5 h-3.5" />
+                </button>
+
                 {/* Zen Code-Only toggle on Editor header */}
                 <button
                   onClick={toggleZenMode}
-                  className={`px-2 py-0.5 rounded text-xs transition-colors flex items-center gap-1 cursor-pointer ${
+                  className={`px-2 py-1 rounded text-xs transition-colors flex items-center gap-1 cursor-pointer ${
                     isZenMode
                       ? 'text-[#FFA116] bg-[#FFA116]/10 font-bold border border-[#FFA116]/30'
                       : 'text-slate-400 hover:text-white hover:bg-slate-800'
@@ -695,15 +1213,15 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                   title="Toggle Zen Focus: Code Only (Alt+Z)"
                 >
                   <Columns className="w-3.5 h-3.5" />
-                  <span>{isZenMode ? 'Split' : 'Zen'}</span>
+                  <span className="hidden sm:inline">{isZenMode ? 'Split' : 'Zen'}</span>
                 </button>
 
+                {/* Font Size Selector */}
                 <div className="flex items-center gap-1 text-xs text-slate-500">
-                  <span className="text-[10px] uppercase font-semibold">Font</span>
                   <select
                     value={fontSize}
                     onChange={(e) => setFontSize(Number(e.target.value))}
-                    className="bg-slate-100 dark:bg-slate-800 border-none rounded text-xs px-1.5 py-0.5 text-slate-700 dark:text-slate-200 focus:outline-none"
+                    className="bg-slate-100 dark:bg-slate-800 border-none rounded text-xs px-1.5 py-0.5 text-slate-700 dark:text-slate-200 focus:outline-none cursor-pointer"
                   >
                     <option value={12}>12px</option>
                     <option value={14}>14px</option>
@@ -712,10 +1230,11 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                   </select>
                 </div>
 
+                {/* Reset Code Button */}
                 <button
                   onClick={() => setShowResetConfirm(true)}
-                  className="p-1 rounded text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 transition-colors"
-                  title="Reset code to starter template"
+                  className="p-1.5 rounded text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                  title="Reset code to starter template (Alt + R)"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                 </button>
@@ -723,10 +1242,10 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             </div>
 
             {/* Monaco Editor Container */}
-            <div className={`w-full transition-all duration-200 ${isZenMode ? 'h-[calc(100vh-270px)] min-h-[500px]' : activeFullscreen ? 'h-[550px]' : 'h-[400px]'}`}>
+            <div className={`w-full transition-all duration-200 ${isZenMode ? 'h-[calc(100vh-270px)] min-h-[500px]' : activeFullscreen ? 'h-[520px]' : 'h-[430px]'}`}>
               <Editor
                 height="100%"
-                language="java"
+                language={selectedLanguage === 'cpp' ? 'cpp' : selectedLanguage === 'python' ? 'python' : selectedLanguage === 'sql' ? 'sql' : 'java'}
                 theme={editorTheme}
                 value={code}
                 onChange={(value) => setCode(value || '')}
@@ -753,7 +1272,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                 options={{
                   fontSize,
                   fontFamily: 'JetBrains Mono, Fira Code, Consolas, monospace',
-                  minimap: { enabled: false },
+                  minimap: { enabled: isMinimapEnabled },
                   scrollBeyondLastLine: false,
                   wordWrap: 'on',
                   automaticLayout: true,
@@ -771,7 +1290,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             {/* Editor Action Bottom Bar */}
             <div className="flex items-center justify-between px-4 py-2.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60">
               <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-                Ctrl+Enter to Run · Ctrl+Shift+Enter to Submit
+                Ctrl+Enter to Run · Ctrl+Shift+Enter to Submit · Alt+F to Format
               </span>
 
               <div className="flex items-center gap-2 ml-auto">
@@ -779,7 +1298,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                 <button
                   onClick={handleRun}
                   disabled={isRunning || isSubmitting}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors cursor-pointer"
                 >
                   <Play className="w-3.5 h-3.5 text-emerald-500 fill-current" />
                   <span>{isRunning ? 'Running...' : 'Run Code'}</span>
@@ -789,7 +1308,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                 <button
                   onClick={handleSubmit}
                   disabled={isRunning || isSubmitting}
-                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 shadow-sm transition-all"
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 shadow-sm transition-all cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>{isSubmitting ? 'Evaluating...' : 'Submit Code'}</span>
@@ -798,8 +1317,21 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             </div>
           </div>
 
+          {/* Draggable Drawer Resize Handle */}
+          <div
+            onMouseDown={startDrawerResize}
+            onDoubleClick={() => setDrawerHeight(260)}
+            className="h-2.5 -my-1 cursor-row-resize flex items-center justify-center hover:bg-[#FFA116]/25 active:bg-[#FFA116]/40 transition-colors group relative z-10 rounded select-none"
+            title="Drag to resize console drawer (Double-click to reset to 260px)"
+          >
+            <div className="w-16 h-1 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-[#FFA116] group-active:bg-[#FFA116] transition-colors" />
+          </div>
+
           {/* Execution & Results Panel (Drawer) */}
-          <div className="bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col h-[280px]">
+          <div
+            style={{ height: `${drawerHeight}px` }}
+            className="bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col flex-shrink-0"
+          >
             {/* Drawer Tabs */}
             <div className="flex items-center justify-between px-4 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50 dark:bg-[#090d16]">
               <div className="flex items-center gap-2">
@@ -882,7 +1414,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                       <textarea
                         value={customInput}
                         onChange={(e) => setCustomInput(e.target.value)}
-                        placeholder="Enter input for Scanner..."
+                        placeholder="Enter standard input (stdin)..."
                         className="w-full h-24 p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-mono text-slate-800 dark:text-slate-200 resize-none focus:outline-none focus:ring-1 focus:ring-indigo-500"
                       />
                     </div>
@@ -907,7 +1439,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                             runResult.stdout || <span className="text-slate-600">(no output)</span>
                           )
                         ) : (
-                          <span className="text-slate-600">Click &quot;Run Code&quot; to execute Java code against input.</span>
+                          <span className="text-slate-600">Click &quot;Run Code&quot; to execute your {selectedLanguage.toUpperCase()} solution.</span>
                         )}
                       </pre>
                     </div>
@@ -920,7 +1452,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                 <div className="space-y-4">
                   {!submitResult ? (
                     <div className="text-center py-8 text-xs text-slate-400">
-                      Click &quot;Submit Code&quot; to evaluate your Java program against all hidden and sample test cases.
+                      Click &quot;Submit Code&quot; to evaluate your {selectedLanguage.toUpperCase()} program against all hidden and sample test cases.
                     </div>
                   ) : (
                     <div className="space-y-4">
@@ -961,7 +1493,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-mono">
                               <AlertTriangle className="w-4 h-4 text-rose-400" />
-                              <span>Java Compiler (javac) Diagnostics</span>
+                              <span>{selectedLanguage.toUpperCase()} Compiler / Execution Diagnostics</span>
                             </span>
                             <span className="text-[10px] font-mono text-rose-400 bg-rose-900/60 px-2 py-0.5 rounded border border-rose-700">
                               Exit Code 1
@@ -976,8 +1508,8 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                             <span className="font-semibold text-rose-300 block">💡 Troubleshooting Hints:</span>
                             <ul className="list-disc list-inside space-y-0.5 text-slate-400">
                               <li>Check line numbers and carat markers (^) shown above.</li>
-                              <li>Verify semicolons, curly braces, and variable declarations.</li>
-                              <li>Ensure public class is named Main or matches filename.</li>
+                              <li>Verify syntax, punctuation, indentations, and imports.</li>
+                              <li>Ensure standard I/O format matches the problem specifications.</li>
                             </ul>
                           </div>
                         </div>

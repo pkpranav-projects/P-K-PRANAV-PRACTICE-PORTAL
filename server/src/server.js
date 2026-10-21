@@ -2,11 +2,24 @@ const express = require('express');
 const cors = require('cors');
 const path = require('node:path');
 const fs = require('node:fs');
-const { spawnSync, exec } = require('node:child_process');
+const { spawnSync, exec, spawn } = require('node:child_process');
 const { dbHelpers } = require('./db');
-const { JavaExecutor } = require('./executor');
+const { JavaExecutor, findCppCompiler, findPythonInterpreter } = require('./executor');
 const { getCurriculum, documentsDir } = require('./curriculum');
 const { getMasterclassData } = require('./masterclass');
+
+function getEdgeExecutable() {
+  const candidatePaths = [
+    'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+    'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+    process.env.LOCALAPPDATA ? path.join(process.env.LOCALAPPDATA, 'Microsoft\\Edge\\Application\\msedge.exe') : null
+  ].filter(Boolean);
+
+  for (const p of candidatePaths) {
+    if (fs.existsSync(p)) return p;
+  }
+  return null;
+}
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,11 +27,45 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
-// Static route to view original source screenshots
-const questionsDir = path.resolve(__dirname, '../../questions');
-app.use('/api/screenshots', express.static(questionsDir));
+// Static routes to view original source screenshots across all question folders
+const questionsDir4 = path.resolve(__dirname, '../../questions4');
+const questionsDir1 = path.resolve(__dirname, '../../questions');
+const questionsDir2 = path.resolve(__dirname, '../../questions2cpp');
+const questionsDir3 = path.resolve(__dirname, '../../questions3');
+const dbmsDir = path.resolve(__dirname, '../../DBMS questions');
 
-// Health check endpoint verifying Java JDK
+// Smart screenshot resolver supporting ranges and direct names
+app.get('/api/screenshots/:filename', (req, res, next) => {
+  const raw = decodeURIComponent(req.params.filename);
+  const match = raw.match(/Screenshot\s*\((\d+)\)\.png/i);
+  const dirs = [dbmsDir, questionsDir4, questionsDir1, questionsDir2, questionsDir3];
+
+  if (match) {
+    const targetFile = `Screenshot (${match[1]}).png`;
+    for (const d of dirs) {
+      const fp = path.join(d, targetFile);
+      if (fs.existsSync(fp)) {
+        return res.sendFile(fp);
+      }
+    }
+  } else {
+    for (const d of dirs) {
+      const fp = path.join(d, raw);
+      if (fs.existsSync(fp)) {
+        return res.sendFile(fp);
+      }
+    }
+  }
+  next();
+});
+
+app.use('/api/screenshots', express.static(dbmsDir));
+app.use('/api/screenshots', express.static(questionsDir4));
+app.use('/api/screenshots', express.static(questionsDir1));
+app.use('/api/screenshots', express.static(questionsDir2));
+app.use('/api/screenshots', express.static(questionsDir3));
+
+// Health check endpoint verifying Java JDK, Python 3, and C++
 app.get('/api/health', (req, res) => {
   let javaOk = false;
   let javacOk = false;
@@ -45,6 +92,34 @@ app.get('/api/health', (req, res) => {
     javacOk = false;
   }
 
+  let pythonOk = false;
+  let pythonVersion = 'Not detected';
+  try {
+    const pyCmd = findPythonInterpreter();
+    const pyCheck = spawnSync(pyCmd, ['--version'], { encoding: 'utf8' });
+    if (pyCheck.status === 0 || pyCheck.stdout) {
+      pythonOk = true;
+      pythonVersion = (pyCheck.stdout || pyCheck.stderr).trim().split('\n')[0];
+    }
+  } catch (err) {
+    pythonOk = false;
+  }
+
+  let cppOk = false;
+  let cppVersion = 'Not installed';
+  try {
+    const cppCmd = findCppCompiler();
+    if (cppCmd) {
+      const cppCheck = spawnSync(cppCmd, ['--version'], { encoding: 'utf8' });
+      if (cppCheck.status === 0 || cppCheck.stdout) {
+        cppOk = true;
+        cppVersion = (cppCheck.stdout || '').split('\n')[0];
+      }
+    }
+  } catch (err) {
+    cppOk = false;
+  }
+
   res.json({
     status: javaOk && javacOk ? 'ok' : 'degraded',
     java: {
@@ -54,6 +129,14 @@ app.get('/api/health', (req, res) => {
     javac: {
       available: javacOk,
       version: javacVersion
+    },
+    python: {
+      available: pythonOk,
+      version: pythonVersion
+    },
+    cpp: {
+      available: cppOk,
+      version: cppVersion
     },
     database: 'connected'
   });
@@ -131,12 +214,23 @@ app.get('/api/questions/:id/solution', (req, res) => {
 // Save user draft code
 app.post('/api/drafts/:id', (req, res) => {
   try {
-    const { code } = req.body;
+    const { code, language } = req.body;
     if (typeof code !== 'string') {
       return res.status(400).json({ error: 'Code string is required' });
     }
-    dbHelpers.saveDraft(req.params.id, code);
+    dbHelpers.saveDraft(req.params.id, code, language || 'java');
     res.json({ success: true, updatedAt: new Date().toISOString() });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get user draft code for specific language
+app.get('/api/drafts/:id', (req, res) => {
+  try {
+    const language = (req.query.language || 'java').toLowerCase();
+    const draft = dbHelpers.getDraft(req.params.id, language);
+    res.json({ draftCode: draft ? draft.code : null, updatedAt: draft ? draft.updatedAt : null });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -165,13 +259,13 @@ app.post('/api/revision/:id', (req, res) => {
 
 // Run single execution (with custom or sample input)
 app.post('/api/run', async (req, res) => {
-  const { code, input } = req.body;
+  const { code, input, language } = req.body;
   if (!code || typeof code !== 'string') {
-    return res.status(400).json({ error: 'Java source code is required' });
+    return res.status(400).json({ error: 'Source code is required' });
   }
 
   try {
-    const result = await JavaExecutor.runSingle(code, input || '');
+    const result = await JavaExecutor.runSingle(language || 'java', code, input || '', req.body.questionId || '');
     res.json(result);
   } catch (err) {
     res.status(500).json({
@@ -185,7 +279,7 @@ app.post('/api/run', async (req, res) => {
 
 // Submit code for full evaluation against test cases
 app.post('/api/submit', async (req, res) => {
-  const { questionId, code } = req.body;
+  const { questionId, code, language = 'java' } = req.body;
   if (!questionId || !code) {
     return res.status(400).json({ error: 'questionId and code are required' });
   }
@@ -196,7 +290,7 @@ app.post('/api/submit', async (req, res) => {
   }
 
   try {
-    const evalResult = await JavaExecutor.evaluateSubmission(code, question.testCases);
+    const evalResult = await JavaExecutor.evaluateSubmission(language, code, question.testCases, questionId);
     
     // Save submission record in SQLite
     dbHelpers.addSubmission({
@@ -207,7 +301,8 @@ app.post('/api/submit', async (req, res) => {
       executionTimeMs: evalResult.executionTimeMs,
       errorMessage: evalResult.errorMessage,
       testResults: evalResult.testResults,
-      code
+      code,
+      language: (language || 'java').toLowerCase()
     });
 
     res.json(evalResult);
@@ -276,9 +371,19 @@ app.get('/api/documents', (req, res) => {
   }
 });
 
-// Open document directly in user's OS native viewer without downloading
+// Alias for curriculum endpoint
+app.get('/api/curriculum', (req, res) => {
+  try {
+    const list = getCurriculum();
+    res.json(list);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Open document directly in Microsoft Edge or system desktop viewer without downloading
 app.post('/api/documents/open', (req, res) => {
-  const { filename } = req.body;
+  const { filename, app: targetApp = 'edge' } = req.body;
   if (!filename) {
     return res.status(400).json({ error: 'Filename is required' });
   }
@@ -290,15 +395,39 @@ app.post('/api/documents/open', (req, res) => {
     return res.status(404).json({ error: 'Document file not found in documentss folder' });
   }
 
-  // Windows command to open file in registered default application
-  const cmd = `powershell -Command "Start-Process -FilePath '${targetPath.replace(/'/g, "''")}'"`;
-  exec(cmd, (err) => {
-    if (err) {
-      console.error('Failed to open document:', err);
-      return res.status(500).json({ error: 'Failed to launch default application' });
+  const edgeExe = getEdgeExecutable();
+
+  if (targetApp === 'system' || !edgeExe) {
+    // Open in Windows default application (e.g. Office desktop app)
+    const cmd = `powershell -Command "Start-Process -FilePath '${targetPath.replace(/'/g, "''")}'"`;
+    exec(cmd, (err) => {
+      if (err) {
+        console.error('Failed to open document:', err);
+        return res.status(500).json({ error: 'Failed to launch desktop application' });
+      }
+      res.json({ success: true, message: `Opened ${safeFilename} in default desktop application` });
+    });
+  } else {
+    // Launch directly in Microsoft Edge without downloading
+    try {
+      const child = spawn(edgeExe, [targetPath], {
+        detached: true,
+        stdio: 'ignore'
+      });
+      child.unref();
+      res.json({ success: true, message: `Opened ${safeFilename} directly in Microsoft Edge (No download)` });
+    } catch (err) {
+      console.error('Failed to spawn Edge:', err);
+      // Fallback to powershell Start-Process
+      const cmd = `powershell -Command "Start-Process -FilePath '${targetPath.replace(/'/g, "''")}'"`;
+      exec(cmd, (fbErr) => {
+        if (fbErr) {
+          return res.status(500).json({ error: 'Failed to open file in Edge or default viewer' });
+        }
+        res.json({ success: true, message: `Opened ${safeFilename} in default viewer (Edge fallback)` });
+      });
     }
-    res.json({ success: true, message: `Opened ${safeFilename} in native system viewer` });
-  });
+  }
 });
 
 // Optional static preview

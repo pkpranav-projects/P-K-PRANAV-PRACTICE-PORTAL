@@ -63,12 +63,18 @@ db.exec(`
   );
 `);
 
-// Ensure bank column exists on preexisting databases
+// Ensure columns exist on preexisting databases
 try {
   db.exec("ALTER TABLE questions ADD COLUMN bank TEXT DEFAULT 'bank1'");
-} catch (e) {
-  // column already exists
-}
+} catch (e) {}
+
+try {
+  db.exec("ALTER TABLE questions ADD COLUMN recommendedLanguage TEXT DEFAULT 'Java'");
+} catch (e) {}
+
+try {
+  db.exec("ALTER TABLE submissions ADD COLUMN language TEXT DEFAULT 'java'");
+} catch (e) {}
 
 // Seed questions from both Bank 1 (Photo Portal) and Bank 2 (Masterclass)
 function seedQuestions() {
@@ -76,11 +82,11 @@ function seedQuestions() {
     INSERT INTO questions (
       id, title, description, inputFormat, outputFormat, constraints,
       sampleInput, sampleOutput, testCases, topic, difficulty,
-      sourceScreenshot, explanation, referenceSolution, starterCode, extractionStatus, bank
+      sourceScreenshot, explanation, referenceSolution, starterCode, extractionStatus, bank, recommendedLanguage
     ) VALUES (
       ?, ?, ?, ?, ?, ?,
       ?, ?, ?, ?, ?,
-      ?, ?, ?, ?, ?, ?
+      ?, ?, ?, ?, ?, ?, ?
     )
     ON CONFLICT(id) DO UPDATE SET
       title = excluded.title,
@@ -98,8 +104,52 @@ function seedQuestions() {
       referenceSolution = excluded.referenceSolution,
       starterCode = excluded.starterCode,
       extractionStatus = excluded.extractionStatus,
-      bank = excluded.bank
+      bank = excluded.bank,
+      recommendedLanguage = excluded.recommendedLanguage
   `);
+
+  // Language mapping for Bank 1 problems
+  const bank1LangMap = {
+    'java-001': 'Java',
+    'java-002': 'Java',
+    'java-003': 'Java',
+    'java-004': 'Java',
+    'java-005': 'Python',
+    'java-006': 'Java',
+    'java-007': 'C++',
+    'java-008': 'Java',
+    'java-009': 'Python',
+    'java-010': 'Java',
+    'java-011': 'C++',
+    'java-012': 'Java',
+    'java-013': 'Python',
+    'java-014': 'Java',
+    'java-015': 'C++',
+    'java-016': 'Java',
+    'java-017': 'Python',
+    'java-018': 'C++',
+    'java-019': 'Java',
+    'java-020': 'Java'
+  };
+
+  // Language mapping for Bank 2 problems
+  const bank2LangMap = {
+    'bank2-001': 'Java',
+    'bank2-002': 'Python',
+    'bank2-003': 'C++',
+    'bank2-004': 'Python',
+    'bank2-005': 'Python',
+    'bank2-006': 'C++',
+    'bank2-007': 'Python',
+    'bank2-008': 'C++',
+    'bank2-009': 'Python',
+    'bank2-010': 'Java',
+    'bank2-011': 'Java',
+    'bank2-012': 'C++',
+    'bank2-013': 'C++',
+    'bank2-014': 'Python',
+    'bank2-015': 'Java'
+  };
 
   // Bank 1: Screenshot Exam Questions
   const bank1Path = path.join(__dirname, '..', '..', 'questions.json');
@@ -124,7 +174,8 @@ function seedQuestions() {
           q.referenceSolution || '',
           q.starterCode || '',
           q.extractionStatus || 'verified',
-          'bank1'
+          'bank1',
+          bank1LangMap[q.id] || q.recommendedLanguage || 'Java'
         );
       }
       console.log(`Synchronized ${data1.length} questions for Bank 1 (Screenshot Portal).`);
@@ -156,12 +207,79 @@ function seedQuestions() {
           q.referenceSolution || '',
           q.starterCode || '',
           q.extractionStatus || 'verified',
-          'bank2'
+          'bank2',
+          q.recommendedLanguage || bank2LangMap[q.id] || 'C++'
         );
       }
       console.log(`Synchronized ${data2.length} questions for Bank 2 (Masterclass).`);
     } catch (e) {
       console.error('Error loading Bank 2 questions:', e.message);
+    }
+  }
+
+  // Bank 3: Lab Test Questions (questions4)
+  const bank3Path = path.join(__dirname, '..', '..', 'questions_bank3.json');
+  if (fs.existsSync(bank3Path)) {
+    try {
+      const data3 = JSON.parse(fs.readFileSync(bank3Path, 'utf8'));
+      for (const q of data3) {
+        insertOrReplace.run(
+          q.id,
+          q.title,
+          q.description,
+          q.inputFormat || '',
+          q.outputFormat || '',
+          JSON.stringify(q.constraints || []),
+          q.sampleInput || '',
+          q.sampleOutput || '',
+          JSON.stringify(q.testCases || []),
+          q.topic || 'General',
+          q.difficulty || 'Medium',
+          q.sourceScreenshot || 'Screenshot (295).png',
+          q.explanation || '',
+          q.referenceSolution || '',
+          q.starterCode || '',
+          q.extractionStatus || 'verified',
+          'bank3',
+          q.recommendedLanguage || 'Java'
+        );
+      }
+      console.log(`Synchronized ${data3.length} questions for Bank 3 (Lab Tests - questions4).`);
+    } catch (e) {
+      console.error('Error loading Bank 3 questions:', e.message);
+    }
+  }
+
+  // Bank 4: DBMS & SQL Lab Questions
+  const dbmsPath = path.join(__dirname, '..', '..', 'questions_dbms.json');
+  if (fs.existsSync(dbmsPath)) {
+    try {
+      const dataDBMS = JSON.parse(fs.readFileSync(dbmsPath, 'utf8'));
+      for (const q of dataDBMS) {
+        insertOrReplace.run(
+          q.id,
+          q.title,
+          q.description,
+          q.inputFormat || '',
+          q.outputFormat || '',
+          JSON.stringify(q.constraints || []),
+          q.sampleInput || '',
+          q.sampleOutput || '',
+          JSON.stringify(q.testCases || []),
+          q.topic || 'DBMS',
+          q.difficulty || 'Medium',
+          q.sourceScreenshot || '',
+          q.explanation || '',
+          q.referenceSolution || '',
+          q.starterCode || '',
+          q.extractionStatus || 'verified',
+          'dbms',
+          q.recommendedLanguage || 'SQL'
+        );
+      }
+      console.log(`Synchronized ${dataDBMS.length} questions for Bank 4 (DBMS Lab Practice).`);
+    } catch (e) {
+      console.error('Error loading DBMS questions:', e.message);
     }
   }
 }
@@ -173,6 +291,7 @@ const dbHelpers = {
   getQuestions: (filters = {}) => {
     let query = `
       SELECT q.id, q.title, q.topic, q.difficulty, q.sourceScreenshot, q.bank,
+             COALESCE(q.recommendedLanguage, 'Java') as recommendedLanguage,
              CASE WHEN b.questionId IS NOT NULL THEN 1 ELSE 0 END as isBookmarked,
              CASE WHEN r.questionId IS NOT NULL THEN 1 ELSE 0 END as isRevision,
              (SELECT status FROM submissions WHERE questionId = q.id ORDER BY id DESC LIMIT 1) as lastStatus,
@@ -232,6 +351,7 @@ const dbHelpers = {
   getQuestionById: (id) => {
     const q = db.prepare(`
       SELECT q.*,
+             COALESCE(q.recommendedLanguage, 'Java') as recommendedLanguage,
              CASE WHEN b.questionId IS NOT NULL THEN 1 ELSE 0 END as isBookmarked,
              CASE WHEN r.questionId IS NOT NULL THEN 1 ELSE 0 END as isRevision,
              d.code as draftCode,
@@ -249,22 +369,33 @@ const dbHelpers = {
 
     return {
       ...q,
+      recommendedLanguage: q.recommendedLanguage || 'Java',
       constraints: JSON.parse(q.constraints || '[]'),
       testCases: JSON.parse(q.testCases || '[]')
     };
   },
 
-  saveDraft: (questionId, code) => {
+  saveDraft: (questionId, code, language = 'java') => {
+    const draftKey = `${questionId}_${language}`;
     const stmt = db.prepare(`
       INSERT INTO drafts (questionId, code, updatedAt)
       VALUES (?, ?, CURRENT_TIMESTAMP)
       ON CONFLICT(questionId) DO UPDATE SET code = excluded.code, updatedAt = CURRENT_TIMESTAMP
     `);
-    return stmt.run(questionId, code);
+    if (language === 'java') {
+      try { stmt.run(questionId, code); } catch {}
+    }
+    return stmt.run(draftKey, code);
   },
 
-  getDraft: (questionId) => {
-    return db.prepare('SELECT code, updatedAt FROM drafts WHERE questionId = ?').get(questionId);
+  getDraft: (questionId, language = 'java') => {
+    const draftKey = `${questionId}_${language}`;
+    const specific = db.prepare('SELECT code, updatedAt FROM drafts WHERE questionId = ?').get(draftKey);
+    if (specific) return specific;
+    if (language === 'java') {
+      return db.prepare('SELECT code, updatedAt FROM drafts WHERE questionId = ?').get(questionId);
+    }
+    return null;
   },
 
   toggleBookmark: (questionId) => {
@@ -292,8 +423,8 @@ const dbHelpers = {
   addSubmission: (sub) => {
     const stmt = db.prepare(`
       INSERT INTO submissions (
-        questionId, status, passedCount, totalCount, executionTimeMs, errorMessage, testResults, code
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        questionId, status, passedCount, totalCount, executionTimeMs, errorMessage, testResults, code, language
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     return stmt.run(
       sub.questionId,
@@ -303,7 +434,8 @@ const dbHelpers = {
       sub.executionTimeMs || 0,
       sub.errorMessage || '',
       JSON.stringify(sub.testResults || []),
-      sub.code
+      sub.code,
+      sub.language || 'java'
     );
   },
 
@@ -334,6 +466,8 @@ const dbHelpers = {
     // Bank specific totals and solved
     const bank1Total = db.prepare("SELECT COUNT(*) as count FROM questions WHERE bank = 'bank1'").get().count;
     const bank2Total = db.prepare("SELECT COUNT(*) as count FROM questions WHERE bank = 'bank2'").get().count;
+    const bank3Total = db.prepare("SELECT COUNT(*) as count FROM questions WHERE bank = 'bank3'").get().count;
+    const dbmsTotal = db.prepare("SELECT COUNT(*) as count FROM questions WHERE bank = 'dbms'").get().count;
 
     const bank1Solved = db.prepare(`
       SELECT COUNT(DISTINCT q.id) as count
@@ -347,6 +481,20 @@ const dbHelpers = {
       FROM questions q
       JOIN submissions s ON q.id = s.questionId
       WHERE q.bank = 'bank2' AND s.status = 'Accepted'
+    `).get().count;
+
+    const bank3Solved = db.prepare(`
+      SELECT COUNT(DISTINCT q.id) as count
+      FROM questions q
+      JOIN submissions s ON q.id = s.questionId
+      WHERE q.bank = 'bank3' AND s.status = 'Accepted'
+    `).get().count;
+
+    const dbmsSolved = db.prepare(`
+      SELECT COUNT(DISTINCT q.id) as count
+      FROM questions q
+      JOIN submissions s ON q.id = s.questionId
+      WHERE q.bank = 'dbms' AND s.status = 'Accepted'
     `).get().count;
 
     const solvedRows = db.prepare(`
@@ -414,6 +562,10 @@ const dbHelpers = {
       bank1Solved,
       bank2Total,
       bank2Solved,
+      bank3Total,
+      bank3Solved,
+      dbmsTotal,
+      dbmsSolved,
       solvedCount,
       attemptedCount,
       notStartedCount,

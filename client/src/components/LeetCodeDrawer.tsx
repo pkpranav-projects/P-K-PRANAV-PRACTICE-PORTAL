@@ -27,7 +27,7 @@ interface LeetCodeDrawerProps {
   onClose: () => void;
   activeTab: LeetCodeTab;
   setActiveTab: (tab: LeetCodeTab) => void;
-  onSelectBank?: (bank: 'bank1' | 'bank2' | 'all') => void;
+  onSelectBank?: (bank: 'bank1' | 'bank2' | 'bank3' | 'all') => void;
   dailyGoal: number;
   solvedToday: number;
   totalSolved: number;
@@ -36,6 +36,8 @@ interface LeetCodeDrawerProps {
   bank1Solved: number;
   bank2Total: number;
   bank2Solved: number;
+  bank3Total?: number;
+  bank3Solved?: number;
   accuracy: number;
   systemHealth: SystemHealth | null;
   onOpenSettings: () => void;
@@ -55,6 +57,8 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
   bank1Solved,
   bank2Total,
   bank2Solved,
+  bank3Total = 56,
+  bank3Solved = 0,
   accuracy,
   systemHealth,
   onOpenSettings
@@ -82,7 +86,7 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
     };
   }, [isOpen]);
 
-  const handleNavClick = (tab: LeetCodeTab, bank?: 'bank1' | 'bank2' | 'all') => {
+  const handleNavClick = (tab: LeetCodeTab, bank?: 'bank1' | 'bank2' | 'bank3' | 'all') => {
     if (bank && onSelectBank) {
       onSelectBank(bank);
     }
@@ -232,6 +236,16 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
             </button>
 
             <button
+              onClick={() => handleNavClick('problems', 'bank3')}
+              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#282828] transition-colors pl-8"
+            >
+              <span className="truncate">✨ Bank 3 (Lab Tests)</span>
+              <span className="text-[11px] font-mono text-purple-400 font-semibold">
+                {bank3Solved}/{bank3Total}
+              </span>
+            </button>
+
+            <button
               onClick={() => handleNavClick('revision')}
               className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === 'revision'
@@ -303,7 +317,7 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
             >
               <div className="flex items-center gap-2.5">
                 <Timer className="w-4 h-4 text-rose-400" />
-                <span>Neo Exam Simulator</span>
+                <span>Pranav Exam Simulator</span>
               </div>
               <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-400 font-semibold">
                 Timed

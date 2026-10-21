@@ -26,18 +26,22 @@ export interface TestResult {
   errorMessage?: string;
 }
 
+export type SupportedLanguage = 'java' | 'cpp' | 'python' | 'sql';
+
 export interface QuestionSummary {
   id: string;
   title: string;
   topic: string;
   difficulty: Difficulty;
-  bank?: 'bank1' | 'bank2';
+  bank?: 'bank1' | 'bank2' | 'bank3' | 'dbms';
+  recommendedLanguage?: 'Java' | 'C++' | 'Python' | 'SQL';
   solved: boolean;
   attempted: boolean;
   isBookmarked: boolean;
   isRevision: boolean;
   lastStatus?: string;
   lastSubmittedAt?: string;
+  sourceScreenshot?: string;
 }
 
 export interface QuestionDetail {
@@ -52,7 +56,8 @@ export interface QuestionDetail {
   testCases: TestCase[];
   topic: string;
   difficulty: Difficulty;
-  bank?: 'bank1' | 'bank2';
+  bank?: 'bank1' | 'bank2' | 'bank3' | 'dbms';
+  recommendedLanguage?: 'Java' | 'C++' | 'Python' | 'SQL';
   sourceScreenshot: string;
   starterCode?: string;
   hints?: string[];
@@ -102,6 +107,7 @@ export interface SubmissionRecord {
   testResults?: TestResult[];
   submittedAt: string;
   code?: string;
+  language?: string;
 }
 
 export interface TopicStat {
@@ -122,6 +128,10 @@ export interface DashboardStats {
   bank1Solved?: number;
   bank2Total?: number;
   bank2Solved?: number;
+  bank3Total?: number;
+  bank3Solved?: number;
+  dbmsTotal?: number;
+  dbmsSolved?: number;
   solvedCount: number;
   attemptedCount: number;
   notStartedCount: number;
@@ -144,6 +154,14 @@ export interface SystemHealth {
     version: string;
   };
   javac: {
+    available: boolean;
+    version: string;
+  };
+  python?: {
+    available: boolean;
+    version: string;
+  };
+  cpp?: {
     available: boolean;
     version: string;
   };

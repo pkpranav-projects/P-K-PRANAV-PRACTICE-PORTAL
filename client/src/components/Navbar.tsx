@@ -60,8 +60,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="font-bold text-lg text-slate-900 dark:text-white tracking-tight">
                   Java Practice Arena
                 </span>
-                <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-                  Neo Portal
+                <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                  Pranav Portal
                 </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400">

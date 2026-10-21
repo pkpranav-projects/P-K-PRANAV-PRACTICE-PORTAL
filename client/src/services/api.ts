@@ -8,7 +8,8 @@ import {
   SubmitResult,
   SystemHealth,
   CurriculumItem,
-  MasterclassData
+  MasterclassData,
+  SupportedLanguage
 } from '../types';
 
 const API_BASE = '/api';
@@ -53,13 +54,19 @@ export const api = {
     return res.json();
   },
 
-  async saveDraft(id: string, code: string): Promise<{ success: boolean; updatedAt: string }> {
+  async saveDraft(id: string, code: string, language: SupportedLanguage = 'java'): Promise<{ success: boolean; updatedAt: string }> {
     const res = await fetch(`${API_BASE}/drafts/${id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code })
+      body: JSON.stringify({ code, language })
     });
     if (!res.ok) throw new Error('Failed to save draft');
+    return res.json();
+  },
+
+  async getDraft(id: string, language: SupportedLanguage = 'java'): Promise<{ draftCode: string | null; updatedAt: string | null }> {
+    const res = await fetch(`${API_BASE}/drafts/${id}?language=${language}`);
+    if (!res.ok) throw new Error('Failed to get draft');
     return res.json();
   },
 
@@ -81,20 +88,20 @@ export const api = {
     return res.json();
   },
 
-  async runCode(code: string, input?: string): Promise<RunResult> {
+  async runCode(code: string, input?: string, language: SupportedLanguage = 'java', questionId?: string): Promise<RunResult> {
     const res = await fetch(`${API_BASE}/run`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code, input })
+      body: JSON.stringify({ code, input, language, questionId })
     });
     return res.json();
   },
 
-  async submitCode(questionId: string, code: string): Promise<SubmitResult> {
+  async submitCode(questionId: string, code: string, language: SupportedLanguage = 'java'): Promise<SubmitResult> {
     const res = await fetch(`${API_BASE}/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ questionId, code })
+      body: JSON.stringify({ questionId, code, language })
     });
     return res.json();
   },
@@ -164,11 +171,11 @@ export const api = {
     return res.json();
   },
 
-  async openDocument(filename: string): Promise<{ success: boolean; message: string }> {
+  async openDocument(filename: string, app: 'edge' | 'system' = 'edge'): Promise<{ success: boolean; message: string }> {
     const res = await fetch(`${API_BASE}/documents/open`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filename })
+      body: JSON.stringify({ filename, app })
     });
     if (!res.ok) {
       const err = await res.json();

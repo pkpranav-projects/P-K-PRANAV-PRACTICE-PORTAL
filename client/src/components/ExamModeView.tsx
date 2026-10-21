@@ -94,7 +94,7 @@ export const ExamModeView: React.FC<ExamModeViewProps> = ({
           </div>
           <div>
             <h1 className="text-xl font-bold tracking-tight text-white m-0">
-              Neo Lab Exam Simulator
+              Pranav Lab Exam Simulator
             </h1>
             <p className="text-xs text-amber-200/80 mt-0.5">
               Simulate actual university lab exams: timed execution, no hints, strict test evaluation.

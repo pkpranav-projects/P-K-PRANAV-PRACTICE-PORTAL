@@ -8,15 +8,22 @@ import {
   Settings,
   Code2,
   Maximize2,
-  Minimize2
+  Minimize2,
+  Search,
+  Volume2,
+  VolumeX,
+  HelpCircle,
+  Database
 } from 'lucide-react';
 import { PranavJavaSymbol } from './PranavJavaSymbol';
 import { SystemHealth } from '../types';
+import { PracticeTimer } from './PracticeTimer';
 
 export type LeetCodeTab =
   | 'explore'
   | 'problems'
   | 'workspace'
+  | 'dbms'
   | 'masterclass'
   | 'curriculum'
   | 'exam'
@@ -38,6 +45,10 @@ interface LeetCodeNavbarProps {
   activeQuestionId: string | null;
   isAbsoluteFullscreen?: boolean;
   onToggleAbsoluteFullscreen?: () => void;
+  onOpenCommandPalette?: () => void;
+  onOpenShortcutsModal?: () => void;
+  isSoundEnabled?: boolean;
+  onToggleSound?: () => void;
 }
 
 export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
@@ -51,7 +62,11 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
   onOpenSettings,
   activeQuestionId,
   isAbsoluteFullscreen = false,
-  onToggleAbsoluteFullscreen
+  onToggleAbsoluteFullscreen,
+  onOpenCommandPalette,
+  onOpenShortcutsModal,
+  isSoundEnabled = true,
+  onToggleSound
 }) => {
   const [isInterviewOpen, setIsInterviewOpen] = useState(false);
   const [isStoreOpen, setIsStoreOpen] = useState(false);
@@ -64,7 +79,7 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
   };
 
   return (
-    <nav className="flex h-[50px] w-full items-center border-b border-[#383838] bg-[#282828] text-[#eff1f6bf] select-none sticky top-0 z-50">
+    <nav className="flex h-[50px] w-full items-center border-b border-slate-200 dark:border-[#383838] bg-white dark:bg-[#282828] text-slate-700 dark:text-[#eff1f6bf] select-none sticky top-0 z-50 transition-colors">
       <div className="w-full max-w-[1700px] h-full mx-auto px-4 sm:px-6 flex items-center justify-between">
         
         {/* Left side: Authentic LeetCode Logo and Main Navigation Tabs */}
@@ -80,10 +95,10 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
 
             {/* Brand Typography: PRANAV Practice JAVA */}
             <div className="flex items-baseline gap-1.5 whitespace-nowrap">
-              <span className="text-white font-extrabold text-[16px] tracking-tight font-sans">
+              <span className="text-slate-900 dark:text-white font-extrabold text-[16px] tracking-tight font-sans">
                 PRANAV
               </span>
-              <span className="text-neutral-300 font-medium text-[15px] font-sans">
+              <span className="text-slate-500 dark:text-neutral-300 font-medium text-[15px] font-sans">
                 Practice
               </span>
               <span className="text-[#FFA116] font-bold text-[15px] tracking-wide font-sans">
@@ -100,28 +115,48 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               onClick={() => setActiveTab('explore')}
               className={`relative h-full flex items-center px-1 transition-colors ${
                 activeTab === 'explore'
-                  ? 'text-white font-semibold'
-                  : 'text-[#eff1f6bf] hover:text-white'
+                  ? 'text-slate-900 dark:text-white font-semibold'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
               }`}
             >
               <span>Explore</span>
               {activeTab === 'explore' && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-t-sm" />
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
               )}
             </button>
 
-            {/* Problems Tab (Exactly like user screenshot) */}
+            {/* Problems Tab */}
             <button
               onClick={() => setActiveTab('problems')}
               className={`relative h-full flex items-center px-1 transition-colors ${
                 activeTab === 'problems'
-                  ? 'text-white font-semibold'
-                  : 'text-[#eff1f6bf] hover:text-white'
+                  ? 'text-slate-900 dark:text-white font-semibold'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
               }`}
             >
               <span>Problems</span>
               {activeTab === 'problems' && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-t-sm" />
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
+              )}
+            </button>
+
+            {/* DBMS & SQL Lab Tab */}
+            <button
+              onClick={() => setActiveTab('dbms')}
+              className={`relative h-full flex items-center gap-1.5 px-1 transition-colors ${
+                activeTab === 'dbms'
+                  ? 'text-slate-900 dark:text-white font-semibold'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
+              }`}
+              title="DBMS & SQL Engineering Lab (Triggers, Stored Procedures, Schemas)"
+            >
+              <Database className="w-3.5 h-3.5 text-amber-500" />
+              <span>DBMS Lab</span>
+              <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold border border-amber-500/30">
+                SQL
+              </span>
+              {activeTab === 'dbms' && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
               )}
             </button>
 
@@ -130,13 +165,13 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               onClick={() => setActiveTab('exam')}
               className={`relative h-full flex items-center px-1 transition-colors ${
                 activeTab === 'exam'
-                  ? 'text-white font-semibold'
-                  : 'text-[#eff1f6bf] hover:text-white'
+                  ? 'text-slate-900 dark:text-white font-semibold'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
               }`}
             >
               <span>Contest</span>
               {activeTab === 'exam' && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-t-sm" />
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
               )}
             </button>
 
@@ -145,13 +180,13 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               onClick={() => setActiveTab('masterclass')}
               className={`relative h-full flex items-center px-1 transition-colors ${
                 activeTab === 'masterclass'
-                  ? 'text-white font-semibold'
-                  : 'text-[#eff1f6bf] hover:text-white'
+                  ? 'text-slate-900 dark:text-white font-semibold'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
               }`}
             >
               <span>Discuss</span>
               {activeTab === 'masterclass' && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-t-sm" />
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
               )}
             </button>
 
@@ -162,25 +197,25 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
                 onBlur={() => setTimeout(() => setIsInterviewOpen(false), 200)}
                 className={`relative h-full flex items-center gap-1 px-1 transition-colors ${
                   activeTab === 'curriculum' || activeTab === 'revision'
-                    ? 'text-white font-semibold'
-                    : 'text-[#eff1f6bf] hover:text-white'
+                    ? 'text-slate-900 dark:text-white font-semibold'
+                    : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
                 }`}
               >
                 <span>Interview</span>
                 <ChevronDown className="w-3.5 h-3.5 opacity-70" />
                 {(activeTab === 'curriculum' || activeTab === 'revision') && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-t-sm" />
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
                 )}
               </button>
 
               {isInterviewOpen && (
-                <div className="absolute top-[50px] left-0 w-52 bg-[#282828] border border-[#383838] rounded-b-lg shadow-xl py-1 z-50 text-xs">
+                <div className="absolute top-[50px] left-0 w-52 bg-white dark:bg-[#282828] border border-slate-200 dark:border-[#383838] rounded-b-lg shadow-xl py-1 z-50 text-xs">
                   <button
                     onClick={() => {
                       setActiveTab('curriculum');
                       setIsInterviewOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-[#333] text-[#eff1f6bf] hover:text-white transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-[#eff1f6bf] hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
                     Study Curriculum (27 Guides)
                   </button>
@@ -189,7 +224,7 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
                       setActiveTab('revision');
                       setIsInterviewOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-[#333] text-[#eff1f6bf] hover:text-white transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-[#eff1f6bf] hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
                     Revision Queue
                   </button>
@@ -197,7 +232,7 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               )}
             </div>
 
-            {/* Store (Gold/Orange Text exactly like LeetCode screenshot) */}
+            {/* Store (Gold/Orange Text) */}
             <div className="relative h-full flex items-center">
               <button
                 onClick={() => setIsStoreOpen(!isStoreOpen)}
@@ -209,20 +244,20 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               </button>
 
               {isStoreOpen && (
-                <div className="absolute top-[50px] left-0 w-48 bg-[#282828] border border-[#383838] rounded-b-lg shadow-xl py-1 z-50 text-xs">
+                <div className="absolute top-[50px] left-0 w-48 bg-white dark:bg-[#282828] border border-slate-200 dark:border-[#383838] rounded-b-lg shadow-xl py-1 z-50 text-xs">
                   <button
                     onClick={() => {
                       onOpenSettings();
                       setIsStoreOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-[#333] text-[#eff1f6bf] hover:text-white transition-colors flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-[#eff1f6bf] hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-2"
                   >
                     <Settings className="w-3.5 h-3.5" />
                     <span>Settings & Backup</span>
                   </button>
-                  <div className="px-4 py-2 text-[11px] text-neutral-400 border-t border-[#383838] flex items-center justify-between">
+                  <div className="px-4 py-2 text-[11px] text-slate-500 dark:text-neutral-400 border-t border-slate-200 dark:border-[#383838] flex items-center justify-between">
                     <span>OpenJDK 27</span>
-                    <span className="text-emerald-400 font-mono">SANDBOX</span>
+                    <span className="text-emerald-500 dark:text-emerald-400 font-mono">SANDBOX</span>
                   </div>
                 </div>
               )}
@@ -234,14 +269,14 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
                 onClick={() => setActiveTab('workspace')}
                 className={`relative h-full hidden xl:flex items-center gap-1.5 px-2 transition-colors ${
                   activeTab === 'workspace'
-                    ? 'text-white font-semibold'
-                    : 'text-neutral-400 hover:text-white'
+                    ? 'text-slate-900 dark:text-white font-semibold'
+                    : 'text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 <Code2 className="w-3.5 h-3.5 text-amber-500" />
                 <span className="text-xs font-mono">{activeQuestionId}</span>
                 {activeTab === 'workspace' && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-t-sm" />
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
                 )}
               </button>
             )}
@@ -249,22 +284,62 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
           </div>
         </div>
 
-        {/* Right side: Practice streak flame + Theme toggle + Minimal Profile */}
-        <div className="flex items-center gap-3">
+        {/* Right side: Search + Timer + Flame + Sound + Shortcuts + Theme + Fullscreen + Profile */}
+        <div className="flex items-center gap-2.5">
           
+          {/* Quick Command Palette Search */}
+          {onOpenCommandPalette && (
+            <button
+              onClick={onOpenCommandPalette}
+              className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#1f1f1f] dark:hover:bg-[#282828] border border-slate-200 dark:border-[#383838] text-slate-500 dark:text-neutral-400 hover:text-slate-800 dark:hover:text-white transition-colors cursor-pointer text-xs"
+              title="Search questions & commands (Ctrl+K)"
+            >
+              <Search className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-400" />
+              <span>Search...</span>
+              <kbd className="text-[10px] font-mono px-1 py-0.2 rounded bg-slate-200 dark:bg-[#2e2e2e] text-slate-600 dark:text-neutral-300 border border-slate-300 dark:border-[#444]">
+                Ctrl+K
+              </kbd>
+            </button>
+          )}
+
+          {/* Practice Stopwatch & Pomodoro Timer */}
+          <PracticeTimer />
+
           {/* Practice Streak Flame Indicator */}
           <div
-            className="flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold text-neutral-300 hover:text-white cursor-pointer"
+            className="flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-neutral-300 hover:text-slate-900 dark:hover:text-white cursor-pointer"
             title="Practice Streak"
           >
             <Flame className="w-4 h-4 fill-current text-orange-500" />
             <span className="font-mono text-xs">{Math.max(1, solvedToday)}</span>
           </div>
 
+          {/* Audio Sound Toggle */}
+          {onToggleSound && (
+            <button
+              onClick={onToggleSound}
+              className="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer text-slate-600 dark:text-neutral-300"
+              title={isSoundEnabled ? 'Audio Effects: Enabled (Click to mute)' : 'Audio Effects: Muted (Click to enable)'}
+            >
+              {isSoundEnabled ? <Volume2 className="w-4 h-4 text-emerald-500 dark:text-emerald-400" /> : <VolumeX className="w-4 h-4 text-slate-400 dark:text-neutral-500" />}
+            </button>
+          )}
+
+          {/* Keyboard Shortcuts Cheatsheet */}
+          {onOpenShortcutsModal && (
+            <button
+              onClick={onOpenShortcutsModal}
+              className="p-1.5 rounded text-slate-500 hover:text-slate-800 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-[#383838] transition-colors cursor-pointer hidden sm:flex"
+              title="Keyboard Shortcuts Cheatsheet (?)"
+            >
+              <HelpCircle className="w-4 h-4" />
+            </button>
+          )}
+
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-1.5 rounded text-neutral-400 hover:text-white hover:bg-[#383838] transition-colors"
+            className="p-1.5 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-[#383838] transition-colors"
             title={`Theme: ${theme === 'oled' ? 'OLED Black' : theme.toUpperCase()} (Click to cycle)`}
           >
             {theme === 'dark' && <Moon className="w-4 h-4 text-neutral-300" />}
@@ -273,8 +348,8 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
                 <span className="w-3.5 h-3.5 rounded-full bg-black border-[1.5px] border-[#FFA116] shadow-sm" />
               </span>
             )}
-            {theme === 'light' && <Sun className="w-4 h-4 text-amber-400" />}
-            {theme === 'system' && <Laptop className="w-4 h-4 text-neutral-400" />}
+            {theme === 'light' && <Sun className="w-4 h-4 text-amber-500" />}
+            {theme === 'system' && <Laptop className="w-4 h-4 text-slate-500 dark:text-neutral-400" />}
           </button>
 
           {/* Absolute Fullscreen Toggle */}
@@ -283,8 +358,8 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               onClick={onToggleAbsoluteFullscreen}
               className={`p-1.5 rounded transition-all duration-200 cursor-pointer ${
                 isAbsoluteFullscreen
-                  ? 'bg-[#FFA116]/20 text-[#FFA116] ring-1 ring-[#FFA116]/60 shadow-sm'
-                  : 'text-neutral-400 hover:text-white hover:bg-[#383838]'
+                  ? 'bg-amber-100 text-amber-600 dark:bg-[#FFA116]/20 dark:text-[#FFA116] ring-1 ring-amber-400 dark:ring-[#FFA116]/60 shadow-sm'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-[#383838]'
               }`}
               title={
                 isAbsoluteFullscreen
@@ -298,7 +373,7 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               }
             >
               {isAbsoluteFullscreen ? (
-                <Minimize2 className="w-4 h-4 text-[#FFA116]" />
+                <Minimize2 className="w-4 h-4 text-amber-600 dark:text-[#FFA116]" />
               ) : (
                 <Maximize2 className="w-4 h-4" />
               )}
@@ -308,13 +383,13 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
           {/* User Profile Solved Avatar (Clean circle with count) */}
           <button
             onClick={() => setActiveTab('dashboard')}
-            className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-[#383838] transition-colors cursor-pointer"
+            className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer"
             title="View Dashboard Analytics"
           >
-            <div className="w-6 h-6 rounded-full bg-[#383838] border border-neutral-600 text-emerald-400 font-bold text-[11px] flex items-center justify-center">
+            <div className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-[#383838] border border-emerald-300 dark:border-neutral-600 text-emerald-600 dark:text-emerald-400 font-bold text-[11px] flex items-center justify-center">
               ✓
             </div>
-            <span className="text-xs font-mono text-neutral-300">
+            <span className="text-xs font-mono text-slate-600 dark:text-neutral-300">
               {totalSolved}/{totalQuestions}
             </span>
           </button>

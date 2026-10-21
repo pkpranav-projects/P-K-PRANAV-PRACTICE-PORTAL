@@ -1,6 +1,6 @@
 # ☕ Java Practice Arena — Complete Exam-Style Coding Platform
 
-A personal, production-grade Java programming practice and exam portal built from real skipped Neo Portal (`iamneo.ai` / `examly.io`) lab exam screenshots.
+A personal, production-grade Java programming practice and exam portal built from real skipped university lab exam screenshots.
 
 ---
 

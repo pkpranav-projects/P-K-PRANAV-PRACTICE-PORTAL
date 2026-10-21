@@ -5,11 +5,15 @@ import { LeetCodeSidebar } from './components/LeetCodeSidebar';
 import { ExploreView } from './components/ExploreView';
 import { QuestionBankView } from './components/QuestionBankView';
 import { ProblemWorkspaceView } from './components/ProblemWorkspaceView';
+import { DBMSPracticeView } from './components/DBMSPracticeView';
 import { CurriculumView } from './components/CurriculumView';
 import { MasterclassView } from './components/MasterclassView';
 import { ExamModeView } from './components/ExamModeView';
 import { DashboardView } from './components/DashboardView';
 import { SettingsModal } from './components/SettingsModal';
+import { CommandPalette } from './components/CommandPalette';
+import { KeyboardShortcutsModal } from './components/KeyboardShortcutsModal';
+import { soundManager } from './services/sound';
 import { api } from './services/api';
 import { DashboardStats, QuestionSummary, SystemHealth } from './types';
 
@@ -20,12 +24,27 @@ export const App: React.FC = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSidebarFullyContracted, setIsSidebarFullyContracted] = useState(false);
   const [isAbsoluteFullscreen, setIsAbsoluteFullscreen] = useState(false);
-  const [selectedBankFilter, setSelectedBankFilter] = useState<'bank1' | 'bank2' | 'all'>('all');
+  const [selectedBankFilter, setSelectedBankFilter] = useState<'bank1' | 'bank2' | 'bank3' | 'dbms' | 'all'>('all');
+  const [questionViewMode, setQuestionViewMode] = useState<'table' | 'cards' | 'topic'>(() => {
+    try {
+      return (localStorage.getItem('arena_question_view_mode') as any) || 'table';
+    } catch {
+      return 'table';
+    }
+  });
 
   const [theme, setTheme] = useState<'dark' | 'oled' | 'light' | 'system'>(() => {
     return (localStorage.getItem('arena_theme') as any) || 'dark';
   });
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(() => soundManager.enabled);
+
+  const toggleSound = useCallback(() => {
+    const next = soundManager.toggle();
+    setIsSoundEnabled(next);
+  }, []);
 
   // Data states
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -147,6 +166,33 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [toggleAbsoluteFullscreen]);
 
+  // Global Keyboard shortcuts: Ctrl+K (Palette), Ctrl+B (Sidebar), ? (Shortcuts Cheatsheet)
+  useEffect(() => {
+    const handleGlobalHotkeys = (e: KeyboardEvent) => {
+      // Ctrl+K / Cmd+K: Command Palette
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        setIsCommandPaletteOpen((prev) => !prev);
+      }
+      // Ctrl+B / Cmd+B: Sidebar Collapse
+      else if ((e.ctrlKey || e.metaKey) && (e.key === 'b' || e.key === 'B')) {
+        e.preventDefault();
+        setIsSidebarCollapsed((prev) => !prev);
+      }
+      // ?: Keyboard Shortcuts Modal (when not actively typing in an input/textarea)
+      else if (e.key === '?' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        const target = e.target as HTMLElement;
+        const tagName = target?.tagName?.toLowerCase();
+        if (tagName !== 'input' && tagName !== 'textarea' && !target?.isContentEditable) {
+          e.preventDefault();
+          setIsShortcutsOpen((prev) => !prev);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleGlobalHotkeys);
+    return () => window.removeEventListener('keydown', handleGlobalHotkeys);
+  }, []);
+
   // Load initial application data
   const loadInitialData = useCallback(async () => {
     try {
@@ -213,7 +259,7 @@ export const App: React.FC = () => {
   const allQuestionIds = questions.map((q) => q.id);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-[#eff1f6bf] flex flex-col select-none transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#1a1a1a] dark:text-[#eff1f6bf] flex flex-col select-none transition-colors duration-200">
       {/* Authentic LeetCode Top Navigation Bar (Fixed 50px) */}
       <LeetCodeNavbar
         activeTab={activeTab}
@@ -230,6 +276,10 @@ export const App: React.FC = () => {
         activeQuestionId={activeQuestionId}
         isAbsoluteFullscreen={isAbsoluteFullscreen}
         onToggleAbsoluteFullscreen={toggleAbsoluteFullscreen}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        onOpenShortcutsModal={() => setIsShortcutsOpen(true)}
+        isSoundEnabled={isSoundEnabled}
+        onToggleSound={toggleSound}
       />
 
       {/* Main Page Layout: Left Docked LeetCode Sidebar + Content */}
@@ -247,12 +297,16 @@ export const App: React.FC = () => {
               setSelectedBankFilter(bank);
               setActiveTab('problems');
             }}
-            totalQuestions={stats?.totalQuestions || 45}
+            totalQuestions={stats?.totalQuestions || 101}
             totalSolved={stats?.solvedCount || 0}
             bank1Solved={stats?.bank1Solved || 0}
             bank1Total={stats?.bank1Total || 30}
             bank2Solved={stats?.bank2Solved || 0}
             bank2Total={stats?.bank2Total || 15}
+            bank3Solved={stats?.bank3Solved || 0}
+            bank3Total={stats?.bank3Total || 56}
+            dbmsSolved={stats?.dbmsSolved || 0}
+            dbmsTotal={stats?.dbmsTotal || 12}
           />
         )}
 
@@ -273,7 +327,7 @@ export const App: React.FC = () => {
             </div>
           ) : (
             <>
-              {/* LeetCode Explore Page (Authentic Featured, Interview, Learn sections) */}
+              {/* LeetCode Explore Page (Authentic, On-Point Explorables) */}
               {activeTab === 'explore' && (
                 <ExploreView
                   stats={stats}
@@ -283,9 +337,25 @@ export const App: React.FC = () => {
                     setSelectedBankFilter(bank);
                     setActiveTab('problems');
                   }}
+                  onNavigateToDBMS={() => setActiveTab('dbms')}
+                  onNavigateToTopicMode={() => {
+                    setQuestionViewMode('topic');
+                    try { localStorage.setItem('arena_question_view_mode', 'topic'); } catch {}
+                    setSelectedBankFilter('all');
+                    setActiveTab('problems');
+                  }}
                   onNavigateToMasterclass={() => setActiveTab('masterclass')}
                   onNavigateToCurriculum={() => setActiveTab('curriculum')}
                   onNavigateToExam={() => setActiveTab('exam')}
+                  onNavigateToRevision={() => setActiveTab('revision')}
+                  onNavigateToDashboard={() => setActiveTab('dashboard')}
+                  onNavigateToWorkspace={() => {
+                    if (activeQuestionId) {
+                      setActiveTab('workspace');
+                    } else {
+                      handlePickRandom();
+                    }
+                  }}
                   onPickRandom={handlePickRandom}
                 />
               )}
@@ -299,6 +369,7 @@ export const App: React.FC = () => {
                   onToggleRevision={handleToggleRevision}
                   initialFilterStatus="All"
                   initialBank={selectedBankFilter}
+                  initialViewMode={questionViewMode}
                   onPickRandom={handlePickRandom}
                 />
               )}
@@ -313,6 +384,18 @@ export const App: React.FC = () => {
                   allQuestionIds={allQuestionIds}
                   isAbsoluteFullscreen={isAbsoluteFullscreen}
                   onToggleAbsoluteFullscreen={toggleAbsoluteFullscreen}
+                />
+              )}
+
+              {/* DBMS & SQL Engineering Lab Arena */}
+              {activeTab === 'dbms' && (
+                <DBMSPracticeView
+                  questions={questions}
+                  onSelectQuestion={handleSelectQuestion}
+                  onNavigateToBank={(bank) => {
+                    setSelectedBankFilter(bank);
+                    setActiveTab('problems');
+                  }}
                 />
               )}
 
@@ -397,6 +480,27 @@ export const App: React.FC = () => {
         }}
         systemHealth={systemHealth}
         onDataReset={loadInitialData}
+      />
+
+      {/* Global Command Palette (Ctrl+K) */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        questions={questions}
+        onSelectQuestion={handleSelectQuestion}
+        setActiveTab={setActiveTab}
+        onPickRandom={handlePickRandom}
+        theme={theme}
+        setTheme={setTheme}
+        onToggleFullscreen={toggleAbsoluteFullscreen}
+        isSoundEnabled={isSoundEnabled}
+        onToggleSound={toggleSound}
+      />
+
+      {/* Keyboard Shortcuts Cheatsheet Modal (?) */}
+      <KeyboardShortcutsModal
+        isOpen={isShortcutsOpen}
+        onClose={() => setIsShortcutsOpen(false)}
       />
     </div>
   );

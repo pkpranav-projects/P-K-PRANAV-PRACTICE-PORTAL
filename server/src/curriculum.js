@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const documentsDir = path.resolve(__dirname, '../../documentss');
 
 const curriculumList = [
-  // Module 1: Java Foundations & Language Basics
+  // Module 1: Java Foundations & Primitives
   {
     id: 'doc-01',
     sequence: 1,
@@ -50,41 +50,11 @@ const curriculumList = [
       'Critical for solving String portal questions (questions java-001 through java-005).'
     ]
   },
+
+  // Module 2: Object-Oriented Programming (OOP)
   {
     id: 'doc-04',
     sequence: 4,
-    title: 'Single & Multi-Dimensional Arrays',
-    filename: 'Section12_Arrays+in+Java.pdf',
-    module: 'Foundations & Primitives',
-    format: 'PDF',
-    estimatedMinutes: 30,
-    description: [
-      'Covers 1D and 2D array declarations, dynamic memory allocation, and zero-based indexing.',
-      'Teaches nested loop traversals, matrix row-column mappings, and boundary validations.',
-      'Explores common edge cases including ArrayIndexOutOfBoundsException and jagged arrays.',
-      'Directly applies to matrix rotation, multiplication, and sorting exam challenges.'
-    ]
-  },
-
-  // Module 2: Object-Oriented Programming & Hierarchy
-  {
-    id: 'doc-05',
-    sequence: 5,
-    title: 'Array of Custom Objects & Heap References',
-    filename: 'Array of Object.pdf',
-    module: 'OOP & Class Design',
-    format: 'PDF',
-    estimatedMinutes: 20,
-    description: [
-      'Explains how reference arrays store pointers rather than actual object memory in the heap.',
-      'Demonstrates two-step instantiation: creating the array container then instantiating each item.',
-      'Highlights common NullPointerException hazards when iterating uninitialized elements.',
-      'Bridges foundational arrays with real-world entity modeling and collection classes.'
-    ]
-  },
-  {
-    id: 'doc-06',
-    sequence: 6,
     title: 'Class Inheritance & Polymorphism',
     filename: 'Section10_Inheritance+in+Java.pdf',
     module: 'OOP & Class Design',
@@ -98,8 +68,8 @@ const curriculumList = [
     ]
   },
   {
-    id: 'doc-07',
-    sequence: 7,
+    id: 'doc-05',
+    sequence: 5,
     title: 'Super Constructor Chaining & State Initialization',
     filename: 'Super constructor.pptx',
     module: 'OOP & Class Design',
@@ -113,8 +83,8 @@ const curriculumList = [
     ]
   },
   {
-    id: 'doc-08',
-    sequence: 8,
+    id: 'doc-06',
+    sequence: 6,
     title: 'Interfaces & Multiple Contract Inheritance',
     filename: 'Section11_Interfaces+in+Java (1).pdf',
     module: 'OOP & Class Design',
@@ -128,8 +98,8 @@ const curriculumList = [
     ]
   },
   {
-    id: 'doc-09',
-    sequence: 9,
+    id: 'doc-07',
+    sequence: 7,
     title: 'Applied Interface Architecture & Decoupling',
     filename: 'Java+Interface (2).pptx',
     module: 'OOP & Class Design',
@@ -143,7 +113,39 @@ const curriculumList = [
     ]
   },
 
-  // Module 3: Exception Handling & Robust Systems
+  // Module 3: Arrays & Object Arrays
+  {
+    id: 'doc-08',
+    sequence: 8,
+    title: 'Single & Multi-Dimensional Arrays',
+    filename: 'Section12_Arrays+in+Java.pdf',
+    module: 'Arrays & Object References',
+    format: 'PDF',
+    estimatedMinutes: 30,
+    description: [
+      'Covers 1D and 2D array declarations, dynamic memory allocation, and zero-based indexing.',
+      'Teaches nested loop traversals, matrix row-column mappings, and boundary validations.',
+      'Explores common edge cases including ArrayIndexOutOfBoundsException and jagged arrays.',
+      'Directly applies to matrix rotation, multiplication, and sorting exam challenges.'
+    ]
+  },
+  {
+    id: 'doc-09',
+    sequence: 9,
+    title: 'Array of Custom Objects & Heap References',
+    filename: 'Array of Object.pdf',
+    module: 'Arrays & Object References',
+    format: 'PDF',
+    estimatedMinutes: 20,
+    description: [
+      'Explains how reference arrays store pointers rather than actual object memory in the heap.',
+      'Demonstrates two-step instantiation: creating the array container then instantiating each item.',
+      'Highlights common NullPointerException hazards when iterating uninitialized elements.',
+      'Bridges foundational arrays with real-world entity modeling and collection classes.'
+    ]
+  },
+
+  // Module 4: Exception Handling & Robust Systems
   {
     id: 'doc-10',
     sequence: 10,
@@ -190,7 +192,7 @@ const curriculumList = [
     ]
   },
 
-  // Module 4: File I/O & Stream Processing
+  // Module 5: File I/O & Stream Processing
   {
     id: 'doc-13',
     sequence: 13,
@@ -222,43 +224,13 @@ const curriculumList = [
     ]
   },
 
-  // Module 5: Generics & Linear Collections
+  // Module 6: Collections - Lists & Sequences
   {
     id: 'doc-15',
     sequence: 15,
-    title: 'Generics Fundamentals & Type Safety',
-    filename: 'Section19_Generics+in+Java.pdf',
-    module: 'Generics & Collections',
-    format: 'PDF',
-    estimatedMinutes: 30,
-    description: [
-      'Explains how generic type parameters <T, E, K, V> provide compile-time type safety.',
-      'Demonstrates generic class and method syntax while eliminating manual typecasting.',
-      'Explores type erasure mechanics and how bytecode retains backwards compatibility.',
-      'Essential prerequisite for understanding modern Java Collection Framework data structures.'
-    ]
-  },
-  {
-    id: 'doc-16',
-    sequence: 16,
-    title: 'Bounded Type Parameters & Wildcards',
-    filename: 'Generics.pptx',
-    module: 'Generics & Collections',
-    format: 'PPTX',
-    estimatedMinutes: 20,
-    description: [
-      'Covers advanced generics including upper bounded wildcards <? extends Number>.',
-      'Explains lower bounded wildcards <? super Integer> and the PECS design principle.',
-      'Demonstrates generic interfaces and constraints when writing reusable library algorithms.',
-      'Crucial for advanced university Java exams testing polymorphic generic collections.'
-    ]
-  },
-  {
-    id: 'doc-17',
-    sequence: 17,
     title: 'List Interface & ArrayList Dynamic Arrays',
     filename: 'Section17_Lists+and+ArrayLists+Unleashed+–+A+Hilarious+Journey+through+Data+Structures.pdf',
-    module: 'Generics & Collections',
+    module: 'Collections - Lists & Sequences',
     format: 'PDF',
     estimatedMinutes: 35,
     description: [
@@ -269,11 +241,11 @@ const curriculumList = [
     ]
   },
   {
-    id: 'doc-18',
-    sequence: 18,
+    id: 'doc-16',
+    sequence: 16,
     title: 'ArrayList with Custom Entity Classes (CRUD)',
     filename: 'ArrayList program for Student Class.docx',
-    module: 'Generics & Collections',
+    module: 'Collections - Lists & Sequences',
     format: 'DOCX',
     estimatedMinutes: 15,
     description: [
@@ -284,11 +256,11 @@ const curriculumList = [
     ]
   },
   {
-    id: 'doc-19',
-    sequence: 19,
+    id: 'doc-17',
+    sequence: 17,
     title: 'LinkedList Internals & Doubly-Linked Nodes',
     filename: "Section18_LinkedLists+-+Java's+Dance+of+Nodes.pdf",
-    module: 'Generics & Collections',
+    module: 'Collections - Lists & Sequences',
     format: 'PDF',
     estimatedMinutes: 30,
     description: [
@@ -299,11 +271,11 @@ const curriculumList = [
     ]
   },
   {
-    id: 'doc-20',
-    sequence: 20,
+    id: 'doc-18',
+    sequence: 18,
     title: 'Vectors & Thread-Safe Legacy Collections',
     filename: 'Vectors.pptx',
-    module: 'Generics & Collections',
+    module: 'Collections - Lists & Sequences',
     format: 'PPTX',
     estimatedMinutes: 20,
     description: [
@@ -314,12 +286,12 @@ const curriculumList = [
     ]
   },
   {
-    id: 'doc-21',
-    sequence: 21,
+    id: 'doc-19',
+    sequence: 19,
     title: 'Stacks, Queues & Double-Ended Deques',
     filename: 'stack_queue_deque.ppt',
-    module: 'Generics & Collections',
-    format: 'PPTX',
+    module: 'Collections - Lists & Sequences',
+    format: 'PPT',
     estimatedMinutes: 25,
     description: [
       'Illustrates Last-In-First-Out (LIFO) Stack operations: push, pop, and peek.',
@@ -329,43 +301,45 @@ const curriculumList = [
     ]
   },
 
-  // Module 6: Sets, Maps & Object Sorting
+  // Module 7: Generics & Type Parameters
   {
-    id: 'doc-22',
-    sequence: 22,
-    title: 'Set Interface, HashSets & TreeSets',
-    filename: 'Section21_Set,+HashSet,+TreeSet,+LinkedHashSet.pdf',
-    module: 'Sets, Maps & Sorting',
+    id: 'doc-20',
+    sequence: 20,
+    title: 'Generics Fundamentals & Type Safety',
+    filename: 'Section19_Generics+in+Java.pdf',
+    module: 'Generics & Type Parameters',
     format: 'PDF',
     estimatedMinutes: 30,
     description: [
-      'Covers the Set interface contract ensuring mathematical uniqueness with zero duplicate elements.',
-      'Details HashSet hashing mechanics and bucket indexing via hashCode() and equals().',
-      'Contrasts HashSet (unordered), LinkedHashSet (insertion order), and TreeSet (sorted order).',
-      'Indispensable for deduplicating data streams and O(1) membership testing in exams.'
+      'Explains how generic type parameters <T, E, K, V> provide compile-time type safety.',
+      'Demonstrates generic class and method syntax while eliminating manual typecasting.',
+      'Explores type erasure mechanics and how bytecode retains backwards compatibility.',
+      'Essential prerequisite for understanding modern Java Collection Framework data structures.'
     ]
   },
   {
-    id: 'doc-23',
-    sequence: 23,
-    title: 'Set Operations Code & Mathematical Algorithms',
-    filename: 'Set Interface example programs.docx',
-    module: 'Sets, Maps & Sorting',
-    format: 'DOCX',
-    estimatedMinutes: 15,
+    id: 'doc-21',
+    sequence: 21,
+    title: 'Bounded Type Parameters & Wildcards',
+    filename: 'Generics.pptx',
+    module: 'Generics & Type Parameters',
+    format: 'PPTX',
+    estimatedMinutes: 20,
     description: [
-      'Collection of executable Java programs demonstrating real-world Set manipulation.',
-      'Shows mathematical set operations: union (addAll), intersection (retainAll), and difference (removeAll).',
-      'Demonstrates word frequency extraction and unique token harvesting from raw text inputs.',
-      'Provides ready-to-adapt code snippets for competitive exam string and set challenges.'
+      'Covers advanced generics including upper bounded wildcards <? extends Number>.',
+      'Explains lower bounded wildcards <? super Integer> and the PECS design principle.',
+      'Demonstrates generic interfaces and constraints when writing reusable library algorithms.',
+      'Crucial for advanced university Java exams testing polymorphic generic collections.'
     ]
   },
+
+  // Module 8: Maps, Sets & Sorting
   {
-    id: 'doc-24',
-    sequence: 24,
+    id: 'doc-22',
+    sequence: 22,
     title: 'Map Architecture: HashMaps, TreeMaps & Red-Black Trees',
     filename: 'Section20_Deep+dive+on+Map,+HashMap,+TreeMap,+LinkedHashMap.pdf',
-    module: 'Sets, Maps & Sorting',
+    module: 'Maps, Sets & Sorting',
     format: 'PDF',
     estimatedMinutes: 40,
     description: [
@@ -376,11 +350,41 @@ const curriculumList = [
     ]
   },
   {
+    id: 'doc-23',
+    sequence: 23,
+    title: 'Set Interface, HashSets & TreeSets',
+    filename: 'Section21_Set,+HashSet,+TreeSet,+LinkedHashSet.pdf',
+    module: 'Maps, Sets & Sorting',
+    format: 'PDF',
+    estimatedMinutes: 30,
+    description: [
+      'Covers the Set interface contract ensuring mathematical uniqueness with zero duplicate elements.',
+      'Details HashSet hashing mechanics and bucket indexing via hashCode() and equals().',
+      'Contrasts HashSet (unordered), LinkedHashSet (insertion order), and TreeSet (sorted order).',
+      'Indispensable for deduplicating data streams and O(1) membership testing in exams.'
+    ]
+  },
+  {
+    id: 'doc-24',
+    sequence: 24,
+    title: 'Set Operations Code & Mathematical Algorithms',
+    filename: 'Set Interface example programs.docx',
+    module: 'Maps, Sets & Sorting',
+    format: 'DOCX',
+    estimatedMinutes: 15,
+    description: [
+      'Collection of executable Java programs demonstrating real-world Set manipulation.',
+      'Shows mathematical set operations: union (addAll), intersection (retainAll), and difference (removeAll).',
+      'Demonstrates word frequency extraction and unique token harvesting from raw text inputs.',
+      'Provides ready-to-adapt code snippets for competitive exam string and set challenges.'
+    ]
+  },
+  {
     id: 'doc-25',
     sequence: 25,
     title: 'Object Ordering: Comparable vs Comparator',
     filename: 'comparable and comparator.docx',
-    module: 'Sets, Maps & Sorting',
+    module: 'Maps, Sets & Sorting',
     format: 'DOCX',
     estimatedMinutes: 20,
     description: [
@@ -391,13 +395,13 @@ const curriculumList = [
     ]
   },
 
-  // Module 7: Modern Date/Time & Multithreading
+  // Module 9: Modern Java & Concurrency
   {
     id: 'doc-26',
     sequence: 26,
     title: 'Modern Date & Time API (java.time)',
     filename: 'Section23_Date+and+Time+in+Java.pdf',
-    module: 'Modern Java & Threads',
+    module: 'Modern Java & Concurrency',
     format: 'PDF',
     estimatedMinutes: 25,
     description: [
@@ -412,7 +416,7 @@ const curriculumList = [
     sequence: 27,
     title: 'Multithreading, Lifecycle & Synchronization',
     filename: 'Java+Threads.pptx',
-    module: 'Modern Java & Threads',
+    module: 'Modern Java & Concurrency',
     format: 'PPTX',
     estimatedMinutes: 35,
     description: [

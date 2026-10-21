@@ -1,0 +1,1842 @@
+[
+  {
+    "index": 1,
+    "q_num": "1",
+    "files": "Screenshot (295).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 8_COD 1 Sections",
+    "input_preview": "The first line of input consists of an integer N representing the number of products. The second line of input consists ",
+    "constraints_preview": ""
+  },
+  {
+    "index": 2,
+    "q_num": "1",
+    "files": "Screenshot (296).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 8_COD",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 S N s 20 1 price 10000"
+  },
+  {
+    "index": 3,
+    "q_num": "1",
+    "files": "Screenshot (297).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 8_COD",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 4,
+    "q_num": "2",
+    "files": "Screenshot (298).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 8_COD 1 Sections",
+    "input_preview": "The first line of input consists of an integer N representing the number of items in the cart.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 5,
+    "q_num": "2",
+    "files": "Screenshot (299).png - Screenshot (300).png",
+    "file_count": 2,
+    "snippet": "1 Sections",
+    "desc_preview": "",
+    "input_preview": "The first line of input consists of an integer N representing the number of items in the cart.",
+    "constraints_preview": "1 price 10000"
+  },
+  {
+    "index": 6,
+    "q_num": "3",
+    "files": "Screenshot (301).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 8_COD 1 Sections",
+    "input_preview": "The first line of input consists of an integer N representing the number of students. The second line of input consists ",
+    "constraints_preview": ""
+  },
+  {
+    "index": 7,
+    "q_num": "3",
+    "files": "Screenshot (302).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu",
+    "constraints_preview": "1 marks 100 Narnes are single words with no spaces"
+  },
+  {
+    "index": 8,
+    "q_num": "3",
+    "files": "Screenshot (303).png",
+    "file_count": 1,
+    "snippet": "Input",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 9,
+    "q_num": "4",
+    "files": "Screenshot (304).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 8_COD 1 Sections",
+    "input_preview": "The first line of input consists of an integer N representing the number of students present.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 10,
+    "q_num": "4",
+    "files": "Screenshot (305).png",
+    "file_count": 1,
+    "snippet": "The last line prints Count: X where X is the total number of students.",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 roll number 1000"
+  },
+  {
+    "index": 11,
+    "q_num": "4",
+    "files": "Screenshot (306).png",
+    "file_count": 1,
+    "snippet": "4",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 12,
+    "q_num": "1",
+    "files": "Screenshot (307).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "The first line of input consists of an integer N representing the number of employees.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 13,
+    "q_num": "1",
+    "files": "Screenshot (308).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "10000 salary 200000 Narnes are single words with no spaces"
+  },
+  {
+    "index": 14,
+    "q_num": "1",
+    "files": "Screenshot (309).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 15,
+    "q_num": "2",
+    "files": "Screenshot (310).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "The first line of input consists of an integer N representing the number of scores. The second line of input consists of",
+    "constraints_preview": ""
+  },
+  {
+    "index": 16,
+    "q_num": "2",
+    "files": "Screenshot (311).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_",
+    "desc_preview": "",
+    "input_preview": "The first line of input consists of an integer N representing the number of scores. The second line of input consists of",
+    "constraints_preview": "1 S N s 20 1 score 1000"
+  },
+  {
+    "index": 17,
+    "q_num": "2",
+    "files": "Screenshot (312).png",
+    "file_count": 1,
+    "snippet": "case I",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 18,
+    "q_num": "3",
+    "files": "Screenshot (313).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o For example, start = 1, end = 10, step Amrita_24CYS204_Advance Prgramming_",
+    "input_preview": "The first line nf innut consists nf three snace-senarated inteaers renresentina the Summary 0/4 >",
+    "constraints_preview": ""
+  },
+  {
+    "index": 19,
+    "q_num": "3",
+    "files": "Screenshot (314).png - Screenshot (315).png",
+    "file_count": 2,
+    "snippet": "E8220",
+    "desc_preview": "",
+    "input_preview": "The first line of input consists of three space-separated integers representing the start value, end value, and step siz",
+    "constraints_preview": "O start end 200 1 step 50"
+  },
+  {
+    "index": 20,
+    "q_num": "4",
+    "files": "Screenshot (316).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "The first line of input consists of an integer N representing the number of words. The second line of input consists of ",
+    "constraints_preview": ""
+  },
+  {
+    "index": 21,
+    "q_num": "4",
+    "files": "Screenshot (317).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 word length 20 All words are lowercase with no spaces"
+  },
+  {
+    "index": 22,
+    "q_num": "4",
+    "files": "Screenshot (318).png",
+    "file_count": 1,
+    "snippet": "5",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 23,
+    "q_num": "1",
+    "files": "Screenshot (319).png",
+    "file_count": 1,
+    "snippet": "8E118",
+    "desc_preview": "8E118 -o Amrita_24CYS204_Advance Prgramming_Day 8_PAH",
+    "input_preview": "The first line of input consists of an integer N representing the number of books. The second line of input consists of ",
+    "constraints_preview": ""
+  },
+  {
+    "index": 24,
+    "q_num": "1",
+    "files": "Screenshot (320).png - Screenshot (321).png",
+    "file_count": 2,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 8E118",
+    "constraints_preview": "1 pages 2000 Book titles are single words with no spaces"
+  },
+  {
+    "index": 25,
+    "q_num": "2",
+    "files": "Screenshot (322).png",
+    "file_count": 1,
+    "snippet": "8E118",
+    "desc_preview": "8E118 -o Amrita_24CYS204_Advance Prgramming_Day 8_PAH",
+    "input_preview": "The first line of input consists of an integer N representing the number of delivery time values.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 26,
+    "q_num": "2",
+    "files": "Screenshot (323).png",
+    "file_count": 1,
+    "snippet": "8E118",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 8E118",
+    "constraints_preview": "1 s N 100 1 delivery time 1000"
+  },
+  {
+    "index": 27,
+    "q_num": "2",
+    "files": "Screenshot (324).png",
+    "file_count": 1,
+    "snippet": "Input",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 28,
+    "q_num": "3",
+    "files": "Screenshot (325).png - Screenshot (326).png",
+    "file_count": 2,
+    "snippet": "8E118",
+    "desc_preview": "8E118 -o Amrita_24CYS204_Advance Prgramming_Day 8_PAH",
+    "input_preview": "The first line of input consists of an integer N representing the number of readings. The second line of input consists ",
+    "constraints_preview": "100 1 reading 100000"
+  },
+  {
+    "index": 29,
+    "q_num": "3",
+    "files": "Screenshot (327).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "P K Pranav CB.SC.U4CYS25037 8E118"
+  },
+  {
+    "index": 30,
+    "q_num": "4",
+    "files": "Screenshot (328).png",
+    "file_count": 1,
+    "snippet": "8E118",
+    "desc_preview": "8E118 -o Amrita_24CYS204_Advance Prgramming_Day 8_PAH",
+    "input_preview": "The first line of input consists of two space-separated integers N and K representing the total number of scores and the",
+    "constraints_preview": ""
+  },
+  {
+    "index": 31,
+    "q_num": "4",
+    "files": "Screenshot (329).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "The first line of input consists of two space-separated integers N and K representing the total number of scores and the",
+    "constraints_preview": "IS KS N s 20 1 score 10000"
+  },
+  {
+    "index": 32,
+    "q_num": "4",
+    "files": "Screenshot (330).png",
+    "file_count": 1,
+    "snippet": "case I",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 33,
+    "q_num": "1",
+    "files": "Screenshot (331).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 9_COD 1 Sections",
+    "input_preview": "The first line of input consists of an integer n, representing the nurnber of items. The next n groups of three lines ea",
+    "constraints_preview": ""
+  },
+  {
+    "index": 34,
+    "q_num": "1",
+    "files": "Screenshot (332).png - Screenshot (335).png",
+    "file_count": 4,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1SnSIO 0.1 deposit 10000.0"
+  },
+  {
+    "index": 35,
+    "q_num": "2",
+    "files": "Screenshot (336).png - Screenshot (337).png",
+    "file_count": 2,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 9_COD 1 Sections",
+    "input_preview": "The first line of input contains an integer N - the number of vehicles. The next N lines contain details of each vehicle",
+    "constraints_preview": "IS NSIO 6 RegNumber length IO"
+  },
+  {
+    "index": 36,
+    "q_num": "2",
+    "files": "Screenshot (338).png - Screenshot (339).png",
+    "file_count": 2,
+    "snippet": "FC143",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "IS NSIO 6 RegNumber length IO"
+  },
+  {
+    "index": 37,
+    "q_num": "3",
+    "files": "Screenshot (340).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 9_COD",
+    "desc_preview": "Amrita_24CYS204_Advance Prgramming_Day 9_COD FC143 + 30",
+    "input_preview": "The first line of input consists of an integer value, S, representing the target sum. The second line of input consists ",
+    "constraints_preview": ""
+  },
+  {
+    "index": 38,
+    "q_num": "3",
+    "files": "Screenshot (341).png - Screenshot (342).png",
+    "file_count": 2,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 9_COD",
+    "desc_preview": "",
+    "input_preview": "Amrita_24CYS204_Advance Prgramming_Day 9_COD FC143",
+    "constraints_preview": "1 sss 1000 IS NSIO"
+  },
+  {
+    "index": 39,
+    "q_num": "4",
+    "files": "Screenshot (343).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 9_COD",
+    "desc_preview": "Amrita_24CYS204_Advance Prgramming_Day 9_COD FC143 + 30",
+    "input_preview": "The first line contains an integer n, the number of books. The next n lines contain book details in the forrnat: title a",
+    "constraints_preview": ""
+  },
+  {
+    "index": 40,
+    "q_num": "4",
+    "files": "Screenshot (344).png",
+    "file_count": 1,
+    "snippet": "All values are space-separated.",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "50 1 price 10000"
+  },
+  {
+    "index": 41,
+    "q_num": "4",
+    "files": "Screenshot (345).png",
+    "file_count": 1,
+    "snippet": "case I",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 42,
+    "q_num": "1",
+    "files": "Screenshot (346).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "The first line of the input is an integer N representing the size of the list. The second line of the input is N space-s",
+    "constraints_preview": "Summary 0/4 Java (11)"
+  },
+  {
+    "index": 43,
+    "q_num": "1",
+    "files": "Screenshot (347).png - Screenshot (349).png",
+    "file_count": 3,
+    "snippet": "4 Questions",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 1 Sections",
+    "constraints_preview": "1 array elernent 20 1 array elernent 20"
+  },
+  {
+    "index": 44,
+    "q_num": "2",
+    "files": "Screenshot (350).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "The input consists of multiple space-separated values representing different operations on a product list. Each operatio",
+    "constraints_preview": ""
+  },
+  {
+    "index": 45,
+    "q_num": "2",
+    "files": "Screenshot (351).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_",
+    "desc_preview": "",
+    "input_preview": "The input consists of multiple space-separated values representing different operations on a product list. Each operatio",
+    "constraints_preview": ""
+  },
+  {
+    "index": 46,
+    "q_num": "2",
+    "files": "Screenshot (352).png - Screenshot (355).png",
+    "file_count": 4,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu",
+    "constraints_preview": "1 Choice 4 1 string length 100"
+  },
+  {
+    "index": 47,
+    "q_num": "3",
+    "files": "Screenshot (356).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "Line 1: integer n \u2014 number of books to add. Next n lines: three space-separated values \u2014 ISBN (integer), Title (string, ",
+    "constraints_preview": ""
+  },
+  {
+    "index": 48,
+    "q_num": "3",
+    "files": "Screenshot (357).png",
+    "file_count": 1,
+    "snippet": "spaces), Author (string, no spaces).",
+    "desc_preview": "",
+    "input_preview": "Line 1: integer n \u2014 number of books to add. Next n lines: three space-separated values \u2014 ISBN (integer), Title (string, ",
+    "constraints_preview": "1 snS20 C) g rnsn"
+  },
+  {
+    "index": 49,
+    "q_num": "3",
+    "files": "Screenshot (358).png",
+    "file_count": 1,
+    "snippet": "Output Format",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 snS20 1000 ISBN 9999 (unique)"
+  },
+  {
+    "index": 50,
+    "q_num": "4",
+    "files": "Screenshot (359).png - Screenshot (360).png",
+    "file_count": 2,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "Summary 0/4 > Java (11)",
+    "constraints_preview": "50 O score 100"
+  },
+  {
+    "index": 51,
+    "q_num": "4",
+    "files": "Screenshot (361).png - Screenshot (362).png",
+    "file_count": 2,
+    "snippet": "O score 100",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "50 O score 100"
+  },
+  {
+    "index": 52,
+    "q_num": "4",
+    "files": "Screenshot (363).png",
+    "file_count": 1,
+    "snippet": "Ravi 92 200",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 53,
+    "q_num": "1",
+    "files": "Screenshot (401).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 9_PAH",
+    "desc_preview": "Amrita_24CYS204_Advance Prgramming_Day 9_PAH iamneo.ai is now full screen Exit Full Screen (Esc) 2",
+    "input_preview": "The first line of input consists of an integer n, representing the number of students to register.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 54,
+    "q_num": "1",
+    "files": "Screenshot (402).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 9_PAH 1 Sections",
+    "input_preview": "The first line of input consists of an integer n, representing the number of students to register.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 55,
+    "q_num": "1",
+    "files": "Screenshot (403).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "The first line of input consists of an integer n, representing the number of students to register.",
+    "constraints_preview": "Summary 0/4 > Footer Snippet"
+  },
+  {
+    "index": 56,
+    "q_num": "1",
+    "files": "Screenshot (404).png - Screenshot (405).png",
+    "file_count": 2,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "2<nSIO 3 length of each student name 50"
+  },
+  {
+    "index": 57,
+    "q_num": "2",
+    "files": "Screenshot (406).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 9_PAH 1 Sections",
+    "input_preview": "The first line contains an integer N - the nurnber of students. The next N lines contain one of the following commands:",
+    "constraints_preview": ""
+  },
+  {
+    "index": 58,
+    "q_num": "2",
+    "files": "Screenshot (407).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "The first line contains an integer N - the nurnber of students. The next N lines contain one of the following commands:",
+    "constraints_preview": "roll_no (Inteqer, 1 roll_no 1000) -4 Unique student roll nurnber. Summary 0/4 >"
+  },
+  {
+    "index": 59,
+    "q_num": "2",
+    "files": "Screenshot (408).png - Screenshot (409).png",
+    "file_count": 2,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "roll_no (Integer, 1 roll_no 1000) -4 Unique student roll nurnber. name (String, 1 length 50) -+ Student's name (only let"
+  },
+  {
+    "index": 60,
+    "q_num": "3",
+    "files": "Screenshot (410).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 9_PAH",
+    "desc_preview": "Amrita_24CYS204_Advance Prgramming_Day 9_PAH 1 Sections 4 Questions",
+    "input_preview": "The first line contains an integer n - the nurnber of elements in Set A. The second line contains n space-separated inte",
+    "constraints_preview": ""
+  },
+  {
+    "index": 61,
+    "q_num": "3",
+    "files": "Screenshot (411).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 9_PAH",
+    "desc_preview": "Amrita_24CYS204_Advance Prgramming_Day 9_PAH 1 Sections 4 Questions",
+    "input_preview": "The first line contains an integer n - the nurnber of elements in Set A. The second line contains n space-separated inte",
+    "constraints_preview": ""
+  },
+  {
+    "index": 62,
+    "q_num": "3",
+    "files": "Screenshot (412).png - Screenshot (414).png",
+    "file_count": 3,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 9_PAH",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 S n, m S 10 -10000 each element 40000"
+  },
+  {
+    "index": 63,
+    "q_num": "4",
+    "files": "Screenshot (415).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 9_PAH 1 Sections",
+    "input_preview": "The first line contains an integer N, representing the number of words in the list. The next N lines contain a string re",
+    "constraints_preview": "Summary 0/4 > Java (11)"
+  },
+  {
+    "index": 64,
+    "q_num": "4",
+    "files": "Screenshot (416).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "IS NS15 Each word consists of lowercase English letters only."
+  },
+  {
+    "index": 65,
+    "q_num": "4",
+    "files": "Screenshot (417).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 66,
+    "q_num": "1",
+    "files": "Screenshot (421).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day IO_COD 1 Sections",
+    "input_preview": "The input consists of choices representing the operation to be performed. If the choice is 1, the following input consis",
+    "constraints_preview": ""
+  },
+  {
+    "index": 67,
+    "q_num": "1",
+    "files": "Screenshot (422).png - Screenshot (426).png",
+    "file_count": 5,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 68,
+    "q_num": "2",
+    "files": "Screenshot (427).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day IO_COD 1 Sections",
+    "input_preview": "Each line contains an integer representing the chosen option from 1 to 3. Option 1: Enqueue a new order ID into the queu",
+    "constraints_preview": ""
+  },
+  {
+    "index": 69,
+    "q_num": "2",
+    "files": "Screenshot (428).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day IO_COD",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "The maximum size of the queue is defined as max = 5. The queue can store integer values."
+  },
+  {
+    "index": 70,
+    "q_num": "2",
+    "files": "Screenshot (429).png - Screenshot (431).png",
+    "file_count": 3,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day IO_COD",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "The maximum size of the queue is defined as max = 5. The queue can store integer values."
+  },
+  {
+    "index": 71,
+    "q_num": "2",
+    "files": "Screenshot (432).png",
+    "file_count": 1,
+    "snippet": "Case 3",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 72,
+    "q_num": "2",
+    "files": "Screenshot (433).png - Screenshot (434).png",
+    "file_count": 2,
+    "snippet": "Case 3",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 73,
+    "q_num": "3",
+    "files": "Screenshot (435).png",
+    "file_count": 1,
+    "snippet": "Jansi is working on implementing deque (double-ended queue) operations in her",
+    "desc_preview": "Jansi is working on implementing deque (double-ended queue) operations in her -o Amrita_24CYS204_Advance Prgramming_Day IO_COD",
+    "input_preview": "The first line of input contains an integer representing the elernent to insert at the front.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 74,
+    "q_num": "3",
+    "files": "Screenshot (436).png - Screenshot (437).png",
+    "file_count": 2,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "The first line of input contains an integer representing the elernent to insert at the front.",
+    "constraints_preview": "number of inputs = 6 1 element value 10000"
+  },
+  {
+    "index": 75,
+    "q_num": "3",
+    "files": "Screenshot (438).png - Screenshot (439).png",
+    "file_count": 2,
+    "snippet": "case I",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 76,
+    "q_num": "4",
+    "files": "Screenshot (440).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Print the original string, followed by \" followed by the minimum nurnber of Amrita_24CYS204_Advance Prgramming_Day IO_COD",
+    "input_preview": "The input consists of a single string containing only { and",
+    "constraints_preview": ""
+  },
+  {
+    "index": 77,
+    "q_num": "4",
+    "files": "Screenshot (441).png",
+    "file_count": 1,
+    "snippet": "P K Pranav CB.SC.U4CYS25037",
+    "desc_preview": "",
+    "input_preview": "The input consists of a single string containing only { and",
+    "constraints_preview": "1 Length of the string 100 Summary 0/4"
+  },
+  {
+    "index": 78,
+    "q_num": "4",
+    "files": "Screenshot (442).png - Screenshot (443).png",
+    "file_count": 2,
+    "snippet": "Input",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 79,
+    "q_num": "1",
+    "files": "Screenshot (444).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 80,
+    "q_num": "1",
+    "files": "Screenshot (445).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 81,
+    "q_num": "1",
+    "files": "Screenshot (446).png",
+    "file_count": 1,
+    "snippet": "1 Sections",
+    "desc_preview": "",
+    "input_preview": "For choice 1 (add): \"<name> has been added to the waitlist.\" For choice 2 (remove): \"<name> has been removed from the wa",
+    "constraints_preview": ""
+  },
+  {
+    "index": 82,
+    "q_num": "1",
+    "files": "Screenshot (447).png - Screenshot (449).png",
+    "file_count": 3,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 83,
+    "q_num": "2",
+    "files": "Screenshot (450).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "The first input line contains an integer n, which represents the number of sensor readings.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 84,
+    "q_num": "2",
+    "files": "Screenshot (451).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu",
+    "constraints_preview": "Summary 0/4 c (17)"
+  },
+  {
+    "index": 85,
+    "q_num": "2",
+    "files": "Screenshot (452).png - Screenshot (453).png",
+    "file_count": 2,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1SnSIO 1 sensors 100"
+  },
+  {
+    "index": 86,
+    "q_num": "3",
+    "files": "Screenshot (454).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_ 1 Sections",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 87,
+    "q_num": "3",
+    "files": "Screenshot (455).png",
+    "file_count": 1,
+    "snippet": "P K Pranav CB.SC.U4CYS25037",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 88,
+    "q_num": "3",
+    "files": "Screenshot (456).png - Screenshot (458).png",
+    "file_count": 3,
+    "snippet": "push()",
+    "desc_preview": "",
+    "input_preview": "The input is a string expression.",
+    "constraints_preview": "1 Length of string 50 1 Length of string 50"
+  },
+  {
+    "index": 89,
+    "q_num": "4",
+    "files": "Screenshot (459).png",
+    "file_count": 1,
+    "snippet": "Implement two stacks in an array",
+    "desc_preview": "Implement two stacks in an array -o Amrita_24CYS204_Advance Prgramming_",
+    "input_preview": "The first line contains an integer n, representing the size of the array. The subsequent lines contain a series of opera",
+    "constraints_preview": ""
+  },
+  {
+    "index": 90,
+    "q_num": "4",
+    "files": "Screenshot (460).png",
+    "file_count": 1,
+    "snippet": "3 -9 pop from Stackl.",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 91,
+    "q_num": "4",
+    "files": "Screenshot (461).png",
+    "file_count": 1,
+    "snippet": "Implement two stacks in an array",
+    "desc_preview": "Implement two stacks in an array -o Amrita_24CYS204_Advance Prgramming_",
+    "input_preview": "The first line contains an integer n, representing the size of the array. The subsequent lines contain a series of opera",
+    "constraints_preview": ""
+  },
+  {
+    "index": 92,
+    "q_num": "4",
+    "files": "Screenshot (462).png",
+    "file_count": 1,
+    "snippet": "\"Popped elernent from Stack2 is: X\"",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1SnSIO 100"
+  },
+  {
+    "index": 93,
+    "q_num": "4",
+    "files": "Screenshot (463).png - Screenshot (466).png",
+    "file_count": 4,
+    "snippet": "\"Invalid choice! Please choose again\"",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1SnSIO 100"
+  },
+  {
+    "index": 94,
+    "q_num": "1",
+    "files": "Screenshot (467).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day IO_PAH 1 Sections",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 95,
+    "q_num": "1",
+    "files": "Screenshot (468).png",
+    "file_count": 1,
+    "snippet": "Insert 5-9 front = 5",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 96,
+    "q_num": "1",
+    "files": "Screenshot (469).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "The first line contains an integer n (integer), representing the number of elements. The second line contains n space-se",
+    "constraints_preview": ""
+  },
+  {
+    "index": 97,
+    "q_num": "1",
+    "files": "Screenshot (470).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu",
+    "constraints_preview": "100 1 elements 1000"
+  },
+  {
+    "index": 98,
+    "q_num": "1",
+    "files": "Screenshot (471).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day IO_PAH",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "100 1 elements 1000"
+  },
+  {
+    "index": 99,
+    "q_num": "1",
+    "files": "Screenshot (472).png",
+    "file_count": 1,
+    "snippet": "5",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 100,
+    "q_num": "2",
+    "files": "Screenshot (473).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day IO_PAH 1 Sections",
+    "input_preview": "The input consists of an integer values, each representing an action to be taken: 1: Enqueue a new customer with a given",
+    "constraints_preview": ""
+  },
+  {
+    "index": 101,
+    "q_num": "2",
+    "files": "Screenshot (474).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "The input consists of an integer values, each representing an action to be taken: 1: Enqueue a new customer with a given",
+    "constraints_preview": "Summary 0/4 > C++ ( 17) v"
+  },
+  {
+    "index": 102,
+    "q_num": "2",
+    "files": "Screenshot (475).png - Screenshot (477).png",
+    "file_count": 3,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day IO_PAH",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 Action to be done 3 Each customer is represented by a unique customer ID, which is a positive integer."
+  },
+  {
+    "index": 103,
+    "q_num": "3",
+    "files": "Screenshot (478).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day IO_PAH 1 Sections",
+    "input_preview": "The input consists of a string where representing the a valid expression S without any white spaces.",
+    "constraints_preview": "Summary 0/4 > C++ ( 17) v"
+  },
+  {
+    "index": 104,
+    "q_num": "3",
+    "files": "Screenshot (479).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day IO_PAH",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "The expression is valid and fully parenthesized. Length of the expression 100."
+  },
+  {
+    "index": 105,
+    "q_num": "3",
+    "files": "Screenshot (480).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "The expression is valid and fully parenthesized. P K Pranav CB.SC.U4CYS25037"
+  },
+  {
+    "index": 106,
+    "q_num": "4",
+    "files": "Screenshot (481).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day IO_PAH 1 Sections",
+    "input_preview": "The input consists of a single line of input containing a sentence with words separated by spaces.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 107,
+    "q_num": "4",
+    "files": "Screenshot (482).png - Screenshot (483).png",
+    "file_count": 2,
+    "snippet": "The input consists of a single line of input containing a sentence with words",
+    "desc_preview": "",
+    "input_preview": "The input consists of a single line of input containing a sentence with words separated by spaces.",
+    "constraints_preview": "1 length of input string 100 Words will not contain newline characters."
+  },
+  {
+    "index": 108,
+    "q_num": "1",
+    "files": "Screenshot (484).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day II_COD 1 Sections",
+    "input_preview": "The first line contains an integer n, the number of students. The next n lines each contain a student name and an intege",
+    "constraints_preview": ""
+  },
+  {
+    "index": 109,
+    "q_num": "1",
+    "files": "Screenshot (485).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "The given testcases fall under the following specification: 50"
+  },
+  {
+    "index": 110,
+    "q_num": "1",
+    "files": "Screenshot (486).png - Screenshot (488).png",
+    "file_count": 3,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "The given testcases fall under the following specification: 50"
+  },
+  {
+    "index": 111,
+    "q_num": "2",
+    "files": "Screenshot (489).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day II_COD 1 Sections",
+    "input_preview": "A single number N -9 end of the range. For integer input -9 standard FizzBuzz",
+    "constraints_preview": ""
+  },
+  {
+    "index": 112,
+    "q_num": "2",
+    "files": "Screenshot (490).png",
+    "file_count": 1,
+    "snippet": "1 Sections",
+    "desc_preview": "",
+    "input_preview": "A single number N -9 end of the range. For integer input -9 standard FizzBuzz",
+    "constraints_preview": "IS Ng 50 Summary 0/4"
+  },
+  {
+    "index": 113,
+    "q_num": "2",
+    "files": "Screenshot (491).png - Screenshot (493).png",
+    "file_count": 3,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "IS Ng 50"
+  },
+  {
+    "index": 114,
+    "q_num": "3",
+    "files": "Screenshot (494).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day II_COD 1 Sections",
+    "input_preview": "The first line of input contains an integer, representing the size of the array. The second line contains space-separate",
+    "constraints_preview": "Summary 0/4 > Java (11)"
+  },
+  {
+    "index": 115,
+    "q_num": "3",
+    "files": "Screenshot (495).png - Screenshot (496).png",
+    "file_count": 2,
+    "snippet": "7AD92",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 sizes 100. 1 SelementSIOO."
+  },
+  {
+    "index": 116,
+    "q_num": "3",
+    "files": "Screenshot (497).png",
+    "file_count": 1,
+    "snippet": "Input",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 117,
+    "q_num": "4",
+    "files": "Screenshot (498).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o EventManager manager = new EventManager(); Amrita_24CYS204_Advance Prgramming_Day II_COD",
+    "input_preview": "The first line of the input contains an integer n, the nurnber of events. The next n lines each contain a string in the ",
+    "constraints_preview": ""
+  },
+  {
+    "index": 118,
+    "q_num": "4",
+    "files": "Screenshot (499).png",
+    "file_count": 1,
+    "snippet": "The next n lines each contain a string in the forrnat: HH:MM Description",
+    "desc_preview": "",
+    "input_preview": "The first line of the input contains an integer n, the nurnber of events. The next n lines each contain a string in the ",
+    "constraints_preview": "50 HH:MM will always be a valid 24-hour time"
+  },
+  {
+    "index": 119,
+    "q_num": "4",
+    "files": "Screenshot (500).png",
+    "file_count": 1,
+    "snippet": "HH:MM will always be a valid 24-hour time",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "50 HH:MM will always be a valid 24-hour time"
+  },
+  {
+    "index": 120,
+    "q_num": "4",
+    "files": "Screenshot (501).png",
+    "file_count": 1,
+    "snippet": "5",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 121,
+    "q_num": "4",
+    "files": "Screenshot (502).png",
+    "file_count": 1,
+    "snippet": "15:00 ClientCall",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 122,
+    "q_num": "4",
+    "files": "Screenshot (503).png",
+    "file_count": 1,
+    "snippet": "15:00 ClientCall",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 123,
+    "q_num": "1",
+    "files": "Screenshot (504).png",
+    "file_count": 1,
+    "snippet": "9CA6C",
+    "desc_preview": "9CA6C -o Amrita_24CYS204_Advance Prgramming_Day II_CY",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 124,
+    "q_num": "1",
+    "files": "Screenshot (505).png",
+    "file_count": 1,
+    "snippet": "9CA6C",
+    "desc_preview": "",
+    "input_preview": "The first line of input consists of an integer n, representing the nurnber of halls. The next n x 4 lines each contain h",
+    "constraints_preview": ""
+  },
+  {
+    "index": 125,
+    "q_num": "1",
+    "files": "Screenshot (506).png - Screenshot (509).png",
+    "file_count": 4,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "100 0.0 < costPerDay 1000000.0"
+  },
+  {
+    "index": 126,
+    "q_num": "2",
+    "files": "Screenshot (510).png",
+    "file_count": 1,
+    "snippet": "9CA6C",
+    "desc_preview": "9CA6C -o Amrita_24CYS204_Advance Prgramming_Day II_CY",
+    "input_preview": "The first line of input consists of an integer size, representing the number of elements in the array.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 127,
+    "q_num": "2",
+    "files": "Screenshot (511).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 9CA6C",
+    "constraints_preview": "1 sizes 1000 -106 array elernent 106"
+  },
+  {
+    "index": 128,
+    "q_num": "2",
+    "files": "Screenshot (512).png",
+    "file_count": 1,
+    "snippet": "Sample Test Cases",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 129,
+    "q_num": "3",
+    "files": "Screenshot (513).png",
+    "file_count": 1,
+    "snippet": "9CA6C",
+    "desc_preview": "9CA6C -o Amrita_24CYS204_Advance Prgramming_Day II_CY",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 130,
+    "q_num": "3",
+    "files": "Screenshot (514).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 131,
+    "q_num": "3",
+    "files": "Screenshot (515).png",
+    "file_count": 1,
+    "snippet": "listen -+ \"eilnst\"",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 132,
+    "q_num": "3",
+    "files": "Screenshot (516).png",
+    "file_count": 1,
+    "snippet": "P K Pranav CB.SC.U4CYS25037",
+    "desc_preview": "",
+    "input_preview": "The first line contains an integer N, representing the number of words. The second line contains N space-separated words",
+    "constraints_preview": ""
+  },
+  {
+    "index": 133,
+    "q_num": "3",
+    "files": "Screenshot (517).png",
+    "file_count": 1,
+    "snippet": "9CA6C",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 s N 100 1 Length of each word 20"
+  },
+  {
+    "index": 134,
+    "q_num": "3",
+    "files": "Screenshot (518).png",
+    "file_count": 1,
+    "snippet": "5",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 135,
+    "q_num": "4",
+    "files": "Screenshot (519).png",
+    "file_count": 1,
+    "snippet": "9CA6C",
+    "desc_preview": "9CA6C -o Amrita_24CYS204_Advance Prgramming_Day II_CY",
+    "input_preview": "The first line of input contains an integer n, the number of lines in the message. The next n lines each contain a strin",
+    "constraints_preview": ""
+  },
+  {
+    "index": 136,
+    "q_num": "4",
+    "files": "Screenshot (520).png",
+    "file_count": 1,
+    "snippet": "9CA6C",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 9CA6C",
+    "constraints_preview": "50 HH:MM will always be a valid 24-hour time"
+  },
+  {
+    "index": 137,
+    "q_num": "4",
+    "files": "Screenshot (521).png",
+    "file_count": 1,
+    "snippet": "2",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 138,
+    "q_num": "4",
+    "files": "Screenshot (522).png",
+    "file_count": 1,
+    "snippet": "White List (Allowed libraries & functions)",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 139,
+    "q_num": "4",
+    "files": "Screenshot (523).png",
+    "file_count": 1,
+    "snippet": "White List (Allowed libraries & functions)",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 140,
+    "q_num": "1",
+    "files": "Screenshot (524).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day II_PAH 1 Sections",
+    "input_preview": "The first line of input consists of an integer N, representing the number of workouts.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 141,
+    "q_num": "1",
+    "files": "Screenshot (525).png",
+    "file_count": 1,
+    "snippet": "1 Sections",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "IS NS15"
+  },
+  {
+    "index": 142,
+    "q_num": "1",
+    "files": "Screenshot (526).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day II_PAH",
+    "desc_preview": "",
+    "input_preview": "The first line of input consists of an integer N, representing the number of workouts.",
+    "constraints_preview": "IS NS15"
+  },
+  {
+    "index": 143,
+    "q_num": "1",
+    "files": "Screenshot (527).png",
+    "file_count": 1,
+    "snippet": "case I",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "IS NS15"
+  },
+  {
+    "index": 144,
+    "q_num": "1",
+    "files": "Screenshot (528).png",
+    "file_count": 1,
+    "snippet": "case I",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "IS NS15"
+  },
+  {
+    "index": 145,
+    "q_num": "2",
+    "files": "Screenshot (529).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day II_PAH 1 Sections",
+    "input_preview": "First line of the input consist of number of entries Next input is the Dialed number, Duration and Dialled date for all ",
+    "constraints_preview": "Summary 0/4 > Java (11)"
+  },
+  {
+    "index": 146,
+    "q_num": "2",
+    "files": "Screenshot (530).png - Screenshot (533).png",
+    "file_count": 4,
+    "snippet": "Aryan is developing a voting system for a college election. Each vote is recorded as an",
+    "desc_preview": "Aryan is developing a voting system for a college election. Each vote is recorded as an entry in an array, where every student's vote is represented by a candidate's ID. Since it is a majority-rule el",
+    "input_preview": "First line of the input consist of number of entries Next input is the Dialed number, Duration and Dialled date for all ",
+    "constraints_preview": "50 1 duration 1000"
+  },
+  {
+    "index": 147,
+    "q_num": "3",
+    "files": "Screenshot (534).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day II_PAH",
+    "desc_preview": "",
+    "input_preview": "The first line contains an integer N \u2014 Summary 0/4 >",
+    "constraints_preview": ""
+  },
+  {
+    "index": 148,
+    "q_num": "3",
+    "files": "Screenshot (535).png",
+    "file_count": 1,
+    "snippet": "number must appear at least 4 times to be the majority.",
+    "desc_preview": "",
+    "input_preview": "The first line contains an integer N \u2014 the nurnber of votes cast. The second line contains N space-separated integers, e",
+    "constraints_preview": "1 s N 100 Summary 0/4 >"
+  },
+  {
+    "index": 149,
+    "q_num": "3",
+    "files": "Screenshot (536).png - Screenshot (537).png",
+    "file_count": 2,
+    "snippet": "3FBB4",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 s N 100 1 arr[i] 106"
+  },
+  {
+    "index": 150,
+    "q_num": "4",
+    "files": "Screenshot (538).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day II_PAH 1 Sections",
+    "input_preview": "The first line of the input contains an integer n, representing the number of words. The next n lines each contain a wor",
+    "constraints_preview": ""
+  },
+  {
+    "index": 151,
+    "q_num": "4",
+    "files": "Screenshot (539).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu",
+    "constraints_preview": "100 Words contain only lowercase English letters"
+  },
+  {
+    "index": 152,
+    "q_num": "4",
+    "files": "Screenshot (540).png",
+    "file_count": 1,
+    "snippet": "Refer to the sample output for formatting specifications.",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "100 Words contain only lowercase English letters"
+  },
+  {
+    "index": 153,
+    "q_num": "4",
+    "files": "Screenshot (541).png",
+    "file_count": 1,
+    "snippet": "5",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 154,
+    "q_num": "4",
+    "files": "Screenshot (542).png",
+    "file_count": 1,
+    "snippet": "Input",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 155,
+    "q_num": "4",
+    "files": "Screenshot (543).png",
+    "file_count": 1,
+    "snippet": "Input",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 156,
+    "q_num": "1",
+    "files": "Screenshot (544).png - Screenshot (546).png",
+    "file_count": 3,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 12_COD 1 Sections",
+    "input_preview": "The input consists of an integer n, representing the upper limit for both square and cube calculations.",
+    "constraints_preview": "100"
+  },
+  {
+    "index": 157,
+    "q_num": "2",
+    "files": "Screenshot (547).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 12_COD 1 Sections",
+    "input_preview": "Summary 0/4 Java (11)",
+    "constraints_preview": ""
+  },
+  {
+    "index": 158,
+    "q_num": "2",
+    "files": "Screenshot (548).png",
+    "file_count": 1,
+    "snippet": "\u2022 In a single line",
+    "desc_preview": "",
+    "input_preview": "The input consists of a single integer n, representing the number of stars and dashes to be printed.",
+    "constraints_preview": "Summary 0/4 > Java (11)"
+  },
+  {
+    "index": 159,
+    "q_num": "2",
+    "files": "Screenshot (549).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "1 snS20"
+  },
+  {
+    "index": 160,
+    "q_num": "2",
+    "files": "Screenshot (550).png",
+    "file_count": 1,
+    "snippet": "Input",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 161,
+    "q_num": "3",
+    "files": "Screenshot (551).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Vowel Thread . vowel Turn = Amrita_24CYS204_Advance Prgramming_Day 12_COD",
+    "input_preview": "A single integer n representing the number of vowels (and consonants) to print. Summary 0/4 >",
+    "constraints_preview": ""
+  },
+  {
+    "index": 162,
+    "q_num": "3",
+    "files": "Screenshot (552).png - Screenshot (553).png",
+    "file_count": 2,
+    "snippet": "Each letter separated by a single space, with no trailing space.",
+    "desc_preview": "",
+    "input_preview": "A single integer n representing the number of vowels (and consonants) to print.",
+    "constraints_preview": "Summary 0/4 Header Snippet"
+  },
+  {
+    "index": 163,
+    "q_num": "3",
+    "files": "Screenshot (554).png",
+    "file_count": 1,
+    "snippet": "P K Pranav CB.SC.U4CYS25037",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu"
+  },
+  {
+    "index": 164,
+    "q_num": "3",
+    "files": "Screenshot (555).png",
+    "file_count": 1,
+    "snippet": "P K Pranav CB.SC.U4CYS25037",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "P K Pranav CB.SC.U4CYS25037 1 Sections"
+  },
+  {
+    "index": 165,
+    "q_num": "4",
+    "files": "Screenshot (556).png",
+    "file_count": 1,
+    "snippet": "Lisa is developing a smart thermostat system that monitors and controls room",
+    "desc_preview": "Lisa is developing a smart thermostat system that monitors and controls room -o Amrita_24CYS204_Advance Prgramming_Day 12_COD",
+    "input_preview": "First line: A string representing the building name. Second line: An integer L, the lower temperature range.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 166,
+    "q_num": "4",
+    "files": "Screenshot (557).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "First line: A string representing the building name. Second line: An integer L, the lower temperature range.",
+    "constraints_preview": "Summary 0/4 > Java (11)"
+  },
+  {
+    "index": 167,
+    "q_num": "4",
+    "files": "Screenshot (558).png - Screenshot (559).png",
+    "file_count": 2,
+    "snippet": "Code Constraints",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "P K Pranav CB.SC.U4CYS25037 cbsc.u4cys25037@cb.students.amrita.edu"
+  },
+  {
+    "index": 168,
+    "q_num": "1",
+    "files": "Screenshot (576).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 12_PAH 1 Sections",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 169,
+    "q_num": "1",
+    "files": "Screenshot (577).png",
+    "file_count": 1,
+    "snippet": "cbsc.u4cys25037@cb.students.amrita.edu",
+    "desc_preview": "",
+    "input_preview": "No console input.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 170,
+    "q_num": "1",
+    "files": "Screenshot (578).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 171,
+    "q_num": "1",
+    "files": "Screenshot (579).png",
+    "file_count": 1,
+    "snippet": "Cube of 75 is 421875",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 172,
+    "q_num": "1",
+    "files": "Screenshot (580).png",
+    "file_count": 1,
+    "snippet": "Square of 6 is 36",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 173,
+    "q_num": "2",
+    "files": "Screenshot (581).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 12_PAH 1 Sections",
+    "input_preview": "The input consists of a single string.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 174,
+    "q_num": "2",
+    "files": "Screenshot (582).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 12_PAH",
+    "desc_preview": "",
+    "input_preview": "The input consists of a single string.",
+    "constraints_preview": "2 Length of the String 200"
+  },
+  {
+    "index": 175,
+    "q_num": "2",
+    "files": "Screenshot (583).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 12_PAH",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "2 Length of the String 200"
+  },
+  {
+    "index": 176,
+    "q_num": "2",
+    "files": "Screenshot (584).png",
+    "file_count": 1,
+    "snippet": "Java is fun",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": ""
+  },
+  {
+    "index": 177,
+    "q_num": "3",
+    "files": "Screenshot (585).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 12_PAH 1 Sections",
+    "input_preview": "The input contains 5 space-separated integers representing the initial balance in the account, deposit amount for Thread",
+    "constraints_preview": ""
+  },
+  {
+    "index": 178,
+    "q_num": "3",
+    "files": "Screenshot (586).png",
+    "file_count": 1,
+    "snippet": "Amrita_24CYS204_Advance Prgramming_Day 12_PAH",
+    "desc_preview": "",
+    "input_preview": "The input contains 5 space-separated integers representing the initial balance in the account, deposit amount for Thread",
+    "constraints_preview": ""
+  },
+  {
+    "index": 179,
+    "q_num": "3",
+    "files": "Screenshot (587).png - Screenshot (588).png",
+    "file_count": 2,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "10 amount 104"
+  },
+  {
+    "index": 180,
+    "q_num": "4",
+    "files": "Screenshot (589).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 12_PAH 1 Sections",
+    "input_preview": "The input consists of a single integer, limit, representing the total number of orders.",
+    "constraints_preview": ""
+  },
+  {
+    "index": 181,
+    "q_num": "4",
+    "files": "Screenshot (590).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "The input consists of a single integer, limit, representing the total number of orders.",
+    "constraints_preview": "Summary 0/4 > Java (11)"
+  },
+  {
+    "index": 182,
+    "q_num": "4",
+    "files": "Screenshot (591).png",
+    "file_count": 1,
+    "snippet": "-o",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "O limit 1000 The processing order must strictly alternate between Processor-I and Processor-2."
+  },
+  {
+    "index": 183,
+    "q_num": "4",
+    "files": "Screenshot (592).png - Screenshot (593).png",
+    "file_count": 2,
+    "snippet": "P K Pranav CB.SC.U4CYS25037",
+    "desc_preview": "",
+    "input_preview": "",
+    "constraints_preview": "O limit 1000 P K Pranav CB.SC.U4CYS25037"
+  },
+  {
+    "index": 184,
+    "q_num": "?",
+    "files": "Screenshot 2026-10-20 154643.png - Screenshot 2026-10-20 154634.png",
+    "file_count": 2,
+    "snippet": "-o",
+    "desc_preview": "-o Amrita_24CYS204_Advance Prgramming_Day 12_CY 1 Sections",
+    "input_preview": "First line: an integer n, the size of the array. Second line: n space-separated integers representing the elements of th",
+    "constraints_preview": "Summary 2/4 > 9"
+  }
+]

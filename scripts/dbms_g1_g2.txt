@@ -1,0 +1,2727 @@
+=== GROUP 1 (4FDF1): Screenshots 604 - 618 ===
+
+--- Screenshot (604).png ---
+g COD (3)
+QUESTION 1/3 CODE
+Problem Statement
+A bank needs a trigger system to:
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+6000, 2023
+3000, 2023
+4FDF1
+1 Sections
+3 Questions
+2
+3
+.11 @ 01:59:48
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+2
+- write your query here
+• Prevent withdrawal if balance insufficient
+• Restrict daily withdrawal
+• Flag transaction as FRAUD if amount > 250,000
+• Automatically update balance
+• Mark transaction status accordingly
+The following table is already created, and the records are inserted into the table.
+Table details:
+accounts
+account id O
+account name
+balance
+account_type
+Summary 0/3 >
+int
+varchar
+decimal
+varchar
+transactions
+txn id P
+account id
+txn_type
+amount
+Footer Snippet
+int
+int
+varchar
+decimal
+3
+4
+5
+6
+7
+8
+g
+10
+Transaction 1
+INSERT INTO transactions VALUES (1, 101,
+- Transaction 2 (Fraud)
+INSERT INTO transactions VALUES (2, 101,
+- Transaction 3 (Daily limit fail)
+INSERT INTO transactions VALUES (3, 101,
+'wi thdraw
+, 2000, '2023-10-01 ,
+'withdraw' ,
+'withdraw' ,
+-10-01',")
+-10-01',")
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (605).png ---
+g COD (3)
+QUESTION 1/3 CODE
+• Mark transaction status accordingly
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+, 2000, '2023
+3000, 2023
+4FDF1
+1 Sections
+3 Questions
+2
+.11 @ 01:59:47
+• Answered • Bookmarked • Skipped
+3
++ IO
+Header Snippet
+MySQL (80) v
+The following table is already created, and the records are inserted into the table.
+file.sql +
+2
+- write your query here
+Table details:
+accounts
+account id O
+account name
+balance
+account_type
+branch
+created at
+Sample Input Record:
+Table: transactions
+Summary 0/3 >
+int
+varchar
+decimal
+varchar
+varchar
+date
+transactions
+txn id P
+account id
+txn_type
+amount
+txn date
+status
+int
+int
+varchar
+decimal
+date
+varchar
+Footer Snippet
+3
+4
+5
+6
+7
+8
+g
+10
+Transaction 1
+INSERT INTO transactions VALUES (1, 101,
+- Transaction 2 (Fraud)
+INSERT INTO transactions VALUES (2, 101,
+- Transaction 3 (Daily limit fail)
+INSERT INTO transactions VALUES (3, 101,
+'wi thdraw
+'withdraw' ,
+'withdraw' ,
+6000, '2023-10-01 ,
+Previous
+-10-01',")
+-10-01',")
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (606).png ---
+g COD (3)
+QUESTION 1/3
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+Savin s
+, 2000, '2023
+3000, 2023
+0 01:59:45
+4FDF1
+1 Sections
+3 Questions
+2
+date
+3
+• Answered • Bookmarked • Skipped
+CODE
+status
++ IO
+varchar
+1/1/2023
+2/10/2023
+Header Snippet
+MySQL (80) v
+created at
+Sample Input Record:
+Table: transactions
+Table: accounts
+Task:
+1. Insert withdrawal within limit
+file.sql +
+2
+- write your query here
+Chen nai
+Madurai
+2. Insert withdrawal > 50000 (FRAUD case)
+3. Insert withdrawal exceeding daily limit
+4. Insert deposit and verify balance
+Input Format
+The input records are already prepopulated, as given in the problem statement.
+Summary 0/3
+Footer Snippet
+3
+4
+5
+6
+7
+8
+g
+10
+Transaction 1
+INSERT INTO transactions VALUES (1, 101,
+- Transaction 2 (Fraud)
+INSERT INTO transactions VALUES (2, 101,
+- Transaction 3 (Daily limit fail)
+INSERT INTO transactions VALUES (3, 101,
+'wi thdraw
+'withdraw' ,
+'withdraw' ,
+6000, '2023-10-01
+Previous
+-10-01',")
+-10-01',")
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (607).png ---
+g COD (3)
+QUESTION 1/3 CODE
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+6000, 2023
+4FDF1
+1 Sections
+3 Questions
+2
+3
+.11 @ 01:59:43
+• Answered • Bookmarked • Skipped
++ IO
+The input records are already prepopulated, as given in the problem statement.
+Output Format
+The output should display transaction status and updated account balance.
+Header Snippet
+MySQL (80) v
+file.sql +
+2
+- write your query here
+Sample Test Cases
+Output
+txn_id account_id txn_type amount txn_date status
+1 101 withdraw 2000.00 2023-10-01 SUCCESS
+2 101 withdraw 6000.00 2023-10-01 SUCCESS
+3 101 withdraw 3000.00 2023-10-01 SUCCESS
+4 101 deposit 1000.00 2023-10-01 SUCCESS
+account_id account_name balance account_type branch
+101 Ravi 110000.00 Savings Chennai 2023-01-01
+102 Kumar 50000.00 Current Madurai 2023-02-10
+Note
+created_at
+Footer Snippet
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+3
+4
+5
+6
+7
+8
+g
+10
+Transaction 1
+INSERT INTO transactions VALUES (1, 101,
+- Transaction 2 (Fraud)
+INSERT INTO transactions VALUES (2, 101,
+- Transaction 3 (Daily limit fail)
+INSERT INTO transactions VALUES (3, 101,
+'wi thdraw
+'withdraw' ,
+'withdraw' ,
+, 2000, '2023-10-01
+3000, '2023-10-01 ,
+-10-01',")
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (608).png ---
+g COD (3)
+QUESTION 1/3
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+6000, 2023
+0 01:59:41
+4FDF1
+1 Sections
+3 Questions
+2
+CODE
+3
++ IO
+• Answered • Bookmarked • Skipped
+Output Format
+The output should display transaction status and updated account balance.
+Sample Test Cases
+Output
+txn_id account_id txn_type amount txn_date status
+1 101 withdraw 2000.00 2023-10-01 SUCCESS
+2 101 withdraw 6000.00 2023-10-01 SUCCESS
+3 101 withdraw 3000.00 2023-10-01 SUCCESS
+4 101 deposit 1000.00 2023-10-01 SUCCESS
+account_id account_name balance account_type branch
+101 Ravi 110000.00 Savings Chennai 2023-01-01
+102 Kumar 50000.00 Current Madurai 2023-02-10
+Note
+Footer Snippet
+'wi thdraw
+'withdraw' ,
+'withdraw' ,
+'deposit ,
+, 2000, '2023-10-01 ,
+3000, '2023-10-01
+-10-01',")
+created_at
+3
+4
+5
+6
+7
+8
+g
+10
+11
+12
+13
+14
+15
+16
+Transaction 1
+INSERT INTO transactions VALUES (1, 101,
+- Transaction 2 (Fraud)
+INSERT INTO transactions VALUES (2, 101,
+- Transaction 3 (Daily limit fail)
+INSERT INTO transactions VALUES (3, 101,
+Deposit
+INSERT INTO transactions VALUES (4, 101,
+SELECT * FRO* transactions;
+SELECT * FRO.' accounts;
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+' 1000, '2023-10-01',
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (609).png ---
+g COD (3)
+QUESTION 2/3 CODE
+Problem Statement
+P K Pranav CB.SC.U4CYS25037
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:37
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+An e-commerce company wants to automate inventory control using triggers. The
+system must:
+2
+- write your query here
+•
+•
+•
+•
+•
+•
+•
+Prevent orders if available stock is insufficient
+Automatically reduce stock after every order
+Dynamically update product price based on stock level:
+If stock < IO -+ increase price by 20%
+If stock > 100-9 decrease price by 10%
+Mark order status as PLACED if successful
+Reject invalid orders using exceptions
+The following table is already created, and the records are inserted into the table.
+Table details:
+products
+product_id P
+name
+Summary 0/3
+Footer Snippet
+orders
+orders
+orders
+VALUES
+VALUES
+VALUES
+int
+varchar
+orders
+order id P
+product_id
+int
+int
+3
+4
+5
+6
+7
+8
+9
+INSERT
+INSERT
+INSERT
+SELECT
+SELECT
+INTO
+INTO
+INTO
+(2,
+1,
+'2023-10-01' , 'Ram
+' 'Sita',")
+40, '2023-10-01 ,
+'2023-10-01' ,
+* FR(X products;
+* FR(X orders;
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (610).png ---
+g COD (3)
+QUESTION 2/3 CODE
+products
+product_id P
+name
+price
+stock
+category
+supplier
+Sample Input Record:
+Table: products
+Table: orders
+Task
+Summary 0/3
+P K Pranav CB.SC.U4CYS25037
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:35
+• Answered • Bookmarked • Skipped
+file.sql +
+int
+varchar
+decimal
+int
+varchar
+varchar
+Laptop
+Mobile
+orders
+order id P
+product_id
+quantity
+order date
+customer
+status
++ IO
+int
+int
+int
+date
+varchar
+varchar
+Header Snippet
+MySQL (80) v
+2
+- write your query here
+Footer Snippet
+Electronics
+Electronics
+3
+4
+5
+6
+7
+8
+9
+INSERT
+INSERT
+INSERT
+SELECT
+SELECT
+INTO
+INTO
+INTO
+orders
+orders
+orders
+VALUES
+VALUES
+VALUES
+(2,
+1,
+'2023-10-01' , 'Ram
+' 'Sita',")
+40, '2023-10-01 ,
+'2023-10-01' ,
+* FR(X products;
+* FR(X orders;
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (611).png ---
+g COD (3)
+QUESTION 2/3 CODE
+Task
+1. Place an order within stock limit
+2. Place an order that reduces stock below 10 (trigger price increase)
+3. Place an order for product with stock > 100 (price decrease case)
+4. Attempt order exceeding stock -+ should throw error
+Input Format
+P K Pranav CB.SC.U4CYS25037
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:33
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+2
+- write your query here
+The input records are already prepopulated, as given in the problem statement.
+Output Format
+The output should display order status followed by updated stock and price OR
+error message
+Sample Test Cases
+Output
+product_id name price
+1 Laptop 60000.00 5
+2 Mobile 18000.00 110
+Summary 0/3 >
+Footer Snippet
+orders
+orders
+orders
+VALUES
+VALUES
+VALUES
+stock category supplier
+Electronics Dell
+Electronics Samsung
+3
+4
+5
+6
+7
+8
+9
+INSERT
+INSERT
+INSERT
+SELECT
+SELECT
+INTO
+INTO
+INTO
+(2,
+1,
+'2023-10-01' , 'Ram
+' 'Sita',")
+40, '2023-10-01 ,
+'2023-10-01' ,
+* FR(X products;
+* FR(X orders;
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (612).png ---
+g COD (3)
+QUESTION 2/3 CODE
+Output Format
+P K Pranav CB.SC.U4CYS25037
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:32
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+2
+- write your query here
+The output should display order status followed by updated stock and price OR
+error message
+Sample Test Cases
+Output
+product_id name price stock category supplier
+1 Laptop 60000.00 5 Electronics Dell
+2 Mobile 18000.00 110 Electronics Samsung
+order_id product_id quantity order_date customer status
+1 1 5 2023-10-01 Ram PLACED
+2 1 40 2023-10-01 Sita PLACED
+3 2 10 2023-10-01 Raj PLACED
+Note
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+Footer Snippet
+3
+4
+5
+6
+7
+8
+9
+INSERT
+INSERT
+INSERT
+SELECT
+SELECT
+INTO
+INTO
+INTO
+orders
+orders
+orders
+VALUES
+VALUES
+VALUES
+(1,
+(2,
+1,
+1,5, '2023-10-01' , 'Ram
+40, '2023-10-01 ,
+'2023-10-01' ,
+' 'Sita',")
+* FR(X products;
+* FR(X orders;
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (613).png ---
+g COD (3)
+QUESTION 2/3 CODE
+Output Format
+P K Pranav CB.SC.U4CYS25037
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:30
+• Answered • Bookmarked • Skipped
++ IO
+MySQL (80) v
+file.sql +
+2
+- write your query here
+The output should display order status followed by updated stock and price OR
+error message
+Sample Test Cases
+Output
+product_id name price stock category supplier
+1 Laptop 60000.00 5 Electronics Dell
+2 Mobile 18000.00 110 Electronics Samsung
+order_id product_id quantity order_date customer
+1 1 5 2023-10-01 Ram PLACED
+2 1 40 2023-10-01 Sita PLACED
+3 2 10 2023-10-01 Raj PLACED
+Note
+status
+Footer Snippet
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO
+INSERT INTO
+INSERT INTO
+orders
+orders
+orders
+VALUES
+VALUES
+VALUES
+(2,
+1,
+'2023-10-01' , 'Ram
+' 'Sita',")
+40, '2023-10-01 ,
+'2023-10-01' ,
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+SELECT * FROM products;
+SELECT * FROM orders;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (614).png ---
+g COD (3)
+QUESTION 3/3 CODE
+Problem Statement
+P K Pranav CB.SC.U4CYS25037
+1 Sections
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+3 Questions
+S 0 01:59:26
+• Answered • Bookmarked • Skipped
++ 30
+Create a trigger named phone_format_enforcer that activates before updating a record
+in the courier_customers table. The trigger must ensure that whenever a customer's
+phone_number is updated, the new value begins with '+91'.
+If the updated phone_number does not start with '+91', the trigger should automatically
+prepend '+91' to the value. If the phone_number already follows the required format, the
+update should proceed without any modification. Existing records that are not part of
+the update operation should remain unaffected.
+Table Name: courier_customers
+Column Name
+cust_id
+cust name
+phone_number
+Summary 0/3
+Header Snippet
+1 #no header
+MySQL (80) v
+2
+Footer Snippet
+Data Type
+INT
+VARCHAR(60)
+VARCHAR(20)
+VARCHAR(60)
+3
+4
+5
+6
+7
+UPDATE courier_customers
+SET phone _ number =
+' 9944332211 '
+*ERE cust_id = 5
+SELECT * FR(X courier _ customers;
+Sample Tests
+Submissions
+Custom Inputs
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (615).png ---
+g COD (3)
+QUESTION 3/3
+P K Pranav CB.SC.U4CYS25037
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+0 01:59:24
+• Answered • Bookmarked • Skipped
+CODE
+Column Name
+cust_id
+cust name
+phone_number
+Sample Records:
+cust_id
+Summary 0/3
+cust_name
+Arjun
+Meera
+Sneha
+Kiran
+Data Type
+INT
+VARCHAR(60)
+VARCHAR(20)
+VARCHAR(60)
+phone_number
++919876543210
++918765432109
+9988776655
++917654321098
+8877665544
++ 30
+city
+Chennai
+Mumbai
+Delhi
+Kolkata
+Bangalore
+Header Snippet
+1 #no header
+MySQL (80) v
+2
+Footer Snippet
+3
+4
+5
+6
+7
+UPDATE courier_customers
+SET phone _ number =
+' 9944332211 '
+*ERE cust_id = 5
+SELECT * FR(X courier _ customers;
+Sample Tests
+Submissions
+Custom Inputs
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (616).png ---
+g COD (3)
+QUESTION 3/3
+Note:
+P K Pranav CB.SC.U4CYS25037
+1 Sections
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+3 Questions
+0 01:59:23
+• Answered • Bookmarked • Skipped
+CODE
+Meera
+Sneha
+Kiran
++918765432109
+9988776655
++917654321098
+8877665544
++ 30
+Mumbai
+Delhi
+Kolkata
+Bangalore
+• Use appropriate delimiters while defining the trigger.
+• Write only the trigger as per the given specifications. The update operation and
+retrieval of records will be handled in the backend.
+• Table names are case sensitive.
+Input Format
+The input records are already prepopulated.
+Output Format
+The output displays the updated courier_customers table as shown below:
+Summary 0/3
+Header Snippet
+1 #no header
+MySQL (80) v
+2
+Footer Snippet
+3
+4
+5
+6
+7
+UPDATE courier_customers
+SET phone _ number =
+' 9944332211 '
+*ERE cust_id = 5
+SELECT * FR(X courier _ customers;
+Sample Tests
+Submissions
+Custom Inputs
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (617).png ---
+g COD (3)
+QUESTION 3/3
+P K Pranav CB.SC.U4CYS25037
+1 Sections
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+3 Questions
+0 01:59:22
+• Answered • Bookmarked • Skipped
+CODE
++ 30
+Refer to the sample output for the column headers.
+Sample Test Cases
+Output
+cust_id cust_name phone_number
+Arjun +919876543210 Chennai
+2 Meera +918765432109 Mumbai
+3 Ravi 9988776655 Delhi
+4 Sneha +917654321098 Kolkata
+5 Kiran +919944332211 Bangalore
+city
+White List (Allowed libraries & functions)
+Header Snippet
+1 #no header
+MySQL (80) v
+2
+Footer Snippet
+TRIGGER
+Note
+phone_format_enforcer
+3
+4
+5
+6
+7
+UPDATE courier_customers
+SET phone _ number =
+' 9944332211 '
+*ERE cust_id = 5
+SELECT * FR(X courier _ customers;
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+Summary 0/3 >
+Sample Tests
+Submissions
+Custom Inputs
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (618).png ---
+g COD (3)
+QUESTION 3/3 CODE
+Refer to the sample output for the column headers.
+P K Pranav CB.SC.U4CYS25037
+1 Sections
+4FDF1
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+3 Questions
+0 01:59:20
+• Answered • Bookmarked • Skipped
++ 30
+1
+#no header
+MySQL (80) v
+Sample Test Cases
+Output
+cust_id cust_name phone_number
+Arjun +919876543210 Chennai
+2 Meera +918765432109 Mumbai
+3 Ravi 9988776655 Delhi
+4 Sneha +917654321098 Kolkata
+5 Kiran +919944332211 Bangalore
+city
+White List (Allowed libraries & functions)
+2
+Footer Snippet
+TRIGGER
+Note
+phone_format_enforcer
+3
+4
+5
+6
+7
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+UPDATE courier_customers
+SET phone _ number =
+' 9944332211 '
+*ERE cust_id = 5
+SELECT * FR(X courier _ customers;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+=== GROUP 2 (2AEFB): Screenshots 619 - 632 ===
+
+--- Screenshot (619).png ---
+(3 COD (3)
+QUESTION 1/3
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+' 2024-03-12
+' 2024-04-05
+2AEFB
+1 Sections
+3 Questions
+2
+0 01:59:56
+• Answered • Bookmarked • Skipped
+CODE
+3
++ IO
+MySQL (8.0) v
+file.sql +
+1
+- write your query herd
+Problem Statement
+In a food delivery system, the admin wants to track all late deliveries. Create a trigger
+named delivery_after_insert that executes after a new record is inserted into the
+deliveries table.
+The trigger should check whether the Delivery_time is greater than 60 minutes. If true,
+insert the following details into the late_deliveries table:
+Delivery_id
+Customer_name
+Restaurant_name
+Delivery_time
+The following table has already been created, and the records are inserted into the table.
+Footer Snippet
+2
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO deliveries VALUES
+(701,
+(702,
+(703,
+(704,
+(705,
+'Kiran',
+Arun' ,
+Suresh' ,
+Meena ,
+'Vimal',
+'Pizza Hut' ,
+Dominos ,
+Subway' ,
+'KFC',
+45,
+75,
+50,
+90,
+' 2024-01-
+' 2024-02-
+10', 'Chennai
+15', 'Bangalore'
+' Hyderabad' ) ,
+, 'Delhi').
+Burger King' , 40, '2024-05-18', 'Coimbatore '
+Ride_id
+Custorner_name
+Driver_name
+Distance
+Summary 0/3
+bng_ rides
+int NN
+Ride_id
+varchar(SO) NN
+Customer_name
+varchar (SO)
+Driver_name
+Oistance
+SELECT * FR(X late_deliveries;
+int NN
+varchar(50) NN
+varchar(se)
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (620).png ---
+(3 COD (3)
+QUESTION 1/3
+Delivery_id
+Customer_name
+Restaurant_name
+Delivery_time
+The following table has already been created, and the records are inserted into the table.
+Ride_id
+Custorner_name
+Driver_name
+Distance
+Ride_date
+Sample records:
+Summary 0/3 >
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+' 2024-03-12
+' 2024-04-05
+2AEFB
+1 Sections
+3 Questions
+2
+0 01:59:54
+• Answered • Bookmarked • Skipped
+CODE
+3
++ IO
+MySQL (8.0) v
+file.sql +
+1
+- write your query here
+bng_ rides
+int NN
+Ride_id
+varchar(SO) NN
+Customer_name
+varchar (SO)
+Driver_name
+Distance
+date
+varchar ( 30)
+int NN
+varchar(50) NN
+varchar(se)
+Footer Snippet
+2
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO deliveries VALUES
+(701,
+(702,
+(703,
+(704,
+(705,
+'Kiran',
+Arun' ,
+Suresh' ,
+Meena ,
+'Vimal',
+'Pizza Hut' ,
+Dominos ,
+Subway' ,
+'KFC',
+45,
+75,
+50,
+90,
+' 2024-01-
+' 2024-02-
+10', 'Chennai
+15', 'Bangalore'
+' Hyderabad' ) ,
+, 'Delhi').
+Burger King' , 40, '2024-05-18', 'Coimbatore '
+SELECT * FR(X late_deliveries;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (621).png ---
+(3 COD (3)
+QUESTION 1/3
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+2024-01-10
+2024-02-15
+2024-03-12
+2024-04-05
+2024-05-18
+' 2024-03-12
+' 2024-04-05
+2AEFB
+1 Sections
+3 Questions
+2
+3
+0 01:59:52
+• Answered • Bookmarked • Skipped
+CODE
+MySQL (8.0) v
+file.sql +
+1
+- write your query herd
+Sample records:
+Table name: rides
+Delivery_id
+Input Format
+Customer name
+Kiran
+Arun
+Suresh
+Meena
+Vimal
+Restaurant name
+Pizza Hut
+Dominos
+Subway
+KFC
+Burger King
+Delivery_time
+45
+75
+50
+Order date
++ IO
+City
+Chennai
+Bangalore
+Hyderabad
+Delhi
+Coimbatore
+Footer Snippet
+2
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO deliveries VALUES
+(701,
+(702,
+(703,
+(704,
+(705,
+'Kiran',
+Arun' ,
+Suresh' ,
+Meena ,
+'Vimal',
+'Pizza Hut' ,
+Dominos ,
+Subway' ,
+'KFC',
+45,
+75,
+50,
+90,
+' 2024-01-
+' 2024-02-
+10', 'Chennai
+15', 'Bangalore'
+' Hyderabad' ) ,
+, 'Delhi').
+Burger King' , 40, '2024-05-18', 'Coimbatore '
+SELECT * FR(X late_deliveries;
+The input table is already created, and records are already prepopulated, as
+mentioned in the problem statement.
+OUtDUt Format
+Summary 0/3 >
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (622).png ---
+(3 COD (3)
+QUESTION 1/3
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+' 2024-03-12
+' 2024-04-05
+2AEFB
+1 Sections
+3 Questions
+2
+0 01:59:51
+• Answered • Bookmarked • Skipped
+CODE
+3
++ IO
+MySQL (8.0) v
+file.sql +
+1
+- write your query herd
+Input Format
+The input table is already created, and records are already prepopulated, as
+mentioned in the problem statement.
+Output Format
+The output displays all records from the late_deliveries table.
+Refer to the sample output.
+Sample Test Cases
+Output
+Delivery_id Customer_name Restaurant_name
+702 Arun Dominos 75
+704 Meena KFC 90
+White List (Allowed libraries & functions)
+TRIGGER
+Summary 0/3
+Footer Snippet
+Delivery_time
+2
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO deliveries VALUES
+(701,
+(702,
+(703,
+(704,
+(705,
+'Kiran',
+Arun' ,
+Suresh' ,
+Meena ,
+'Vimal',
+'Pizza Hut' ,
+Dominos ,
+Subway' ,
+'KFC',
+45,
+75,
+50,
+90,
+' 2024-01-
+' 2024-02-
+10', 'Chennai
+15', 'Bangalore'
+' Hyderabad' ) ,
+, 'Delhi').
+Burger King' , 40, '2024-05-18', 'Coimbatore '
+SELECT * FR(X late_deliveries;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (623).png ---
+(3 COD (3)
+QUESTION 1/3
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+' 2024-03-12
+' 2024-04-05
+2AEFB
+1 Sections
+3 Questions
+2
+3
+0 01:59:45
+• Answered • Bookmarked • Skipped
+MySQL (8.0) v
+file.sql +
+CODE
++ IO
+1
+- write your query herd
+The output displays all records from the late_deliveries table.
+Refer to the sample output.
+Sample Test Cases
+Output
+Delivery_id Customer_name Restaurant_name
+702 Arun Dominos 75
+704 Meena KFC 90
+White List (Allowed libraries & functions)
+TRIGGER
+Note
+Delivery_time
+Footer Snippet
+2
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO deliveries VALUES
+(701,
+(702,
+(703,
+(704,
+(705,
+'Kiran',
+Arun' ,
+Suresh' ,
+Meena ,
+'Vimal',
+'Pizza Hut' ,
+Dominos ,
+Subway' ,
+'KFC',
+45,
+75,
+50,
+90,
+' 2024-01-
+' 2024-02-
+10', 'Chennai
+15', 'Bangalore'
+' Hyderabad' ) ,
+, 'Delhi').
+Burger King' , 40, '2024-05-18', 'Coimbatore '
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+SELECT * FR(X late_deliveries;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (624).png ---
+(3 COD (3)
+QUESTION 2/3
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+2024-01-10
+2024-02-15
+2024-03-12
+2024-05-18
+2AEFB
+1 Sections
+3 Questions
+CODE
++ IO
+MySQL (8.0) v
+file.sql +
+1
+- write your query here
+Problem Statement
+In an online course platform, the admin wants to track students who have low
+attendance. Create a trigger named attendance_after_insert that executes after a new
+record is inserted into the attendance table.
+The trigger should check whether the Attendance_percentage is less than 60. If true,
+insert the following details into the low_attendance table:
+Student_id
+Student_name
+Course_name
+Attendance_percentage
+The following table has already been created, and the records are inserted into the table.
+Footer Snippet
+2
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO attendance VALUES
+(801,
+(802,
+(803,
+(804,
+(805,
+'Kiran',
+Arun' ,
+Suresh' ,
+Meena ,
+'Vimal',
+Python' ,
+Java' ,
+DBMS' ,
+75,
+55,
+65,
+50,
+80,
+0 01:59:40
+• Answered • Bookmarked • Skipped
+, Chennai '
+, Bangalore '
+Hyderabad' ) ,
+2024-04-05' ,
+Delhi
+, Coimbatore' •
+attendance
+Student_id
+Student_name
+Course_name
+Attendance_percentage
+Summary 0/3 >
+int NN
+varchar(50) NN
+varchar(5ø)
+int
+Student_id c9
+Student_name
+Course_name
+Attendanrp perrentaøp
+int NN
+varchar(50) NN
+varchar(50)
+SELECT * FR(X low _ attendance;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (625).png ---
+2AEFB
+Student id
+Input Format
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+2024-02-15
+2024-03-12
+2024-04-05
+2024-01-10
+2024-02-15
+2024-03-12
+2024-05-18
+1 Sections
+3 Questions
+(3 COD (3)
+QUESTION 2/3
+C'ty
+CODE
+varcnar(JV)
+MySQL (8.0) v
+file.sql +
+1
+- write your query here
+Sample records:
+Table name: deliveries
+Student name
+Kiran
+Arun
+Suresh
+Meena
+Vimal
+Course name
+Python
+Java
+DBMS
+Al
+Attendance_percent
+age
+75
+55
+65
+50
+80
+Date recorded
+2024-01-10
+2024-05-18
++ IO
+City
+Chennai
+Bangalore
+Hyderabad
+Delhi
+Coimbatore
+Footer Snippet
+2
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO attendance VALUES
+(801,
+(802,
+(803,
+(804,
+(805,
+'Kiran',
+Arun' ,
+Suresh' ,
+Meena ,
+'Vimal',
+Python' ,
+Java' ,
+DBMS' ,
+75,
+55,
+65,
+50,
+80,
+0 01:59:37
+• Answered • Bookmarked • Skipped
+, Chennai '
+, Bangalore '
+Hyderabad' ) ,
+The input table is already created, and records are already prepopulated, as
+mentioned in the problem statement.
+Output Format
+The output displays all records from the low_attendance table.
+Summary 0/3
+2024-04-05' ,
+Delhi
+, Coimbatore' •
+SELECT * FR(X low _ attendance;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (626).png ---
+(3 COD (3)
+QUESTION 2/3 CODE
+The input table is already created, and records are already prepopulated, as
+mentioned in the problem statement.
+Output Format
+The output displays all records from the low_attendance table.
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+2024-01-10
+2024-02-15
+2024-03-12
+2024-05-18
+2AEFB
+1 Sections
+3 Questions
++ IO
+MySQL (8.0) v
+file.sql +
+1
+- write your query here
+Refer to the sample output.
+Sample Test Cases
+Output
+Student_id Student_name Course_name
+802 Arun Java 55
+804 Meena DBMS 50
+White List (Allowed libraries & functions)
+TRIGGER
+Note
+Summary 0/3
+Attendance_percentage
+Footer Snippet
+2
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO attendance VALUES
+(801,
+(802,
+(803,
+(804,
+(805,
+'Kiran',
+Arun' ,
+Suresh' ,
+Meena ,
+'Vimal',
+Python' ,
+Java' ,
+DBMS' ,
+75,
+55,
+65,
+50,
+80,
+0 01:59:35
+• Answered • Bookmarked • Skipped
+, Chennai '
+, Bangalore '
+Hyderabad' ) ,
+2024-04-05' ,
+Delhi
+, Coimbatore' •
+SELECT * FR(X low _ attendance;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (627).png ---
+(3 COD (3)
+QUESTION 2/3 CODE
+The input table is already created, and records are already prepopulated, as
+mentioned in the problem statement.
+Output Format
+The output displays all records from the low_attendance table.
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+2024-01-10
+2024-02-15
+2024-03-12
+2024-05-18
+2AEFB
+1 Sections
+3 Questions
+MySQL (8.0) v
+file.sql +
++ IO
+1
+- write your query here
+Refer to the sample output.
+Sample Test Cases
+Output
+Student_id Student_name Course_name
+802 Arun Java 55
+804 Meena DBMS 50
+White List (Allowed libraries & functions)
+TRIGGER
+Note
+Summary 0/3
+Footer Snippet
+Attendance_percentage
+2
+3
+4
+5
+6
+7
+8
+9
+INSERT INTO attendance VALUES
+(801,
+(802,
+(803,
+(804,
+(805,
+'Kiran',
+Arun' ,
+Suresh' ,
+Meena ,
+'Vimal',
+Python' ,
+Java' ,
+DBMS' ,
+75,
+55,
+65,
+50,
+80,
+0 01:59:32
+• Answered • Bookmarked • Skipped
+, Chennai '
+, Bangalore '
+Hyderabad' ) ,
+2024-04-05' ,
+Delhi
+, Coimbatore' •
+SELECT * FR(X low _ attendance;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (628).png ---
+(3 COD (3)
+QUESTION 3/3
+P K Pranav CB.SC.U4CYS25037
+2AEFB
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+CODE
++ IO
+MySQL (8.0)
+file.sql
+1
+- write your query here
+Problem Statement
+In a gym management system, the admin wants to track members whose membership
+becomes 'Active' after an update. Create a trigger named membership_after_update that
+executes after a record is updated in the gym_members table.
+The trigger should check whether the Membership_status is 'Active'. If true, insert the
+following details into the active_members table:
+Member_id
+Member_name
+Membership_status
+Table name:
+gym_members and active_members
+Footer Snippet
+= 'Active'
+= 'Active'
+0 01:59:28
+• Answered • Bookmarked • Skipped
+*ERE Member_id = 2
+*ERE Member_id = 4
+Member_id O
+Member_name
+Membership_status
+Plan_type
+Summary 0/3
+int
+varchar(5ø)
+active members
+NN
+Member_id O
+NN
+Member_name
+int NN
+varchar(50) NN
+varchar(20)
+2
+3
+4
+5
+varchar(2Ø)
+Membership_status
+varchar(3ø)
+UPDATE gym_members SET Membership _ status
+UPDATE gym_members SET Membership _ status
+SELECT * FR(X active_members;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (629).png ---
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+2AEFB
++ IO
+int NN
+varchar(50) NN
+varchar(20)
+Plan_type
+Monthly
+Yearly
+Quarterly
+Monthly
+Yearly
+1 Sections
+3 Questions
+(3 COD (3)
+QUESTION 3/3 CODE
+Member_id O
+Member_name
+Membership_status
+Plan_type
+Table name:
+gym_members
+Member id
+2
+3
+4
+5
+Summary 0/3 >
+MySQL (8.0)
+file.sql
+int
+varchar(5ø)
+NN
+NN
+varchar(2Ø)
+varchar(3ø)
+Member name
+Vikram
+Divya
+Arun
+M e era
+Karthik
+active members
+Member_id O
+Member_name
+Membership_status
+Membership_status
+Inactive
+Expired
+Inactive
+Expired
+Inactive
+- write your query here
+Footer Snippet
+2
+3
+5
+= 'Active'
+= 'Active'
+0 01:59:25
+• Answered • Bookmarked • Skipped
+*ERE Member_id = 2
+*ERE Member_id = 4
+UPDATE gym_members SET Membership _ status
+UPDATE gym_members SET Membership _ status
+SELECT * FR(X active_members;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (630).png ---
+(3 COD (3)
+QUESTION 3/3 CODE
+Divya
+Arun
+Karthik
+Input Format
+P K Pranav CB.SC.U4CYS25037
+2AEFB
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
++ IO
+Yearly
+Quarterly
+Monthly
+Yearly
+MySQL (8.0)
+file.sql +
+1
+- write your query here
+Expired
+Inactive
+Expired
+Inactive
+The input table is already created, and records are already prepopulated.
+Output Format
+The output displays all records from the active_members table.
+Refer to the sample output for the formatting specifications.
+Sample Test Cases
+Output
+Summary 0/3
+Footer Snippet
+2
+3
+4
+5
+= 'Active'
+= 'Active'
+.11 @ 01:59:24
+• Answered • Bookmarked • Skipped
+*ERE Member_id = 2
+*ERE Member_id = 4
+UPDATE gym_members SET Membership _ status
+UPDATE gym_members SET Membership _ status
+SELECT * FR(X active_members;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (631).png ---
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+(3 COD (3)
+QUESTION 3/3 CODE
+Input Format
+The input table is already created, and records are already prepopulated.
+Output Format
+The output displays all records from the active_members table.
+Refer to the sample output for the formatting specifications.
+1 Sections
+3 Questions
++ IO
+2AEFB
+-o
+MySQL (8.0)
+file.sql
+1
+- write your query here
+Sample Test Cases
+Output
+Member_id Member_name
+2 Divya Active
+4 Meera Active
+Note
+Membership_status
+Footer Snippet
+2
+3
+4
+5
+0 01:59:22
+• Answered • Bookmarked • Skipped
+*ERE Member_id = 2
+*ERE Member_id = 4
+UPDATE gym_members SET Membership _ status
+UPDATE gym_members SET Membership _ status
+SELECT * FR(X active_members;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+= 'Active'
+= 'Active'
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (632).png ---
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+(3 COD (3)
+QUESTION 3/3 CODE
+Input Format
+The input table is already created, and records are already prepopulated.
+Output Format
+The output displays all records from the active_members table.
+Refer to the sample output for the formatting specifications.
+1 Sections
+3 Questions
++ IO
+2AEFB
+-o
+MySQL (8.0)
+file.sql
+1
+- write your query here
+Sample Test Cases
+Output
+Member_id Member_name
+2 Divya Active
+4 Meera Active
+Note
+Membership_status
+Footer Snippet
+2
+3
+4
+5
+0 01:59:17
+• Answered • Bookmarked • Skipped
+*ERE Member_id = 2
+*ERE Member_id = 4
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+UPDATE gym_members SET Membership _ status —
+— 'Active'
+UPDATE gym_members SET Membership _ status
+= 'Active'
+SELECT * FR(X active_members;
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+=== GROUP 3 (35167): Screenshots 633 - 638 ===
+
+--- Screenshot (633).png ---
+CJ COD (3)
+QUESTION 1/3 CODE
+Problem Statement
+P K Pranav CB.SC.U4CYS25037
+35167
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+2
+3
++ IO
+MySQL (8.0)
+1
+Footer Snippet
+file.sql
+David needs to calculate the sum of the digits of a specific number using a PL/SQL
+program. The number for which the sum of digits is to be calculated is 359. The program
+should use the MOD function to extract the last digit and the FLOOR function to remove
+the last digit during each iteration of a loop.
+Your task is to implement a PL/SQL block that calculates the sum of the digits of the
+number 359 and outputs the result.
+Input Format
+No console input.
+Output Format
+The output prints "Result" followed by "Sum of digits is: 17".
+Refer to the sample output
+Sample Test Cases
+Output
+Summary 0/3
+2
+3
+Now, execute the procedure separately
+CALL SumOfDigits(359);
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+• Answered
+Previous
+0 01:59:26
+• Bookmarked • Skipped
+Clear
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (634).png ---
+CJ COD (3)
+QUESTION 1/3 CODE
+Input Format
+No console input.
+Output Format
+P K Pranav CB.SC.U4CYS25037
+35167
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+2
+3
++ IO
+MySQL (8.0)
+1
+Footer Snippet
+file.sql
+The output prints "Result" followed by "Sum of digits is: 17".
+Refer to the sample output
+Sample Test Cases
+Output
+Result
+Sum of digits is: 17
+Note
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+2
+3
+Now, execute the procedure separately
+CALL SumOfDigits(359);
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+• Answered
+Previous
+0 01:59:24
+• Bookmarked • Skipped
+Clear
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (635).png ---
+CJ COD (3)
+QUESTION 2/3 CODE
+Problem Statement
+P K Pranav CB.SC.U4CYS25037
+35167
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:18
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+Harish is working on a data validation task and needs to determine if a number is a
+palindrome using a PL/SQL program. A number is considered a palindrome if it reads the
+same forwards and backwards.
+Your task is to implement a PL/SQL block that determines if the number 141 and 123 is a
+palindrome or not and outputs the result. The program should use the MOD function to
+extract the last digit and DIV for integer division to remove the last digit.
+Input Format
+No console input.
+Output Format
+The output prints "Result" followed by "<number> is <a palindrome / not a
+palindrome>
+Refer to the sample output.
+Sample Test Cases
+Summary 0/3
+2
+- write your query here
+Footer Snippet
+3 CALL CheckPa1indrome(141) ;
+4 CALL CheckPa1indrome(123) ;
+5
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (636).png ---
+CJ COD (3)
+QUESTION 2/3 CODE
+No console input.
+Output Format
+P K Pranav CB.SC.U4CYS25037
+35167
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:16
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+2
+- write your query here
+The output prints "Result" followed by "<number> is <a palindrome / not a
+palindrome>
+Refer to the sample output.
+Sample Test Cases
+Output
+Result
+141 is a palindrome
+Result
+123 is not a palindrome
+Note
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+Footer Snippet
+3 CALL CheckPa1indrome(141) ;
+4 CALL CheckPa1indrome(123) ;
+5
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (637).png ---
+CJ COD (3)
+QUESTION 3/3 CODE
+Problem Statement
+P K Pranav CB.SC.U4CYS25037
+35167
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:06
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+Reena is participating in an interview and is given a task to find the greatest number
+among three given numbers using a PL/SQL program. The numbers provided are 10, 20,
+and 15. Reena needs to write a PL/SQL block that compares these numbers and
+determines which one is the greatest.
+Your task is to help Reena by implementing a PL/SQL block that identifies the greatest
+number and outputs the result.
+Input Format
+No console input.
+Output Format
+The output prints "Result"
+Followed by "The greatest number is: 20".
+Refer to the sample output.
+Sample Test Cases
+Summary 0/3
+2
+- write your query here
+Footer Snippet
+3 CALL FindGreatest(1Ø, 20,
+4
+Sample Tests
+Submissions
+15);
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (638).png ---
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+CJ COD (3)
+QUESTION 3/3 CODE
+Input Format
+No console input.
+Output Format
+The output prints "Result"
+Followed by "The greatest number is: 20".
+Refer to the sample output.
+Sample Test Cases
+Output
+Result
+The greatest number is: 20
+Note
+The program will be evaluated only after the "Submit" button is clicked.
+1 Sections
+3 Questions
+0 01:59:04
+• Answered • Bookmarked • Skipped
++ IO
+35167
+-o
+Header Snippet
+MySQL (80) v
+file.sql
+2
+- write your query here
+Footer Snippet
+3 CALL F indGreatest(1Ø,
+4
+Sample Tests
+Submissions
+20,
+15);
+Custom Inputs
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+=== GROUP 4 (F5867): Screenshots 639 - 644 ===
+
+--- Screenshot (639).png ---
+CJ COD (3)
+QUESTION 1/3 CODE
+Problem Statement
+P K Pranav CB.SC.U4CYS25037
+F5867
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+2
+.11 @ 01:59:58
+• Answered • Bookmarked • Skipped
+3
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+Michael is developing a script to analyze employee performance. He needs to find the
+average performance score of a list of scores. The scores are given as a comma-
+separated string '80, 90, 85, 95, 88'. Write a PL/SQL block to calculate and display the
+average score.
+Input Format
+No console input.
+Output Format
+The output prints "Result" followed by "Average performance score: < score>"
+Refer to the sample output.
+Sample Test Cases
+Output
+Result
+Average performance score: 87.60
+Summary 0/3
+2
+- write your query here
+Footer Snippet
+3 CALL CalculateAverageScore( ' 80, 90, 85,
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+95,
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (640).png ---
+CJ COD (3)
+QUESTION 1/3 CODE
+Input Format
+No console input.
+Output Format
+P K Pranav CB.SC.U4CYS25037
+F5867
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+2
+0 01:59:56
+• Answered • Bookmarked • Skipped
+3
++ IO
+Header Snippet
+MySQL (80) v
+file.sql
+2
+- write your query here
+The output prints "Result" followed by "Average performance score: < score>"
+Refer to the sample output.
+Sample Test Cases
+Output
+Result
+Average performance score: 87.60
+Note
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+Footer Snippet
+3 CALL CalculateAverageScore( ' 80, 90, 85,
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+95,
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (641).png ---
+CJ COD (3)
+QUESTION 2/3 CODE
+Problem Statement
+P K Pranav CB.SC.U4CYS25037
+F5867
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:52
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+Alice is developing a text processing script and needs to find the length of the longest
+word in the given sentence 'PL/SQL is a powerful language'.
+Write a PL/SQL block to find and display the length of the longest word in the sentence.
+Input Format
+No console input.
+Output Format
+The output prints "Result" followed by "Length of the longest word: <length>"
+Refer to the sample output.
+Sample Test Cases
+Output
+Result
+Length of the longest word: 8
+Summary 0/3 >
+2
+- write your query here
+Footer Snippet
+3 CALL FindLongestWordLength( 'PL/SQL is a powerful language' ) ;
+4
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (642).png ---
+CJ COD (3)
+QUESTION 2/3 CODE
+Input Format
+No console input.
+Output Format
+P K Pranav CB.SC.U4CYS25037
+F5867
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:51
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+2
+- write your query here
+The output prints "Result" followed by "Length of the longest word: <length>"
+Refer to the sample output.
+Sample Test Cases
+Output
+Result
+Length of the longest word: 8
+Note
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+Footer Snippet
+3 CALL FindLongestWordLength( 'PL/SQL is a powerful language' ) ;
+4
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+ext
+
+--- Screenshot (643).png ---
+CJ COD (3)
+QUESTION 3/3 CODE
+Problem Statement
+P K Pranav CB.SC.U4CYS25037
+F5867
+cbsc.u4cys25037@cb.students.amrita.edu
+-o
+1 Sections
+3 Questions
+.11 @ 01:59:48
+• Answered • Bookmarked • Skipped
++ IO
+Header Snippet
+MySQL (80) v
+file.sql +
+David is developing a text analysis tool and needs to count the number of words in a
+given sentence. The sentence is processed by repeatedly finding the position of spaces
+using the LOCATE function to determine word boundaries.
+Your task is to write a MySQL stored procedure named CountWords that takes a
+sentence as input and counts the number of words in it. The procedure should trim
+leading and trailing spaces, identify spaces to determine word boundaries, and count the
+total number of words.
+Test the procedure using the sentence "Hello World from MySQL" and output the total
+word count.
+Input Format
+No console input.
+Output Format
+The output "Result" followed by "Number of words in "Hello World from MySQL" is:
+Refer to the sample output.
+Summary 0/3 >
+2
+- write your query here
+Footer Snippet
+3 CALL CountWords( Hello World from MySQL ' ) ;
+4
+5
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next
+
+--- Screenshot (644).png ---
+P K Pranav CB.SC.U4CYS25037
+cbsc.u4cys25037@cb.students.amrita.edu
+CJ COD (3)
+QUESTION 3/3 CODE
+Input Format
+No console input.
+Output Format
+1 Sections
+3 Questions
+.11 @ 01:59:47
+• Answered • Bookmarked • Skipped
++ IO
+F5867
+-o
+Header Snippet
+MySQL (80) v
+file.sql +
+2
+- write your query here
+The output "Result" followed by "Number of words in "Hello World from MySQL" is:
+Refer to the sample output.
+Sample Test Cases
+Output
+Result
+Number of words in "Hello World from MySQL" is: 4
+Note
+The program will be evaluated only after the "Submit" button is clicked.
+Extra spaces and new line characters in the program output will result in the failure
+of the test cases.
+Summary 0/3
+Footer Snippet
+3 CALL CountWords( Hello World from MySQL ' ) ;
+4
+5
+Sample Tests
+Submissions
+Custom Inputs
+Click "Compile' to test against sample test cases
+Previous
+Bookmark
+ubmit Te
+Not Viewed
+Next

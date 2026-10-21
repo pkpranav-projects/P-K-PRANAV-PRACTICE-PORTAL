@@ -1481,8 +1481,8 @@ System.out.println(new String(chars)); // "Hello"`
     returns: "The String, converted to lowercase.",
     exceptions: "None.",
     pitfalls: "Strings are immutable! Calling `s.toLowerCase()` does not change `s`. You must reassign: `s = s.toLowerCase();`.",
-    snippet: `String raw = "NEO PORTAL";
-String lower = raw.toLowerCase(); // "neo portal"`
+    snippet: `String raw = "PRANAV PRACTICE";
+String lower = raw.toLowerCase(); // "pranav practice"`
   },
   {
     name: "String.toUpperCase",

@@ -67,6 +67,47 @@ html.light {
   border-radius: 0 0 0.5rem 0.5rem;
 }
 
+/* Base Body Colors by Theme */
+html.light,
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.dark,
+html.dark body {
+  background-color: #1a1a1a !important;
+  color: #eff1f6bf !important;
+}
+
+/* Card Tile Appearance & Crisp Visible Outline */
+.arena-card-tile {
+  border: 1.5px solid #e2e8f0;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.arena-card-tile:hover {
+  border-color: #f59e0b;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.15), 0 8px 10px -6px rgba(245, 158, 11, 0.1);
+}
+
+.dark .arena-card-tile {
+  border: 1.5px solid #383838;
+  background-color: #212121;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.dark .arena-card-tile:hover {
+  border-color: #FFA116;
+  background-color: #262626;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(255, 161, 22, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+}
+
 /* OLED Black Theme Overrides - Pure Pitch Black #000000 */
 html.oled,
 html.oled body {
@@ -76,59 +117,47 @@ html.oled body {
 
 html.oled .bg-\[\#1a1a1a\],
 html.oled .dark\:bg-\[\#1a1a1a\],
-html.oled .dark\:bg-\[\#121212\],
-html.oled [class*="bg-slate-50 dark:bg-[#121212]"],
-html.oled [class*="dark:bg-[#1a1a1a]"] {
+html.oled .dark\:bg-\[\#121212\] {
   background-color: #000000 !important;
+}
+
+/* OLED Card Tiles: Keep Distinct Outline and Elevation */
+html.oled .arena-card-tile {
+  border: 1.5px solid #3a3a3a !important;
+  background-color: #0c0c0c !important;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 4px 16px rgba(0, 0, 0, 0.8) !important;
+}
+
+html.oled .arena-card-tile:hover {
+  border-color: #FFA116 !important;
+  background-color: #141414 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(255, 161, 22, 0.25) !important;
 }
 
 html.oled nav,
 html.oled .bg-\[\#282828\],
 html.oled .dark\:bg-\[\#282828\] {
-  background-color: #070707 !important;
-  border-color: #1a1a1a !important;
+  background-color: #080808 !important;
+  border-color: #222222 !important;
 }
 
 html.oled aside,
 html.oled aside > div {
   background-color: #000000 !important;
-  border-color: #181818 !important;
-}
-
-html.oled .bg-\[\#262626\],
-html.oled .dark\:bg-\[\#262626\],
-html.oled .bg-\[\#222222\],
-html.oled .dark\:bg-\[\#222222\],
-html.oled .bg-\[\#202020\],
-html.oled .dark\:bg-\[\#202020\],
-html.oled .bg-\[\#242424\],
-html.oled .dark\:bg-\[\#242424\],
-html.oled .bg-sd-card {
-  background-color: #080808 !important;
-  border-color: #1c1c1c !important;
-}
-
-html.oled .border-\[\#383838\],
-html.oled .border-\[\#2e2e2e\],
-html.oled .border-\[\#333333\],
-html.oled .border-neutral-800,
-html.oled .dark\:border-\[\#282828\],
-html.oled .dark\:border-\[\#333333\],
-html.oled .border-sd-border {
-  border-color: #191919 !important;
+  border-color: #222222 !important;
 }
 
 html.oled table {
   background-color: #000000 !important;
 }
 
-html.oled thead tr,
-html.oled .bg-slate-50\/70 {
-  background-color: #070707 !important;
+html.oled thead tr {
+  background-color: #0a0a0a !important;
 }
 
 html.oled tbody tr:hover {
-  background-color: #0c0c0c !important;
+  background-color: #0f0f0f !important;
 }
 
 html.oled .monaco-editor,

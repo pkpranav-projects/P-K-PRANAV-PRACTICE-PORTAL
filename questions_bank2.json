@@ -2,608 +2,627 @@
   {
     "id": "bank2-001",
     "bank": "bank2",
-    "title": "Calorie Tracker Daily Summary",
-    "topic": "Loops & Arrays",
-    "difficulty": "Easy",
-    "description": "Bob is building a fitness logging system. Given the number of meals N eaten in a day, followed by N integers representing the calories consumed in each meal, calculate and print: (1) Total daily calories, (2) The maximum calorie meal, and (3) Whether the daily intake exceeded a recommended threshold of 2000 calories ('EXCEEDED' or 'WITHIN_LIMIT').",
-    "inputFormat": "First line contains an integer N (number of meals).\\nSecond line contains N space-separated integers representing the calorie count of each meal.",
-    "outputFormat": "Print three lines:\\nLine 1: Total: <total>\\nLine 2: Max: <max>\\nLine 3: Status: <EXCEEDED or WITHIN_LIMIT>",
+    "title": "Deva's Supermarket Shelf Hash Table with Linear Probing",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Medium",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (238).png - Screenshot (240).png",
+    "description": "Deva works at a bustling supermarket, and he is looking for an efficient way to manage the products on the store shelves. He wants to use a hash table with linear probing to keep track of the available slots on the shelves and optimize product placement.\n\nHe uses a hash table of size N with the modulo hash function `index = key % N`. When inserting a product key, if the hashed slot is already occupied, linear probing is used to inspect consecutive subsequent slots `(index + 1) % N`, `(index + 2) % N`, etc., until an empty slot is found. Help Deva write a program that prints the slot index where each product is stored.\n\n### Input Format\n- The first line contains an integer N representing the size of the hash table.\n- The second line contains an integer K representing the number of product keys.\n- The third line contains K space-separated integers representing the product keys.\n\n### Output Format\n- Output K space-separated integers, each representing the slot index allocated for the corresponding product key.\n\n### Constraints\n- 1 <= N <= 100\n- 1 <= K <= N\n- 1 <= product key <= 100000\n\n### Sample Input 1\n```\n6\n5\n15 30 9 21 12\n```\n\n### Sample Output 1\n```\n3 0 4 5 1\n```\n\n### Explanation 1\n- Table size = 6.\n- Key 15: 15 % 6 = 3 (empty slot, allocated at index 3).\n- Key 30: 30 % 6 = 0 (empty slot, allocated at index 0).\n- Key 9: 9 % 6 = 3 (occupied by 15). Linear probe -> index 4 is empty, allocated at index 4.\n- Key 21: 21 % 6 = 3 (occupied). Probes 4 (occupied), finds 5 empty, allocated at index 5.\n- Key 12: 12 % 6 = 0 (occupied by 30). Linear probe -> index 1 is empty, allocated at index 1.\nResult: 3 0 4 5 1",
+    "inputFormat": "The first line contains an integer N representing the size of the hash table.\nThe second line contains an integer K representing the number of product keys.\nThe third line contains K space-separated integers representing the product keys.",
+    "outputFormat": "Output K space-separated integers, each representing the slot index allocated for the corresponding product key.",
     "constraints": [
       "1 <= N <= 100",
-      "1 <= calories[i] <= 5000"
+      "1 <= K <= N",
+      "1 <= product key <= 100000"
     ],
-    "sampleInput": "4\n450 600 850 300",
-    "sampleOutput": "Total: 2200\nMax: 850\nStatus: EXCEEDED",
+    "sampleInput": "6\n5\n15 30 9 21 12",
+    "sampleOutput": "3 0 4 5 1",
     "testCases": [
       {
-        "input": "4\n450 600 850 300",
-        "expectedOutput": "Total: 2200\nMax: 850\nStatus: EXCEEDED",
+        "input": "6\n5\n15 30 9 21 12",
+        "expectedOutput": "3 0 4 5 1",
         "isHidden": false
       },
       {
-        "input": "3\n500 600 400",
-        "expectedOutput": "Total: 1500\nMax: 600\nStatus: WITHIN_LIMIT",
+        "input": "10\n5\n123 456 789 321 654",
+        "expectedOutput": "3 6 9 1 4",
         "isHidden": false
       },
       {
-        "input": "1\n2000",
-        "expectedOutput": "Total: 2000\nMax: 2000\nStatus: WITHIN_LIMIT",
+        "input": "5\n4\n10 15 20 25",
+        "expectedOutput": "0 1 2 3",
         "isHidden": true
       },
       {
-        "input": "5\n100 200 300 400 1100",
-        "expectedOutput": "Total: 2100\nMax: 1100\nStatus: EXCEEDED",
+        "input": "7\n3\n14 21 28",
+        "expectedOutput": "0 1 2",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        long total = 0;\n        int maxCal = Integer.MIN_VALUE;\n        for (int i = 0; i < n; i++) {\n            int cal = sc.nextInt();\n            total += cal;\n            if (cal > maxCal) maxCal = cal;\n        }\n        System.out.println(\"Total: \" + total);\n        System.out.println(\"Max: \" + maxCal);\n        System.out.println(\"Status: \" + (total > 2000 ? \"EXCEEDED\" : \"WITHIN_LIMIT\"));\n    }\n}"
+    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int k = sc.nextInt();\n        int[] table = new int[n];\n        boolean[] occupied = new boolean[n];\n        // Complete linear probing logic here\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int k = sc.nextInt();\n        boolean[] occupied = new boolean[n];\n        int[] result = new int[k];\n        for (int i = 0; i < k; i++) {\n            int key = sc.nextInt();\n            int idx = ((key % n) + n) % n;\n            while (occupied[idx]) {\n                idx = (idx + 1) % n;\n            }\n            occupied[idx] = true;\n            result[i] = idx;\n        }\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < k; i++) {\n            if (i > 0) sb.append(\" \");\n            sb.append(result[i]);\n        }\n        System.out.println(sb.toString());\n    }\n}",
+    "explanation": "Calculates initial hash index using key % n. Resolves collisions by linearly checking consecutive positions until an unoccupied index is identified.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-002",
     "bank": "bank2",
-    "title": "ASCII Box Generator",
-    "topic": "Nested Loops",
+    "title": "Balanced Parentheses Redundancy Checker",
+    "topic": "Stacks & Queues",
     "difficulty": "Easy",
-    "description": "Given two positive integers W (width) and H (height), render an ASCII hollow rectangle box using the character '#' for the border and a single space ' ' for the interior. If W < 2 or H < 2, print a solid grid of '#' characters of size H x W.",
-    "inputFormat": "A single line containing two space-separated integers: W and H.",
-    "outputFormat": "H lines representing the ASCII box.",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (241).png - Screenshot (242).png",
+    "description": "Given a string of balanced algebraic expressions containing operators (+, -, *, /) and parentheses, determine if the expression contains any redundant parentheses. A set of parentheses is redundant if a sub-expression is surrounded by duplicate or unnecessary brackets (e.g. `((a+b))` contains redundant brackets, whereas `(a+b)` does not).\n\n### Input Format\n- A single string S representing a valid algebraic expression without spaces.\n\n### Output Format\n- Print \"Yes\" if redundant parentheses exist, otherwise print \"No\".\n\n### Constraints\n- 1 <= length of S <= 100\n- S contains only lowercase letters, operators (+, -, *, /), and parentheses '(' and ')'.\n\n### Sample Input 1\n```\n(a+b)\n```\n\n### Sample Output 1\n```\nNo\n```\n\n### Sample Input 2\n```\n((a+b))\n```\n\n### Sample Output 2\n```\nYes\n```",
+    "inputFormat": "A single string S representing a valid algebraic expression without spaces.",
+    "outputFormat": "Print \"Yes\" if redundant parentheses exist, otherwise print \"No\".",
     "constraints": [
-      "1 <= W, H <= 25"
+      "1 <= length of S <= 100",
+      "The expression is valid and fully parenthesized without whitespaces."
     ],
-    "sampleInput": "5 4",
-    "sampleOutput": "#####\n#   #\n#   #\n#####",
+    "sampleInput": "(a+b)",
+    "sampleOutput": "No",
     "testCases": [
       {
-        "input": "5 4",
-        "expectedOutput": "#####\n#   #\n#   #\n#####",
+        "input": "(a+b)",
+        "expectedOutput": "No",
         "isHidden": false
       },
       {
-        "input": "3 3",
-        "expectedOutput": "###\n# #\n###",
+        "input": "((a+b))",
+        "expectedOutput": "Yes",
         "isHidden": false
       },
       {
-        "input": "1 1",
-        "expectedOutput": "#",
+        "input": "(a+(b*c))",
+        "expectedOutput": "No",
         "isHidden": true
       },
       {
-        "input": "6 2",
-        "expectedOutput": "######\n######",
-        "isHidden": true
-      },
-      {
-        "input": "4 5",
-        "expectedOutput": "####\n#  #\n#  #\n#  #\n####",
+        "input": "(a)",
+        "expectedOutput": "Yes",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your code here\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int w = sc.nextInt();\n        int h = sc.nextInt();\n\n        for (int r = 0; r < h; r++) {\n            StringBuilder sb = new StringBuilder();\n            for (int c = 0; c < w; c++) {\n                if (r == 0 || r == h - 1 || c == 0 || c == w - 1) {\n                    sb.append('#');\n                } else {\n                    sb.append(' ');\n                }\n            }\n            System.out.println(sb.toString());\n        }\n    }\n}"
+    "starterCode": "import java.util.Scanner;\nimport java.util.Stack;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n        // Implement redundant parentheses check using a Stack\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.Stack;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n        Stack<Character> stack = new Stack<>();\n        boolean redundant = false;\n        for (char ch : s.toCharArray()) {\n            if (ch == ')') {\n                int count = 0;\n                while (!stack.isEmpty() && stack.peek() != '(') {\n                    char top = stack.pop();\n                    if (top == '+' || top == '-' || top == '*' || top == '/') {\n                        count++;\n                    }\n                }\n                if (!stack.isEmpty()) stack.pop(); // pop '('\n                if (count == 0) {\n                    redundant = true;\n                    break;\n                }\n            } else {\n                stack.push(ch);\n            }\n        }\n        System.out.println(redundant ? \"Yes\" : \"No\");\n    }\n}",
+    "explanation": "Pushes elements onto a stack. When encountering a closing parenthesis ')', pops until '('; if no operator was enclosed between the pair, the brackets are redundant.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-003",
     "bank": "bank2",
-    "title": "Clean Anagram Checker",
-    "topic": "Strings & Characters",
-    "difficulty": "Medium",
-    "description": "Two strings are anagrams if they contain the same characters with the exact same frequencies, regardless of spaces, punctuation, or case. Given two lines of text, determine whether they form a valid anagram. Ignore all characters except English letters (A-Z, a-z) and treat uppercase and lowercase letters as identical. Print 'ANAGRAM' if valid, or 'NOT ANAGRAM'.",
-    "inputFormat": "Two lines of input, each containing a string.",
-    "outputFormat": "Print 'ANAGRAM' if they are anagrams, or 'NOT ANAGRAM' otherwise.",
+    "title": "Fruit Contest Hashing & Score Lookup",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Easy",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (243).png - Screenshot (245).png, Screenshot (251).png - Screenshot (253).png",
+    "description": "Develop a program using hashing to manage a fruit contest where each fruit is assigned a unique name and a corresponding score. The organizer enters the number of fruits N, followed by their names and scores. Then, the organizer queries a specific fruit name T to check if it participated in the contest.\n\n### Input Format\n- The first line contains an integer N representing the number of fruits.\n- The following N lines each contain a string fruitName and an integer score, separated by a space.\n- The last line contains a string T representing the fruit to search for.\n\n### Output Format\n- If T exists, print: Key '<T>' exists in the dictionary.\n- If T does not exist, print: Key '<T>' does not exist in the dictionary.\n\n### Constraints\n- 1 <= N <= 15\n- Keys are case-sensitive\n- Fruit names are alphanumeric strings without spaces (max length 100)\n\n### Sample Input 1\n```\n2\nbanana 2\napple 1\nBanana\n```\n\n### Sample Output 1\n```\nKey 'Banana' does not exist in the dictionary.\n```\n\n### Sample Input 2\n```\n3\napple 1\nbanana 2\ncherry 3\ncherry\n```\n\n### Sample Output 2\n```\nKey 'cherry' exists in the dictionary.\n```",
+    "inputFormat": "The first line consists of an integer N, representing the number of fruits in the contest.\nThe following N lines contain a string K and an integer V, separated by a space, representing the name and score of each fruit.\nThe last line consists of a string T, representing the fruit to search for.",
+    "outputFormat": "If T exists in the dictionary, print \"Key '<T>' exists in the dictionary.\". If T does not exist, print \"Key '<T>' does not exist in the dictionary.\".",
     "constraints": [
-      "1 <= length of each string <= 1000"
+      "1 <= N <= 15",
+      "The keys are case-sensitive.",
+      "Maximum key length is 100."
     ],
-    "sampleInput": "Dormitory\nDirty room",
-    "sampleOutput": "ANAGRAM",
+    "sampleInput": "2\nbanana 2\napple 1\nBanana",
+    "sampleOutput": "Key 'Banana' does not exist in the dictionary.",
     "testCases": [
       {
-        "input": "Dormitory\nDirty room",
-        "expectedOutput": "ANAGRAM",
+        "input": "2\nbanana 2\napple 1\nBanana",
+        "expectedOutput": "Key 'Banana' does not exist in the dictionary.",
         "isHidden": false
       },
       {
-        "input": "Hello World\nWorld Hello",
-        "expectedOutput": "ANAGRAM",
+        "input": "3\napple 1\nbanana 2\ncherry 3\ncherry",
+        "expectedOutput": "Key 'cherry' exists in the dictionary.",
         "isHidden": false
       },
       {
-        "input": "The eyes\nThey see",
-        "expectedOutput": "ANAGRAM",
+        "input": "3\napple 1\nbanana 2\ncherry 3\nApple",
+        "expectedOutput": "Key 'Apple' does not exist in the dictionary.",
         "isHidden": true
       },
       {
-        "input": "Java 21\nKotlin 21",
-        "expectedOutput": "NOT ANAGRAM",
-        "isHidden": true
-      },
-      {
-        "input": "A gentleman\nElegant man",
-        "expectedOutput": "ANAGRAM",
+        "input": "1\nMango 50\nMango",
+        "expectedOutput": "Key 'Mango' exists in the dictionary.",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement anagram checker\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLine()) return;\n        String s1 = sc.nextLine();\n        String s2 = sc.hasNextLine() ? sc.nextLine() : \"\";\n\n        int[] count = new int[26];\n        for (char c : s1.toCharArray()) {\n            if (Character.isLetter(c)) {\n                count[Character.toLowerCase(c) - 'a']++;\n            }\n        }\n        for (char c : s2.toCharArray()) {\n            if (Character.isLetter(c)) {\n                count[Character.toLowerCase(c) - 'a']--;\n            }\n        }\n\n        boolean isAnagram = true;\n        for (int val : count) {\n            if (val != 0) {\n                isAnagram = false;\n                break;\n            }\n        }\n\n        System.out.println(isAnagram ? \"ANAGRAM\" : \"NOT ANAGRAM\");\n    }\n}"
+    "starterCode": "import java.util.Scanner;\nimport java.util.HashMap;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        // Read fruits and query\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.HashMap;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        HashMap<String, Integer> map = new HashMap<>();\n        for (int i = 0; i < n; i++) {\n            String name = sc.next();\n            int score = sc.nextInt();\n            map.put(name, score);\n        }\n        String query = sc.next();\n        if (map.containsKey(query)) {\n            System.out.println(\"Key '\" + query + \"' exists in the dictionary.\");\n        } else {\n            System.out.println(\"Key '\" + query + \"' does not exist in the dictionary.\");\n        }\n    }\n}",
+    "explanation": "Uses hash map keyed by exact case-sensitive fruit string, enabling instant constant time lookup.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-004",
     "bank": "bank2",
-    "title": "Matrix 90-Degree Clockwise Rotation",
-    "topic": "2D Arrays",
-    "difficulty": "Medium",
-    "description": "Given an N x N 2D square matrix of integers, rotate the matrix 90 degrees clockwise in-place and output the resulting matrix. Each row should be printed on a separate line with elements separated by a single space.",
-    "inputFormat": "First line contains an integer N.\\nThe next N lines each contain N space-separated integers representing the matrix rows.",
-    "outputFormat": "Print the rotated N x N matrix, one row per line with space-separated values.",
+    "title": "Madhan's Singly Linked List Insertion & Sort",
+    "topic": "Linked Lists",
+    "difficulty": "Easy",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (246).png - Screenshot (247).png",
+    "description": "Madhan is tasked with creating a program that manages a singly linked list with the following functionalities:\n1. Insert elements at the end of the list based on user input.\n2. Sort the elements of the list in ascending order.\n3. Display the sorted elements of the list.\n\n### Input Format\n- The first line consists of an integer N, which is the number of elements.\n- The second line consists of N space-separated integers.\n\n### Output Format\n- The output prints the sorted elements of the linked list separated by spaces.\n\n### Constraints\n- 1 <= N <= 10\n- 1 <= elements <= 100\n\n### Sample Input 1\n```\n5\n78 89 34 51 67\n```\n\n### Sample Output 1\n```\n34 51 67 78 89\n```",
+    "inputFormat": "The first line of input consists of an integer N, which is the number of elements.\nThe second line consists of N space-separated integers.",
+    "outputFormat": "The output prints the sorted elements of the linked list separated by spaces.",
     "constraints": [
-      "1 <= N <= 50",
-      "-1000 <= matrix[i][j] <= 1000"
+      "1 <= N <= 10",
+      "1 <= elements <= 100"
     ],
-    "sampleInput": "3\n1 2 3\n4 5 6\n7 8 9",
-    "sampleOutput": "7 4 1\n8 5 2\n9 6 3",
+    "sampleInput": "5\n78 89 34 51 67",
+    "sampleOutput": "34 51 67 78 89",
     "testCases": [
       {
-        "input": "3\n1 2 3\n4 5 6\n7 8 9",
-        "expectedOutput": "7 4 1\n8 5 2\n9 6 3",
+        "input": "5\n78 89 34 51 67",
+        "expectedOutput": "34 51 67 78 89",
         "isHidden": false
       },
       {
-        "input": "2\n1 2\n3 4",
-        "expectedOutput": "3 1\n4 2",
+        "input": "5\n10 5 20 35 15",
+        "expectedOutput": "5 10 15 20 35",
         "isHidden": false
       },
       {
-        "input": "1\n99",
-        "expectedOutput": "99",
+        "input": "1\n42",
+        "expectedOutput": "42",
         "isHidden": true
       },
       {
-        "input": "4\n1 2 3 4\n5 6 7 8\n9 10 11 12\n13 14 15 16",
-        "expectedOutput": "13 9 5 1\n14 10 6 2\n15 11 7 3\n16 12 8 4",
+        "input": "4\n9 3 1 7",
+        "expectedOutput": "1 3 7 9",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Rotate matrix clockwise\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[][] mat = new int[n][n];\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < n; j++) {\n                mat[i][j] = sc.nextInt();\n            }\n        }\n\n        // Transpose\n        for (int i = 0; i < n; i++) {\n            for (int j = i + 1; j < n; j++) {\n                int temp = mat[i][j];\n                mat[i][j] = mat[j][i];\n                mat[j][i] = temp;\n            }\n        }\n\n        // Reverse each row\n        for (int i = 0; i < n; i++) {\n            int left = 0, right = n - 1;\n            while (left < right) {\n                int temp = mat[i][left];\n                mat[i][left] = mat[i][right];\n                mat[i][right] = temp;\n                left++;\n                right--;\n            }\n        }\n\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < n; j++) {\n                System.out.print(mat[i][j] + (j == n - 1 ? \"\" : \" \"));\n            }\n            System.out.println();\n        }\n    }\n}"
+    "starterCode": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.Collections;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        // Complete linked list / sort logic\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.Collections;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        ArrayList<Integer> list = new ArrayList<>();\n        for (int i = 0; i < n; i++) {\n            list.add(sc.nextInt());\n        }\n        Collections.sort(list);\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < list.size(); i++) {\n            if (i > 0) sb.append(\" \");\n            sb.append(list.get(i));\n        }\n        System.out.println(sb.toString());\n    }\n}",
+    "explanation": "Collects elements into a sequential list structure, sorts them in ascending numerical order, and prints them separated by spaces.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-005",
     "bank": "bank2",
-    "title": "String Run-Length Encoding",
-    "topic": "Strings & Loops",
+    "title": "Arjun's Safe Division Calculator with Custom Exception",
+    "topic": "Exception Handling",
     "difficulty": "Easy",
-    "description": "Run-length encoding (RLE) is a basic data compression algorithm. Consecutive repeated characters are replaced by the character followed by its count. For example, 'AAABBBCC' becomes 'A3B3C2'. If a character appears only once, output the character followed by '1' (e.g., 'A1'). Given a string S consisting of uppercase alphabetic letters, output its compressed RLE representation.",
-    "inputFormat": "A single line containing the uppercase string S.",
-    "outputFormat": "Print the RLE compressed string.",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (248).png - Screenshot (250).png",
+    "description": "Arjun is building a simple calculator application that performs division operations. The application needs to handle cases where division by zero occurs, as this is mathematically undefined and causes runtime exceptions.\n\nThe program validates the denominator before performing the division and throws an exception with the message \"Division by zero is not allowed!\" if the denominator is zero. Implement this division calculator using try-catch blocks to ensure invalid operations are handled gracefully.\n\n### Input Format\n- The first line contains an integer numerator representing the dividend.\n- The second line contains an integer denominator representing the divisor.\n\n### Output Format\n- If valid, print: Result of division: <quotient>\n- If division by zero occurs, print: Error: Division by zero is not allowed!\n\n### Constraints\n- 0 <= numerator <= 1000\n- 0 <= denominator <= 1000\n\n### Sample Input 1\n```\n25\n5\n```\n\n### Sample Output 1\n```\nResult of division: 5\n```\n\n### Sample Input 2\n```\n34\n0\n```\n\n### Sample Output 2\n```\nError: Division by zero is not allowed!\n```",
+    "inputFormat": "The first line consists of an integer numerator representing the dividend.\nThe second line consists of an integer denominator representing the divisor.",
+    "outputFormat": "If the division is valid, print 'Result of division: <result>'. If a division by zero error occurs, print 'Error: Division by zero is not allowed!'.",
     "constraints": [
-      "1 <= S.length() <= 1000",
-      "S contains only uppercase letters 'A'-'Z'"
+      "0 <= numerator <= 1000",
+      "0 <= denominator <= 1000"
     ],
-    "sampleInput": "AAABBBCC",
-    "sampleOutput": "A3B3C2",
+    "sampleInput": "25\n5",
+    "sampleOutput": "Result of division: 5",
     "testCases": [
       {
-        "input": "AAABBBCC",
-        "expectedOutput": "A3B3C2",
+        "input": "25\n5",
+        "expectedOutput": "Result of division: 5",
         "isHidden": false
       },
       {
-        "input": "ABCD",
-        "expectedOutput": "A1B1C1D1",
+        "input": "34\n0",
+        "expectedOutput": "Error: Division by zero is not allowed!",
         "isHidden": false
       },
       {
-        "input": "AAAAA",
-        "expectedOutput": "A5",
+        "input": "100\n10",
+        "expectedOutput": "Result of division: 10",
         "isHidden": true
       },
       {
-        "input": "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWW",
-        "expectedOutput": "W12B1W12B3W12",
+        "input": "0\n5",
+        "expectedOutput": "Result of division: 0",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement run-length encoding\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLine()) return;\n        String s = sc.nextLine().trim();\n        if (s.isEmpty()) return;\n\n        StringBuilder sb = new StringBuilder();\n        int count = 1;\n        for (int i = 1; i < s.length(); i++) {\n            if (s.charAt(i) == s.charAt(i - 1)) {\n                count++;\n            } else {\n                sb.append(s.charAt(i - 1)).append(count);\n                count = 1;\n            }\n        }\n        sb.append(s.charAt(s.length() - 1)).append(count);\n        System.out.println(sb.toString());\n    }\n}"
+    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int num = sc.nextInt();\n        int den = sc.nextInt();\n        // Use try-catch to validate denominator\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int num = sc.nextInt();\n        int den = sc.nextInt();\n        try {\n            if (den == 0) {\n                throw new ArithmeticException(\"Division by zero is not allowed!\");\n            }\n            System.out.println(\"Result of division: \" + (num / den));\n        } catch (ArithmeticException e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        }\n    }\n}",
+    "explanation": "Validates divisor inside a try-catch construct, catching zero-division situations and reporting the required error message.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-006",
     "bank": "bank2",
-    "title": "Robust Age & Range Validator",
-    "topic": "Exception Handling",
-    "difficulty": "Easy",
-    "description": "Write a program that reads an input string representing a user's age. Validate the input using proper exception handling:\\n- If the input cannot be parsed as a whole integer, catch NumberFormatException and print 'ERROR: Invalid number format'.\\n- If the integer is less than 0 or greater than 120, print 'ERROR: Age out of range [0, 120]'.\\n- Otherwise, print 'VALID: <age>'.",
-    "inputFormat": "A single line containing input text.",
-    "outputFormat": "Print the validation status message as specified.",
-    "constraints": [
-      "Input string length <= 50"
-    ],
-    "sampleInput": "25",
-    "sampleOutput": "VALID: 25",
-    "testCases": [
-      {
-        "input": "25",
-        "expectedOutput": "VALID: 25",
-        "isHidden": false
-      },
-      {
-        "input": "abc",
-        "expectedOutput": "ERROR: Invalid number format",
-        "isHidden": false
-      },
-      {
-        "input": "-5",
-        "expectedOutput": "ERROR: Age out of range [0, 120]",
-        "isHidden": true
-      },
-      {
-        "input": "150",
-        "expectedOutput": "ERROR: Age out of range [0, 120]",
-        "isHidden": true
-      },
-      {
-        "input": "0",
-        "expectedOutput": "VALID: 0",
-        "isHidden": true
-      }
-    ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement age validation\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLine()) return;\n        String line = sc.nextLine().trim();\n\n        try {\n            int age = Integer.parseInt(line);\n            if (age < 0 || age > 120) {\n                System.out.println(\"ERROR: Age out of range [0, 120]\");\n            } else {\n                System.out.println(\"VALID: \" + age);\n            }\n        } catch (NumberFormatException e) {\n            System.out.println(\"ERROR: Invalid number format\");\n        }\n    }\n}"
-  },
-  {
-    "id": "bank2-007",
-    "bank": "bank2",
-    "title": "Collatz Conjecture Step Counter",
-    "topic": "Control Flow & while Loop",
-    "difficulty": "Easy",
-    "description": "The Collatz conjecture states that starting from any positive integer N:\\n- If N is even, divide it by 2 (N = N / 2).\\n- If N is odd, multiply it by 3 and add 1 (N = 3 * N + 1).\\nRepeat until N becomes 1. Given N, print the sequence of numbers generated separated by a space, followed by the total number of steps taken to reach 1 on the next line.",
-    "inputFormat": "A single positive integer N.",
-    "outputFormat": "Line 1: Space-separated sequence starting with N and ending with 1.\\nLine 2: Steps: <total_steps>",
-    "constraints": [
-      "1 <= N <= 10000"
-    ],
-    "sampleInput": "6",
-    "sampleOutput": "6 3 10 5 16 8 4 2 1\nSteps: 8",
-    "testCases": [
-      {
-        "input": "6",
-        "expectedOutput": "6 3 10 5 16 8 4 2 1\nSteps: 8",
-        "isHidden": false
-      },
-      {
-        "input": "1",
-        "expectedOutput": "1\nSteps: 0",
-        "isHidden": false
-      },
-      {
-        "input": "11",
-        "expectedOutput": "11 34 17 52 26 13 40 20 10 5 16 8 4 2 1\nSteps: 14",
-        "isHidden": true
-      },
-      {
-        "input": "2",
-        "expectedOutput": "2 1\nSteps: 1",
-        "isHidden": true
-      }
-    ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement Collatz sequence\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLong()) return;\n        long n = sc.nextLong();\n        StringBuilder sb = new StringBuilder();\n        sb.append(n);\n        int steps = 0;\n\n        while (n != 1) {\n            if (n % 2 == 0) {\n                n = n / 2;\n            } else {\n                n = 3 * n + 1;\n            }\n            sb.append(\" \").append(n);\n            steps++;\n        }\n        System.out.println(sb.toString());\n        System.out.println(\"Steps: \" + steps);\n    }\n}"
-  },
-  {
-    "id": "bank2-008",
-    "bank": "bank2",
-    "title": "Roman Numeral to Decimal Converter",
-    "topic": "Strings & Switch",
+    "title": "Corporate Team-Building Mathematical Powers Distribution",
+    "topic": "Recursion & Backtracking",
     "difficulty": "Medium",
-    "description": "Convert a given Roman numeral string into its integer decimal equivalent using standard Roman rules:\\nI=1, V=5, X=10, L=50, C=100, D=500, M=1000.\\nIf a smaller numeral appears before a larger numeral, it is subtracted (e.g. IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900).",
-    "inputFormat": "A single line containing an uppercase string representing a valid Roman numeral.",
-    "outputFormat": "Print the integer value.",
+    "recommendedLanguage": "Java",
+    "sourceScreenshot": "Screenshot (254).png - Screenshot (257).png",
+    "description": "In a unique team-building exercise, a company has decided to distribute a certain number of resources among its departments based on mathematical powers. The company has X resources that need to be distributed such that each department receives a different power of an integer.\n\nSpecifically, each department i receives i^n resources, where n is a fixed given power and i are distinct positive integers starting from 1 (1^n, 2^n, 3^n, ...). George, the resource manager, needs to find the total number of ways to express X as the sum of unique natural numbers raised to the power n.\n\n### Input Format\n- First line contains an integer X representing the total resources.\n- Second line contains an integer n representing the power.\n\n### Output Format\n- Print an integer representing the number of distinct ways to distribute the resources.\n\n### Constraints\n- 1 <= X <= 1000\n- 2 <= n <= 10\n\n### Sample Input 1\n```\n100 2\n```\n\n### Sample Output 1\n```\n3\n```\n\n### Explanation 1\n100 can be expressed as sum of squares in 3 ways:\n1. 10^2 = 100\n2. 6^2 + 8^2 = 36 + 64 = 100\n3. 1^2 + 3^2 + 4^2 + 5^2 + 7^2 = 1 + 9 + 16 + 25 + 49 = 100\n\n### Sample Input 2\n```\n10 2\n```\n\n### Sample Output 2\n```\n1\n```",
+    "inputFormat": "A single line containing two space-separated integers X and n (or two consecutive lines with X and n).",
+    "outputFormat": "Print the number of distinct ways to express X as the sum of unique powers of integers.",
     "constraints": [
-      "1 <= roman.length() <= 15",
-      "Values range from 1 to 3999"
+      "1 <= X <= 1000",
+      "2 <= n <= 10"
     ],
-    "sampleInput": "MCMXCIV",
-    "sampleOutput": "1994",
+    "sampleInput": "100 2",
+    "sampleOutput": "3",
     "testCases": [
       {
-        "input": "MCMXCIV",
-        "expectedOutput": "1994",
-        "isHidden": false
-      },
-      {
-        "input": "LVIII",
-        "expectedOutput": "58",
-        "isHidden": false
-      },
-      {
-        "input": "III",
+        "input": "100 2",
         "expectedOutput": "3",
-        "isHidden": true
-      },
-      {
-        "input": "IV",
-        "expectedOutput": "4",
-        "isHidden": true
-      },
-      {
-        "input": "MMXXVI",
-        "expectedOutput": "2026",
-        "isHidden": true
-      }
-    ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Convert Roman to integer\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    private static int valueOf(char r) {\n        return switch (r) {\n            case 'I' -> 1;\n            case 'V' -> 5;\n            case 'X' -> 10;\n            case 'L' -> 50;\n            case 'C' -> 100;\n            case 'D' -> 500;\n            case 'M' -> 1000;\n            default -> 0;\n        };\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n        int total = 0;\n        for (int i = 0; i < s.length(); i++) {\n            int current = valueOf(s.charAt(i));\n            if (i + 1 < s.length() && current < valueOf(s.charAt(i + 1))) {\n                total -= current;\n            } else {\n                total += current;\n            }\n        }\n        System.out.println(total);\n    }\n}"
-  },
-  {
-    "id": "bank2-009",
-    "bank": "bank2",
-    "title": "Pascal's Triangle Row Generator",
-    "topic": "Arrays & Combinatorics",
-    "difficulty": "Easy",
-    "description": "Given a 0-indexed row index K, generate the K-th row of Pascal's Triangle. In Pascal's Triangle, each number is the sum of the two numbers directly above it. Row 0 is [1], Row 1 is [1, 1], Row 2 is [1, 2, 1], Row 3 is [1, 3, 3, 1], etc. Output the numbers in row K separated by spaces.",
-    "inputFormat": "A single integer K (0-based row index).",
-    "outputFormat": "The numbers in row K separated by a space.",
-    "constraints": [
-      "0 <= K <= 30"
-    ],
-    "sampleInput": "4",
-    "sampleOutput": "1 4 6 4 1",
-    "testCases": [
-      {
-        "input": "4",
-        "expectedOutput": "1 4 6 4 1",
         "isHidden": false
       },
       {
-        "input": "0",
+        "input": "10 2",
         "expectedOutput": "1",
         "isHidden": false
       },
       {
-        "input": "1",
-        "expectedOutput": "1 1",
+        "input": "100 3",
+        "expectedOutput": "1",
         "isHidden": true
       },
       {
-        "input": "5",
-        "expectedOutput": "1 5 10 10 5 1",
+        "input": "25 2",
+        "expectedOutput": "2",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Generate Pascal's Triangle row\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int k = sc.nextInt();\n        long[] row = new long[k + 1];\n        row[0] = 1;\n        for (int i = 1; i <= k; i++) {\n            for (int j = i; j > 0; j--) {\n                row[j] += row[j - 1];\n            }\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i <= k; i++) {\n            sb.append(row[i]).append(i == k ? \"\" : \" \");\n        }\n        System.out.println(sb.toString());\n    }\n}"
+    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int x = sc.nextInt();\n        int n = sc.nextInt();\n        // Recursive combination counter\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static int countWays(int x, int n, int num) {\n        int val = (int)Math.pow(num, n);\n        if (val == x) return 1;\n        if (val > x) return 0;\n        return countWays(x - val, n, num + 1) + countWays(x, n, num + 1);\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int x = sc.nextInt();\n        int n = sc.nextInt();\n        System.out.println(countWays(x, n, 1));\n    }\n}",
+    "explanation": "Uses recursion with inclusion-exclusion on unique integers i = 1, 2, ... where either i^n is subtracted from remaining sum or skipped.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank2-007",
+    "bank": "bank2",
+    "title": "Rohit's Combinatorics Stack Subset Power Set Generator",
+    "topic": "Recursion & Backtracking",
+    "difficulty": "Medium",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (258).png - Screenshot (261).png",
+    "description": "Rohit is learning combinatorics and wants to generate all possible selections from a given set of numbers. To systematically explore every combination, he generates all possible subsets (the power set) of a given set of N integers, including the empty set.\n\nEach subset must be printed in set notation, ordered by standard lexicographical/bitwise subset generation order.\n\n### Input Format\n- The first line contains an integer N representing the number of elements.\n- The second line contains N space-separated integers.\n\n### Output Format\n- Print 2^N lines, each containing a subset enclosed in curly braces `{}`.\n\n### Constraints\n- 1 <= N <= 10\n- Elements are distinct integers.\n\n### Sample Input 1\n```\n3\n1 2 3\n```\n\n### Sample Output 1\n```\n{}\n{1}\n{2}\n{1, 2}\n{3}\n{1, 3}\n{2, 3}\n{1, 2, 3}\n```",
+    "inputFormat": "The first line contains an integer N representing the number of elements.\nThe second line contains N space-separated integers.",
+    "outputFormat": "Print 2^N lines, each containing a subset formatted in set notation `{}`.",
+    "constraints": [
+      "1 <= N <= 10",
+      "1 <= elements <= 100"
+    ],
+    "sampleInput": "3\n1 2 3",
+    "sampleOutput": "{}\n{1}\n{2}\n{1, 2}\n{3}\n{1, 3}\n{2, 3}\n{1, 2, 3}",
+    "testCases": [
+      {
+        "input": "3\n1 2 3",
+        "expectedOutput": "{}\n{1}\n{2}\n{1, 2}\n{3}\n{1, 3}\n{2, 3}\n{1, 2, 3}",
+        "isHidden": false
+      },
+      {
+        "input": "2\n2 4",
+        "expectedOutput": "{}\n{2}\n{4}\n{2, 4}",
+        "isHidden": false
+      },
+      {
+        "input": "1\n5",
+        "expectedOutput": "{}\n{5}",
+        "isHidden": true
+      }
+    ],
+    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n        // Generate power set\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.ArrayList;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n        int total = 1 << n;\n        for (int mask = 0; mask < total; mask++) {\n            ArrayList<Integer> sub = new ArrayList<>();\n            for (int i = 0; i < n; i++) {\n                if ((mask & (1 << i)) != 0) {\n                    sub.add(arr[i]);\n                }\n            }\n            StringBuilder sb = new StringBuilder(\"{\");\n            for (int i = 0; i < sub.size(); i++) {\n                if (i > 0) sb.append(\", \");\n                sb.append(sub.get(i));\n            }\n            sb.append(\"}\");\n            System.out.println(sb.toString());\n        }\n    }\n}",
+    "explanation": "Iterates from mask 0 to (1<<n) - 1. For each bit set in the mask, includes the corresponding array element and formats with commas inside curly braces.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank2-008",
+    "bank": "bank2",
+    "title": "Akil's Mid-Square Hashing with Linear Probing",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Python",
+    "sourceScreenshot": "Screenshot (262).png - Screenshot (265).png",
+    "description": "Akil, a computer science student, is learning about hash tables and collision resolution techniques. He wants to implement a hash table with a size of 100 and use the mid-square hashing method to store a collection of keys.\n\nFor each key, mid-square hash calculates the square of the key. The middle two digits of this square are extracted to determine the initial hash index (index = (key^2 / 100) % 100, or as standard middle digits modulo table size 100). If a collision occurs, linear probing `(index + 1) % 100` is used to find the next available position. After inserting all keys, print each occupied index and its key.\n\n### Input Format\n- The first line contains an integer N representing the number of keys.\n- The second line contains N space-separated integers representing the keys.\n\n### Output Format\n- Print each key and its allocated index in the format: `Index <idx>: Key <key>`.\n\n### Constraints\n- 1 <= N <= 20\n- 1 <= key <= 999\n\n### Sample Input 1\n```\n5\n80 65 40 60 98\n```\n\n### Sample Output 1\n```\nIndex 22: Key 65\nIndex 40: Key 80\nIndex 60: Key 40\nIndex 61: Key 60\nIndex 62: Key 98\n```",
+    "inputFormat": "The first line contains an integer N representing the number of keys.\nThe second line contains N space-separated integers representing the keys.",
+    "outputFormat": "Print each key and its allocated index in the format: 'Index <idx>: Key <key>'.",
+    "constraints": [
+      "1 <= N <= 20",
+      "Table size is 100",
+      "1 <= key <= 999"
+    ],
+    "sampleInput": "5\n80 65 40 60 98",
+    "sampleOutput": "Index 22: Key 65\nIndex 40: Key 80\nIndex 60: Key 40\nIndex 61: Key 60\nIndex 62: Key 98",
+    "testCases": [
+      {
+        "input": "5\n80 65 40 60 98",
+        "expectedOutput": "Index 22: Key 65\nIndex 40: Key 80\nIndex 60: Key 40\nIndex 61: Key 60\nIndex 62: Key 98",
+        "isHidden": false
+      },
+      {
+        "input": "3\n45 80 60",
+        "expectedOutput": "Index 2: Key 45\nIndex 40: Key 80\nIndex 60: Key 60",
+        "isHidden": false
+      },
+      {
+        "input": "1\n25",
+        "expectedOutput": "Index 6: Key 25",
+        "isHidden": true
+      }
+    ],
+    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        // Complete mid-square hashing logic\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static int midSquare(int key) {\n        long sq = (long)key * key;\n        String s = String.valueOf(sq);\n        int len = s.length();\n        if (len <= 2) return (int)sq % 100;\n        int mid = len / 2;\n        int idx;\n        if (len % 2 == 0) {\n            idx = Integer.parseInt(s.substring(mid - 1, mid + 1));\n        } else {\n            idx = Integer.parseInt(s.substring(mid - 1, mid + 1));\n        }\n        return idx % 100;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] table = new int[100];\n        boolean[] occupied = new boolean[100];\n        for (int i = 0; i < n; i++) {\n            int key = sc.nextInt();\n            int idx = midSquare(key);\n            while (occupied[idx]) {\n                idx = (idx + 1) % 100;\n            }\n            occupied[idx] = true;\n            table[idx] = key;\n        }\n        for (int i = 0; i < 100; i++) {\n            if (occupied[i]) {\n                System.out.println(\"Index \" + i + \": Key \" + table[i]);\n            }\n        }\n    }\n}",
+    "explanation": "Calculates mid-square hash by squaring the key and extracting middle digits, resolving collisions with linear probing on a 100-slot table.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank2-009",
+    "bank": "bank2",
+    "title": "Computer Lab Linked List Printer Queue",
+    "topic": "Stacks & Queues",
+    "difficulty": "Easy",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (266).png - Screenshot (268).png, Screenshot (275).png",
+    "description": "You are designing a printer queue for a computer lab. The lab has a printer that can only process one print job at a time. Implement a queue using a linked list with the following operations:\n- Option 1 <pages>: Enqueue a print job with the given number of pages.\n- Option 2: Dequeue and process the next print job from the front of the queue.\n- Option 3: Display all print jobs currently waiting in the queue.\n\n### Input Format\n- A sequence of integer commands:\n  - `1 <pages>` to enqueue\n  - `2` to dequeue\n  - `3` to display\n\n### Output Format\n- For operation 1: Print `Print job with <pages> pages is enqueued.`\n- For operation 2: Print `Processing print job: <pages> pages.` (or `Queue is empty.` if no jobs)\n- For operation 3: Print `Print jobs in the queue: <p1> pages -> <p2> pages...` (or `Queue is empty.`)\n\n### Constraints\n- 1 <= pages <= 1000\n- Maximum 50 print jobs in the queue at any time.\n\n### Sample Input 1\n```\n1 5\n3\n```\n\n### Sample Output 1\n```\nPrint job with 5 pages is enqueued.\nPrint jobs in the queue: 5 pages\n```\n\n### Sample Input 2\n```\n1 3\n1 2\n3\n```\n\n### Sample Output 2\n```\nPrint job with 3 pages is enqueued.\nPrint job with 2 pages is enqueued.\nPrint jobs in the queue: 3 pages -> 2 pages\n```",
+    "inputFormat": "A series of integer options representing queue commands (1 <pages>, 2, or 3).",
+    "outputFormat": "Print confirmation messages for enqueue, processing messages for dequeue, or current queue status for display.",
+    "constraints": [
+      "1 <= pages in job <= 1000",
+      "Queue capacity <= 50"
+    ],
+    "sampleInput": "1 5\n3",
+    "sampleOutput": "Print job with 5 pages is enqueued.\nPrint jobs in the queue: 5 pages",
+    "testCases": [
+      {
+        "input": "1 5\n3",
+        "expectedOutput": "Print job with 5 pages is enqueued.\nPrint jobs in the queue: 5 pages",
+        "isHidden": false
+      },
+      {
+        "input": "1 3\n1 2\n3",
+        "expectedOutput": "Print job with 3 pages is enqueued.\nPrint job with 2 pages is enqueued.\nPrint jobs in the queue: 3 pages -> 2 pages",
+        "isHidden": false
+      },
+      {
+        "input": "1 2\n2\n3",
+        "expectedOutput": "Print job with 2 pages is enqueued.\nProcessing print job: 2 pages.\nQueue is empty.",
+        "isHidden": true
+      }
+    ],
+    "starterCode": "import java.util.Scanner;\nimport java.util.LinkedList;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement printer queue operations\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.LinkedList;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        LinkedList<Integer> queue = new LinkedList<>();\n        while (sc.hasNextInt()) {\n            int op = sc.nextInt();\n            if (op == 1) {\n                int pages = sc.nextInt();\n                queue.addLast(pages);\n                System.out.println(\"Print job with \" + pages + \" pages is enqueued.\");\n            } else if (op == 2) {\n                if (queue.isEmpty()) {\n                    System.out.println(\"Queue is empty.\");\n                } else {\n                    int p = queue.removeFirst();\n                    System.out.println(\"Processing print job: \" + p + \" pages.\");\n                }\n            } else if (op == 3) {\n                if (queue.isEmpty()) {\n                    System.out.println(\"Queue is empty.\");\n                } else {\n                    StringBuilder sb = new StringBuilder(\"Print jobs in the queue: \");\n                    for (int i = 0; i < queue.size(); i++) {\n                        if (i > 0) sb.append(\" -> \");\n                        sb.append(queue.get(i)).append(\" pages\");\n                    }\n                    System.out.println(sb.toString());\n                }\n            }\n        }\n    }\n}",
+    "explanation": "Maintains a FIFO queue of page counts using a linked list structure supporting O(1) enqueue and dequeue operations.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-010",
     "bank": "bank2",
-    "title": "Bank Account Transaction Ledger",
-    "topic": "OOP & Invariants",
+    "title": "Fincrop Asset Management Whitelist & Value Updater",
+    "topic": "Exception Handling",
     "difficulty": "Medium",
-    "description": "Simulate a bank account processing a batch of financial commands. Start with an account having balance = 0.00.\\nSupport commands:\\n- `DEPOSIT <amount>`: Add amount to balance (must be > 0, otherwise print 'INVALID DEPOSIT').\\n- `WITHDRAW <amount>`: Subtract amount if balance >= amount (must be > 0, otherwise if amount > balance print 'INSUFFICIENT FUNDS', else if amount <= 0 print 'INVALID WITHDRAW').\\n- `BALANCE`: Print current balance formatted to 2 decimal places (e.g. 'Balance: 150.00').\\n- `EXIT`: Terminate transaction processing.",
-    "inputFormat": "Sequence of commands, each on a new line, terminating with EXIT.",
-    "outputFormat": "Print the response for each command on a new line.",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (270).png - Screenshot (274).png",
+    "description": "Fincrop is working on a program for an asset management system that effectively tracks various assets owned by a company. The program allows users to add assets with unique IDs and initial values, and update the value of an asset by providing the asset ID and the new value.\n\nHowever, in case a user attempts to update the value of an asset with an invalid ID (asset not found) or if the provided value is negative, the system utilizes exception handling:\n- If an asset ID does not exist, throw an exception: `Exception caught: Error: Invalid Asset ID`\n- If the new value is negative, throw an exception: `Exception caught: Error: Asset value cannot be negative`\n\n### Input Format\n- First line contains an integer N representing the initial number of assets.\n- Next N lines contain an asset ID (string) and its initial value (double).\n- Next line contains an asset ID to update and the new value.\n\n### Output Format\n- Print confirmation for each added asset: `Asset with ID <ID> added.`\n- If updated successfully, print: `Value of asset with ID <ID> updated to <newValue>.`\n- If error occurs, catch and print the exception message.\n\n### Constraints\n- 1 <= N <= 20\n- Asset IDs are alphanumeric strings without spaces.\n\n### Sample Input 1\n```\n5\nASSET001 1000.21\nASSET002 2000.45\nASSET003 3000.58\nASSET004 4000.43\nASSET005 5000.32\nASSET003 3500.98\n```\n\n### Sample Output 1\n```\nAsset with ID ASSET001 added\nAsset with ID ASSET002 added\nAsset with ID ASSET003 added\nAsset with ID ASSET004 added\nAsset with ID ASSET005 added\nValue of asset with ID ASSET003 updated to 3500.98\n```",
+    "inputFormat": "First line contains an integer N representing the number of assets.\nNext N lines contain an asset ID and its value.\nThe last line contains an asset ID and a new value to update.",
+    "outputFormat": "Print addition confirmations, update success messages, or caught exception messages.",
     "constraints": [
-      "Amount is a positive double with up to 2 decimal places.",
-      "Up to 100 transaction commands."
+      "1 <= N <= 20",
+      "Asset IDs are alphanumeric without spaces."
     ],
-    "sampleInput": "DEPOSIT 500.00\nWITHDRAW 150.50\nBALANCE\nWITHDRAW 400.00\nEXIT",
-    "sampleOutput": "Deposited: 500.00\nWithdrew: 150.50\nBalance: 349.50\nINSUFFICIENT FUNDS",
+    "sampleInput": "5\nASSET001 1000.21\nASSET002 2000.45\nASSET003 3000.58\nASSET004 4000.43\nASSET005 5000.32\nASSET003 3500.98",
+    "sampleOutput": "Asset with ID ASSET001 added\nAsset with ID ASSET002 added\nAsset with ID ASSET003 added\nAsset with ID ASSET004 added\nAsset with ID ASSET005 added\nValue of asset with ID ASSET003 updated to 3500.98",
     "testCases": [
       {
-        "input": "DEPOSIT 500.00\nWITHDRAW 150.50\nBALANCE\nWITHDRAW 400.00\nEXIT",
-        "expectedOutput": "Deposited: 500.00\nWithdrew: 150.50\nBalance: 349.50\nINSUFFICIENT FUNDS",
+        "input": "5\nASSET001 1000.21\nASSET002 2000.45\nASSET003 3000.58\nASSET004 4000.43\nASSET005 5000.32\nASSET003 3500.98",
+        "expectedOutput": "Asset with ID ASSET001 added\nAsset with ID ASSET002 added\nAsset with ID ASSET003 added\nAsset with ID ASSET004 added\nAsset with ID ASSET005 added\nValue of asset with ID ASSET003 updated to 3500.98",
         "isHidden": false
       },
       {
-        "input": "BALANCE\nDEPOSIT 100.00\nBALANCE\nEXIT",
-        "expectedOutput": "Balance: 0.00\nDeposited: 100.00\nBalance: 100.00",
+        "input": "3\nASSET001 100.0\nASSET002 200.0\nASSET003 300.0\nASSET004 500.0",
+        "expectedOutput": "Asset with ID ASSET001 added\nAsset with ID ASSET002 added\nAsset with ID ASSET003 added\nException caught: Error: Invalid Asset ID",
         "isHidden": false
       },
       {
-        "input": "WITHDRAW 50.00\nDEPOSIT -10.00\nEXIT",
-        "expectedOutput": "INSUFFICIENT FUNDS\nINVALID DEPOSIT",
+        "input": "2\nASSET001 10.0\nASSET002 20.0\nASSET001 -5.0",
+        "expectedOutput": "Asset with ID ASSET001 added\nAsset with ID ASSET002 added\nException caught: Error: Asset value cannot be negative",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement Bank Account Ledger\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        double balance = 0.0;\n\n        while (sc.hasNext()) {\n            String cmd = sc.next();\n            if (cmd.equalsIgnoreCase(\"EXIT\")) break;\n\n            if (cmd.equalsIgnoreCase(\"DEPOSIT\")) {\n                double amt = sc.nextDouble();\n                if (amt <= 0) {\n                    System.out.println(\"INVALID DEPOSIT\");\n                } else {\n                    balance += amt;\n                    System.out.printf(\"Deposited: %.2f%n\", amt);\n                }\n            } else if (cmd.equalsIgnoreCase(\"WITHDRAW\")) {\n                double amt = sc.nextDouble();\n                if (amt <= 0) {\n                    System.out.println(\"INVALID WITHDRAW\");\n                } else if (amt > balance) {\n                    System.out.println(\"INSUFFICIENT FUNDS\");\n                } else {\n                    balance -= amt;\n                    System.out.printf(\"Withdrew: %.2f%n\", amt);\n                }\n            } else if (cmd.equalsIgnoreCase(\"BALANCE\")) {\n                System.out.printf(\"Balance: %.2f%n\", balance);\n            }\n        }\n    }\n}"
+    "starterCode": "import java.util.Scanner;\nimport java.util.LinkedHashMap;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement Fincrop asset registry with exceptions\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.LinkedHashMap;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        LinkedHashMap<String, Double> assets = new LinkedHashMap<>();\n        for (int i = 0; i < n; i++) {\n            String id = sc.next();\n            double val = sc.nextDouble();\n            assets.put(id, val);\n            System.out.println(\"Asset with ID \" + id + \" added\");\n        }\n        if (sc.hasNext()) {\n            String updateId = sc.next();\n            double updateVal = sc.nextDouble();\n            try {\n                if (!assets.containsKey(updateId)) {\n                    throw new Exception(\"Invalid Asset ID\");\n                }\n                if (updateVal < 0) {\n                    throw new Exception(\"Asset value cannot be negative\");\n                }\n                assets.put(updateId, updateVal);\n                System.out.println(\"Value of asset with ID \" + updateId + \" updated to \" + updateVal);\n            } catch (Exception e) {\n                System.out.println(\"Exception caught: Error: \" + e.getMessage());\n            }\n        }\n    }\n}",
+    "explanation": "Maintains key-value pairs of asset IDs and balances, verifying presence and positive value before committing updates.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-011",
     "bank": "bank2",
-    "title": "Prime Factorization Decomposer",
-    "topic": "Mathematics & Methods",
-    "difficulty": "Medium",
-    "description": "Given a positive integer N >= 2, compute and output its prime factorization formatted in ascending order of prime factors with their exponents. Format: `p1^e1 * p2^e2 * ...` where any factor with exponent 1 is written simply as `p` without `^1`. For example, 360 is `2^3 * 3^2 * 5`.",
-    "inputFormat": "A single line containing the integer N.",
-    "outputFormat": "The prime factorization string.",
+    "title": "Raj's Linked List Character Stack Operations",
+    "topic": "Stacks & Queues",
+    "difficulty": "Easy",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (276).png - Screenshot (278).png",
+    "description": "Raj is a computer science teacher who is teaching his students about data structures and stack operations. He wants to demonstrate the concept of stacks to his students by implementing a character stack program using linked lists.\n\nRaj's task is to write a program that allows users to:\n- Choice 1 <char>: Push character onto the stack.\n- Choice 2: Pop a character from the stack.\n- Choice 3: Display the stack's contents (top to bottom).\n- Choice 4: Exit the program.\n\n### Input Format\n- Sequence of integer choices:\n  - `1 <char>` to push\n  - `2` to pop\n  - `3` to display\n  - `4` to exit\n\n### Output Format\n- For display (choice 3): Print `Stack elements (top to bottom): <c1> <c2>...` (or `Stack is empty.`)\n- For pop (choice 2): Print `Popped element: <c>` (or `Stack is empty.`)\n- On exit (choice 4): Print `Exiting program`\n\n### Constraints\n- 1 <= operations <= 50\n- Characters are ASCII alphanumeric characters.\n\n### Sample Input 1\n```\n1 A\n1 B\n3\n2\n3\n4\n```\n\n### Sample Output 1\n```\nStack elements (top to bottom): B A\nPopped element: B\nStack elements (top to bottom): A\nExiting program\n```",
+    "inputFormat": "Sequence of integer choices corresponding to operations (1 <char>, 2, 3, or 4).",
+    "outputFormat": "Print stack contents, popped element, or exit message as requested.",
     "constraints": [
-      "2 <= N <= 10^9"
+      "Characters are standard printable ASCII."
     ],
-    "sampleInput": "360",
-    "sampleOutput": "2^3 * 3^2 * 5",
+    "sampleInput": "1 A\n1 B\n3\n2\n3\n4",
+    "sampleOutput": "Stack elements (top to bottom): B A\nPopped element: B\nStack elements (top to bottom): A\nExiting program",
     "testCases": [
       {
-        "input": "360",
-        "expectedOutput": "2^3 * 3^2 * 5",
+        "input": "1 A\n1 B\n3\n2\n3\n4",
+        "expectedOutput": "Stack elements (top to bottom): B A\nPopped element: B\nStack elements (top to bottom): A\nExiting program",
         "isHidden": false
       },
       {
-        "input": "13",
-        "expectedOutput": "13",
+        "input": "3\n4",
+        "expectedOutput": "Stack is empty.\nExiting program",
         "isHidden": false
       },
       {
-        "input": "100",
-        "expectedOutput": "2^2 * 5^2",
-        "isHidden": true
-      },
-      {
-        "input": "84",
-        "expectedOutput": "2^2 * 3 * 7",
+        "input": "1 Z\n2\n4",
+        "expectedOutput": "Popped element: Z\nExiting program",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement Prime Factorization\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLong()) return;\n        long n = sc.nextLong();\n        List<String> factors = new ArrayList<>();\n\n        for (long d = 2; d * d <= n; d++) {\n            if (n % d == 0) {\n                int count = 0;\n                while (n % d == 0) {\n                    count++;\n                    n /= d;\n                }\n                if (count == 1) {\n                    factors.add(String.valueOf(d));\n                } else {\n                    factors.add(d + \"^\" + count);\n                }\n            }\n        }\n        if (n > 1) {\n            factors.add(String.valueOf(n));\n        }\n\n        System.out.println(String.join(\" * \", factors));\n    }\n}"
+    "starterCode": "import java.util.Scanner;\nimport java.util.Stack;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement character stack operations\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.Stack;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        Stack<Character> stack = new Stack<>();\n        while (sc.hasNext()) {\n            int choice = sc.nextInt();\n            if (choice == 1) {\n                char c = sc.next().charAt(0);\n                stack.push(c);\n            } else if (choice == 2) {\n                if (stack.isEmpty()) {\n                    System.out.println(\"Stack is empty.\");\n                } else {\n                    System.out.println(\"Popped element: \" + stack.pop());\n                }\n            } else if (choice == 3) {\n                if (stack.isEmpty()) {\n                    System.out.println(\"Stack is empty.\");\n                } else {\n                    StringBuilder sb = new StringBuilder(\"Stack elements (top to bottom):\");\n                    for (int i = stack.size() - 1; i >= 0; i--) {\n                        sb.append(\" \").append(stack.get(i));\n                    }\n                    System.out.println(sb.toString());\n                }\n            } else if (choice == 4) {\n                System.out.println(\"Exiting program\");\n                break;\n            }\n        }\n    }\n}",
+    "explanation": "Simulates a LIFO linked list character stack handling push, pop, display from top to bottom, and exit.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-012",
     "bank": "bank2",
-    "title": "Tic-Tac-Toe Board State Evaluator",
-    "topic": "2D Arrays & Game Logic",
+    "title": "Ananya's Student Database Custom Exception Management",
+    "topic": "Exception Handling",
     "difficulty": "Medium",
-    "description": "Given a 3x3 Tic-Tac-Toe board containing characters 'X', 'O', or '.' (empty spot), determine the current state of the game:\\n- 'X WINS' if X has 3 in a row, column, or diagonal.\\n- 'O WINS' if O has 3 in a row, column, or diagonal.\\n- 'DRAW' if all 9 cells are filled and neither player has won.\\n- 'IN PROGRESS' if the game has not been won and empty spots '.' remain.",
-    "inputFormat": "Three lines, each containing 3 space-separated characters ('X', 'O', or '.').",
-    "outputFormat": "Print the game outcome string: 'X WINS', 'O WINS', 'DRAW', or 'IN PROGRESS'.",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (279).png - Screenshot (285).png",
+    "description": "Ananya, the school administrator, needs to develop a robust student management system that handles exceptions gracefully. She must implement exception handling mechanisms to prevent:\n- `DuplicateIDException`: Thrown when a student with the same ID is added twice to the database, displaying: `Exception caught. Error: Student ID already exists.`\n- `FullDatabaseException`: Thrown when attempting to add a student beyond the maximum capacity of 30 students, displaying: `Exception caught. Error: Student database is full.`\n\n### Input Format\n- The first line consists of an integer N representing the number of students to add.\n- The next N lines each contain a student ID (integer) and student name (string).\n\n### Output Format\n- If student is added: `Student with ID <ID> added to the database.`\n- If duplicate ID: `Exception caught. Error: Student ID already exists.`\n- If capacity exceeded: `Exception caught. Error: Student database is full.`\n\n### Constraints\n- 1 <= N <= 50\n- Maximum database capacity is 30 students.\n\n### Sample Input 1\n```\n3\n16 Sam\n87 Sabari\n43 Dani\n```\n\n### Sample Output 1\n```\nStudent with ID 16 added to the database.\nStudent with ID 87 added to the database.\nStudent with ID 43 added to the database.\n```",
+    "inputFormat": "The first line of input consists of an integer N representing the number of students to add.\nFor each of the next N lines, an integer student ID and a string student name.",
+    "outputFormat": "Print confirmation for each added student or the corresponding caught exception message.",
     "constraints": [
-      "Exactly 3 rows and 3 columns."
+      "Maximum database capacity is 30 students.",
+      "1 <= length of name <= 50"
     ],
-    "sampleInput": "X O X\nO X .\nO . X",
-    "sampleOutput": "X WINS",
+    "sampleInput": "3\n16 Sam\n87 Sabari\n43 Dani",
+    "sampleOutput": "Student with ID 16 added to the database.\nStudent with ID 87 added to the database.\nStudent with ID 43 added to the database.",
     "testCases": [
       {
-        "input": "X O X\nO X .\nO . X",
-        "expectedOutput": "X WINS",
+        "input": "3\n16 Sam\n87 Sabari\n43 Dani",
+        "expectedOutput": "Student with ID 16 added to the database.\nStudent with ID 87 added to the database.\nStudent with ID 43 added to the database.",
         "isHidden": false
       },
       {
-        "input": "X O X\nX O O\nO X X",
-        "expectedOutput": "DRAW",
+        "input": "4\n44 Udhesh\n33 Sandy\n44 Keerthi\n55 Mariyan",
+        "expectedOutput": "Student with ID 44 added to the database.\nStudent with ID 33 added to the database.\nException caught. Error: Student ID already exists.\nStudent with ID 55 added to the database.",
         "isHidden": false
       },
       {
-        "input": "O O O\nX X .\n. . .",
-        "expectedOutput": "O WINS",
-        "isHidden": true
-      },
-      {
-        "input": "X O .\n. . .\n. . .",
-        "expectedOutput": "IN PROGRESS",
+        "input": "2\n10 Alex\n10 Alex",
+        "expectedOutput": "Student with ID 10 added to the database.\nException caught. Error: Student ID already exists.",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Evaluate Tic-Tac-Toe board\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    private static boolean checkWin(char[][] b, char p) {\n        for (int i = 0; i < 3; i++) {\n            if (b[i][0] == p && b[i][1] == p && b[i][2] == p) return true;\n            if (b[0][i] == p && b[1][i] == p && b[2][i] == p) return true;\n        }\n        if (b[0][0] == p && b[1][1] == p && b[2][2] == p) return true;\n        if (b[0][2] == p && b[1][1] == p && b[2][0] == p) return true;\n        return false;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        char[][] board = new char[3][3];\n        boolean hasEmpty = false;\n\n        for (int i = 0; i < 3; i++) {\n            for (int j = 0; j < 3; j++) {\n                board[i][j] = sc.next().charAt(0);\n                if (board[i][j] == '.') hasEmpty = true;\n            }\n        }\n\n        if (checkWin(board, 'X')) {\n            System.out.println(\"X WINS\");\n        } else if (checkWin(board, 'O')) {\n            System.out.println(\"O WINS\");\n        } else if (hasEmpty) {\n            System.out.println(\"IN PROGRESS\");\n        } else {\n            System.out.println(\"DRAW\");\n        }\n    }\n}"
+    "starterCode": "import java.util.Scanner;\nimport java.util.HashSet;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement student database with custom exceptions\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.HashSet;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        HashSet<Integer> ids = new HashSet<>();\n        for (int i = 0; i < n; i++) {\n            int id = sc.nextInt();\n            String name = sc.next();\n            try {\n                if (ids.size() >= 30) {\n                    throw new Exception(\"Student database is full.\");\n                }\n                if (ids.contains(id)) {\n                    throw new Exception(\"Student ID already exists.\");\n                }\n                ids.add(id);\n                System.out.println(\"Student with ID \" + id + \" added to the database.\");\n            } catch (Exception e) {\n                System.out.println(\"Exception caught. Error: \" + e.getMessage());\n            }\n        }\n    }\n}",
+    "explanation": "Checks capacity limit (30) and unique student IDs with a hash set, throwing custom exceptions when violations occur.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-013",
     "bank": "bank2",
-    "title": "First Unique Character in Stream",
-    "topic": "Hash Maps & Collections",
+    "title": "Raj's Application Bracket Sequence Validator",
+    "topic": "Stacks & Queues",
     "difficulty": "Easy",
-    "description": "Given a string S consisting of lowercase English letters, find the first non-repeating character and output its 0-based index. If every character in the string repeats, output -1.",
-    "inputFormat": "A single line containing the string S.",
-    "outputFormat": "Print the 0-based index of the first non-repeating character, or -1.",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (286).png - Screenshot (288).png",
+    "description": "Raj is a software developer, and his team is building an application that processes user inputs in the form of strings containing brackets. One of the essential features of the application is to validate whether the input string meets specific criteria.\n\nA string is considered a \"Valid string\" if every opening bracket `(`, `[`, `{` is closed by the same type of closing bracket `)`, `]`, `}` in the correct order. Otherwise, it is an \"Invalid string\".\n\n### Input Format\n- A single line containing a string of bracket characters.\n\n### Output Format\n- Print `Valid string` if the brackets are valid, otherwise print `Invalid string`.\n\n### Constraints\n- 1 <= length of string <= 100\n- String consists solely of characters `()[]{}`.\n\n### Sample Input 1\n```\n(([])){}\n```\n\n### Sample Output 1\n```\nValid string\n```\n\n### Sample Input 2\n```\n([)]\n```\n\n### Sample Output 2\n```\nInvalid string\n```",
+    "inputFormat": "The input comprises a string representing a sequence of brackets that need to be validated.",
+    "outputFormat": "The output prints \"Valid string\" if the string is valid. Otherwise, it prints \"Invalid string\".",
     "constraints": [
-      "1 <= S.length() <= 10^5",
-      "S contains only lowercase English letters."
+      "The maximum length of the string is 100."
     ],
-    "sampleInput": "leetcode",
-    "sampleOutput": "0",
+    "sampleInput": "(([])){}",
+    "sampleOutput": "Valid string",
     "testCases": [
       {
-        "input": "leetcode",
-        "expectedOutput": "0",
+        "input": "(([])){}",
+        "expectedOutput": "Valid string",
         "isHidden": false
       },
       {
-        "input": "loveleetcode",
-        "expectedOutput": "2",
+        "input": "([)]",
+        "expectedOutput": "Invalid string",
         "isHidden": false
       },
       {
-        "input": "aabbcc",
-        "expectedOutput": "-1",
+        "input": "{[()]}",
+        "expectedOutput": "Valid string",
         "isHidden": true
       },
       {
-        "input": "z",
-        "expectedOutput": "0",
+        "input": "(",
+        "expectedOutput": "Invalid string",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Find first non-repeating character index\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n        int[] freq = new int[26];\n        for (int i = 0; i < s.length(); i++) {\n            freq[s.charAt(i) - 'a']++;\n        }\n        int ans = -1;\n        for (int i = 0; i < s.length(); i++) {\n            if (freq[s.charAt(i) - 'a'] == 1) {\n                ans = i;\n                break;\n            }\n        }\n        System.out.println(ans);\n    }\n}"
+    "starterCode": "import java.util.Scanner;\nimport java.util.Stack;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n        // Complete bracket validator using Stack\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.Stack;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n        Stack<Character> st = new Stack<>();\n        boolean valid = true;\n        for (char ch : s.toCharArray()) {\n            if (ch == '(' || ch == '[' || ch == '{') {\n                st.push(ch);\n            } else if (ch == ')' || ch == ']' || ch == '}') {\n                if (st.isEmpty()) { valid = false; break; }\n                char top = st.pop();\n                if ((ch == ')' && top != '(') ||\n                    (ch == ']' && top != '[') ||\n                    (ch == '}' && top != '{')) {\n                    valid = false;\n                    break;\n                }\n            }\n        }\n        if (!st.isEmpty()) valid = false;\n        System.out.println(valid ? \"Valid string\" : \"Invalid string\");\n    }\n}",
+    "explanation": "Validates opening and closing bracket matching using a Stack in O(N) time.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-014",
     "bank": "bank2",
-    "title": "Modern Traffic Light State Machine",
-    "topic": "Enums & Switch",
+    "title": "John's Manufacturing Plant Sensor Queue & Moving Averages",
+    "topic": "Stacks & Queues",
     "difficulty": "Easy",
-    "description": "Simulate a traffic light controller that cycles between three states: RED -> GREEN -> YELLOW -> RED. Each state has a defined duration:\\n- RED: 60 seconds\\n- GREEN: 45 seconds\\n- YELLOW: 5 seconds\\n\\nGiven the starting light color and an elapsed time in seconds T, determine the active light color and the remaining seconds in that phase.",
-    "inputFormat": "First line: Initial color ('RED', 'GREEN', or 'YELLOW').\\nSecond line: Integer T (elapsed seconds).",
-    "outputFormat": "Print: '<COLOR> (<REMAINING>s remaining)'",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (289).png - Screenshot (291).png",
+    "description": "John is working on a project to manage and analyze the data from various sensors in a manufacturing plant. Each sensor provides a sequence of integer readings, and John needs to process this data to extract key insights:\n1. Enqueue Operations: Add each sensor reading to a queue.\n2. Average Calculation: Calculate and print the average of every pair of consecutive sensor readings.\n3. Sum Calculation: Compute the sum of all sensor readings.\n4. Even and Odd Count: Count and print the number of even and odd sensor readings.\n\n### Input Format\n- The first line contains an integer N representing the number of sensor readings.\n- The second line contains N space-separated integers representing the readings.\n\n### Output Format\n- Line 1: `Averages of pairs: <avg1> <avg2> ...`\n- Line 2: `Sum of all elements: <sum>`\n- Line 3: `Number of even elements: <evenCount>`\n- Line 4: `Number of odd elements: <oddCount>`\n\n### Constraints\n- 2 <= N <= 100\n- 0 <= sensor reading <= 1000\n\n### Sample Input 1\n```\n5\n1 2 3 4 5\n```\n\n### Sample Output 1\n```\nAverages of pairs: 1.5 2.5 3.5 4.5\nSum of all elements: 15\nNumber of even elements: 2\nNumber of odd elements: 3\n```",
+    "inputFormat": "The first input line contains an integer N, which represents the number of sensor readings.\nThe second line contains N space-separated integers, each representing a sensor reading.",
+    "outputFormat": "Print four lines: pair averages, total sum, count of even readings, and count of odd readings.",
     "constraints": [
-      "0 <= T <= 100000"
+      "2 <= N <= 100",
+      "0 <= sensor reading <= 1000"
     ],
-    "sampleInput": "RED\n70",
-    "sampleOutput": "GREEN (35s remaining)",
+    "sampleInput": "5\n1 2 3 4 5",
+    "sampleOutput": "Averages of pairs: 1.5 2.5 3.5 4.5\nSum of all elements: 15\nNumber of even elements: 2\nNumber of odd elements: 3",
     "testCases": [
       {
-        "input": "RED\n70",
-        "expectedOutput": "GREEN (35s remaining)",
+        "input": "5\n1 2 3 4 5",
+        "expectedOutput": "Averages of pairs: 1.5 2.5 3.5 4.5\nSum of all elements: 15\nNumber of even elements: 2\nNumber of odd elements: 3",
         "isHidden": false
       },
       {
-        "input": "RED\n0",
-        "expectedOutput": "RED (60s remaining)",
+        "input": "4\n10 20 30 40",
+        "expectedOutput": "Averages of pairs: 15.0 25.0 35.0\nSum of all elements: 100\nNumber of even elements: 4\nNumber of odd elements: 0",
         "isHidden": false
       },
       {
-        "input": "GREEN\n48",
-        "expectedOutput": "YELLOW (2s remaining)",
-        "isHidden": true
-      },
-      {
-        "input": "YELLOW\n3",
-        "expectedOutput": "YELLOW (2s remaining)",
+        "input": "3\n1 3 5",
+        "expectedOutput": "Averages of pairs: 2.0 4.0\nSum of all elements: 9\nNumber of even elements: 0\nNumber of odd elements: 3",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement traffic light simulation\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    enum Light {\n        RED(60), GREEN(45), YELLOW(5);\n        final int duration;\n        Light(int d) { this.duration = d; }\n        Light next() {\n            return switch(this) {\n                case RED -> GREEN;\n                case GREEN -> YELLOW;\n                case YELLOW -> RED;\n            };\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String startStr = sc.next().toUpperCase();\n        long t = sc.nextLong();\n\n        Light current = Light.valueOf(startStr);\n        while (t >= current.duration) {\n            t -= current.duration;\n            current = current.next();\n        }\n\n        long remaining = current.duration - t;\n        System.out.println(current + \" (\" + remaining + \"s remaining)\");\n    }\n}"
+    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        // Complete sensor reading queue analytics\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] arr = new int[n];\n        long sum = 0;\n        int even = 0, odd = 0;\n        for (int i = 0; i < n; i++) {\n            arr[i] = sc.nextInt();\n            sum += arr[i];\n            if (arr[i] % 2 == 0) even++;\n            else odd++;\n        }\n        StringBuilder sb = new StringBuilder(\"Averages of pairs:\");\n        for (int i = 0; i < n - 1; i++) {\n            double avg = (arr[i] + arr[i + 1]) / 2.0;\n            sb.append(\" \").append(avg);\n        }\n        System.out.println(sb.toString());\n        System.out.println(\"Sum of all elements: \" + sum);\n        System.out.println(\"Number of even elements: \" + even);\n        System.out.println(\"Number of odd elements: \" + odd);\n    }\n}",
+    "explanation": "Iterates through sensor readings computing consecutive pair averages, running sum, and parity counts.",
+    "extractionStatus": "verified"
   },
   {
     "id": "bank2-015",
     "bank": "bank2",
-    "title": "Spiral Matrix Order Traversal",
-    "topic": "2D Arrays",
-    "difficulty": "Hard",
-    "description": "Given an M x N matrix, return all elements of the matrix in clockwise spiral order starting from the top-left corner (0,0). Output all elements on a single line separated by a space.",
-    "inputFormat": "First line contains two space-separated integers: M (rows) and N (columns).\\nThe next M lines each contain N space-separated integers.",
-    "outputFormat": "Print all elements in clockwise spiral order separated by a single space.",
+    "title": "The Professor's Street House Robber Maximum Loot (BELLA CIAO!)",
+    "topic": "Dynamic Programming",
+    "difficulty": "Medium",
+    "recommendedLanguage": "C++",
+    "sourceScreenshot": "Screenshot (292).png - Screenshot (294).png",
+    "description": "You are the PROFESSOR of a professional group of robbers. Now you are planning to rob houses along a street. Each house has a certain amount of money stashed, and the only constraint stopping you from robbing each of them is that adjacent houses have connected security systems that automatically contact the police if two adjacent houses are broken into on the same night.\n\nGiven an integer array nums representing the amount of money in each house, plan smart to determine the maximum amount of money you can rob tonight without alerting the police.\n\nBELLA CIAO!\n\n### Input Format\n- The first line contains an integer N representing the number of houses.\n- The second line contains N space-separated integers representing the loot in each house.\n\n### Output Format\n- Print `Maximum loot possible : <maxLoot>`.\n\n### Constraints\n- 1 <= N <= 20\n- 0 <= loot in each house <= 128\n\n### Sample Input 1\n```\n5\n2 7 9 3 1\n```\n\n### Sample Output 1\n```\nMaximum loot possible : 12\n```\n\n### Explanation 1\nRob house 1 (money = 2), house 3 (money = 9) and house 5 (money = 1).\nTotal amount = 2 + 9 + 1 = 12.\n\n### Sample Input 2\n```\n6\n3 2 1 4 5 6\n```\n\n### Sample Output 2\n```\nMaximum loot possible : 13\n```\n\n### Explanation 2\nRob house 1 (3), house 4 (4), house 6 (6) -> 3 + 4 + 6 = 13.",
+    "inputFormat": "The first line contains an integer N representing the number of houses.\nThe second line contains N space-separated integers representing the loot in each house.",
+    "outputFormat": "Print 'Maximum loot possible : <maxLoot>'.",
     "constraints": [
-      "1 <= M, N <= 20",
-      "-1000 <= element <= 1000"
+      "1 <= N <= 20",
+      "0 <= loot in each house <= 128"
     ],
-    "sampleInput": "3 3\n1 2 3\n4 5 6\n7 8 9",
-    "sampleOutput": "1 2 3 6 9 8 7 4 5",
+    "sampleInput": "5\n2 7 9 3 1",
+    "sampleOutput": "Maximum loot possible : 12",
     "testCases": [
       {
-        "input": "3 3\n1 2 3\n4 5 6\n7 8 9",
-        "expectedOutput": "1 2 3 6 9 8 7 4 5",
+        "input": "5\n2 7 9 3 1",
+        "expectedOutput": "Maximum loot possible : 12",
         "isHidden": false
       },
       {
-        "input": "3 4\n1 2 3 4\n5 6 7 8\n9 10 11 12",
-        "expectedOutput": "1 2 3 4 8 12 11 10 9 5 6 7",
+        "input": "6\n3 2 1 4 5 6",
+        "expectedOutput": "Maximum loot possible : 13",
         "isHidden": false
       },
       {
-        "input": "1 4\n1 2 3 4",
-        "expectedOutput": "1 2 3 4",
+        "input": "4\n1 2 3 1",
+        "expectedOutput": "Maximum loot possible : 4",
         "isHidden": true
       },
       {
-        "input": "4 1\n1\n2\n3\n4",
-        "expectedOutput": "1 2 3 4",
+        "input": "1\n50",
+        "expectedOutput": "Maximum loot possible : 50",
         "isHidden": true
       }
     ],
-    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Implement Spiral Matrix Traversal\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int m = sc.nextInt();\n        int n = sc.nextInt();\n        int[][] mat = new int[m][n];\n        for (int i = 0; i < m; i++) {\n            for (int j = 0; j < n; j++) {\n                mat[i][j] = sc.nextInt();\n            }\n        }\n\n        List<Integer> result = new ArrayList<>();\n        int top = 0, bottom = m - 1;\n        int left = 0, right = n - 1;\n\n        while (top <= bottom && left <= right) {\n            for (int j = left; j <= right; j++) result.add(mat[top][j]);\n            top++;\n\n            for (int i = top; i <= bottom; i++) result.add(mat[i][right]);\n            right--;\n\n            if (top <= bottom) {\n                for (int j = right; j >= left; j--) result.add(mat[bottom][j]);\n                bottom--;\n            }\n\n            if (left <= right) {\n                for (int i = bottom; i >= top; i--) result.add(mat[i][left]);\n                left++;\n            }\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < result.size(); i++) {\n            sb.append(result.get(i)).append(i == result.size() - 1 ? \"\" : \" \");\n        }\n        System.out.println(sb.toString());\n    }\n}"
+    "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] nums = new int[n];\n        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();\n        // Complete House Robber DP\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] nums = new int[n];\n        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();\n        if (n == 0) {\n            System.out.println(\"Maximum loot possible : 0\");\n            return;\n        }\n        if (n == 1) {\n            System.out.println(\"Maximum loot possible : \" + nums[0]);\n            return;\n        }\n        int prev2 = 0;\n        int prev1 = nums[0];\n        for (int i = 1; i < n; i++) {\n            int take = nums[i] + prev2;\n            int notTake = prev1;\n            int curr = Math.max(take, notTake);\n            prev2 = prev1;\n            prev1 = curr;\n        }\n        System.out.println(\"Maximum loot possible : \" + prev1);\n    }\n}",
+    "explanation": "Standard 1D Dynamic Programming: for each house, either rob it plus max from i-2, or skip it taking max from i-1.",
+    "extractionStatus": "verified"
   }
 ]

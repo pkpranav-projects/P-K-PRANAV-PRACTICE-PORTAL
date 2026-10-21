@@ -126,8 +126,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <span className="font-bold text-sm text-slate-900 dark:text-white tracking-tight truncate">
                   Java Arena
                 </span>
-                <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-semibold border border-indigo-500/20">
-                  NEO
+                <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 font-semibold border border-amber-500/20">
+                  PRANAV
                 </span>
               </div>
               <span className="text-[11px] text-slate-400 truncate">

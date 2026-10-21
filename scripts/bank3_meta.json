@@ -1,0 +1,874 @@
+[
+  {
+    "id": "bank3-001",
+    "index": 1,
+    "title": "Meera's A Small Shop And Wants",
+    "session": "Day 8 COD",
+    "shots": "Screenshot",
+    "topic": "Comparator",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Meera manages a small shop and wants to display her products sorted by price in descending order so the most expensive items appear at the top of her catalogue. She uses Java's Comparator interface to define a custom ordering that is separate from the product's natural order. Each product has a name and a price. The program reads N products, sorts them by price in descending order using a Comparator, and prints the sorted list. A class PriceComparator implements Comparator\u00ab Product> and overrides the compare() method to return the difference of the second product's price minus the first product's price (this makes higher prices come first). The sortProducts() function uses a selection sort, passing the comparator to all comparisons via comparator.compare(). The main function reads the inputs, creates a PriceComparator, calls sortProducts(), and prints each product's name and price.",
+    "inputFormat": "Skipped + 30 The third line of input consists of N space-separated integers representing the prices of the products in the same order.",
+    "outputFormat": "Print N lines. Each line consists of a product name followed by a space and its price, sorted in descending order of price.",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 1 S N s 20 1 price 10000 Product names are single words with no spaces"
+    ]
+  },
+  {
+    "id": "bank3-002",
+    "index": 2,
+    "title": "Karan's A Basic Shopping Cart System",
+    "session": "Day 8 COD",
+    "shots": "Screenshot",
+    "topic": "Vector & Collections",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Karan is building a basic shopping cart system. He uses a Vector to store the item prices added to a customer's cart. After all items are added, the system displays the total number of items, lists all item prices, and calculates the total cost. The program uses two user-defined functions. The first function, addltems(), accepts the Vector and an array of prices, and adds each price to the Vector using the add() method. The second function, displayCart(), accepts the Vector and prints the size using size(), then iterates through it using an index-based loop with get() to print each price, and finally prints the total cost. The main function reads the input, calls both functions in order.",
+    "inputFormat": "The first line of input consists of an integer N representing the number of items in the cart. The second line of input consists of N space-separated integers representing the price of each item.",
+    "outputFormat": "",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 1 price 10000"
+    ]
+  },
+  {
+    "id": "bank3-003",
+    "index": 3,
+    "title": "Divya's Class Teacher",
+    "session": "Day 8 COD",
+    "shots": "Screenshot",
+    "topic": "Comparable",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Divya is a class teacher who needs to print the rank list of her students sorted by their marks in ascending order. She decides to use Java's Comparable interface to define the natural ordering for a Student class so that students can be sorted directly using any sort routine. Each student has a name and a marks value. The program reads N students, sorts them by marks in ascending order using the natural ordering defined through Comparable, and prints the sorted list. The Student class implements Comparable\u00ab Student> and overrides the compareTo() method to compare students by their marks. The sortStudents() function uses a simple selection sort \u2014 for each position i it finds the student with the smallest marks among positions i to N-1 and swaps them into position i, using compareTo() for all comparisons. The main function reads the input, calls sortStudents(), and prints each student's name and marks.",
+    "inputFormat": "Skipped + 30 The first line of input consists of an integer N representing the number of students. The second line of input consists of N space-separated strings representing the names of the students. The third line of input consists of N space-separated integers representing the marks of the students in the same order as the names.",
+    "outputFormat": "Print N lines. Each line consists of a student's name followed by a space and their marks, in ascending order of marks.",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 1 marks 100 Narnes are single words with no spaces"
+    ]
+  },
+  {
+    "id": "bank3-004",
+    "index": 4,
+    "title": "Sunita's College Coordinator",
+    "session": "Day 8 COD",
+    "shots": "Screenshot",
+    "topic": "Iterators & Iterable",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Sunita is a college coordinator who maintains an attendance list of student roll numbers. She stores the roll numbers in a Vector and uses an Iterator to traverse the list, printing each roll number and counting how many students are present. The program uses two user-defined functions. The first function, loadRolls(), accepts the Vector and an array of roll numbers, and adds each roll number using the Vector's add() method. The second function, traverseAndCount(), accepts the Vector, obtains an Iterator using iterator(), and uses hasNext() and next() in a while loop to print each roll number and count the total. It then prints the count. The main function reads the input and calls both functions.",
+    "inputFormat": "The first line of input consists of an integer N representing the number of students present. The second line of input consists of N space-separated integers representing the roll numbers.",
+    "outputFormat": "Print N lines each containing one roll number in the order they were added. The last line prints Count: X where X is the total number of students.",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 1 roll number 1000"
+    ]
+  },
+  {
+    "id": "bank3-005",
+    "index": 5,
+    "title": "Day 8 CY - Challenge 1",
+    "session": "Day 8 CY",
+    "shots": "Screenshot",
+    "topic": "Comparable",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Anita is an HR manager who needs to generate a payroll report where employees are listed sorted by salary in ascending order. When two employees have the same salary, they must be listed in alphabetical order of their names. She uses Java's Comparable interface to encode this two-level ordering directly into the Employee class. The Employee class implements Comparable\u00ab Employee> and overrides compareTo(): it first compares salaries, and if they are equal, it compares names using String.compareTo() to break the tie alphabetically. The sortEmployees() function uses selection sort with compareTo() for all comparisons. The main function reads N employees, calls sortEmployees(), and prints each employee's name and salary.",
+    "inputFormat": "The first line of input consists of an integer N representing the number of employees. The second line of input consists of N space-separated strings representing the employee names. The third line of input consists of N space-separated integers representing the salaries in the same order.",
+    "outputFormat": "Print N lines. Each line consists of an employee name followed by a space and their",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 10000 salary 200000 Narnes are single words with no spaces"
+    ]
+  },
+  {
+    "id": "bank3-006",
+    "index": 6,
+    "title": "Vikram's Game Developer",
+    "session": "Day 8 CY",
+    "shots": "Screenshot",
+    "topic": "Iterators & Iterable",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Vikram is a game developer who maintains player scores in a Vector. After each round, he wants to filter out all scores that fall below a given threshold, keeping only the qualifying scores. He uses an Iterator to traverse the Vector and the Iterator's remove() method to safely delete elements during traversal without causing errors. The program uses two user-defined functions. The first function, loadScores(), adds all scores to the Vector using add(). The second function, filterAndDisplay(), accepts the Vector and a threshold. It obtains an Iterator using iterator() and uses hasNext() and next() in a while loop \u2014 if the current element is strictly less than the threshold, it calls it.remove() to remove it. After the loop, it prints the remaining elements using a second iterator and prints the remaining count. The main function reads all inputs and calls both functions.",
+    "inputFormat": "Skipped + 30 Vector and a threshold. It obtains an Iterator using iterator() and uses hasNext() and next() in a while loop \u2014 if the current element is strictly less than the threshold, it calls it.remove() to remove it. After the loop, it prints the remaining elements using a second iterator and prints the remaining count. The main function reads all inputs and calls both functions. Input Format The first line of input consists of an integer N representing the number of scores. The second line of input consists of N space-separated integers representing the scores. The third line of input consists of an integer representing the threshold value.",
+    "outputFormat": "Print each remaining score on a separate line in their original order. The last line prints Remaining: X where X is the count of scores that met or exceeded the threshold.",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 1 S N s 20 1 score 1000 1 threshold 1000"
+    ]
+  },
+  {
+    "id": "bank3-007",
+    "index": 7,
+    "title": "Deepa's Maths Teacher",
+    "session": "Day 8 CY",
+    "shots": "Screenshot",
+    "topic": "Iterators & Iterable",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Deepa is a maths teacher who wants to generate number sequences with a fixed step value for her classroom exercises. Given a start value, an end value, and a step size, she needs to produce all numbers from start to end (inclusive) that are reachable by adding the step repeatedly. = 2 produces: 1, 3, 5, 7, 9. A class StepRange implements Iterable\u00ab Integer> and holds the start, end, and step values. It overrides the iterator() method and returns an inner class Steplterator that implements Iterator\u00ab Integer>. The inner class maintains a current variable initialised to start. hasNext() returns true while current is less than or equal to end. next() returns the current value and advances current by step. The main function creates a StepRange object, uses it in a for-each loop to print each value and count them, then prints the count.",
+    "inputFormat": "Skipped 11 ua33 11 lall 'Lali 13 a val lau.c 11 11 Lla113cu Lu start. hasNext() returns true while current is less than or equal to end. next() returns the current value and advances current by step. The main function creates a StepRange object, uses it in a for-each loop to print each value and count them, then prints the count. Input Format The first line of input consists of three space-separated integers representing the start value, end value, and step size.",
+    "outputFormat": "Print each value in the sequence on a separate line. The last line prints Count: X where X is the total number of values generated.",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: O start end 200 1 step 50"
+    ]
+  },
+  {
+    "id": "bank3-008",
+    "index": 8,
+    "title": "Rahul's A Word Processing Utility",
+    "session": "Day 8 CY",
+    "shots": "Screenshot",
+    "topic": "Comparator",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Rahul is building a word processing utility. He needs to sort a list of words first by their length in ascending order, and when two words have the same length, they should appear in alphabetical order. He uses a Comparator to define this custom two-level ordering without modifying the String class. A class WordComparator implements Comparator <String> and overrides the compare() method: it first compares the lengths of the two strings, and if the lengths are equal, it uses String.compareTo() to compare them alphabetically. The sortWords() function uses selection sort with comparator.compare() for all comparisons. The main function reads N words, calls sortWords(), and prints each word on a new line.",
+    "inputFormat": "The first line of input consists of an integer N representing the number of words. The second line of input consists of N space-separated strings representing the words.",
+    "outputFormat": "",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 1 word length 20 All words are lowercase with no spaces"
+    ]
+  },
+  {
+    "id": "bank3-009",
+    "index": 9,
+    "title": "Sita's A Library Catalogue",
+    "session": "Day 8 PAH",
+    "shots": "Screenshot",
+    "topic": "Comparator",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Sita manages a library catalogue. She needs to sort books first by number of pages in ascending order. When two books have the same page count, they should appear in alphabetical order by title. She first sorts using Comparable for the primary key (pages) and uses a Comparator as the tiebreaker (alphabetical title order). The Book class implements and overrides compareTo() to compare only by page count. A separate class BookComparator implements Comparator\u00ab Book> and overrides compare(): it first calls compareTo() on the two books, and if the result is zero (equal pages), it breaks the tie by comparing titles alphabetically using String.compareTo(). The sortBooks() function uses selection sort with BookComparator for all comparisons. The main function reads N books, sorts them, and prints each book's title and page count.",
+    "inputFormat": "Skipped 4 + 30 The first line of input consists of an integer N representing the number of books. The second line of input consists of N space-separated strings representing the book titles (single words, no spaces). The third line of input consists of N space-separated integers representing the page counts in the same order.",
+    "outputFormat": "Print N lines. Each line consists of a book title followed by a space and its page count, sorted by ascending page count and alphabetically by title for equal page counts.",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 1 pages 2000 Book titles are single words with no spaces"
+    ]
+  },
+  {
+    "id": "bank3-010",
+    "index": 10,
+    "title": "Priya's Logistics Coordinator",
+    "session": "Day 8 PAH",
+    "shots": "Screenshot",
+    "topic": "Iterators & Iterable",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Priya is a logistics coordinator who tracks delivery time values (in minutes) stored in a Vector. Her manager asks her how many deliveries were completed within a given time window \u2014 that is, how many values fall between a lower bound and an upper bound, both inclusive. The DeliveryBatch class implements Iterable\u00ab Integer> and wraps a Vector internally. It overrides iterator() to return the Vector's own iterator, making the batch directly usable in a for-each loop. The program uses two user-defined functions. The first function, loadDeliveries(), adds all values to the internal Vector. The second function, countlnRange(), accepts the DeliveryBatch object and the bounds low and high, iterates over it using a for-each loop, counts every element where low <= element high, and returns the count. The main function reads all inputs, calls both functions, and prints the result.",
+    "inputFormat": "Skipped 4 + 30 The first line of input consists of an integer N representing the number of delivery time values. The second line of input consists of N space-separated integers representing the delivery times. The third line of input consists of two space-separated integers representing the lower bound and upper bound of the time window.",
+    "outputFormat": "The first line of output consists of an integer representing the count of deliveries that fall within the range [low, high] inclusive.",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 1 s N 100 1 delivery time 1000 1 low high 1000"
+    ]
+  },
+  {
+    "id": "bank3-011",
+    "index": 11,
+    "title": "Rajan's Data Analyst",
+    "session": "Day 8 PAH",
+    "shots": "Screenshot",
+    "topic": "Iterators & Iterable",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Rajan is a data analyst who stores a batch of sensor readings in a Vector. He needs to find the maximum and minimum values in the batch. He uses an Iterator to traverse the entire Vector in a single pass, tracking the largest and smallest values seen so far. The program uses two user-defined functions. The first function, loadData(), adds all readings to the Vector using add(). The second function, findMaxMin(), accepts the Vector, obtains an Iterator using iterator(), and uses hasNext() and next() to traverse all elements in one pass while maintaining max and min variables initialised to the first element. After the traversal it prints the maximum and minimum. The main function reads the inputs and calls both functions.",
+    "inputFormat": "The first line of input consists of an integer N representing the number of readings. The second line of input consists of N space-separated integers representing the sensor readings.",
+    "outputFormat": "",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: 100 1 reading 100000"
+    ]
+  },
+  {
+    "id": "bank3-012",
+    "index": 12,
+    "title": "Arjun's Game Server Developer",
+    "session": "Day 8 PAH",
+    "shots": "Screenshot",
+    "topic": "Comparable",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Arjun is a game server developer who stores player scores in a Vector. After each game session, he needs to extract the top K scores in descending order to display on the leaderboard. He sorts the Vector using Comparable (by descending score order) and then uses an Iterator to extract the first K elements. The Score class implements and overrides compareTo() to sort in descending order (higher scores come first). The program uses three user-defined functions. The first function, loadScores(), adds all Score objects to the Vector. The second function, sortVector(), applies a selection sort on the Vector using compareTo() via get() and set(). The third function, printTopK(), uses an Iterator to traverse the sorted Vector and prints exactly the first K score values, then stops. The main function reads all inputs and calls all three functions in order.",
+    "inputFormat": "Skipped + 30 functions. The first function, loadScores(), adds all Score objects to the Vector. The second function, sortVector(), applies a selection sort on the Vector using compareTo() via get() and set(). The third function, printTopK(), uses an Iterator to traverse the sorted Vector and prints exactly the first K score values, then stops. The main function reads all inputs and calls all three functions in order. Input Format The first line of input consists of two space-separated integers N and K representing the total number of scores and the number of top scores to display. The second line of input consists of N space-separated integers representing the scores.",
+    "outputFormat": "Print K lines. Each line contains one score from the top K scores in descending order.",
+    "constraints": [
+      "In this scenario, the test cases fall under the following constraints: IS KS N s 20 1 score 10000"
+    ]
+  },
+  {
+    "id": "bank3-013",
+    "index": 13,
+    "title": "Skipped 4 + 30 Header Snippet 1 2 3 import java",
+    "session": "Day 9 COD",
+    "shots": "Screenshot",
+    "topic": "Strings",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Header Snippet 1 2 3 import java. util . ArrayList; import java. util.List; import java. util . Scanner; Mesa, a store manager, needs a program to manage inventory items. Define a class ItemType with private attributes for name, deposit, and cost per day. Create an ArrayList in the Main class to store ItemType objects, allowing input and display. Note: Use for formatting output in tabular format, display double values with 1 decimal place.",
+    "inputFormat": "The first line of input consists of an integer n, representing the nurnber of items. The next n groups of three lines each represent one item: - The first line contains a string representing the item name. - The second line contains a double value representing the deposit amount. - The third line contains a double value representing the cost per day.",
+    "outputFormat": "Skipped + 30 Header Snippet 1 2 3 import java. util . ArrayList; import java. util.List; import java. util . Scanner; The output prints a formatted table with columns for name, deposit and cost per day. Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "The given test cases fall under the following constraints: 1SnSIO 0.1 deposit 10000.0 0.1 cost per day 1000.0"
+    ]
+  },
+  {
+    "id": "bank3-014",
+    "index": 14,
+    "title": "Day 9 COD - Challenge 2",
+    "session": "Day 9 COD",
+    "shots": "Screenshot",
+    "topic": "Strings",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Python",
+    "description": "Skipped 4 + 30 A city traffic management system needs to track vehicles entering a toll booth. Each vehicle is uniquely identified by its registration number. The system should allow adding vehicles to a record, ensuring that no duplicate registration numbers exist. The vehicles should be stored in a HashSet, which does not guarantee any specific order. Your task is to implement a program using a HashSet that allows adding vehicle details and displaying the records.",
+    "inputFormat": "The first line of input contains an integer N - the number of vehicles. The next N lines contain details of each vehicle in the format: \"RegNumber OwnerName VehicleType\" RegNumber (String) - A unique registration number (Alphanumeric). OwnerName (String) - The name of the vehicle owner. VehicleType (String, Car, Bike, or Truck) - The type of vehicle. If a vehicle with the same registration number is already present, ignore the duplicate entry.",
+    "outputFormat": "The output prints the unique vehicle records in any order (since HashSet does not rnaintain order).",
+    "constraints": [
+      "The given test cases fall under the following constraints: IS NSIO 6 RegNumber length IO 1 OwnerName length 100 RegNumber consists of alphanumeric characters and is unique. VehicleType is always either Car, Bike, or Truck. Duplicate registration numbers should be ignored."
+    ]
+  },
+  {
+    "id": "bank3-015",
+    "index": 15,
+    "title": "Arjun's Select Exactly N Prime Numbers",
+    "session": "Day 9 COD",
+    "shots": "Screenshot",
+    "topic": "Strings",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped Arjun is working on a project where he needs to find all possible combinations of prime numbers that sum up to a given target. The prime numbers in the combinations should be greater than a specific value P and less than or equal to a limit S. Arjun needs to select exactly N prime numbers that sum up to S. Help him implement the task using a List.",
+    "inputFormat": "The first line of input consists of an integer value, S, representing the target sum. The second line of input consists of an integer value, N, representing the nurnber of prime numbers to be selected. The third line of input consists of an integer value, P, representing the lower bound for the prime numbers to be considered.",
+    "outputFormat": "The output prints: A space-separated list of prime number combinations that sum up to S, where exactly N primes are chosen from the range greater than P and less than or equal to S. For each valid combination of primes, print them on a new line, separated by a space.",
+    "constraints": [
+      "1 sss 1000 IS NSIO O s P s 100"
+    ]
+  },
+  {
+    "id": "bank3-016",
+    "index": 16,
+    "title": "Implementation of The Interface In The Book Class",
+    "session": "Day 9 COD",
+    "shots": "Screenshot",
+    "topic": "String Sorting & Comparable",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Python",
+    "description": "Skipped An online bookstore wants to maintain a list of books sorted based on their price. Each book has a title, author name, and price. You are required to: \u2022 \u2022 \u2022 \u2022 \u2022 \u2022 \u2022 \u2022 Create a class named Book with the following attributes: String title String author integer price Implement the interface in the Book class. Sort the books in ascending order of price. If two books have the same price, then sort them in lexicographical order of title. Store the objects and use Collections.sort() to sort them.",
+    "inputFormat": "The first line contains an integer n, the number of books. The next n lines contain book details in the forrnat: title author price title \u2014 A string representing the name of the book (single word, alphabets only). author \u2014 A string representing the author's name (single word, alphabets only). price \u2014 An integer representing the price of the book. All values are space-separated.",
+    "outputFormat": "The output prints the sorted list of books in the forrnat: Sorted Book List: <title> by <author> - <price> Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "Skipped"
+    ]
+  },
+  {
+    "id": "bank3-017",
+    "index": 17,
+    "title": "Implementation of The Code Using Arraylist ?",
+    "session": "Day 9 CY",
+    "shots": "Screenshot",
+    "topic": "String Sorting & Comparable",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Python",
+    "description": "Skipped 4 + 30 Header Snippet 1 2 3 import java. util . Scanner; import java. util . ArrayList; Imagine you have a sorted list of numbers, and you accidentally spill your coffee on it, causing it to be rotated ( right rotation ). You now need to figure out how many times the list has been rotated. In other words, you want to determine the count of rotations in this list that has been shifted from its original sorted state. Can you implement the code using ArrayList ?",
+    "inputFormat": "The first line of the input is an integer N representing the size of the list. The second line of the input is N space-separated integer values.",
+    "outputFormat": "The output is displayed in the following forrnat: \"The nurnber of rotations in the array is: < Value> \" where Value is an integer representing the number of rotations. Refer to the sample output for formatting specifications.",
+    "constraints": []
+  },
+  {
+    "id": "bank3-018",
+    "index": 18,
+    "title": "Day 9 CY - Challenge 2",
+    "session": "Day 9 CY",
+    "shots": "Screenshot",
+    "topic": "Strings",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Python",
+    "description": "Skipped 4 + 30 Sarah, a warehouse manager, is managing a list of product names in her store's inventory system. She needs to perform basic operations like adding (inserting) new products, removing products that are sold out or discontinued, displaying all the products in stock, and searching for a specific product in the inventory list. Sarah's goal is to manage the inventory using a list of product names (strings). The system allows her to perform the following operations using ArrayList: 1. Insert a Product: Sarah adds a new product to the inventory. 2. Delete a Product: Sarah removes a product from the inventory when it's sold or discontinued. 3. Display the Inventory: Sarah checks all the products currently available in the inventory. 4. Search for a Product: Sarah searches for a specific product in the inventory to check if it's available.",
+    "inputFormat": "Skipped + 30 system allows her to perform the following operations using ArrayList: 1. Insert a Product: Sarah adds a new product to the inventory. 2. Delete a Product: Sarah removes a product from the inventory when it's sold or discontinued. 3. Display the Inventory: Sarah checks all the products currently available in the inventory. 4. Search for a Product: Sarah searches for a specific product in the inventory to check if it's available. Input Format The input consists of multiple space-separated values representing different operations on a product list. Each operation follows a specific format: 1 <product_name> - Adds < product_name> to the product list. 2 <product_name> - Removes <product_name> from the product list if it exists. 3 - Print all products currently on the list. 4 <product_name> - Checks if <product_name> exists in the list.",
+    "outputFormat": "Skipped 4 + 30 The input consists of multiple space-separated values representing different operations on a product list. Each operation follows a specific format: 1 <product_name> - Adds < product_name> to the product list. 2 <product_name> - Removes <product_name> from the product list if it exists. 3 - Print all products currently on the list. 4 <product_name> - Checks if <product_name> exists in the list. Output Format The output displays, For (choice 1) prints, \" <item> has been added to the list.\" For (choice 2) prints, \" <item> has been rernoved from the list.\" For (choice 3) prints, \"Items in the list:\" followed by each item in the list on a new line, or \"The list is empty.\" if the list is empty. For (choice 4) prints,\" <item> is found in the list.\" or \" <item> not found in the list.\" Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "1 Choice 4 1 string length 100"
+    ]
+  },
+  {
+    "id": "bank3-019",
+    "index": 19,
+    "title": "Day 9 CY - Challenge 3",
+    "session": "Day 9 CY",
+    "shots": "Screenshot",
+    "topic": "Strings",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "P K Pranav CB.SC.U4CYS25037",
+    "inputFormat": "Skipped sc.next()); library . removeBook(sc . nextlnt()) ; library. display(); o; sc.close 24 } Sample Tests Submissions Custom Inputs",
+    "outputFormat": "Print each remaining book, in the order it was added, as: ISBN: <isbn>, Title: <title>, Author: <author> If no books remain, print: No books available Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "The given test cases fall under the following constraints: 1 snS20 C) g rnsn 1000 ISBN 9999 (unique) Title and Author are alphanumeric with no spaces."
+    ]
+  },
+  {
+    "id": "bank3-020",
+    "index": 20,
+    "title": "Implementation of The Interface",
+    "session": "Day 9 CY",
+    "shots": "Screenshot",
+    "topic": "String Sorting & Comparable",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Python",
+    "description": "Skipped + 30 Ananya is organizing a coding competition at her college. After the evaluation round, she receives a list of participants along with their scores and submission times. To declare the final rankings, she needs to sort the participants based on specific rules. Each participant record contains participant name, score obtained and submission time (in minutes) Ananya wants the ranking to follow these conditions: \u2022 Participants must be sorted in descending order of score (higher score first). \u2022 If two participants have the same score, the one with less submission time should be ranked higher. \u2022 If both score and submission time are the same, sort them in lexicographical order of name. You are required to: \u2022 Create a class named Participant. \u2022 Implement the interface. \u2022 Store the participant objects in a collection. \u2022 Sort them using Collections.sort() based on the above ranking rules. \u2022 Display the final leaderboard.",
+    "inputFormat": "Skipped CODE + 30 Input Format The first line contains an integer n, representing the number of participants. The next n lines contain participant details in the format: name score submissionTime Where: name \u2014 A string score \u2014 An integer submissionTime \u2014 An integer representing time in minutes All values are space-separated.",
+    "outputFormat": "The first line of output prints: \"Final Leaderboard:\" Each subsequent line prints participant details in the format: <name> <score> <submissionTime> Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "50 O score 100 1 submissionTime 300 Names contain onlv alohabets (no soaces)"
+    ]
+  },
+  {
+    "id": "bank3-021",
+    "index": 21,
+    "title": "Day 9 PAH - Challenge 1",
+    "session": "Day 9 PAH",
+    "shots": "Screenshot",
+    "topic": "Strings",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 -o Raman, a computer science teacher, is responsible for registering students for his programming class. To streamline the registration process, he wants to develop a program that stores students' names and allows him to retrieve a student's name based on their index in the list. Raman has decided to use an ArrayList to store the names of students, as it provides efficient dynamic resizing and indexing. Write a program that enables Raman to input the names of students and fetch a student's name using the specified index. If the entered index is invalid, the program should return an appropriate message.",
+    "inputFormat": "The first line of input consists of an integer n, representing the number of students to register. The next n lines of input consist of the names of each student, one by one. The last line of input is an integer, representing the index (O-indexed) of the element to retrieve.",
+    "outputFormat": "Skipped 4 + 30 Raman, a computer science teacher, is responsible for registering students for his programming class. To streamline the registration process, he wants to develop a program that stores students' names and allows him to retrieve a student's name based on their index in the list. Raman has decided to use an ArrayList to store the names of students, as it provides efficient dynamic resizing and indexing. Write a program that enables Raman to input the names of students and fetch a student's name using the specified index. If the entered index is invalid, the program should return an appropriate message. Input Format The first line of input consists of an integer n, representing the number of students to register. The next n lines of input consist of the names of each student, one by one. The last line of input is an integer, representing the index (O-indexed) of the element to retrieve. Output Format",
+    "constraints": [
+      "The given test cases fall under the following constraints:"
+    ]
+  },
+  {
+    "id": "bank3-022",
+    "index": 22,
+    "title": "Day 9 PAH - Challenge 2",
+    "session": "Day 9 PAH",
+    "shots": "Screenshot",
+    "topic": "String Sorting & Comparable",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Python",
+    "description": "Skipped 4 + 30 A college professor wants to keep track of students who attend classes. Each student has a unique roll number and their attendance count increases every time they attend a class. The system should allow adding a student, marking their attendance, and displaying all students with their total attendance. Your task is to implement a Java program using TreeSet to maintain students in sorted order of roll numbers and track their attendance count. Operations: \u2022 A roll_no name -4 Add a student with roll number and name (if not already added). \u2022 M roll_no -+ Mark attendance for the student with the given roll number (increase their count by 1). \u2022 D \u2014+ Display all students in ascending order of roll number along with their attendance count.",
+    "inputFormat": "Skipped 4 + 30 \u2022 D \u2014+ Display all students in ascending order of roll number along with their attendance count. Input Format The first line contains an integer N - the nurnber of students. The next N lines contain one of the following commands: A roll_no name M roll_no D A (Add) -+ Adds a new student with a unique roll number and name. M (Mark) -9 Increases attendance count for the given roll number. D (Display) \u2014+ Prints all students in ascending order of roll number.",
+    "outputFormat": "For D, output prints each student's roll number, name, and attendance count in ascending order of roll number. Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "The given test cases fall under the following constraints: roll_no (Inteqer, 1 roll_no 1000) -4 Unique student roll nurnber."
+    ]
+  },
+  {
+    "id": "bank3-023",
+    "index": 23,
+    "title": "Skipped + 30 -o Header Snippet 1 import j ava",
+    "session": "Day 9 PAH",
+    "shots": "Screenshot",
+    "topic": "String Sorting & Comparable",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Python",
+    "description": "Skipped + 30 -o Header Snippet 1 import j ava. util . Java (11) Arjun is working on a program that checks if one set of numbers is a subset of another. If Set B is a subset of Set A, the program should print \"YES\" followed by the sorted elements of Set B. If Set B is not a subset of Set A, the program should print \"NO\" followed by the average of all elements from both sets combined, rounded to two decimal places. Implement a class Solution with the required method to perform the subset check using TreeSet in Java.",
+    "inputFormat": "The first line contains an integer n - the nurnber of elements in Set A. The second line contains n space-separated integers - the elements of Set A. The third line contains an integer m - the nurnber of elements in Set B. The fourth line contains m space-separated integers - the elements of Set B.",
+    "outputFormat": "Skipped + 30 -o Arjun is working on a program that checks if one set of numbers is a subset of another. If Set B is a subset of Set A, the program should print \"YES\" followed by the sorted elements of Set B. If Set B is not a subset of Set A, the program should print \"NO\" followed by the average of all elements from both sets combined, rounded to two decimal places. Implement a class Solution with the required method to perform the subset check using TreeSet in Java. Input Format The first line contains an integer n - the nurnber of elements in Set A. The second line contains n space-separated integers - the elements of Set A. The third line contains an integer m - the nurnber of elements in Set B. The fourth line contains m space-separated integers - the elements of Set B. Output Format If Set B is a subset of Set A, print \"YES\" followed by the sorted values of Set B, space-separated. Otherwise, print \"NO\" followed by the average of all nurnbers in both sets (rounded to two decimal places).",
+    "constraints": [
+      "The given test cases fall under the following constraints: 1 S n, m S 10 -10000 each element 40000 Elements in both sets are unique."
+    ]
+  },
+  {
+    "id": "bank3-024",
+    "index": 24,
+    "title": "Implementation of It Using Arraylist",
+    "session": "Day 9 PAH",
+    "shots": "Screenshot",
+    "topic": "Strings",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Python",
+    "description": "Skipped + 30 A teacher is filtering a list of words provided by students. Some words contain too many vowels, making them difficult for a spelling competition. The teacher decides to remove all words that contain more than two vowels. Help the teacher to implement it using ArrayList.",
+    "inputFormat": "The first line contains an integer N, representing the number of words in the list. The next N lines contain a string representing the words (one per line).",
+    "outputFormat": "The output consists of words that contain two or less than two vowels, printed in the same order they appeared in the input. Each word is printed on a new line. Refer to the sample output for the formatting specifications.",
+    "constraints": [
+      "In this scenario, the test cases will fall under the following constraints:"
+    ]
+  },
+  {
+    "id": "bank3-025",
+    "index": 25,
+    "title": "Day 10 COD - Challenge 1",
+    "session": "Day 10 COD",
+    "shots": "Screenshot",
+    "topic": "Stacks",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Header Snippet 1 2 3 4 5 6 7 8 9 #include (iostream) using namespace std ; struct Node { int data; Node* next; Raghav is learning about stacks and has implemented a simple stack using a linked list. The stack supports three operations: push, pop and display. However, he is facing some issues with the functionality, and he seeks your assistance. Your task is to help Raghav to achieve the same.",
+    "inputFormat": "The input consists of choices representing the operation to be performed. If the choice is 1, the following input consists of the element to be pushed into the stack. If the choice is 2, perform the pop operation. If the choice is 3, display the stack. If the choice is 4, exit. If the choice is greater than 4, print \"Wrong choice\".",
+    "outputFormat": "Skipped + 30 Header Snippet For each operation, the program should provide appropriate output based on the 1 2 3 4 5 6 7 8 9 #include (iostream) using namespace std ; struct Node { int data; Node* next; operation performed. The output format is as follows: For push operation: \"Node is Inserted\" For pop operation: \"Popped Element: \" followed by the popped value or STACK\" if the stack is empty. For display operation: \"The stack is: \" followed by the stack elernents or STACK\" if the stack is empty. For exit operation: The program terminates. For an invalid choice: \"Wrong choice\". Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "The given test cases fall under the formatting specifications: 1 element value 10000 Choice can be any integer; valid choices are 1, 2, 3, and 4. Invalid choices (any value other than 1\u20144) trigger \"Wrong choice\"."
+    ]
+  },
+  {
+    "id": "bank3-026",
+    "index": 26,
+    "title": "Sita's An Order Processing System For A Company",
+    "session": "Day 10 COD",
+    "shots": "Screenshot",
+    "topic": "Queues & Deque",
+    "difficulty": "Medium",
+    "recommendedLanguage": "C++",
+    "description": "Skipped 4 + 30 Header Snippet 1 2 3 4 5 6 7 8 #include <stdio.h> #include <stdlib.h> #define max 5 struct Queue int orderlDs[max]; int front, rear; Sita is developing an order processing system for a company. To efficiently manage incoming orders, she decides to implement a queue data structure using an array. The queue will store order IDs. Implement the following operations: Insert Order: Add an order ID to the end of the queue. Process Order: Remove and process the next order ID from the queue. Display Queue: Display the order IDs in the queue.",
+    "inputFormat": "Each line contains an integer representing the chosen option from 1 to 3. Option 1: Enqueue a new order ID into the queue. The next line contains an integer representing the elernent to be inserted. Option 2: Dequeue an order ID from the queue for processing. Option 3: Display the list of order IDs currently in the queue.",
+    "outputFormat": "Skipped + 30 Header Snippet upuon z: uequeue an oraer IU rrom we queue ror processing. Option 3: Display the list of order IDs currently in the queue. Output Format The program provides appropriate outputs based on the choice: When enqueuing an order (option 1), the program outputs: \"Order ID corderlD> is inserted in the queue\" When dequeuing an order (option 2), the program outputs: \"Processed Order 'D: corderlD>\" When displaying the order IDs (option 3), the program outputs: \"Order IDs in the queue are: corderlD1> corderlD2> corderlDn>\" If an enqueue operation is attempted when the queue is full, the program outputs: \"Queue is full\" If a dequeue operation is attempted when the queue is empty, the program outputs: \"Queue is empty\" If the user provides an invalid option, the program outputs: \"Invalid option\" Refer to the sample output for formatting specifications.",
+    "constraints": []
+  },
+  {
+    "id": "bank3-027",
+    "index": 27,
+    "title": "Skipped + 30 program",
+    "session": "Day 10 COD",
+    "shots": "Screenshot",
+    "topic": "Queues & Deque",
+    "difficulty": "Medium",
+    "recommendedLanguage": "C++",
+    "description": "Skipped + 30 program. She wants to perform a series of insertions at both the front and back of the deque and display the final state of the deque after all operations. Implement the following operations for Jansi's deque: \u2022 insertFront(deque, data): Insert an element at the front of the deque. \u2022 insertBack(deque, data): Insert an element at the back of the deque. \u2022 printDeque(deque): Print the elements of the deque from front to back (called only once at the end). Write a program to perform 6 specified deque operations and display the final deque state. Note: This question was asked in a Capgemini interview for testing deque implementation logic.",
+    "inputFormat": "Skipped + 30 \u2022 printDeque(deque): Print the elements of the deque from front to back (called only once at the end). Write a program to perform 6 specified deque operations and display the final deque state. Note: This question was asked in a Capgemini interview for testing deque implementation logic. Input Format The first line of input contains an integer representing the elernent to insert at the front. The second line of input contains an integer representing the element to insert at the front. The third line of input contains an integer representing the element to insert at the back. The fourth line of input contains an integer representing the elernent to insert at the back. The fifth line of input contains an integer representing the element to insert at the front. The sixth line of input contains an integer representing the element to insert at the back.",
+    "outputFormat": "The output displays the final state of the deque after all 6 insertions, with elernents separated by spaces.",
+    "constraints": [
+      "The given test cases fall under the following constraints: number of inputs = 6 1 element value 10000"
+    ]
+  },
+  {
+    "id": "bank3-028",
+    "index": 28,
+    "title": "Day 10 COD - Challenge 4",
+    "session": "Day 10 COD",
+    "shots": "Screenshot",
+    "topic": "Stacks",
+    "difficulty": "Hard",
+    "recommendedLanguage": "C++",
+    "description": "Skipped + 30 You are given a string S consisting only of the opening { and closing curly brackets. Your task is to determine the minimum number of reversals required to make the expression balanced. Use a stack to perform the computation. A balanced expression is defined as one where: \u2022 Every opening { has a corresponding closing }. \u2022 The brackets are correctly nested. You must print the original string followed by the minimum number of reversals required. If the string length is odd, it can never be balanced print -1.",
+    "inputFormat": "The input consists of a single string containing only { and",
+    "outputFormat": "reversals required to make it balanced.",
+    "constraints": [
+      "1 Length of the string 100"
+    ]
+  },
+  {
+    "id": "bank3-029",
+    "index": 29,
+    "title": "Day 10 CY - Challenge 1",
+    "session": "Day 10 CY",
+    "shots": "Screenshot",
+    "topic": "Queues & Deque",
+    "difficulty": "Easy",
+    "recommendedLanguage": "C++",
+    "description": "Skipped 4 + 30 You have been assigned to develop a waitlist management system for a popular restaurant. The restaurant experiences high customer demand and often has a waitlist for customers to secure a table. Your task is to develop a program that simulates this waitlist using a double-ended queue. The program should provide the following functionalities: Add Customers: The program should allow the host/hostess to add customers to the waitlist. Each customer is identified by their name. The host/hostess will enter the customer's name, and the program should add the customer to the end of the waitlist. Remove Customers: Once a table becomes available, the host/hostess can remove customers from the waitlist. The program should display the customer at the front of the waitlist and remove them from the list. The host/hostess can then seat the customer at the available table. Move Customers: If a customer at the front of the waitlist is not ready to be seated yet, the host/hostess can move them to the end of the waitlist. This is typically done if the customer requests more time or needs to wait for additional members of their party to arrive. The program should move the customer from the front to the back of the waitlist. Display Waitlist: At any time, the host/hostess can view the current waitlist. The",
+    "inputFormat": "Skipped + 30 For choice 3 (move to back): \" < name> has been moved to the back of the waitlist.\" If the waitlist is empty: \"Error: Waitlist is empty\" For choice 4 (display): \"Current waitlist:\" followed by each name on a new line, or \"Empty\" if the waitlist is empty. For choice 5 (exit): \"Exiting\" For any choice greater than 5: \"Invalid option!\" Refer to the sample input for a better understanding.",
+    "outputFormat": "The output prints the results based on the given choices. Refer to the sample output for the formatting specifications.",
+    "constraints": []
+  },
+  {
+    "id": "bank3-030",
+    "index": 30,
+    "title": "John's Process This Data",
+    "session": "Day 10 CY",
+    "shots": "Screenshot",
+    "topic": "Queues & Deque",
+    "difficulty": "Medium",
+    "recommendedLanguage": "C++",
+    "description": "Skipped 4 + 30 John is working on a project to manage and analyze the data from various sensors in a manufacturing plant. Each sensor provides a sequence of integer readings, and John needs to process this data to get some insights. He wants to implement a queue to handle these sensor readings efficiently. The requirements are as follows: 1. Enqueue Operations: Each sensor reading needs to be added to the circular queue. 2. Average Calculation: Calculate and print the average of every pair of consecutive sensor readings. 3. Sum Calculation: Compute the sum of all sensor readings. 4. Even and Odd Count: Count and print the number of even and odd sensor readings. Assist John in implementing the program.",
+    "inputFormat": "The first input line contains an integer n, which represents the number of sensor readings. The second line contains n space-separated integers, each representing a sensor reading.",
+    "outputFormat": "",
+    "constraints": []
+  },
+  {
+    "id": "bank3-031",
+    "index": 31,
+    "title": "Day 10 CY - Challenge 3",
+    "session": "Day 10 CY",
+    "shots": "Screenshot",
+    "topic": "Stacks",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Ram is working on a smart text editor that helps developers by checking if round, square, and curly brackets are balanced. Developers frequently write code using combinations of (), and [l. It's important to verify that all brackets: \u2022 Open and close properly \u2022 Are properly nested You need to implement the bracket-checking logic and print the original input followed by either \" - True\" (if balanced) or \" - False\" (if not). Example: Inputl: Outputl: - True Explanation:",
+    "inputFormat": "The input is a string expression.",
+    "outputFormat": "The output prints the following: If balanced, print: <input> - True If not balanced, print: <input> - False Refer to the sample output for the formatting specifications.",
+    "constraints": [
+      "1 Length of string 50"
+    ]
+  },
+  {
+    "id": "bank3-032",
+    "index": 32,
+    "title": "Day 10 CY - Challenge 4",
+    "session": "Day 10 CY",
+    "shots": "Screenshot",
+    "topic": "Stacks",
+    "difficulty": "Hard",
+    "recommendedLanguage": "C++",
+    "description": "Skipped + 30 Create a data structure with twoStacks that represent two stacks. Implementation of twoStacks should use only one array, i.e., both stacks should use the same array for storing elements. The following functions must be supported by twoStacks. pushl(int x) \u2014> pushes x to first stack push2(int x) \u2014> pushes x to second stack popl() \u2014> pops an element from the first stack and returns the popped element pop2() \u2014> pops an element from the second stack and returns the popped element Implementation of twoStack should be space efficient.",
+    "inputFormat": "The first line contains an integer n, representing the size of the array. The subsequent lines contain a series of operations, where: 1 x -+ push element x into Stackl. 2 x -9 push element x into Stack2. 3 -9 pop from Stackl. 4 \u2014+ pop from Stack2. 5-9 exit the program. Operations are space-separated and continue until exit command.",
+    "outputFormat": "Skipped + 30 C++ ( 17) v 1 Sample Tests",
+    "constraints": []
+  },
+  {
+    "id": "bank3-033",
+    "index": 33,
+    "title": "Day 10 PAH - Challenge 1",
+    "session": "Day 10 PAH",
+    "shots": "Screenshot",
+    "topic": "Queues & Deque",
+    "difficulty": "Easy",
+    "recommendedLanguage": "C++",
+    "description": "Skipped 4 + 30 Rajesh is working on a project that requires implementing a deque (double-ended queue) using an array-based circular structure. He needs to insert elements one by one at the front of the deque and retrieve the front element before and after performing a series of front deletions. Given N integers, insert each element at the front of the deque one by one. Since each new element is inserted at the front, the last inserted element becomes the front of the deque after all insertions. After printing the front element, delete M elements from the front and print the new front element. Example 1 If the elements 1 2 3 4 5 are inserted at the front one by one: Insert 1 -4 front = 1 Insert 2 -4 front = 2 Insert 3 -+ front = 3 Insert 4-9 front = 4 Insert 5-9 front = 5 After all insertions, the front element is 5 (the last inserted element).Deleting 2 elements from the front leaves [3, 2, 1], so the new front is 3.",
+    "inputFormat": "The first line contains an integer n (integer), representing the number of elements. The second line contains n space-separated integers (integer), representing the elements. The third line contains an integer m (integer), representing the nurnber of front deletions.",
+    "outputFormat": "The output should consist of two lines: The first line should display the front element of the deque before any deletions, in the forrnat: \"The front element is <front_element>.\" The second line should display the front elernent of the deque after deleting del elements, in the format: \"After deletion, the front element becomes",
+    "constraints": [
+      "100 1 elements 1000"
+    ]
+  },
+  {
+    "id": "bank3-034",
+    "index": 34,
+    "title": "Day 10 PAH - Challenge 2",
+    "session": "Day 10 PAH",
+    "shots": "Screenshot",
+    "topic": "Queues & Deque",
+    "difficulty": "Medium",
+    "recommendedLanguage": "C++",
+    "description": "Skipped 4 + 30 You are assigned to develop a simple ticket-booking system for a local movie theater. The theater has a single ticket counter, and customers arrive to purchase tickets for the movie of their choice. Implement a queue using linked lists to manage the customers in line at the ticket counter. Implement a program that provides the following functionalities: \u2022 Enqueue a customer into the ticket line. \u2022 Dequeue the customer at the front of the line when they reach the ticket counter. \u2022 Display the current list of customers in line.",
+    "inputFormat": "The input consists of an integer values, each representing an action to be taken: 1: Enqueue a new customer with a given customer ID. 2: Dequeue the customer at the front of the line. 3: Display the current customer IDs in the line.",
+    "outputFormat": "The program provides appropriate outputs based on the choice: When enqueuing a customer (option 1), the program outputs the customer ID that is added to the line.",
+    "constraints": []
+  },
+  {
+    "id": "bank3-035",
+    "index": 35,
+    "title": "Day 10 PAH - Challenge 3",
+    "session": "Day 10 PAH",
+    "shots": "Screenshot",
+    "topic": "Stacks",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Given a string of balanced expressions, find if it contains a redundant parenthesis or not. A set of parenthesis is redundant if the same sub-expression is surrounded by unnecessary or multiple brackets. Print 'Yes' if redundant else 'No'. Note Note: The expression may contain '+ , , and '/' operators. The given expression is valid and there are no white spaces present.",
+    "inputFormat": "The input consists of a string where representing the a valid expression S without any white spaces.",
+    "outputFormat": "The output prints \"Yes\" if the expression contains redundant braces. The output prints \"No\" if the expression does not contain redundant braces. Refer to the sample output for formatting specifications.",
+    "constraints": []
+  },
+  {
+    "id": "bank3-036",
+    "index": 36,
+    "title": "Day 10 PAH - Challenge 4",
+    "session": "Day 10 PAH",
+    "shots": "Screenshot",
+    "topic": "Stacks",
+    "difficulty": "Hard",
+    "recommendedLanguage": "C++",
+    "description": "Skipped + 30 Neo is experimenting with text transformations and decides to use a stack to reverse the sequence of words in his sentence. He provides a line of text and expects the program to utilize a stack to reorder the words so that the last word appears first and the first word appears last. Write a program to ensure this is done correctly using a stack-based approach. Example Input: I am Neo Output: Neo am I",
+    "inputFormat": "The input consists of a single line of input containing a sentence with words separated by spaces.",
+    "outputFormat": "The output prints a single line of output containing the words of the sentence reversed in order, separated by a single space.",
+    "constraints": [
+      "The given test cases fall under the following constraints: 1 length of input string 100 Words will not contain newline characters. Multiple consecutive spaces will not appear in the input."
+    ]
+  },
+  {
+    "id": "bank3-037",
+    "index": 37,
+    "title": "Day 11 COD - Challenge 1",
+    "session": "Day 11 COD",
+    "shots": "Screenshot",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Python",
+    "description": "Skipped 4 + 30 Header Snippet A teacher stores student names and their grades in a HashMap. Given a list of student- grade entries and a list of names to look up, the program should print the grade for each queried student, or \"Not found\" if the student does not exist. Note: Use a HashMap<String, Integer> to store and retrieve grades.",
+    "inputFormat": "The first line contains an integer n, the number of students. The next n lines each contain a student name and an integer grade separated by a space. The next line contains an integer q, the number of queries. The next q lines each contain a student name to look up.",
+    "outputFormat": "Skipped + 30 For each query, print name: grade if found, or name: Not found if not. Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "The given testcases fall under the following specification: 50 1 sqS20 O grade 100 1 length of name 20"
+    ]
+  },
+  {
+    "id": "bank3-038",
+    "index": 38,
+    "title": "Day 11 COD - Challenge 2",
+    "session": "Day 11 COD",
+    "shots": "Screenshot",
+    "topic": "Generics",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Implement a generic class FizzBuzz<T extends Number> that works with any numeric type. The program prints numbers from 1 to N, replacing multiples of: \u2022 3 and 5-4 \"FizzBuzz\" The generic class accepts an integer value N and applies the FizzBuzz rule from 1 to N. Note: Use a generic class FizzBuzz<T extends Number> and call intValue() to extract the integer value for processing.",
+    "inputFormat": "A single number N -9 end of the range. For integer input -9 standard FizzBuzz For floating-point input -9 apply FizzBuzz on floor values 1 to N",
+    "outputFormat": "",
+    "constraints": [
+      "IS Ng 50"
+    ]
+  },
+  {
+    "id": "bank3-039",
+    "index": 39,
+    "title": "Day 11 COD - Challenge 3",
+    "session": "Day 11 COD",
+    "shots": "Screenshot",
+    "topic": "Generics",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Implement a program called ElementCounter that counts the occurrences of a specified element in an array. The program should include a generic method named countOccurrences that takes an array and an element as parameters, and returns the number of occurrences of that element in the array.",
+    "inputFormat": "The first line of input contains an integer, representing the size of the array. The second line contains space-separated integers, representing the elements of the array. The third line contains an integer, representing the element for which occurrences need to be counted.",
+    "outputFormat": "The output should display an integer representing the number of occurrences of the specified elernent in the array in the following format: \"Occurrences of <elernentToCount>: <count>\". Refer to the sample output for formatting specifications.",
+    "constraints": []
+  },
+  {
+    "id": "bank3-040",
+    "index": 40,
+    "title": "Skipped + 30 Header Snippet 1 import j ava",
+    "session": "Day 11 COD",
+    "shots": "Screenshot",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Header Snippet 1 import j ava. util . Java (11) Riya is building a calendar event scheduler where each event is stored in chronological order using a TreeMap. The key represents the event time in 24-hour format (HH:MM), and the value is the event description. She wants the system to: 1. Automatically sort events by time. 2. Avoid duplicate time entries \u2014 if a duplicate time is entered, ignore the new entry. 3. Print all scheduled events in order. Implement this logic using a class named EventManager.",
+    "inputFormat": "The first line of the input contains an integer n, the nurnber of events. The next n lines each contain a string in the forrnat: HH:MM Description (Example: 09:00 TeamMeeting).",
+    "outputFormat": "The first line of the output prints \"Scheduled Events:\" The next k lines print each event in the format: \"HH:MM - Description\"",
+    "constraints": [
+      "The given test cases fall under the following constraints: 50 HH:MM will always be a valid 24-hour time Descriptions do not contain spaces Ignore any duplicate HH:MM entries"
+    ]
+  },
+  {
+    "id": "bank3-041",
+    "index": 41,
+    "title": "Day 11 CY - Challenge 1",
+    "session": "Day 11 CY",
+    "shots": "Screenshot",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Python",
+    "description": "Skipped 4 + 30 Rajesh, the owner of \"Royal Event Halls,\" manages multiple event halls available for booking. Each hall contains the following details: \u2022 Hall Name \u2022 Contact Number \u2022 Cost Per Day \u2022 Owner Name Rajesh wants to display the list of halls sorted in ascending order based on Cost Per Day. You must implement the Comparable interface in the Hall class and override the compareTo() method. Sorting Rule: If ha111.costPerDay < ha112.costPerDay then halll must come before ha112 Comparison Formula Used: Double.compare(this.costPerDay, other.costPerDay) The program must: \u2022 Accept hall details \u2022 Sort the halls using compareTo() \u2022 Print hall details in ascending order of cost",
+    "inputFormat": "The first line of input consists of an integer n, representing the nurnber of halls. The next n x 4 lines each contain hall details: A String, representing the hall name A String, representing the contact nurnber A double, representing the cost per day A String, representing the owner's name",
+    "outputFormat": "Skipped + 30 For each hall, print the following details in a single line, separated by a single space: Hall Name Contact Number Cost Per Day (displayed with one decimal place) Owner Name The output should display halls in ascending order based on their cost per day. Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "100 0.0 < costPerDay 1000000.0 Length of name 100 Length of ownerName 100 Length of contactNurnber 20"
+    ]
+  },
+  {
+    "id": "bank3-042",
+    "index": 42,
+    "title": "He's Implement A Method",
+    "session": "Day 11 CY",
+    "shots": "Screenshot",
+    "topic": "Generics",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Arjun is working on a utility that allows reversing an array of any type (e.g., integers, strings, or custom objects). He needs to implement a method that can handle arrays of different data types and reverse their elements in place. Additionally, he needs to convert the array into a readable string format to display before and after the reversal. The solution should be implemented using a generic method. Help him implement the task, focusing on using a generic method for reversing arrays and converting them to strings. The reverseArray method is a generic method. Generic Methods: \u2022 The reverseArray method is a generic method that takes an array of any type T[] and reverses its elements in place. \u2022 The arrayToString method is used to convert the array into a string format for easy display.",
+    "inputFormat": "Skipped 4 + 30 The first line of input consists of an integer size, representing the number of elements in the array. The second line consists of size space-separated integers representing the elements of the array.",
+    "outputFormat": "The first line of output prints the array in its original form, forrnatted as a string with square brackets [ ] around the elements, with each elernent separated by a comma and a space. The second line prints the array after it has been reversed, formatted in the same way. Refer to the sample output for the formatting specifications.",
+    "constraints": [
+      "The given testcases fall under the following constraints: 1 sizes 1000 -106 array elernent 106 All array elements are integers."
+    ]
+  },
+  {
+    "id": "bank3-043",
+    "index": 43,
+    "title": "Sophia's A Word Categorization Tool For A Language Learning App",
+    "session": "Day 11 CY",
+    "shots": "Screenshot",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Python",
+    "description": "Skipped + 30 Sophia is developing a word categorization tool for a language learning app. She needs to group words that are anagrams words that contain the same letters but in a different order. Users often search for words with similar spellings, so grouping anagrams will enhance search efficiency. To achieve this, Sophia decides to use a HashMap, where the key is the sorted version of each word, and the values are lists of anagrams. To improve readability, she ensures: 1. Each group is sorted alphabetically. 2. Groups themselves are sorted alphabetically, based on the first word in each group. Example Input 5 listen silent enlist inlets elites Output elites",
+    "inputFormat": "The first line contains an integer N, representing the number of words. The second line contains N space-separated words, each consisting of lowercase English letters (a-z).",
+    "outputFormat": "The output prints groups of anagrams, each group on a new line. Within a group, words should appear in alphabetical order. Groups thernselves should also be sorted alphabetically, based on their first word. Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "1 s N 100 1 Length of each word 20 Words contain only lowercase English letters (a-z)"
+    ]
+  },
+  {
+    "id": "bank3-044",
+    "index": 44,
+    "title": "Day 11 CY - Challenge 4",
+    "session": "Day 11 CY",
+    "shots": "Screenshot",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Priya is analyzing encrypted messages in a research project. She wants to analyze the frequency of each character in a given paragraph. The characters should be stored in a TreeMap so that the output is sorted in ascending order of characters automatically. You are required to build a Java program that: 1. Uses a TreeMap< Character, Integer> to count how many times each character appears in the message. 2. Ignores spaces and considers only alphabets (case-sensitive). 3. Outputs the frequencies of characters in sorted order. You must use a TreeMap in the class named MessageAnalyzer.",
+    "inputFormat": "The first line of input contains an integer n, the number of lines in the message. The next n lines each contain a string (the encrypted message line).",
+    "outputFormat": "Skipped + 30 The first line of input contains an integer n, the number of lines in the message. The next n lines each contain a string (the encrypted message line). Output Format The first line of output prints: \"Character Frequency:\" Then print each character and its frequency in the format: \" < character>: <count>\" Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "The given test cases fall under the following constraints: 50 HH:MM will always be a valid 24-hour time Descriptions do not contain spaces"
+    ]
+  },
+  {
+    "id": "bank3-045",
+    "index": 45,
+    "title": "Skipped 4 + 30 Header Snippet 1 import j ava",
+    "session": "Day 11 PAH",
+    "shots": "Screenshot",
+    "topic": "Generics",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Header Snippet 1 import j ava . util . Scanner; Java (11) Megna, an avid fitness enthusiast, seeks a program to track her daily workouts. The program must allow her to input calorie burn rates. With the ability to specify exercise counts, Megna desires a tool that computes and displays the total calories burned during her workout sessions, aiding her to sum the calories and monitor her fitness progress efficiently. Write a program using a generic method named calculateSum and generic interface NumberProvider to help Megna.",
+    "inputFormat": "The first line of input consists of an integer N, representing the number of workouts. The second line consists of N space-separated integers, representing the calories burnt during each workout.",
+    "outputFormat": "Skipped + 30 Header Snippet 1 import j ava . util . Scanner; Java (11) The output prints an integer, representing the total calories burnt. Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "IS NS15"
+    ]
+  },
+  {
+    "id": "bank3-046",
+    "index": 46,
+    "title": "Day 11 PAH - Challenge 2",
+    "session": "Day 11 PAH",
+    "shots": "Screenshot",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Vikram, a busy sales executive, wants to review his call history. He maintains a log of calls with the dialled number, duration (in minutes), and the date of the call. To identify which calls were the longest, he wants the log sorted in ascending order of call duration. Create a class CallLog with fields dialledNumber, duration, and dialledDate. Read the call entries from the user, sort them by duration using the sort method from the Collections class by implementing the Comparable interface and overriding the compareTo method, and display the sorted log.",
+    "inputFormat": "First line of the input consist of number of entries Next input is the Dialed number, Duration and Dialled date for all entries",
+    "outputFormat": "Output prints the details in after sorting based on duration Refer to the sample output for formatting specifications",
+    "constraints": []
+  },
+  {
+    "id": "bank3-047",
+    "index": 47,
+    "title": "Day 11 PAH - Challenge 3",
+    "session": "Day 11 PAH",
+    "shots": "Screenshot",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Python",
+    "description": "Skipped + 30 each candidate ID and identifies the candidate who received more than half of the total votes. Example Input 7 2212223 Output 2 Explanation The votes are: 2, 2, 1, 2, 2, 3, 2 Count of each candidate: \u2022 2 appears 5 times \u2022 I appears once \u2022 3 appears once The majority element is the one that appears more than N/2 times. Since 7/2 number must appear at least 4 times to be the majority. The number 2 appears 5 times, which is greater than 3.5, so the output is 2. = 3.5, a",
+    "inputFormat": "The first line contains an integer N \u2014",
+    "outputFormat": "Skipped + 30 = 3.5, a Print the majority elernent (the candidate who received more than N/2 votes). If no such candidate exists, print -1. Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "1 s N 100"
+    ]
+  },
+  {
+    "id": "bank3-048",
+    "index": 48,
+    "title": "Skipped + 30 Header Snippet 1 import j ava",
+    "session": "Day 11 PAH",
+    "shots": "Screenshot",
+    "topic": "HashMaps & Sets",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 Header Snippet 1 import j ava. util . Java (11) A linguist named Meera is classifying a list of words based on their first character. She wants to store words grouped by their starting letter using a TreeMap so that the groups appear in sorted order of characters (i.e., 'a' to 'z'). For each letter, all words starting with that letter should be stored in the order they appear. Implement the logic inside a class named WordClassifier using the TreeMap\u00abCharacter, List<String>> collection.",
+    "inputFormat": "The first line of the input contains an integer n, representing the number of words. The next n lines each contain a word.",
+    "outputFormat": "Skipped + 30 Header Snippet 1 import j ava. util . Java (11) The first line of the input contains an integer n, representing the number of words. The next n lines each contain a word. Output Format The first line of the output prints: \"Grouped Words by Starting Letter:\" The next lines print each character key and its list of words in the forrnat: \"letter: wordl word2 word3... Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "The given test cases fall under the following constraints: 100 Words contain only lowercase English letters"
+    ]
+  },
+  {
+    "id": "bank3-049",
+    "index": 49,
+    "title": "Alexa's Developer Tasked With An Application",
+    "session": "Day 12 COD",
+    "shots": "Screenshot",
+    "topic": "Multithreading & Concurrency",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Alexa is a developer tasked with an application that takes a range of numbers as input and employs two threads to concurrently calculate and print the squares and cubes of these numbers. If the number is odd, the program should print the square of the number. If the number is even, the program should print the cube of the number. The goal is to test the correctness of the implementation and ensure proper synchronization between the square and cube threads. Write the program to accomplish his task using multi-threading.",
+    "inputFormat": "The input consists of an integer n, representing the upper limit for both square and cube calculations.",
+    "outputFormat": "The output displays the square and cube threads alternatively in the following format: For square: \"Square: \" followed by the square value. For cube: \"Cube: \" followed by the cube value.",
+    "constraints": [
+      "The given test cases fall under the following constraints: 100"
+    ]
+  },
+  {
+    "id": "bank3-050",
+    "index": 50,
+    "title": "Day 12 COD - Challenge 2",
+    "session": "Day 12 COD",
+    "shots": "Screenshot",
+    "topic": "Multithreading & Concurrency",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Sarah is working on a pattern printing application that generates a sequence of stars (*) and dashes (-) using multithreading. The application uses two threads: \u2022 One thread prints the star ( * ) \u2022 Another thread prints the dash (-) Both threads must work together to print the pattern alternately, starting with a star. For a given integer n, the program should print: \u2022 Exactly n stars and n dashes \u2022 Printed alternately \u2022 In a single line \u2022 Without spaces or extra characters Note The solution must use Java multithreading concepts such as Thread, wait(), and notify() to ensure proper synchronization between threads.",
+    "inputFormat": "Skipped 4 + 30 The solution must use Java multithreading concepts such as Thread, wait(), and notify() to ensure proper synchronization between threads. Input Format The input consists of a single integer n, representing the number of stars and dashes to be printed.",
+    "outputFormat": "Print a single line containing exactly 2 x n characters where: A star ( * ) and a dash (-) are printed alternately The output starts with a star No spaces or extra characters are allowed Refer to the sample output for the formatting specifications.",
+    "constraints": []
+  },
+  {
+    "id": "bank3-051",
+    "index": 51,
+    "title": "Day 12 COD - Challenge 3",
+    "session": "Day 12 COD",
+    "shots": "Screenshot",
+    "topic": "Multithreading & Concurrency",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 You are building a classroom participation tracker that alternates printing vowels and consonants using multithreading. One thread prints vowels (A, E, l, O, U in order, repeating cyclically if n > 5). Another thread prints consonants (B, C, D, F, G, H, J, K, L, M, N, P, Q, in order). The threads alternate, starting with a vowel. For a given integer n, your program should print: Exactly n vowels and n consonants, Alternating in order: vowel -4 consonant -9 vowel -4 consonant . Each letter separated by a single space, with no trailing space. Note: The program must use Java multithreading concepts (Thread, wait(), notify()) for proper synchronization. Vowels repeat cyclically (A, E, l, O, U, A, E, ...) if n > 5. Consonants are used in order without repetition.",
+    "inputFormat": "Skipped + 30 Note: The program must use Java multithreading concepts (Thread, wait(), notify()) for proper synchronization. Vowels repeat cyclically (A, E, l, O, U, A, E, ...) if n > 5. Consonants are used in order without repetition. Input Format A single integer n representing the number of vowels (and consonants) to print.",
+    "outputFormat": "2 x n letters printed alternately starting with a vowel, separated by space, no trailing space. Refer to the sample output for the formatting specifications.",
+    "constraints": []
+  },
+  {
+    "id": "bank3-052",
+    "index": 52,
+    "title": "Skipped + 30 temperatures in a building",
+    "session": "Day 12 COD",
+    "shots": "Screenshot",
+    "topic": "Multithreading & Concurrency",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 temperatures in a building. Each room has a temperature sensor, and the program needs to simulate reading temperature values concurrently using threads. For a given building: \u2022 Each thread represents a room's sensor. \u2022 The thread prints temperature readings from the lower range L to the upper range U. \u2022 Each value should be displayed with a 5-millisecond delay. Your task is to implement a program that creates a thread for a single room, reads the temperature values, and prints them in the specified format.",
+    "inputFormat": "First line: A string representing the building name. Second line: An integer L, the lower temperature range. Third line: An integer U, the upper temperature range.",
+    "outputFormat": "",
+    "constraints": [
+      "The given test cases fall under the following constraints:"
+    ]
+  },
+  {
+    "id": "bank3-053",
+    "index": 53,
+    "title": "Day 12 PAH - Challenge 1",
+    "session": "Day 12 PAH",
+    "shots": "Screenshot",
+    "topic": "Multithreading & Concurrency",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Write a Java program to implement a multi-threaded application that has three threads. The first thread generates a random integer every 1 second. If the value is even, the second thread computes the square of the number and prints it. If the value is odd, the third thread prints the value of the cube of the number. The program should have three classes: NumberGenerator - This class generates a random integer every second and adds it to a queue. If the number is even, it adds it to the queue for the SquareCalculator thread to process. If the number is odd, it adds it to the queue for the CubeCalculator thread to process. SquareCalculator - This class takes the even numbers from the queue and computes their square. It then prints the result. CubeCalculator - This class takes the odd numbers from the queue and computes their cube. It then prints the result. The program should use synchronization to ensure that the threads access the queue safely. Note: Testcases will fail since it is random number generation.",
+    "inputFormat": "No console input.",
+    "outputFormat": "The output prints the random number and their corresponding square or cube.",
+    "constraints": []
+  },
+  {
+    "id": "bank3-054",
+    "index": 54,
+    "title": "Sharon's A Multi-Threaded Application",
+    "session": "Day 12 PAH",
+    "shots": "Screenshot",
+    "topic": "Multithreading & Concurrency",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped 4 + 30 Sharon is developing a multi-threaded application that simulates a word printing system. The application will have two threads, each responsible for printing words from a given sentence. However, the printing of words should be synchronized between the two threads to ensure orderly output. Sharon is unaware of the multi-threading concept. Assist her in achieving her task.",
+    "inputFormat": "The input consists of a single string.",
+    "outputFormat": "The output prints the words on the below format: Words are printed alternatively by two threads, preserving the original word order. Each word should be printed on a separate line, prefixed with the thread name (e.g., \"Thread 1: word\" or \"Thread 2: word\"). Refer to the sample output for formatting specifications.",
+    "constraints": [
+      "The given testcases fall under the following constraints: 2 Length of the String 200"
+    ]
+  },
+  {
+    "id": "bank3-055",
+    "index": 55,
+    "title": "Day 12 PAH - Challenge 3",
+    "session": "Day 12 PAH",
+    "shots": "Screenshot",
+    "topic": "Multithreading & Concurrency",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 You are tasked with implementing the BankAccount class which maintains the account balance and ensures safe deposit and withdrawal operations using synchronized methods. The account operations will be executed by multiple threads, where: \u2022 Thread 1 will deposit money into the account. \u2022 Thread 2 will withdraw money from the account. \u2022 Thread 3 will withdraw money from the account again. \u2022 Thread 4 will make another deposit into the account. Each operation must print the transaction details and the updated account balance. Finally, after all operations are performed, the program should print the final account balance.",
+    "inputFormat": "The input contains 5 space-separated integers representing the initial balance in the account, deposit amount for Thread 1, withdrawal amount for Thread 2,withdrawal amount for Thread 3,and deposit amount for Thread 4.",
+    "outputFormat": "The output prints, For deposit: Deposited: <amount>, New Balance: <updated_ amount and updated_balance rounded to 1 decimal place.",
+    "constraints": [
+      "The given test cases fall under the following constraints: 10 amount 104"
+    ]
+  },
+  {
+    "id": "bank3-056",
+    "index": 56,
+    "title": "Day 12 PAH - Challenge 4",
+    "session": "Day 12 PAH",
+    "shots": "Screenshot",
+    "topic": "Multithreading & Concurrency",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Skipped + 30 In a bustling distribution center, two processors handle order fulfillment. The tasks are evenly distributed, and the processors work alternately to complete the job. Due to the high volume of orders, the center employs a synchronized multi-threading system to ensure accurate order processing without duplication or conflicts. Your task is to design a Java program for this scenario. The system should: \u2022 Accept the total number of orders (limit) as input. \u2022 Use two threads, each representing a processor (Processor-I and Processor-2), to alternately process orders. \u2022 Ensure the processing sequence is maintained, and all orders are accounted for, even when the number of orders is odd. \u2022 At the end of the program, display the total number of processed orders to confirm that no order has been missed. Ensure thread synchronization to handle shared resources correctly.",
+    "inputFormat": "The input consists of a single integer, limit, representing the total number of orders.",
+    "outputFormat": "",
+    "constraints": [
+      "The given test cases fall under the following constraints:"
+    ]
+  }
+]
