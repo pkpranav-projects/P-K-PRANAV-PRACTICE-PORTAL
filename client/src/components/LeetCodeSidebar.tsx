@@ -23,7 +23,7 @@ interface LeetCodeSidebarProps {
   onToggleFullContract?: () => void;
   activeTab: LeetCodeTab;
   setActiveTab: (tab: LeetCodeTab) => void;
-  onSelectBank?: (bank: 'bank1' | 'bank2' | 'bank3' | 'dbms' | 'all') => void;
+  onSelectBank?: (bank: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all') => void;
   totalQuestions: number;
   totalSolved: number;
   bank1Solved: number;
@@ -32,6 +32,8 @@ interface LeetCodeSidebarProps {
   bank2Total: number;
   bank3Solved?: number;
   bank3Total?: number;
+  bank4Solved?: number;
+  bank4Total?: number;
   dbmsSolved?: number;
   dbmsTotal?: number;
 }
@@ -52,6 +54,8 @@ export const LeetCodeSidebar: React.FC<LeetCodeSidebarProps> = ({
   bank2Total,
   bank3Solved = 0,
   bank3Total = 56,
+  bank4Solved = 0,
+  bank4Total = 32,
   dbmsSolved = 0,
   dbmsTotal = 12
 }) => {
@@ -259,7 +263,29 @@ export const LeetCodeSidebar: React.FC<LeetCodeSidebarProps> = ({
           )}
         </button>
 
-        {/* Bank 4 (DBMS & SQL Lab) */}
+        {/* Bank 4 (Video Projects) */}
+        <button
+          onClick={() => {
+            if (onSelectBank) onSelectBank('bank4');
+            setActiveTab('problems');
+          }}
+          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors pl-4 ${
+            !isCollapsed ? '' : 'justify-center pl-3'
+          } text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-[#8c8c8c] dark:hover:text-white dark:hover:bg-[#222222]`}
+          title="Question Bank 4: Video Projects (OOP to File Handling & Projects)"
+        >
+          <div className="flex items-center gap-2.5 truncate">
+            <span className="w-2 h-2 rounded-full bg-rose-500 dark:bg-rose-400 flex-shrink-0" />
+            {!isCollapsed && <span className="truncate">Bank 4 (Projects)</span>}
+          </div>
+          {!isCollapsed && (
+            <span className="font-mono text-[11px] text-rose-600 dark:text-rose-400 font-medium">
+              {bank4Solved}/{bank4Total}
+            </span>
+          )}
+        </button>
+
+        {/* DBMS & SQL Lab */}
         <button
           onClick={() => {
             if (onSelectBank) onSelectBank('dbms');
@@ -268,11 +294,11 @@ export const LeetCodeSidebar: React.FC<LeetCodeSidebarProps> = ({
           className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors pl-4 ${
             !isCollapsed ? '' : 'justify-center pl-3'
           } text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-[#8c8c8c] dark:hover:text-white dark:hover:bg-[#222222]`}
-          title="Question Bank 4: DBMS & SQL Lab"
+          title="DBMS & SQL Lab (MySQL Triggers & Stored Procedures)"
         >
           <div className="flex items-center gap-2.5 truncate">
             <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 flex-shrink-0" />
-            {!isCollapsed && <span className="truncate">Bank 4 (DBMS)</span>}
+            {!isCollapsed && <span className="truncate">DBMS & SQL Lab</span>}
           </div>
           {!isCollapsed && (
             <span className="font-mono text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">

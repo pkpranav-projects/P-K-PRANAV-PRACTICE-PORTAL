@@ -24,7 +24,7 @@ export const App: React.FC = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSidebarFullyContracted, setIsSidebarFullyContracted] = useState(false);
   const [isAbsoluteFullscreen, setIsAbsoluteFullscreen] = useState(false);
-  const [selectedBankFilter, setSelectedBankFilter] = useState<'bank1' | 'bank2' | 'bank3' | 'dbms' | 'all'>('all');
+  const [selectedBankFilter, setSelectedBankFilter] = useState<'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all'>('all');
   const [questionViewMode, setQuestionViewMode] = useState<'table' | 'cards' | 'topic'>(() => {
     try {
       return (localStorage.getItem('arena_question_view_mode') as any) || 'table';
@@ -402,6 +402,8 @@ export const App: React.FC = () => {
             bank2Total={stats?.bank2Total || 15}
             bank3Solved={stats?.bank3Solved || 0}
             bank3Total={stats?.bank3Total || 56}
+            bank4Solved={stats?.bank4Solved || 0}
+            bank4Total={stats?.bank4Total || 32}
             dbmsSolved={stats?.dbmsSolved || 0}
             dbmsTotal={stats?.dbmsTotal || 12}
           />

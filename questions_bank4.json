@@ -1,0 +1,1263 @@
+[
+  {
+    "id": "bank4-001",
+    "bank": "bank4",
+    "title": "Pizza Order Builder with Overloaded Constructors",
+    "topic": "Object-Oriented Programming",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Bro Code's Java Course teaches that overloaded constructors allow a class to have multiple ways of being instantiated depending on how many arguments are provided.\n\nIn this challenge, design a Pizza class that features overloaded constructors to handle various custom orders:\n- Pizza(String bread)\n- Pizza(String bread, String sauce)\n- Pizza(String bread, String sauce, String cheese)\n- Pizza(String bread, String sauce, String cheese, String topping)\n\nThe program reads an integer N (1 to 4) representing the number of ingredients specified by the customer, followed by the ingredient names. Instantiate the Pizza using the appropriate constructor and print the complete ingredient list.",
+    "inputFormat": "The first line contains an integer N (1 <= N <= 4) representing the number of ingredients provided.\nThe second line contains N space-separated strings representing the ingredients in order: bread, sauce, cheese, topping.",
+    "outputFormat": "Print the pizza specification in the format:\n\"Bread: <bread> | Sauce: <sauce> | Cheese: <cheese> | Topping: <topping>\"\nIf an ingredient was not provided in the constructor, display \"None\" for that field.",
+    "constraints": [
+      "1 <= N <= 4",
+      "Ingredient names contain only letters with no spaces"
+    ],
+    "sampleInput": "4\nThickCrust Tomato Mozzarella Pepperoni",
+    "sampleOutput": "Bread: ThickCrust | Sauce: Tomato | Cheese: Mozzarella | Topping: Pepperoni",
+    "testCases": [
+      {
+        "input": "4\nThickCrust Tomato Mozzarella Pepperoni",
+        "expectedOutput": "Bread: ThickCrust | Sauce: Tomato | Cheese: Mozzarella | Topping: Pepperoni",
+        "isHidden": false
+      },
+      {
+        "input": "2\nThinCrust Barbecue",
+        "expectedOutput": "Bread: ThinCrust | Sauce: Barbecue | Cheese: None | Topping: None",
+        "isHidden": false
+      },
+      {
+        "input": "1\nFlatBread",
+        "expectedOutput": "Bread: FlatBread | Sauce: None | Cheese: None | Topping: None",
+        "isHidden": true
+      },
+      {
+        "input": "3\nStuffedCrust Pesto Cheddar",
+        "expectedOutput": "Bread: StuffedCrust | Sauce: Pesto | Cheese: Cheddar | Topping: None",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (03:16:39 - Overloaded Constructors)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass Pizza {\n    String bread, sauce, cheese, topping;\n\n    Pizza(String bread) { this(bread, \"None\", \"None\", \"None\"); }\n    Pizza(String bread, String sauce) { this(bread, sauce, \"None\", \"None\"); }\n    Pizza(String bread, String sauce, String cheese) { this(bread, sauce, cheese, \"None\"); }\n    Pizza(String bread, String sauce, String cheese, String topping) {\n        this.bread = bread;\n        this.sauce = sauce;\n        this.cheese = cheese;\n        this.topping = topping;\n    }\n\n    @Override\n    public String toString() {\n        return \"Bread: \" + bread + \" | Sauce: \" + sauce + \" | Cheese: \" + cheese + \" | Topping: \" + topping;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        Pizza p;\n        if (n == 1) p = new Pizza(sc.next());\n        else if (n == 2) p = new Pizza(sc.next(), sc.next());\n        else if (n == 3) p = new Pizza(sc.next(), sc.next(), sc.next());\n        else p = new Pizza(sc.next(), sc.next(), sc.next(), sc.next());\n        System.out.println(p);\n        sc.close();\n    }\n}",
+    "explanation": "Overloaded constructors demonstrate constructor delegation and handling variable initialization configurations cleanly.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-002",
+    "bank": "bank4",
+    "title": "Car Dealership Inventory with Object Arrays",
+    "topic": "Object-Oriented Programming",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "In Java, an array can store objects just like primitive data types. Storing objects in an array allows developers to manage collections of complex entities efficiently.\n\nCreate a Car class with attributes: make (String), model (String), and year (int). Read N cars into an array of Car objects (`Car[] garage`), then iterate through the array to display each car's information and identify the newest car in the dealership.",
+    "inputFormat": "The first line contains an integer N representing the number of cars.\nThe next N lines each contain make, model, and year separated by spaces.",
+    "outputFormat": "Print each car on a separate line in the format: \"<year> <make> <model>\".\nOn the final line, print: \"Newest Car: <year> <make> <model>\".",
+    "constraints": [
+      "1 <= N <= 20",
+      "1900 <= year <= 2026",
+      "Make and model are single words"
+    ],
+    "sampleInput": "3\nTesla Model3 2023\nFord Mustang 2021\nToyota Camry 2024",
+    "sampleOutput": "2023 Tesla Model3\n2021 Ford Mustang\n2024 Toyota Camry\nNewest Car: 2024 Toyota Camry",
+    "testCases": [
+      {
+        "input": "3\nTesla Model3 2023\nFord Mustang 2021\nToyota Camry 2024",
+        "expectedOutput": "2023 Tesla Model3\n2021 Ford Mustang\n2024 Toyota Camry\nNewest Car: 2024 Toyota Camry",
+        "isHidden": false
+      },
+      {
+        "input": "2\nBMW M3 2022\nAudi RS6 2022",
+        "expectedOutput": "2022 BMW M3\n2022 Audi RS6\nNewest Car: 2022 BMW M3",
+        "isHidden": false
+      },
+      {
+        "input": "1\nHonda Civic 2019",
+        "expectedOutput": "2019 Honda Civic\nNewest Car: 2019 Honda Civic",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (03:30:08 - Array of Objects)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass Car {\n    String make, model;\n    int year;\n    Car(String make, String model, int year) {\n        this.make = make;\n        this.model = model;\n        this.year = year;\n    }\n    String getDetails() { return year + \" \" + make + \" \" + model; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        Car[] inventory = new Car[n];\n        Car newest = null;\n\n        for (int i = 0; i < n; i++) {\n            inventory[i] = new Car(sc.next(), sc.next(), sc.nextInt());\n            if (newest == null || inventory[i].year > newest.year) {\n                newest = inventory[i];\n            }\n        }\n\n        for (Car c : inventory) System.out.println(c.getDetails());\n        if (newest != null) System.out.println(\"Newest Car: \" + newest.getDetails());\n        sc.close();\n    }\n}",
+    "explanation": "Demonstrates instantiating an array of custom class instances and iterating over them.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-003",
+    "bank": "bank4",
+    "title": "Garage Parking Manager with Object Passing",
+    "topic": "Object-Oriented Programming",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Object passing is the practice of passing an object of one class as an argument to a method of another class.\n\nCreate a Vehicle class with a name (String) attribute, and a Garage class with a fixed capacity C.\nThe Garage has a method `boolean park(Vehicle vehicle)`:\n- If current parked vehicles < capacity C, the vehicle is accepted and the method prints: \"Parked: <name> in Bay <bayIndex>\" (1-based indexing).\n- If the garage is full, it prints: \"Garage Full: Cannot park <name>\".",
+    "inputFormat": "The first line contains an integer C representing garage capacity.\nThe second line contains an integer N representing the number of arriving vehicles.\nThe third line contains N space-separated vehicle names.",
+    "outputFormat": "Print the parking status for each arriving vehicle in order.\nOn the final line, print: \"Total Parked: <count>/<capacity>\".",
+    "constraints": [
+      "1 <= C <= 20",
+      "1 <= N <= 30",
+      "Vehicle names are alphanumeric"
+    ],
+    "sampleInput": "2\n3\nBMW Ferrari Tesla",
+    "sampleOutput": "Parked: BMW in Bay 1\nParked: Ferrari in Bay 2\nGarage Full: Cannot park Tesla\nTotal Parked: 2/2",
+    "testCases": [
+      {
+        "input": "2\n3\nBMW Ferrari Tesla",
+        "expectedOutput": "Parked: BMW in Bay 1\nParked: Ferrari in Bay 2\nGarage Full: Cannot park Tesla\nTotal Parked: 2/2",
+        "isHidden": false
+      },
+      {
+        "input": "3\n2\nToyota Honda",
+        "expectedOutput": "Parked: Toyota in Bay 1\nParked: Honda in Bay 2\nTotal Parked: 2/3",
+        "isHidden": false
+      },
+      {
+        "input": "1\n2\nPorsche Corvette",
+        "expectedOutput": "Parked: Porsche in Bay 1\nGarage Full: Cannot park Corvette\nTotal Parked: 1/1",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (03:35:48 - Object Passing)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass Vehicle {\n    String name;\n    Vehicle(String name) { this.name = name; }\n}\n\nclass Garage {\n    int capacity, count = 0;\n    Garage(int capacity) { this.capacity = capacity; }\n    void park(Vehicle v) {\n        if (count < capacity) {\n            count++;\n            System.out.println(\"Parked: \" + v.name + \" in Bay \" + count);\n        } else {\n            System.out.println(\"Garage Full: Cannot park \" + v.name);\n        }\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int capacity = sc.nextInt();\n        int n = sc.nextInt();\n        Garage garage = new Garage(capacity);\n        for (int i = 0; i < n; i++) garage.park(new Vehicle(sc.next()));\n        System.out.println(\"Total Parked: \" + garage.count + \"/\" + garage.capacity);\n        sc.close();\n    }\n}",
+    "explanation": "Illustrates inter-object communication where one class manages and interacts with instances of another.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-004",
+    "bank": "bank4",
+    "title": "Bank Account with Variable Scope & Static Interest Rate",
+    "topic": "Object-Oriented Programming",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Bro Code emphasizes the distinction between local variables, instance variables, and static variables. A static variable belongs to the class itself, and all instances share that single copy.\n\nCreate a BankAccount class where:\n- `annualInterestRate` is a `static double` shared across all accounts.\n- `accountHolder` (String) and `balance` (double) are instance variables.\n- A static method `setInterestRate(double rate)` modifies the shared rate.\n- An instance method `applyAnnualInterest()` adds `(balance * annualInterestRate / 100.0)` to the account balance.\n\nGiven an initial interest rate, N accounts, and an updated interest rate, apply the updated rate to all accounts and print the updated balances.",
+    "inputFormat": "The first line contains double rate representing the new static interest rate percentage.\nThe second line contains an integer N representing the number of accounts.\nThe next N lines contain accountHolder (string) and balance (double).",
+    "outputFormat": "Print each account's updated balance in the format: \"<holder>: <roundedBalance>\".\nRound balance to 2 decimal places.",
+    "constraints": [
+      "0.0 <= rate <= 25.0",
+      "1 <= N <= 20",
+      "0.0 <= balance <= 1000000.0"
+    ],
+    "sampleInput": "5.0\n2\nAlice 1000.0\nBob 2500.0",
+    "sampleOutput": "Alice: 1050.00\nBob: 2625.00",
+    "testCases": [
+      {
+        "input": "5.0\n2\nAlice 1000.0\nBob 2500.0",
+        "expectedOutput": "Alice: 1050.00\nBob: 2625.00",
+        "isHidden": false
+      },
+      {
+        "input": "10.0\n1\nCharlie 500.0",
+        "expectedOutput": "Charlie: 550.00",
+        "isHidden": false
+      },
+      {
+        "input": "3.5\n3\nJohn 10000.0\nDave 2000.0\nEmma 450.0",
+        "expectedOutput": "John: 10350.00\nDave: 2070.00\nEmma: 465.75",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (03:40:27 - Static Keyword)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.Locale;\n\nclass BankAccount {\n    static double annualInterestRate;\n    String holder;\n    double balance;\n\n    BankAccount(String holder, double balance) {\n        this.holder = holder;\n        this.balance = balance;\n    }\n\n    static void setInterestRate(double rate) { annualInterestRate = rate; }\n    void applyInterest() { balance += (balance * annualInterestRate / 100.0); }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Locale.setDefault(Locale.US);\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextDouble()) return;\n        BankAccount.setInterestRate(sc.nextDouble());\n\n        int n = sc.nextInt();\n        BankAccount[] accounts = new BankAccount[n];\n        for (int i = 0; i < n; i++) {\n            accounts[i] = new BankAccount(sc.next(), sc.nextDouble());\n            accounts[i].applyInterest();\n        }\n\n        for (BankAccount a : accounts) {\n            System.out.printf(Locale.US, \"%s: %.2f%n\", a.holder, a.balance);\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Illustrates how static class members apply globally across all created instances.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-005",
+    "bank": "bank4",
+    "title": "Hero RPG Character Custom toString Representation",
+    "topic": "Object-Oriented Programming",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "In Java, every class inherits from the Object class. Overriding the `toString()` method allows objects to return a descriptive textual representation rather than their memory hashcode.\n\nImplement a Hero class with attributes: name (String), heroClass (String), level (int), and hp (int).\nOverride `toString()` to return:\n\"[Hero: <name> | Class: <heroClass> | Level: <level> | HP: <hp>]\"\n\nRead N heroes and print them directly using `System.out.println(hero)`.",
+    "inputFormat": "The first line contains an integer N representing the number of heroes.\nThe next N lines each contain name, heroClass, level, and hp separated by spaces.",
+    "outputFormat": "Print the custom string representation for each hero on a separate line.",
+    "constraints": [
+      "1 <= N <= 20",
+      "1 <= level <= 100",
+      "1 <= hp <= 10000"
+    ],
+    "sampleInput": "2\nArthur Warrior 15 350\nMerlin Mage 20 210",
+    "sampleOutput": "[Hero: Arthur | Class: Warrior | Level: 15 | HP: 350]\n[Hero: Merlin | Class: Mage | Level: 20 | HP: 210]",
+    "testCases": [
+      {
+        "input": "2\nArthur Warrior 15 350\nMerlin Mage 20 210",
+        "expectedOutput": "[Hero: Arthur | Class: Warrior | Level: 15 | HP: 350]\n[Hero: Merlin | Class: Mage | Level: 20 | HP: 210]",
+        "isHidden": false
+      },
+      {
+        "input": "1\nLegolas Archer 25 280",
+        "expectedOutput": "[Hero: Legolas | Class: Archer | Level: 25 | HP: 280]",
+        "isHidden": false
+      },
+      {
+        "input": "3\nGimli Berserker 18 420\nGandalf Wizard 50 600\nFrodo Rogue 5 80",
+        "expectedOutput": "[Hero: Gimli | Class: Berserker | Level: 18 | HP: 420]\n[Hero: Gandalf | Class: Wizard | Level: 50 | HP: 600]\n[Hero: Frodo | Class: Rogue | Level: 5 | HP: 80]",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (03:24:04 - toString Method)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass Hero {\n    String name, heroClass;\n    int level, hp;\n\n    Hero(String name, String heroClass, int level, int hp) {\n        this.name = name;\n        this.heroClass = heroClass;\n        this.level = level;\n        this.hp = hp;\n    }\n\n    @Override\n    public String toString() {\n        return \"[Hero: \" + name + \" | Class: \" + heroClass + \" | Level: \" + level + \" | HP: \" + hp + \"]\";\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            System.out.println(new Hero(sc.next(), sc.next(), sc.nextInt(), sc.nextInt()));\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Overriding toString allows object instances to serialize into readable text formatting.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-006",
+    "bank": "bank4",
+    "title": "Vehicle Fleet Hierarchy with super Constructor Chaining",
+    "topic": "Inheritance & Polymorphism",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Inheritance allows one class to acquire the attributes and methods of another. The `super` keyword refers to the superclass (parent) object, commonly used in constructor chaining to pass arguments to the parent constructor.\n\nDesign a class hierarchy:\n- Base class `Vehicle` with attributes: brand (String) and topSpeed (int). Constructor: `Vehicle(String brand, int topSpeed)`.\n- Derived class `Car` adds doors (int). Constructor uses `super(brand, topSpeed)`.\n- Derived class `Bicycle` adds hasBell (boolean). Constructor uses `super(brand, topSpeed)`.\n\nRead N vehicle entries and output their complete specifications.",
+    "inputFormat": "The first line contains an integer N representing the number of vehicles.\nThe next N lines each start with vehicle type ('CAR' or 'BIKE') followed by:\n- For CAR: brand topSpeed doors\n- For BIKE: brand topSpeed hasBell",
+    "outputFormat": "Print each vehicle:\n- For CAR: \"Car -> Brand: <brand>, Speed: <topSpeed> km/h, Doors: <doors>\"\n- For BIKE: \"Bike -> Brand: <brand>, Speed: <topSpeed> km/h, Bell: <hasBell>\"",
+    "constraints": [
+      "1 <= N <= 20",
+      "1 <= topSpeed <= 400",
+      "Doors between 2 and 6"
+    ],
+    "sampleInput": "2\nCAR Ferrari 340 2\nBIKE Trek 45 true",
+    "sampleOutput": "Car -> Brand: Ferrari, Speed: 340 km/h, Doors: 2\nBike -> Brand: Trek, Speed: 45 km/h, Bell: true",
+    "testCases": [
+      {
+        "input": "2\nCAR Ferrari 340 2\nBIKE Trek 45 true",
+        "expectedOutput": "Car -> Brand: Ferrari, Speed: 340 km/h, Doors: 2\nBike -> Brand: Trek, Speed: 45 km/h, Bell: true",
+        "isHidden": false
+      },
+      {
+        "input": "1\nCAR Honda 200 4",
+        "expectedOutput": "Car -> Brand: Honda, Speed: 200 km/h, Doors: 4",
+        "isHidden": false
+      },
+      {
+        "input": "3\nBIKE Giant 35 false\nCAR Porsche 310 2\nBIKE Scott 40 true",
+        "expectedOutput": "Bike -> Brand: Giant, Speed: 35 km/h, Bell: false\nCar -> Brand: Porsche, Speed: 310 km/h, Doors: 2\nBike -> Brand: Scott, Speed: 40 km/h, Bell: true",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (03:57:33 - Super Keyword)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass Vehicle {\n    String brand;\n    int topSpeed;\n    Vehicle(String brand, int topSpeed) { this.brand = brand; this.topSpeed = topSpeed; }\n}\n\nclass Car extends Vehicle {\n    int doors;\n    Car(String brand, int topSpeed, int doors) { super(brand, topSpeed); this.doors = doors; }\n    void display() { System.out.println(\"Car -> Brand: \" + brand + \", Speed: \" + topSpeed + \" km/h, Doors: \" + doors); }\n}\n\nclass Bicycle extends Vehicle {\n    boolean hasBell;\n    Bicycle(String brand, int topSpeed, boolean hasBell) { super(brand, topSpeed); this.hasBell = hasBell; }\n    void display() { System.out.println(\"Bike -> Brand: \" + brand + \", Speed: \" + topSpeed + \" km/h, Bell: \" + hasBell); }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            String type = sc.next();\n            if (type.equalsIgnoreCase(\"CAR\")) new Car(sc.next(), sc.nextInt(), sc.nextInt()).display();\n            else new Bicycle(sc.next(), sc.nextInt(), sc.nextBoolean()).display();\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Constructor chaining with super ensures base attributes are initialized before child extensions.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-007",
+    "bank": "bank4",
+    "title": "Animal Kingdom Sound Dispatcher with Method Overriding",
+    "topic": "Inheritance & Polymorphism",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Method overriding allows a subclass to provide a specific implementation of a method that is already defined in its superclass.\n\nCreate a base class `Animal` with method `speak()` that prints \"The animal makes a sound\".\nCreate subclasses:\n- `Dog`: overrides `speak()` to print \"Dog goes *woof*\"\n- `Cat`: overrides `speak()` to print \"Cat goes *meow*\"\n- `Cow`: overrides `speak()` to print \"Cow goes *moo*\"\n\nRead N animal type strings and invoke `speak()` dynamically on each.",
+    "inputFormat": "The first line contains an integer N representing the number of animals.\nThe second line contains N space-separated animal names ('dog', 'cat', or 'cow').",
+    "outputFormat": "Print the sound produced by each animal on a new line.",
+    "constraints": [
+      "1 <= N <= 20",
+      "Input animal names are case-insensitive"
+    ],
+    "sampleInput": "3\ndog cat cow",
+    "sampleOutput": "Dog goes *woof*\nCat goes *meow*\nCow goes *moo*",
+    "testCases": [
+      {
+        "input": "3\ndog cat cow",
+        "expectedOutput": "Dog goes *woof*\nCat goes *meow*\nCow goes *moo*",
+        "isHidden": false
+      },
+      {
+        "input": "2\ncat dog",
+        "expectedOutput": "Cat goes *meow*\nDog goes *woof*",
+        "isHidden": false
+      },
+      {
+        "input": "4\ncow cow dog cat",
+        "expectedOutput": "Cow goes *moo*\nCow goes *moo*\nDog goes *woof*\nCat goes *meow*",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (03:53:45 - Method Overriding)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass Animal { void speak() { System.out.println(\"The animal makes a sound\"); } }\nclass Dog extends Animal { void speak() { System.out.println(\"Dog goes *woof*\"); } }\nclass Cat extends Animal { void speak() { System.out.println(\"Cat goes *meow*\"); } }\nclass Cow extends Animal { void speak() { System.out.println(\"Cow goes *moo*\"); } }\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            String name = sc.next().toLowerCase();\n            Animal a = name.equals(\"dog\") ? new Dog() : name.equals(\"cat\") ? new Cat() : name.equals(\"cow\") ? new Cow() : new Animal();\n            a.speak();\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Subclasses provide specialized behaviors while adhering to the common base class contract.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-008",
+    "bank": "bank4",
+    "title": "Abstract Payment Gateway System",
+    "topic": "Inheritance & Polymorphism",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Abstract classes cannot be instantiated and are used to define a blueprint for subclasses. An abstract method has a signature but no body; subclasses must implement all abstract methods.\n\nCreate an `abstract class Payment`:\n- Protected attribute: `double amount`\n- Constructor `Payment(double amount)`\n- Abstract method: `abstract void processPayment()`\n\nImplement concrete subclasses:\n- `CreditCardPayment`: deducts 2% transaction fee and prints:\n  \"Paid $<amount> via Credit Card (Fee: $<fee> | Net: $<net>)\"\n- `PayPalPayment`: deducts 1.5% fee and prints:\n  \"Paid $<amount> via PayPal (Fee: $<fee> | Net: $<net>)\"\n- `CryptoPayment`: 0% fee (0.00 fee) and prints:\n  \"Paid $<amount> via Crypto (Fee: $0.00 | Net: $<amount>)\"\n\nFormat currency to 2 decimal places.",
+    "inputFormat": "The first line contains an integer N representing the number of transactions.\nThe next N lines each contain the payment method ('CREDIT', 'PAYPAL', or 'CRYPTO') and amount (double).",
+    "outputFormat": "Print the payment receipt for each transaction on a new line.",
+    "constraints": [
+      "1 <= N <= 20",
+      "1.0 <= amount <= 10000.0"
+    ],
+    "sampleInput": "3\nCREDIT 100.0\nPAYPAL 200.0\nCRYPTO 50.0",
+    "sampleOutput": "Paid $100.00 via Credit Card (Fee: $2.00 | Net: $98.00)\nPaid $200.00 via PayPal (Fee: $3.00 | Net: $197.00)\nPaid $50.00 via Crypto (Fee: $0.00 | Net: $50.00)",
+    "testCases": [
+      {
+        "input": "3\nCREDIT 100.0\nPAYPAL 200.0\nCRYPTO 50.0",
+        "expectedOutput": "Paid $100.00 via Credit Card (Fee: $2.00 | Net: $98.00)\nPaid $200.00 via PayPal (Fee: $3.00 | Net: $197.00)\nPaid $50.00 via Crypto (Fee: $0.00 | Net: $50.00)",
+        "isHidden": false
+      },
+      {
+        "input": "1\nPAYPAL 500.0",
+        "expectedOutput": "Paid $500.00 via PayPal (Fee: $7.50 | Net: $492.50)",
+        "isHidden": false
+      },
+      {
+        "input": "2\nCRYPTO 1000.0\nCREDIT 250.0",
+        "expectedOutput": "Paid $1000.00 via Crypto (Fee: $0.00 | Net: $1000.00)\nPaid $250.00 via Credit Card (Fee: $5.00 | Net: $245.00)",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:05:06 - Abstraction)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.Locale;\n\nabstract class Payment {\n    double amount;\n    Payment(double amount) { this.amount = amount; }\n    abstract void processPayment();\n}\n\nclass CreditCardPayment extends Payment {\n    CreditCardPayment(double a) { super(a); }\n    void processPayment() {\n        double fee = amount * 0.02;\n        System.out.printf(Locale.US, \"Paid $%.2f via Credit Card (Fee: $%.2f | Net: $%.2f)%n\", amount, fee, amount - fee);\n    }\n}\n\nclass PayPalPayment extends Payment {\n    PayPalPayment(double a) { super(a); }\n    void processPayment() {\n        double fee = amount * 0.015;\n        System.out.printf(Locale.US, \"Paid $%.2f via PayPal (Fee: $%.2f | Net: $%.2f)%n\", amount, fee, amount - fee);\n    }\n}\n\nclass CryptoPayment extends Payment {\n    CryptoPayment(double a) { super(a); }\n    void processPayment() {\n        System.out.printf(Locale.US, \"Paid $%.2f via Crypto (Fee: $0.00 | Net: $%.2f)%n\", amount, amount);\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Locale.setDefault(Locale.US);\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            String type = sc.next().toUpperCase();\n            double amt = sc.nextDouble();\n            Payment p = type.equals(\"CREDIT\") ? new CreditCardPayment(amt) : type.equals(\"PAYPAL\") ? new PayPalPayment(amt) : new CryptoPayment(amt);\n            p.processPayment();\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Abstract classes enforce that all subclasses implement domain-specific calculation methods.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-009",
+    "bank": "bank4",
+    "title": "Secure User Profile with Strict Encapsulation",
+    "topic": "Object-Oriented Programming",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Encapsulation hides an object's internal state and requires all interaction to occur through public getter and setter methods. This allows developers to validate data before updating attributes.\n\nCreate a UserAccount class with private fields: username, password, email.\nProvide getters and setters with validation rules:\n- `setPassword(String p)`: must be >= 8 chars and contain >= 1 digit.\n- `setEmail(String e)`: must contain '@' and '.' after '@'.\n\nRead registration attempts and output whether each profile was successfully created or rejected.",
+    "inputFormat": "The first line contains an integer N representing registration attempts.\nThe next N lines each contain username, password, and email.",
+    "outputFormat": "For each user:\n- If password fails: \"Error: Weak password for <username>\"\n- If email fails: \"Error: Invalid email for <username>\"\n- If both pass: \"User <username> registered successfully\"",
+    "constraints": [
+      "1 <= N <= 20",
+      "Inputs are single words with no spaces"
+    ],
+    "sampleInput": "3\nAlice password123 alice@domain.com\nBob short bob@test.com\nCharlie pass1234 charlie_at_test.com",
+    "sampleOutput": "User Alice registered successfully\nError: Weak password for Bob\nError: Invalid email for Charlie",
+    "testCases": [
+      {
+        "input": "3\nAlice password123 alice@domain.com\nBob short bob@test.com\nCharlie pass1234 charlie_at_test.com",
+        "expectedOutput": "User Alice registered successfully\nError: Weak password for Bob\nError: Invalid email for Charlie",
+        "isHidden": false
+      },
+      {
+        "input": "1\nDave d1234567 dave@work.org",
+        "expectedOutput": "User Dave registered successfully",
+        "isHidden": false
+      },
+      {
+        "input": "2\nEve password12 eve@com\nFrank 12345678 frank@mail.edu",
+        "expectedOutput": "Error: Invalid email for Eve\nUser Frank registered successfully",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:19:39 - Encapsulation)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass UserAccount {\n    private String u, p, e;\n    UserAccount(String u) { this.u = u; }\n    boolean setPassword(String pass) {\n        if (pass.length() < 8) return false;\n        boolean hasDigit = false;\n        for (char c : pass.toCharArray()) if (Character.isDigit(c)) { hasDigit = true; break; }\n        if (hasDigit) { this.p = pass; return true; }\n        return false;\n    }\n    boolean setEmail(String mail) {\n        int at = mail.indexOf('@'), dot = mail.lastIndexOf('.');\n        if (at > 0 && dot > at + 1 && dot < mail.length() - 1) { this.e = mail; return true; }\n        return false;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            String u = sc.next(), p = sc.next(), e = sc.next();\n            UserAccount acc = new UserAccount(u);\n            if (!acc.setPassword(p)) System.out.println(\"Error: Weak password for \" + u);\n            else if (!acc.setEmail(e)) System.out.println(\"Error: Invalid email for \" + u);\n            else System.out.println(\"User \" + u + \" registered successfully\");\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Validating input parameters within encapsulation setters protects internal object consistency.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-010",
+    "bank": "bank4",
+    "title": "Smart Home Device Duplicator using Copy Constructors",
+    "topic": "Object-Oriented Programming",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "In Java, assigning one object variable to another (`b = a`) only copies the reference. To create a true independent clone, developers implement copy constructors.\n\nCreate a SmartDevice class with name, room, and brightness (0-100).\nProvide a copy constructor `SmartDevice(SmartDevice other)`.\nRead an original device configuration, clone it using the copy constructor, apply an updated brightness value ONLY to the copy, and print both objects to prove they maintain separate states.",
+    "inputFormat": "The first line contains name, room, and initial brightness of the original device.\nThe second line contains the updated brightness value for the copied device.",
+    "outputFormat": "Print:\n\"Original: <name> in <room> (Brightness: <originalBrightness>%)\"\n\"Copy: <name> in <room> (Brightness: <updatedBrightness>%)\"",
+    "constraints": [
+      "0 <= brightness <= 100",
+      "Device and room names have no spaces"
+    ],
+    "sampleInput": "LivingRoomLight LivingRoom 75\n30",
+    "sampleOutput": "Original: LivingRoomLight in LivingRoom (Brightness: 75%)\nCopy: LivingRoomLight in LivingRoom (Brightness: 30%)",
+    "testCases": [
+      {
+        "input": "LivingRoomLight LivingRoom 75\n30",
+        "expectedOutput": "Original: LivingRoomLight in LivingRoom (Brightness: 75%)\nCopy: LivingRoomLight in LivingRoom (Brightness: 30%)",
+        "isHidden": false
+      },
+      {
+        "input": "KitchenLamp Kitchen 100\n50",
+        "expectedOutput": "Original: KitchenLamp in Kitchen (Brightness: 100%)\nCopy: KitchenLamp in Kitchen (Brightness: 50%)",
+        "isHidden": false
+      },
+      {
+        "input": "DeskFan Office 40\n90",
+        "expectedOutput": "Original: DeskFan in Office (Brightness: 40%)\nCopy: DeskFan in Office (Brightness: 90%)",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:27:30 - Copy Objects)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass SmartDevice {\n    String name, room;\n    int brightness;\n    SmartDevice(String name, String room, int brightness) { this.name = name; this.room = room; this.brightness = brightness; }\n    SmartDevice(SmartDevice o) { this(o.name, o.room, o.brightness); }\n    String getStatus() { return name + \" in \" + room + \" (Brightness: \" + brightness + \"%)\"; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        SmartDevice orig = new SmartDevice(sc.next(), sc.next(), sc.nextInt());\n        SmartDevice clone = new SmartDevice(orig);\n        clone.brightness = sc.nextInt();\n        System.out.println(\"Original: \" + orig.getStatus());\n        System.out.println(\"Copy: \" + clone.getStatus());\n        sc.close();\n    }\n}",
+    "explanation": "Copy constructors produce deep independent duplicates, preventing accidental shared state side-effects.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-011",
+    "bank": "bank4",
+    "title": "Shape Area & Perimeter Calculator via Abstract Classes",
+    "topic": "Inheritance & Polymorphism",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Polymorphism allows objects of different classes to be treated as objects of a common superclass.\n\nCreate an abstract class `Shape` with abstract methods:\n- `abstract double area()`\n- `abstract double perimeter()`\n\nImplement subclasses:\n- `Circle`: radius r. Area = pi * r^2, Perimeter = 2 * pi * r (use Math.PI).\n- `Rectangle`: width w, height h. Area = w * h, Perimeter = 2 * (w + h).\n\nRead N shape commands and print each shape's computed area and perimeter formatted to 2 decimal places.",
+    "inputFormat": "The first line contains an integer N representing the number of shapes.\nThe next N lines each contain:\n- 'CIRCLE <radius>'\n- 'RECTANGLE <width> <height>'",
+    "outputFormat": "Print each shape formatted as:\n\"<Type> -> Area: <area>, Perimeter: <perimeter>\" (formatted to 2 decimal places).",
+    "constraints": [
+      "1 <= N <= 20",
+      "1.0 <= radius, width, height <= 1000.0"
+    ],
+    "sampleInput": "2\nCIRCLE 5.0\nRECTANGLE 4.0 6.0",
+    "sampleOutput": "Circle -> Area: 78.54, Perimeter: 31.42\nRectangle -> Area: 24.00, Perimeter: 20.00",
+    "testCases": [
+      {
+        "input": "2\nCIRCLE 5.0\nRECTANGLE 4.0 6.0",
+        "expectedOutput": "Circle -> Area: 78.54, Perimeter: 31.42\nRectangle -> Area: 24.00, Perimeter: 20.00",
+        "isHidden": false
+      },
+      {
+        "input": "1\nCIRCLE 10.0",
+        "expectedOutput": "Circle -> Area: 314.16, Perimeter: 62.83",
+        "isHidden": false
+      },
+      {
+        "input": "2\nRECTANGLE 2.5 8.0\nCIRCLE 1.0",
+        "expectedOutput": "Rectangle -> Area: 20.00, Perimeter: 21.00\nCircle -> Area: 3.14, Perimeter: 6.28",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:41:19 - Polymorphism)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.Locale;\n\nabstract class Shape {\n    abstract double area();\n    abstract double perimeter();\n}\n\nclass Circle extends Shape {\n    double r;\n    Circle(double r) { this.r = r; }\n    double area() { return Math.PI * r * r; }\n    double perimeter() { return 2 * Math.PI * r; }\n}\n\nclass Rectangle extends Shape {\n    double w, h;\n    Rectangle(double w, double h) { this.w = w; this.h = h; }\n    double area() { return w * h; }\n    double perimeter() { return 2 * (w + h); }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Locale.setDefault(Locale.US);\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            String type = sc.next().toUpperCase();\n            if (type.equals(\"CIRCLE\")) {\n                Circle c = new Circle(sc.nextDouble());\n                System.out.printf(Locale.US, \"Circle -> Area: %.2f, Perimeter: %.2f%n\", c.area(), c.perimeter());\n            } else {\n                Rectangle r = new Rectangle(sc.nextDouble(), sc.nextDouble());\n                System.out.printf(Locale.US, \"Rectangle -> Area: %.2f, Perimeter: %.2f%n\", r.area(), r.perimeter());\n            }\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Demonstrates abstract base class polymorphism where distinct shapes compute geometrical metrics uniformly.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-012",
+    "bank": "bank4",
+    "title": "Multi-Vehicle Dynamic Polymorphism Fleet Simulator",
+    "topic": "Inheritance & Polymorphism",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Dynamic polymorphism (runtime polymorphism) occurs when the exact method implementation to execute is resolved during program execution based on user selection.\n\nCreate a base class `Vehicle` with method `go()` that prints \"The vehicle moves\".\nCreate subclasses:\n- `Car`: `go()` prints \"The car drives forward on the highway\"\n- `Boat`: `go()` prints \"The boat sails across the water\"\n- `Airplane`: `go()` prints \"The airplane flies through the clouds\"\n\nThe user inputs a numeric choice (1 for Car, 2 for Boat, 3 for Airplane). Instantiate the appropriate subclass into a single `Vehicle` reference variable and call `go()`.",
+    "inputFormat": "The first line contains an integer N representing the number of vehicle choices.\nThe second line contains N space-separated integers (1, 2, or 3).",
+    "outputFormat": "Print the corresponding movement message for each vehicle choice.",
+    "constraints": [
+      "1 <= N <= 20",
+      "Choice is 1, 2, or 3"
+    ],
+    "sampleInput": "3\n1 2 3",
+    "sampleOutput": "The car drives forward on the highway\nThe boat sails across the water\nThe airplane flies through the clouds",
+    "testCases": [
+      {
+        "input": "3\n1 2 3",
+        "expectedOutput": "The car drives forward on the highway\nThe boat sails across the water\nThe airplane flies through the clouds",
+        "isHidden": false
+      },
+      {
+        "input": "2\n3 1",
+        "expectedOutput": "The airplane flies through the clouds\nThe car drives forward on the highway",
+        "isHidden": false
+      },
+      {
+        "input": "4\n2 2 1 3",
+        "expectedOutput": "The boat sails across the water\nThe boat sails across the water\nThe car drives forward on the highway\nThe airplane flies through the clouds",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:46:55 - Dynamic Polymorphism)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass Vehicle {\n    void go() {\n        System.out.println(\"The vehicle moves\");\n    }\n}\n\nclass Car extends Vehicle {\n    @Override\n    void go() {\n        System.out.println(\"The car drives forward on the highway\");\n    }\n}\n\nclass Boat extends Vehicle {\n    @Override\n    void go() {\n        System.out.println(\"The boat sails across the water\");\n    }\n}\n\nclass Airplane extends Vehicle {\n    @Override\n    void go() {\n        System.out.println(\"The airplane flies through the clouds\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            int choice = sc.nextInt();\n            Vehicle v;\n            if (choice == 1) v = new Car();\n            else if (choice == 2) v = new Boat();\n            else v = new Airplane();\n            v.go();\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Runtime dispatch assigns polymorphic subclasses to parent Vehicle reference variables dynamically.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-013",
+    "bank": "bank4",
+    "title": "Predator and Prey Multi-Interface Simulation",
+    "topic": "Interfaces & Generics",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "An interface in Java is a template of methods. A class can implement multiple interfaces, allowing developers to model multifaceted behaviors.\n\nDefine two interfaces:\n- `Prey`: method `void flee()`\n- `Predator`: method `void hunt()`\n\nImplement the following creatures:\n- `Rabbit`: implements `Prey` -> `flee()` prints \"The rabbit is running away!\"\n- `Hawk`: implements `Predator` -> `hunt()` prints \"The hawk is hunting for food!\"\n- `Fish`: implements BOTH `Prey` AND `Predator` ->\n  - `flee()` prints \"The fish is fleeing from a larger fish!\"\n  - `hunt()` prints \"The fish is hunting smaller fish!\"\n\nRead N creature action queries formatted as '<Creature> <Action>' where Action is 'FLEE' or 'HUNT'. Output the corresponding action or 'Action Not Supported' if the creature does not implement that interface.",
+    "inputFormat": "The first line contains an integer N representing the number of queries.\nThe next N lines each contain creatureName ('Rabbit', 'Hawk', or 'Fish') and action ('FLEE' or 'HUNT').",
+    "outputFormat": "Print the triggered action string for each query.",
+    "constraints": [
+      "1 <= N <= 20",
+      "Creature names are case-insensitive"
+    ],
+    "sampleInput": "4\nRabbit FLEE\nHawk HUNT\nFish FLEE\nHawk FLEE",
+    "sampleOutput": "The rabbit is running away!\nThe hawk is hunting for food!\nThe fish is fleeing from a larger fish!\nAction Not Supported",
+    "testCases": [
+      {
+        "input": "4\nRabbit FLEE\nHawk HUNT\nFish FLEE\nHawk FLEE",
+        "expectedOutput": "The rabbit is running away!\nThe hawk is hunting for food!\nThe fish is fleeing from a larger fish!\nAction Not Supported",
+        "isHidden": false
+      },
+      {
+        "input": "2\nFish HUNT\nRabbit HUNT",
+        "expectedOutput": "The fish is hunting smaller fish!\nAction Not Supported",
+        "isHidden": false
+      },
+      {
+        "input": "3\nHawk HUNT\nFish FLEE\nFish HUNT",
+        "expectedOutput": "The hawk is hunting for food!\nThe fish is fleeing from a larger fish!\nThe fish is hunting smaller fish!",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:30:15 - Interface)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\ninterface Prey {\n    void flee();\n}\n\ninterface Predator {\n    void hunt();\n}\n\nclass Rabbit implements Prey {\n    public void flee() { System.out.println(\"The rabbit is running away!\"); }\n}\n\nclass Hawk implements Predator {\n    public void hunt() { System.out.println(\"The hawk is hunting for food!\"); }\n}\n\nclass Fish implements Prey, Predator {\n    public void flee() { System.out.println(\"The fish is fleeing from a larger fish!\"); }\n    public void hunt() { System.out.println(\"The fish is hunting smaller fish!\"); }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        Rabbit rabbit = new Rabbit();\n        Hawk hawk = new Hawk();\n        Fish fish = new Fish();\n\n        for (int i = 0; i < n; i++) {\n            String creature = sc.next().toLowerCase();\n            String action = sc.next().toUpperCase();\n\n            if (creature.equals(\"rabbit\")) {\n                if (action.equals(\"FLEE\")) rabbit.flee();\n                else System.out.println(\"Action Not Supported\");\n            } else if (creature.equals(\"hawk\")) {\n                if (action.equals(\"HUNT\")) hawk.hunt();\n                else System.out.println(\"Action Not Supported\");\n            } else if (creature.equals(\"fish\")) {\n                if (action.equals(\"FLEE\")) fish.flee();\n                else if (action.equals(\"HUNT\")) fish.hunt();\n                else System.out.println(\"Action Not Supported\");\n            }\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Illustrates multiple interface implementation where a single entity exhibits multiple contracts.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-014",
+    "bank": "bank4",
+    "title": "Media Player Unified Interface",
+    "topic": "Interfaces & Generics",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Interfaces declare standard operations that disparate hardware or software modules must support.\n\nCreate a `Playable` interface:\n- `void play(String title)`\n- `void pause()`\n- `void stop()`\n\nImplement:\n- `AudioPlayer`: `play` prints \"Audio Playing: <title>.mp3\", `pause` prints \"Audio Paused\", `stop` prints \"Audio Stopped\".\n- `VideoPlayer`: `play` prints \"Video Streaming: <title>.mp4\", `pause` prints \"Video Paused\", `stop` prints \"Video Stopped\".\n\nGiven a series of player types and commands, execute them via a Playable reference.",
+    "inputFormat": "The first line contains an integer N representing commands.\nThe next N lines each contain:\n- 'AUDIO PLAY <title>'\n- 'AUDIO PAUSE'\n- 'AUDIO STOP'\n- 'VIDEO PLAY <title>'\n- 'VIDEO PAUSE'\n- 'VIDEO STOP'",
+    "outputFormat": "Print the player action output for each command.",
+    "constraints": [
+      "1 <= N <= 20",
+      "Titles contain no spaces"
+    ],
+    "sampleInput": "4\nAUDIO PLAY BohemianRhapsody\nAUDIO PAUSE\nVIDEO PLAY Avatar\nVIDEO STOP",
+    "sampleOutput": "Audio Playing: BohemianRhapsody.mp3\nAudio Paused\nVideo Streaming: Avatar.mp4\nVideo Stopped",
+    "testCases": [
+      {
+        "input": "4\nAUDIO PLAY BohemianRhapsody\nAUDIO PAUSE\nVIDEO PLAY Avatar\nVIDEO STOP",
+        "expectedOutput": "Audio Playing: BohemianRhapsody.mp3\nAudio Paused\nVideo Streaming: Avatar.mp4\nVideo Stopped",
+        "isHidden": false
+      },
+      {
+        "input": "2\nAUDIO STOP\nVIDEO PAUSE",
+        "expectedOutput": "Audio Stopped\nVideo Paused",
+        "isHidden": false
+      },
+      {
+        "input": "3\nVIDEO PLAY Inception\nAUDIO PLAY HotelCalifornia\nAUDIO STOP",
+        "expectedOutput": "Video Streaming: Inception.mp4\nAudio Playing: HotelCalifornia.mp3\nAudio Stopped",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:30:15 - Interfaces)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\ninterface Playable {\n    void play(String title);\n    void pause();\n    void stop();\n}\n\nclass AudioPlayer implements Playable {\n    public void play(String title) { System.out.println(\"Audio Playing: \" + title + \".mp3\"); }\n    public void pause() { System.out.println(\"Audio Paused\"); }\n    public void stop() { System.out.println(\"Audio Stopped\"); }\n}\n\nclass VideoPlayer implements Playable {\n    public void play(String title) { System.out.println(\"Video Streaming: \" + title + \".mp4\"); }\n    public void pause() { System.out.println(\"Video Paused\"); }\n    public void stop() { System.out.println(\"Video Stopped\"); }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        AudioPlayer audio = new AudioPlayer();\n        VideoPlayer video = new VideoPlayer();\n\n        for (int i = 0; i < n; i++) {\n            String device = sc.next().toUpperCase();\n            String cmd = sc.next().toUpperCase();\n            Playable p = device.equals(\"AUDIO\") ? audio : video;\n\n            if (cmd.equals(\"PLAY\")) {\n                p.play(sc.next());\n            } else if (cmd.equals(\"PAUSE\")) {\n                p.pause();\n            } else {\n                p.stop();\n            }\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Standardized interface contracts allow diverse media playback implementations.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-015",
+    "bank": "bank4",
+    "title": "Safe Math Division with ArithmeticException & InputMismatchException",
+    "topic": "Exception Handling",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "An exception is an event that occurs during the execution of a program that disrupts the normal flow of instructions. Handling exceptions prevents programs from crashing.\n\nWrite a program that takes two tokens representing a numerator and denominator.\n- If the denominator is 0, catch `ArithmeticException` and print: \"Error: Cannot divide by zero\"\n- If either input is not a valid integer, catch `NumberFormatException` and print: \"Error: Invalid integer input\"\n- If inputs are valid and denominator != 0, print the integer division result: \"Result: <quotient>\".",
+    "inputFormat": "The first line contains an integer N representing the number of division attempts.\nThe next N lines each contain two string tokens (numerator and denominator).",
+    "outputFormat": "Print the result or corresponding error message for each attempt.",
+    "constraints": [
+      "1 <= N <= 20",
+      "Inputs can be valid integers or non-numeric strings"
+    ],
+    "sampleInput": "3\n10 2\n10 0\n10 abc",
+    "sampleOutput": "Result: 5\nError: Cannot divide by zero\nError: Invalid integer input",
+    "testCases": [
+      {
+        "input": "3\n10 2\n10 0\n10 abc",
+        "expectedOutput": "Result: 5\nError: Cannot divide by zero\nError: Invalid integer input",
+        "isHidden": false
+      },
+      {
+        "input": "2\n100 5\n25 4",
+        "expectedOutput": "Result: 20\nResult: 6",
+        "isHidden": false
+      },
+      {
+        "input": "3\nhello world\n50 0\n-30 3",
+        "expectedOutput": "Error: Invalid integer input\nError: Cannot divide by zero\nResult: -10",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:55:13 - Exception Handling)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            String sNum = sc.next();\n            String sDen = sc.next();\n            try {\n                int num = Integer.parseInt(sNum);\n                int den = Integer.parseInt(sDen);\n                int res = num / den;\n                System.out.println(\"Result: \" + res);\n            } catch (ArithmeticException e) {\n                System.out.println(\"Error: Cannot divide by zero\");\n            } catch (NumberFormatException e) {\n                System.out.println(\"Error: Invalid integer input\");\n            }\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Illustrates try-catch blocks guarding against runtime arithmetic anomalies and parse failures.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-016",
+    "bank": "bank4",
+    "title": "Age Verification Registry with Custom InvalidAgeException",
+    "topic": "Exception Handling",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Java allows developers to define custom exceptions by extending the `Exception` class. This provides domain-specific error handling.\n\nCreate a custom exception `class InvalidAgeException extends Exception`:\n- Constructor: `InvalidAgeException(String message) { super(message); }`\n\nCreate a method `void checkAge(int age) throws InvalidAgeException`:\n- If `age < 18`: throw new InvalidAgeException(\"Must be at least 18 years old\")\n- If `age > 120`: throw new InvalidAgeException(\"Age cannot exceed 120\")\n- Otherwise: valid.\n\nGiven N voter records with name and age, output whether the applicant is registered or print the caught exception message.",
+    "inputFormat": "The first line contains an integer N representing voter applicants.\nThe next N lines each contain name (string) and age (int).",
+    "outputFormat": "For valid applicants: \"Approved: <name> is registered\"\nFor invalid applicants: \"Rejected: <name> -> <exceptionMessage>\" ",
+    "constraints": [
+      "1 <= N <= 20",
+      "-50 <= age <= 200"
+    ],
+    "sampleInput": "3\nAlice 22\nBob 16\nMethuselah 130",
+    "sampleOutput": "Approved: Alice is registered\nRejected: Bob -> Must be at least 18 years old\nRejected: Methuselah -> Age cannot exceed 120",
+    "testCases": [
+      {
+        "input": "3\nAlice 22\nBob 16\nMethuselah 130",
+        "expectedOutput": "Approved: Alice is registered\nRejected: Bob -> Must be at least 18 years old\nRejected: Methuselah -> Age cannot exceed 120",
+        "isHidden": false
+      },
+      {
+        "input": "2\nJohn 18\nSara 65",
+        "expectedOutput": "Approved: John is registered\nApproved: Sara is registered",
+        "isHidden": false
+      },
+      {
+        "input": "2\nTim 12\nGran 125",
+        "expectedOutput": "Rejected: Tim -> Must be at least 18 years old\nRejected: Gran -> Age cannot exceed 120",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:55:13 - Custom Exceptions)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass InvalidAgeException extends Exception {\n    InvalidAgeException(String msg) { super(msg); }\n}\n\npublic class Main {\n    static void checkAge(int age) throws InvalidAgeException {\n        if (age < 18) throw new InvalidAgeException(\"Must be at least 18 years old\");\n        if (age > 120) throw new InvalidAgeException(\"Age cannot exceed 120\");\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            String name = sc.next();\n            int age = sc.nextInt();\n            try {\n                checkAge(age);\n                System.out.println(\"Approved: \" + name + \" is registered\");\n            } catch (InvalidAgeException e) {\n                System.out.println(\"Rejected: \" + name + \" -> \" + e.getMessage());\n            }\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Custom exceptions encapsulate application-specific validation business rules cleanly.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-017",
+    "bank": "bank4",
+    "title": "Inventory Stock Dispenser with InsufficientStockException",
+    "topic": "Exception Handling",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Write an inventory dispenser class that tracks available item stock.\nDefine a custom checked exception `InsufficientStockException`.\n\nA method `void dispense(int requestedQuantity) throws InsufficientStockException`:\n- If `requestedQuantity > currentStock`, throw `InsufficientStockException(\"Requested <requested>, but only <available> remaining\")`.\n- If valid, subtract `requestedQuantity` from stock and print: \"Dispensed: <requested> | Remaining: <remaining>\".\n\nGiven initial stock S and N order requests, process each order using try-catch to ensure the inventory stays operational.",
+    "inputFormat": "The first line contains an integer S representing initial stock.\nThe second line contains an integer N representing order count.\nThe third line contains N space-separated integers representing requested quantities.",
+    "outputFormat": "Print the transaction status or exception message for each request.\nOn the final line, print: \"Final Stock: <remaining>\".",
+    "constraints": [
+      "1 <= S <= 500",
+      "1 <= N <= 20",
+      "1 <= requested <= 100"
+    ],
+    "sampleInput": "20\n4\n5 10 8 3",
+    "sampleOutput": "Dispensed: 5 | Remaining: 15\nDispensed: 10 | Remaining: 5\nError: Requested 8, but only 5 remaining\nDispensed: 3 | Remaining: 2\nFinal Stock: 2",
+    "testCases": [
+      {
+        "input": "20\n4\n5 10 8 3",
+        "expectedOutput": "Dispensed: 5 | Remaining: 15\nDispensed: 10 | Remaining: 5\nError: Requested 8, but only 5 remaining\nDispensed: 3 | Remaining: 2\nFinal Stock: 2",
+        "isHidden": false
+      },
+      {
+        "input": "10\n2\n4 6",
+        "expectedOutput": "Dispensed: 4 | Remaining: 6\nDispensed: 6 | Remaining: 0\nFinal Stock: 0",
+        "isHidden": false
+      },
+      {
+        "input": "5\n3\n2 10 1",
+        "expectedOutput": "Dispensed: 2 | Remaining: 3\nError: Requested 10, but only 3 remaining\nDispensed: 1 | Remaining: 2\nFinal Stock: 2",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:55:13 - Exception Handling)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\nclass InsufficientStockException extends Exception {\n    InsufficientStockException(String msg) { super(msg); }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int stock = sc.nextInt();\n        int n = sc.nextInt();\n        for (int i = 0; i < n; i++) {\n            int req = sc.nextInt();\n            try {\n                if (req > stock) {\n                    throw new InsufficientStockException(\"Requested \" + req + \", but only \" + stock + \" remaining\");\n                }\n                stock -= req;\n                System.out.println(\"Dispensed: \" + req + \" | Remaining: \" + stock);\n            } catch (InsufficientStockException e) {\n                System.out.println(\"Error: \" + e.getMessage());\n            }\n        }\n        System.out.println(\"Final Stock: \" + stock);\n        sc.close();\n    }\n}",
+    "explanation": "Guarantees transactional integrity by throwing exceptions when requested operations cannot be safely completed.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-018",
+    "bank": "bank4",
+    "title": "Robust Grade Processor with Multi-Catch & Finally Cleanup",
+    "topic": "Exception Handling",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "The `finally` block in Java always executes regardless of whether an exception was thrown or caught. It is typically used for resource deallocation, logging, and state confirmation.\n\nGiven an array of string grade tokens:\nProcess an access query `GET <index>`:\n- Parse the token at `index` to an integer.\n- Catch `ArrayIndexOutOfBoundsException` -> print \"Error: Index out of range\"\n- Catch `NumberFormatException` -> print \"Error: Non-numeric grade entry\"\n- If successful -> print \"Grade: <val>\"\n- The `finally` block must ALWAYS print: \"Lookup Processed\".",
+    "inputFormat": "The first line contains an integer N representing the array size.\nThe second line contains N space-separated tokens.\nThe third line contains an integer Q representing the number of queries.\nThe fourth line contains Q space-separated index integers.",
+    "outputFormat": "For each query, print the result/error followed immediately by the finally message.",
+    "constraints": [
+      "1 <= N <= 20",
+      "1 <= Q <= 20",
+      "Indices can be negative or >= N"
+    ],
+    "sampleInput": "4\n95 A+ 82 70\n3\n0 1 5",
+    "sampleOutput": "Grade: 95\nLookup Processed\nError: Non-numeric grade entry\nLookup Processed\nError: Index out of range\nLookup Processed",
+    "testCases": [
+      {
+        "input": "4\n95 A+ 82 70\n3\n0 1 5",
+        "expectedOutput": "Grade: 95\nLookup Processed\nError: Non-numeric grade entry\nLookup Processed\nError: Index out of range\nLookup Processed",
+        "isHidden": false
+      },
+      {
+        "input": "2\n100 88\n1\n1",
+        "expectedOutput": "Grade: 88\nLookup Processed",
+        "isHidden": false
+      },
+      {
+        "input": "3\nFAIL 50 60\n2\n-1 0",
+        "expectedOutput": "Error: Index out of range\nLookup Processed\nError: Non-numeric grade entry\nLookup Processed",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (04:55:13 - Finally Block)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        String[] arr = new String[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.next();\n\n        int q = sc.nextInt();\n        for (int i = 0; i < q; i++) {\n            int idx = sc.nextInt();\n            try {\n                if (idx < 0 || idx >= n) throw new ArrayIndexOutOfBoundsException();\n                int grade = Integer.parseInt(arr[idx]);\n                System.out.println(\"Grade: \" + grade);\n            } catch (ArrayIndexOutOfBoundsException e) {\n                System.out.println(\"Error: Index out of range\");\n            } catch (NumberFormatException e) {\n                System.out.println(\"Error: Non-numeric grade entry\");\n            } finally {\n                System.out.println(\"Lookup Processed\");\n            }\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Guarantees resource and logging cleanup across both successful and failed execution paths.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-019",
+    "bank": "bank4",
+    "title": "Secret Note Logger using FileWriter and FileReader",
+    "topic": "File Handling & Streams",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Bro Code demonstrates writing text with `FileWriter` and streaming characters back using `FileReader.read()`.\n\nIn this problem, simulate the file write-read cycle:\n1. Read a secret message string from standard input.\n2. Write the message into a local file named `secret_note.txt` using `FileWriter`.\n3. Open `secret_note.txt` with `FileReader`, read all characters until `.read()` returns -1, and print the retrieved content with its character count.",
+    "inputFormat": "A single line containing the secret message text.",
+    "outputFormat": "Print:\n\"File Written Successfully\"\n\"Read from File: <content>\"\n\"Characters Read: <length>\" ",
+    "constraints": [
+      "1 <= message length <= 200"
+    ],
+    "sampleInput": "Bro Code Java Masterclass 2026",
+    "sampleOutput": "File Written Successfully\nRead from File: Bro Code Java Masterclass 2026\nCharacters Read: 30",
+    "testCases": [
+      {
+        "input": "Bro Code Java Masterclass 2026",
+        "expectedOutput": "File Written Successfully\nRead from File: Bro Code Java Masterclass 2026\nCharacters Read: 30",
+        "isHidden": false
+      },
+      {
+        "input": "Hello World",
+        "expectedOutput": "File Written Successfully\nRead from File: Hello World\nCharacters Read: 11",
+        "isHidden": false
+      },
+      {
+        "input": "Keep coding every day!",
+        "expectedOutput": "File Written Successfully\nRead from File: Keep coding every day!\nCharacters Read: 22",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (05:09:15 - FileWriter & 05:12:30 - FileReader)",
+    "starterCode": "import java.util.Scanner;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.io.File;\nimport java.io.FileWriter;\nimport java.io.FileReader;\nimport java.io.IOException;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextLine()) return;\n        String message = sc.nextLine();\n\n        File file = new File(\"secret_note.txt\");\n        try {\n            FileWriter writer = new FileWriter(file);\n            writer.write(message);\n            writer.close();\n            System.out.println(\"File Written Successfully\");\n\n            FileReader reader = new FileReader(file);\n            StringBuilder sb = new StringBuilder();\n            int data = reader.read();\n            int count = 0;\n            while (data != -1) {\n                sb.append((char) data);\n                count++;\n                data = reader.read();\n            }\n            reader.close();\n            System.out.println(\"Read from File: \" + sb.toString());\n            System.out.println(\"Characters Read: \" + count);\n        } catch (IOException e) {\n            System.out.println(\"IO Error: \" + e.getMessage());\n        } finally {\n            if (file.exists()) file.delete();\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Validates file writing and streaming character-by-character reading with proper resource closure.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-020",
+    "bank": "bank4",
+    "title": "Word and Character Count File Stream Analyzer",
+    "topic": "File Handling & Streams",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Write a text analyzer that computes text file metrics:\nGiven N lines of text:\n1. Count the total number of lines.\n2. Count the total number of words (tokens separated by spaces).\n3. Count the total number of non-whitespace characters.\n\nDisplay the summary in a standardized file report format.",
+    "inputFormat": "The first line contains an integer N representing the line count.\nThe next N lines each contain a sentence of text.",
+    "outputFormat": "Print:\n\"Lines: <L> | Words: <W> | Non-Space Chars: <C>\" ",
+    "constraints": [
+      "1 <= N <= 20",
+      "Lines contain alphanumeric characters, spaces, and punctuation"
+    ],
+    "sampleInput": "2\nJava is powerful and versatile\nPractice makes perfect",
+    "sampleOutput": "Lines: 2 | Words: 8 | Non-Space Chars: 46",
+    "testCases": [
+      {
+        "input": "2\nJava is powerful and versatile\nPractice makes perfect",
+        "expectedOutput": "Lines: 2 | Words: 8 | Non-Space Chars: 46",
+        "isHidden": false
+      },
+      {
+        "input": "1\nCode everyday",
+        "expectedOutput": "Lines: 1 | Words: 2 | Non-Space Chars: 12",
+        "isHidden": false
+      },
+      {
+        "input": "3\nOne\nTwo Three\nFour Five Six",
+        "expectedOutput": "Lines: 3 | Words: 6 | Non-Space Chars: 22",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (05:12:30 - File Streams)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        sc.nextLine(); // consume newline\n        int wordCount = 0;\n        int charCount = 0;\n\n        for (int i = 0; i < n; i++) {\n            String line = sc.nextLine();\n            String[] tokens = line.trim().split(\"\\\\s+\");\n            if (line.trim().length() > 0) {\n                wordCount += tokens.length;\n            }\n            for (char c : line.toCharArray()) {\n                if (!Character.isWhitespace(c)) charCount++;\n            }\n        }\n\n        System.out.println(\"Lines: \" + n + \" | Words: \" + wordCount + \" | Non-Space Chars: \" + charCount);\n        sc.close();\n    }\n}",
+    "explanation": "Simulates stream tokenization and character frequency metrics typical of file inspection tools.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-021",
+    "bank": "bank4",
+    "title": "System Configuration Parser with Key-Value Reader",
+    "topic": "File Handling & Streams",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Configuration files (.properties, .ini) frequently store application settings as `key=value` pairs.\n\nWrite a config file parser:\n1. Read N configuration lines formatted as `key=value`.\n2. Store the pairs in a key-value structure.\n3. Read Q query keys and output the resolved setting value or \"UNDEFINED\" if the key is not present.",
+    "inputFormat": "The first line contains an integer N representing configuration pairs.\nThe next N lines each contain 'key=value'.\nThe next line contains an integer Q representing query count.\nThe next Q lines each contain a query key.",
+    "outputFormat": "For each query key, print: \"<key> = <value>\" or \"<key> = UNDEFINED\".",
+    "constraints": [
+      "1 <= N <= 30",
+      "1 <= Q <= 20",
+      "Keys and values contain no spaces"
+    ],
+    "sampleInput": "3\nhost=localhost\nport=8080\ndebug=true\n2\nport\ntimeout",
+    "sampleOutput": "port = 8080\ntimeout = UNDEFINED",
+    "testCases": [
+      {
+        "input": "3\nhost=localhost\nport=8080\ndebug=true\n2\nport\ntimeout",
+        "expectedOutput": "port = 8080\ntimeout = UNDEFINED",
+        "isHidden": false
+      },
+      {
+        "input": "1\nenv=production\n1\nenv",
+        "expectedOutput": "env = production",
+        "isHidden": false
+      },
+      {
+        "input": "2\nmax_conn=100\nssl=enabled\n2\nssl\nversion",
+        "expectedOutput": "ssl = enabled\nversion = UNDEFINED",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (05:02:31 - File Handling)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.HashMap;\nimport java.util.Map;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        Map<String, String> config = new HashMap<>();\n\n        for (int i = 0; i < n; i++) {\n            String line = sc.next();\n            String[] parts = line.split(\"=\", 2);\n            if (parts.length == 2) {\n                config.put(parts[0].trim(), parts[1].trim());\n            }\n        }\n\n        int q = sc.nextInt();\n        for (int i = 0; i < q; i++) {\n            String key = sc.next();\n            if (config.containsKey(key)) {\n                System.out.println(key + \" = \" + config.get(key));\n            } else {\n                System.out.println(key + \" = UNDEFINED\");\n            }\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Simulates reading configuration settings from files into runtime memory mappings.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-022",
+    "bank": "bank4",
+    "title": "Student Report Card Serializer with Object Streams",
+    "topic": "File Handling & Streams",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Serialization is the process of converting an object's state into a byte stream, allowing it to be persisted to disk or sent over a network. Deserialization reconstructs the object from bytes.\n\nCreate a class `StudentRecord implements java.io.Serializable`:\n- Fields: `int id`, `String name`, `double gpa`.\n- Method: `String getSummary()` -> \"ID: <id> | Name: <name> | GPA: <gpa>\".\n\nWrite a program that:\n1. Instantiates a `StudentRecord` from user input.\n2. Serializes it into `student.ser` using `ObjectOutputStream`.\n3. Deserializes the record back using `ObjectInputStream`.\n4. Prints the validated summary.",
+    "inputFormat": "A single line containing id (int), name (string), and gpa (double).",
+    "outputFormat": "Print:\n\"Serialized Student Successfully\"\n\"Deserialized: ID: <id> | Name: <name> | GPA: <gpa>\" ",
+    "constraints": [
+      "1 <= id <= 10000",
+      "0.0 <= gpa <= 4.0"
+    ],
+    "sampleInput": "101 Pranav 3.95",
+    "sampleOutput": "Serialized Student Successfully\nDeserialized: ID: 101 | Name: Pranav | GPA: 3.95",
+    "testCases": [
+      {
+        "input": "101 Pranav 3.95",
+        "expectedOutput": "Serialized Student Successfully\nDeserialized: ID: 101 | Name: Pranav | GPA: 3.95",
+        "isHidden": false
+      },
+      {
+        "input": "205 Alice 4.0",
+        "expectedOutput": "Serialized Student Successfully\nDeserialized: ID: 205 | Name: Alice | GPA: 4.00",
+        "isHidden": false
+      },
+      {
+        "input": "309 Bob 3.50",
+        "expectedOutput": "Serialized Student Successfully\nDeserialized: ID: 309 | Name: Bob | GPA: 3.50",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (Serialization)",
+    "starterCode": "import java.util.Scanner;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.io.*;\nimport java.util.Locale;\n\nclass StudentRecord implements Serializable {\n    private static final long serialVersionUID = 1L;\n    int id;\n    String name;\n    double gpa;\n\n    StudentRecord(int id, String name, double gpa) {\n        this.id = id;\n        this.name = name;\n        this.gpa = gpa;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Locale.setDefault(Locale.US);\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int id = sc.nextInt();\n        String name = sc.next();\n        double gpa = sc.nextDouble();\n\n        StudentRecord original = new StudentRecord(id, name, gpa);\n        File file = new File(\"student.ser\");\n\n        try {\n            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));\n            oos.writeObject(original);\n            oos.close();\n            System.out.println(\"Serialized Student Successfully\");\n\n            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));\n            StudentRecord recovered = (StudentRecord) ois.readObject();\n            ois.close();\n\n            System.out.printf(Locale.US, \"Deserialized: ID: %d | Name: %s | GPA: %.2f%n\", recovered.id, recovered.name, recovered.gpa);\n        } catch (Exception e) {\n            System.out.println(\"Error: \" + e.getMessage());\n        } finally {\n            if (file.exists()) file.delete();\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Verifies byte-stream serialization and object resurrection using Java Serializable architecture.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-023",
+    "bank": "bank4",
+    "title": "CSV Data Table Importer with Formatted Terminal Report",
+    "topic": "File Handling & Streams",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Comma-Separated Values (CSV) is the most ubiquitous tabular data export format.\n\nWrite a CSV parser and aggregator:\nGiven N lines of employee data formatted as: `Name,Department,Salary`\n1. Parse each record.\n2. Track total payroll expense and find the highest earner.\n3. Print each formatted row and a summary footer.",
+    "inputFormat": "The first line contains an integer N representing the number of CSV rows.\nThe next N lines each contain 'Name,Department,Salary'.",
+    "outputFormat": "Print each row as: \"[<Department>] <Name> - $<Salary>\"\nOn the next line, print: \"Total Payroll: $<sum>\"\nOn the final line, print: \"Top Earner: <Name> ($<highestSalary>)\" ",
+    "constraints": [
+      "1 <= N <= 20",
+      "Salary is an integer >= 1000"
+    ],
+    "sampleInput": "3\nAlice,Engineering,90000\nBob,Marketing,65000\nCharlie,Engineering,110000",
+    "sampleOutput": "[Engineering] Alice - $90000\n[Marketing] Bob - $65000\n[Engineering] Charlie - $110000\nTotal Payroll: $265000\nTop Earner: Charlie ($110000)",
+    "testCases": [
+      {
+        "input": "3\nAlice,Engineering,90000\nBob,Marketing,65000\nCharlie,Engineering,110000",
+        "expectedOutput": "[Engineering] Alice - $90000\n[Marketing] Bob - $65000\n[Engineering] Charlie - $110000\nTotal Payroll: $265000\nTop Earner: Charlie ($110000)",
+        "isHidden": false
+      },
+      {
+        "input": "1\nDiana,Executive,150000",
+        "expectedOutput": "[Executive] Diana - $150000\nTotal Payroll: $150000\nTop Earner: Diana ($150000)",
+        "isHidden": false
+      },
+      {
+        "input": "2\nEve,Sales,45000\nFrank,Sales,50000",
+        "expectedOutput": "[Sales] Eve - $45000\n[Sales] Frank - $50000\nTotal Payroll: $95000\nTop Earner: Frank ($50000)",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Full Course (05:09:15 - File I/O)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        sc.nextLine(); // newline\n        long totalPayroll = 0;\n        int maxSalary = -1;\n        String topEarner = \"\";\n\n        for (int i = 0; i < n; i++) {\n            String line = sc.nextLine().trim();\n            String[] parts = line.split(\",\");\n            String name = parts[0].trim();\n            String dept = parts[1].trim();\n            int salary = Integer.parseInt(parts[2].trim());\n\n            totalPayroll += salary;\n            if (salary > maxSalary) {\n                maxSalary = salary;\n                topEarner = name;\n            }\n            System.out.println(\"[\" + dept + \"] \" + name + \" - $\" + salary);\n        }\n\n        System.out.println(\"Total Payroll: $\" + totalPayroll);\n        System.out.println(\"Top Earner: \" + topEarner + \" ($\" + maxSalary + \")\");\n        sc.close();\n    }\n}",
+    "explanation": "Processes delimited record streams to produce formatted aggregations.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-024",
+    "bank": "bank4",
+    "title": "Java Interactive CLI Calculator Engine",
+    "topic": "Projects & Applications",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "In Bro Code's project portfolio, a console calculator is a cornerstone project demonstrating control flow, switch statements, and arithmetic operators.\n\nImplement an expression calculation engine supporting:\n- Addition (`+`)\n- Subtraction (`-`)\n- Multiplication (`*`)\n- Division (`/` with integer division)\n- Modulo (`%`)\n- Exponentiation (`^` where a^b computes power)\n\nInput commands until 'EXIT' is received. Print each calculation in the format: \"<num1> <op> <num2> = <result>\".",
+    "inputFormat": "Multiple lines each containing 'num1 op num2' (e.g. '12 + 5').\nThe input ends with 'EXIT'.",
+    "outputFormat": "For each calculation, print: \"<num1> <op> <num2> = <result>\".\nIf division/modulo by zero occurs, print: \"Error: Division by zero\".\nOn termination, print: \"Calculator Closed\".",
+    "constraints": [
+      "Operands are integers",
+      "Supported operators: +, -, *, /, %, ^"
+    ],
+    "sampleInput": "10 + 5\n20 / 4\n2 ^ 8\n7 % 0\nEXIT",
+    "sampleOutput": "10 + 5 = 15\n20 / 4 = 5\n2 ^ 8 = 256\nError: Division by zero\nCalculator Closed",
+    "testCases": [
+      {
+        "input": "10 + 5\n20 / 4\n2 ^ 8\n7 % 0\nEXIT",
+        "expectedOutput": "10 + 5 = 15\n20 / 4 = 5\n2 ^ 8 = 256\nError: Division by zero\nCalculator Closed",
+        "isHidden": false
+      },
+      {
+        "input": "15 * 3\n100 - 45\nEXIT",
+        "expectedOutput": "15 * 3 = 45\n100 - 45 = 55\nCalculator Closed",
+        "isHidden": false
+      },
+      {
+        "input": "5 ^ 3\n14 % 4\nEXIT",
+        "expectedOutput": "5 ^ 3 = 125\n14 % 4 = 2\nCalculator Closed",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Project (Calculator)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        while (sc.hasNext()) {\n            String token = sc.next();\n            if (token.equalsIgnoreCase(\"EXIT\")) break;\n            int num1 = Integer.parseInt(token);\n            String op = sc.next();\n            int num2 = sc.nextInt();\n\n            if ((op.equals(\"/\") || op.equals(\"%\")) && num2 == 0) {\n                System.out.println(\"Error: Division by zero\");\n                continue;\n            }\n\n            long res = 0;\n            switch (op) {\n                case \"+\": res = num1 + num2; break;\n                case \"-\": res = num1 - num2; break;\n                case \"*\": res = (long)num1 * num2; break;\n                case \"/\": res = num1 / num2; break;\n                case \"%\": res = num1 % num2; break;\n                case \"^\": res = (long)Math.pow(num1, num2); break;\n            }\n            System.out.println(num1 + \" \" + op + \" \" + num2 + \" = \" + res);\n        }\n        System.out.println(\"Calculator Closed\");\n        sc.close();\n    }\n}",
+    "explanation": "Implements an interactive command-driven arithmetic engine with operator dispatch.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-025",
+    "bank": "bank4",
+    "title": "Multiple-Choice Trivia Quiz Game Engine",
+    "topic": "Projects & Applications",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Bro Code's Java Quiz Game features questions arrays, options 2D arrays, player answer validation, and score evaluation.\n\nBuild an automated quiz evaluator:\nGiven 4 questions where the correct answer keys are:\nQ1: C (Which keyword creates an object? -> new)\nQ2: B (What is the size of int in Java? -> 4 bytes)\nQ3: A (Which package contains Scanner? -> java.util)\nQ4: D (Which collection allows unique elements only? -> Set)\n\nRead 4 player choices (characters A, B, C, or D). Evaluate each answer, tally the total score out of 4, and display the final performance rating.",
+    "inputFormat": "A single line containing 4 space-separated characters representing the player's answers (e.g. 'C B A D').",
+    "outputFormat": "Print evaluation for each question:\n\"Q1: Correct!\" or \"Q1: Incorrect (Correct: C)\"\nOn the next line, print: \"Total Score: <score>/4\"\nOn the final line, print performance:\n- 4/4: \"Grade: Perfect Score!\"\n- 3/4: \"Grade: Great Job!\"\n- 2/4: \"Grade: Good Effort!\"\n- <= 1/4: \"Grade: Keep Practicing!\" ",
+    "constraints": [
+      "Answers are characters A, B, C, or D"
+    ],
+    "sampleInput": "C B A D",
+    "sampleOutput": "Q1: Correct!\nQ2: Correct!\nQ3: Correct!\nQ4: Correct!\nTotal Score: 4/4\nGrade: Perfect Score!",
+    "testCases": [
+      {
+        "input": "C B A D",
+        "expectedOutput": "Q1: Correct!\nQ2: Correct!\nQ3: Correct!\nQ4: Correct!\nTotal Score: 4/4\nGrade: Perfect Score!",
+        "isHidden": false
+      },
+      {
+        "input": "C A A D",
+        "expectedOutput": "Q1: Correct!\nQ2: Incorrect (Correct: B)\nQ3: Correct!\nQ4: Correct!\nTotal Score: 3/4\nGrade: Great Job!",
+        "isHidden": false
+      },
+      {
+        "input": "A B C D",
+        "expectedOutput": "Q1: Incorrect (Correct: C)\nQ2: Correct!\nQ3: Incorrect (Correct: A)\nQ4: Correct!\nTotal Score: 2/4\nGrade: Good Effort!",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Project (Quiz Game)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        char[] correct = {'C', 'B', 'A', 'D'};\n        int score = 0;\n\n        for (int i = 0; i < 4; i++) {\n            if (!sc.hasNext()) return;\n            char ans = sc.next().toUpperCase().charAt(0);\n            if (ans == correct[i]) {\n                score++;\n                System.out.println(\"Q\" + (i + 1) + \": Correct!\");\n            } else {\n                System.out.println(\"Q\" + (i + 1) + \": Incorrect (Correct: \" + correct[i] + \")\");\n            }\n        }\n\n        System.out.println(\"Total Score: \" + score + \"/4\");\n        if (score == 4) System.out.println(\"Grade: Perfect Score!\");\n        else if (score == 3) System.out.println(\"Grade: Great Job!\");\n        else if (score == 2) System.out.println(\"Grade: Good Effort!\");\n        else System.out.println(\"Grade: Keep Practicing!\");\n        sc.close();\n    }\n}",
+    "explanation": "Implements an interactive quiz grading loop comparing player response vectors against key matrices.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-026",
+    "bank": "bank4",
+    "title": "Tic-Tac-Toe Grid Match Engine",
+    "topic": "Projects & Applications",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Tic-Tac-Toe is a classic game project taught by Bro Code to master 2D arrays, game state checking, and coordinate translation.\n\nA 3x3 board starts empty (filled with '-'). Players alternate placing 'X' and 'O'.\nA player wins if they place 3 of their marks across any row, column, or diagonal.\nIf all 9 cells are filled and no player has won, it is a Draw.\n\nRead the move sequence (0 to 8 representing cell indices 0..8, where row = idx / 3 and col = idx % 3). Stop immediately when a player wins or all moves are exhausted, and print the outcome.",
+    "inputFormat": "The first line contains an integer M representing the number of moves.\nThe second line contains M space-separated cell indices (0 to 8). Player 1 is 'X', Player 2 is 'O'.",
+    "outputFormat": "Print:\n\"Winner: Player X\" or \"Winner: Player O\" or \"Result: Draw\" or \"Game Incomplete\" ",
+    "constraints": [
+      "1 <= M <= 9",
+      "0 <= cell index <= 8",
+      "All moves in input are unique"
+    ],
+    "sampleInput": "5\n0 3 1 4 2",
+    "sampleOutput": "Winner: Player X",
+    "testCases": [
+      {
+        "input": "5\n0 3 1 4 2",
+        "expectedOutput": "Winner: Player X",
+        "isHidden": false
+      },
+      {
+        "input": "9\n0 1 2 4 3 5 7 6 8",
+        "expectedOutput": "Result: Draw",
+        "isHidden": false
+      },
+      {
+        "input": "6\n0 4 1 3 8 5",
+        "expectedOutput": "Winner: Player O",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Project (Tic Tac Toe)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    static char checkWin(char[][] b) {\n        for (int i = 0; i < 3; i++) {\n            if (b[i][0] != '-' && b[i][0] == b[i][1] && b[i][1] == b[i][2]) return b[i][0];\n            if (b[0][i] != '-' && b[0][i] == b[1][i] && b[1][i] == b[2][i]) return b[0][i];\n        }\n        if (b[0][0] != '-' && b[0][0] == b[1][1] && b[1][1] == b[2][2]) return b[0][0];\n        if (b[0][2] != '-' && b[0][2] == b[1][1] && b[1][1] == b[2][0]) return b[0][2];\n        return '-';\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int m = sc.nextInt();\n        char[][] b = new char[3][3];\n        for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) b[i][j] = '-';\n\n        char winner = '-';\n        int movesMade = 0;\n        for (int k = 0; k < m; k++) {\n            int cell = sc.nextInt();\n            char player = (k % 2 == 0) ? 'X' : 'O';\n            b[cell / 3][cell % 3] = player;\n            movesMade++;\n            winner = checkWin(b);\n            if (winner != '-') break;\n        }\n\n        if (winner == 'X') System.out.println(\"Winner: Player X\");\n        else if (winner == 'O') System.out.println(\"Winner: Player O\");\n        else if (movesMade == 9) System.out.println(\"Result: Draw\");\n        else System.out.println(\"Game Incomplete\");\n        sc.close();\n    }\n}",
+    "explanation": "Encapsulates 2D board state manipulation, alternate turn dispatch, and victory condition evaluation.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-027",
+    "bank": "bank4",
+    "title": "Rock-Paper-Scissors-Lizard-Spock Tournament Simulator",
+    "topic": "Projects & Applications",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "An extended version of the Rock-Paper-Scissors game project taught by Bro Code.\nRules:\n- Scissors cuts Paper\n- Paper covers Rock\n- Rock crushes Lizard\n- Lizard poisons Spock\n- Spock smashes Scissors\n- Scissors decapitates Lizard\n- Lizard eats Paper\n- Paper disproves Spock\n- Spock vaporizes Rock\n- Rock crushes Scissors\n\nGiven N rounds of Player 1 and Player 2 moves, determine the round winners and declare the final tournament champion.",
+    "inputFormat": "The first line contains an integer N representing rounds.\nThe next N lines each contain Player 1 move and Player 2 move (Rock, Paper, Scissors, Lizard, Spock).",
+    "outputFormat": "Print each round: \"Round <i>: <Winner>\" (where Winner is 'Player 1', 'Player 2', or 'Tie').\nOn the final line, print the champion: \"Champion: Player 1\" or \"Champion: Player 2\" or \"Tournament Tie\".",
+    "constraints": [
+      "1 <= N <= 20",
+      "Moves are valid capitalized strings"
+    ],
+    "sampleInput": "3\nRock Scissors\nPaper Rock\nSpock Spock",
+    "sampleOutput": "Round 1: Player 1\nRound 2: Player 1\nRound 3: Tie\nChampion: Player 1",
+    "testCases": [
+      {
+        "input": "3\nRock Scissors\nPaper Rock\nSpock Spock",
+        "expectedOutput": "Round 1: Player 1\nRound 2: Player 1\nRound 3: Tie\nChampion: Player 1",
+        "isHidden": false
+      },
+      {
+        "input": "2\nLizard Rock\nPaper Scissors",
+        "expectedOutput": "Round 1: Player 2\nRound 2: Player 2\nChampion: Player 2",
+        "isHidden": false
+      },
+      {
+        "input": "1\nScissors Paper",
+        "expectedOutput": "Round 1: Player 1\nChampion: Player 1",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Project (Rock Paper Scissors)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class Main {\n    static boolean beats(String m1, String m2) {\n        if (m1.equals(\"Scissors\") && (m2.equals(\"Paper\") || m2.equals(\"Lizard\"))) return true;\n        if (m1.equals(\"Paper\") && (m2.equals(\"Rock\") || m2.equals(\"Spock\"))) return true;\n        if (m1.equals(\"Rock\") && (m2.equals(\"Lizard\") || m2.equals(\"Scissors\"))) return true;\n        if (m1.equals(\"Lizard\") && (m2.equals(\"Spock\") || m2.equals(\"Paper\"))) return true;\n        if (m1.equals(\"Spock\") && (m2.equals(\"Scissors\") || m2.equals(\"Rock\"))) return true;\n        return false;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int p1Score = 0, p2Score = 0;\n\n        for (int i = 1; i <= n; i++) {\n            String m1 = sc.next();\n            String m2 = sc.next();\n            if (m1.equals(m2)) {\n                System.out.println(\"Round \" + i + \": Tie\");\n            } else if (beats(m1, m2)) {\n                p1Score++;\n                System.out.println(\"Round \" + i + \": Player 1\");\n            } else {\n                p2Score++;\n                System.out.println(\"Round \" + i + \": Player 2\");\n            }\n        }\n\n        if (p1Score > p2Score) System.out.println(\"Champion: Player 1\");\n        else if (p2Score > p1Score) System.out.println(\"Champion: Player 2\");\n        else System.out.println(\"Tournament Tie\");\n        sc.close();\n    }\n}",
+    "explanation": "Models complex conditional game decision trees and multi-round state tracking.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-028",
+    "bank": "bank4",
+    "title": "Audio Playlist & Track Duration Manager",
+    "topic": "Projects & Applications",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Bro Code's course features an Audio Player project utilizing Clip and AudioInputStream.\n\nModel a music playlist management system:\nEach track has a `title` (String), `artist` (String), and `durationSeconds` (int).\nGiven N tracks:\n1. List each track formatted as: \"[Track <i>] <title> by <artist> (<mm:ss>)\"\n2. Compute the total playlist run time and format it as `HH:MM:SS` (or `MM:SS` if under 1 hour).",
+    "inputFormat": "The first line contains an integer N representing the track count.\nThe next N lines each contain title, artist, and durationSeconds.",
+    "outputFormat": "Print each track on a separate line.\nOn the final line, print: \"Total Duration: <formattedTime>\".",
+    "constraints": [
+      "1 <= N <= 20",
+      "1 <= durationSeconds <= 7200",
+      "Titles and artists have no spaces"
+    ],
+    "sampleInput": "2\nBeliever ImagineDragons 204\nShapeOfYou EdSheeran 233",
+    "sampleOutput": "[Track 1] Believer by ImagineDragons (03:24)\n[Track 2] ShapeOfYou by EdSheeran (03:53)\nTotal Duration: 07:17",
+    "testCases": [
+      {
+        "input": "2\nBeliever ImagineDragons 204\nShapeOfYou EdSheeran 233",
+        "expectedOutput": "[Track 1] Believer by ImagineDragons (03:24)\n[Track 2] ShapeOfYou by EdSheeran (03:53)\nTotal Duration: 07:17",
+        "isHidden": false
+      },
+      {
+        "input": "1\nEcho PinkFloyd 1400",
+        "expectedOutput": "[Track 1] Echo by PinkFloyd (23:20)\nTotal Duration: 23:20",
+        "isHidden": false
+      },
+      {
+        "input": "3\nSongA ArtistA 1800\nSongB ArtistB 1900\nSongC ArtistC 200",
+        "expectedOutput": "[Track 1] SongA by ArtistA (30:00)\n[Track 2] SongB by ArtistB (31:40)\n[Track 3] SongC by ArtistC (03:20)\nTotal Duration: 01:05:00",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Project (Audio Player)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    static String formatTime(int sec) {\n        int h = sec / 3600;\n        int m = (sec % 3600) / 60;\n        int s = sec % 60;\n        if (h > 0) {\n            return String.format(\"%02d:%02d:%02d\", h, m, s);\n        }\n        return String.format(\"%02d:%02d\", m, s);\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int totalSec = 0;\n\n        for (int i = 1; i <= n; i++) {\n            String title = sc.next();\n            String artist = sc.next();\n            int dur = sc.nextInt();\n            totalSec += dur;\n            System.out.println(\"[Track \" + i + \"] \" + title + \" by \" + artist + \" (\" + String.format(\"%02d:%02d\", dur / 60, dur % 60) + \")\");\n        }\n\n        System.out.println(\"Total Duration: \" + formatTime(totalSec));\n        sc.close();\n    }\n}",
+    "explanation": "Formats composite media durations into standardized human-readable representations.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-029",
+    "bank": "bank4",
+    "title": "Console Text Editor & Note-Keeper",
+    "topic": "Projects & Applications",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "Bro Code's Text Editor project introduces file saving, text manipulation, and line indexing.\n\nImplement a console-based notepad:\nSupports commands:\n- `APPEND <text>`: adds a line to the end of the document.\n- `DELETE <lineIndex>`: deletes the 1-based line index (or prints \"Error: Line not found\").\n- `SEARCH <keyword>`: prints 1-based line numbers containing keyword, or \"Not found\".\n- `SAVE`: prints the complete document lines and exits.",
+    "inputFormat": "A series of command lines ending with 'SAVE'.",
+    "outputFormat": "Print action confirmations and the final saved document.",
+    "constraints": [
+      "1 <= operations <= 30"
+    ],
+    "sampleInput": "APPEND First line of code\nAPPEND Second line of notes\nSEARCH notes\nDELETE 1\nSAVE",
+    "sampleOutput": "Matches: Line 2\nDeleted: Line 1\n--- Document Content ---\nSecond line of notes\n--- End of File ---",
+    "testCases": [
+      {
+        "input": "APPEND First line of code\nAPPEND Second line of notes\nSEARCH notes\nDELETE 1\nSAVE",
+        "expectedOutput": "Matches: Line 2\nDeleted: Line 1\n--- Document Content ---\nSecond line of notes\n--- End of File ---",
+        "isHidden": false
+      },
+      {
+        "input": "APPEND Hello World\nSEARCH Java\nSAVE",
+        "expectedOutput": "Matches: None\n--- Document Content ---\nHello World\n--- End of File ---",
+        "isHidden": false
+      },
+      {
+        "input": "APPEND Item A\nAPPEND Item B\nDELETE 5\nSAVE",
+        "expectedOutput": "Error: Line not found\n--- Document Content ---\nItem A\nItem B\n--- End of File ---",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Project (Text Editor)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        List<String> doc = new ArrayList<>();\n\n        while (sc.hasNextLine()) {\n            String line = sc.nextLine().trim();\n            if (line.isEmpty()) continue;\n            if (line.equalsIgnoreCase(\"SAVE\")) break;\n\n            if (line.startsWith(\"APPEND \")) {\n                doc.add(line.substring(7).trim());\n            } else if (line.startsWith(\"DELETE \")) {\n                try {\n                    int idx = Integer.parseInt(line.substring(7).trim());\n                    if (idx >= 1 && idx <= doc.size()) {\n                        doc.remove(idx - 1);\n                        System.out.println(\"Deleted: Line \" + idx);\n                    } else {\n                        System.out.println(\"Error: Line not found\");\n                    }\n                } catch (Exception e) {\n                    System.out.println(\"Error: Line not found\");\n                }\n            } else if (line.startsWith(\"SEARCH \")) {\n                String kw = line.substring(7).trim();\n                List<Integer> matches = new ArrayList<>();\n                for (int i = 0; i < doc.size(); i++) {\n                    if (doc.get(i).contains(kw)) matches.add(i + 1);\n                }\n                if (matches.isEmpty()) {\n                    System.out.println(\"Matches: None\");\n                } else {\n                    StringBuilder sb = new StringBuilder(\"Matches: \");\n                    for (int m : matches) sb.append(\"Line \").append(m).append(\" \");\n                    System.out.println(sb.toString().trim());\n                }\n            }\n        }\n\n        System.out.println(\"--- Document Content ---\");\n        for (String l : doc) System.out.println(l);\n        System.out.println(\"--- End of File ---\");\n        sc.close();\n    }\n}",
+    "explanation": "Manages in-memory document line state with index-safe insertion and deletion operations.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-030",
+    "bank": "bank4",
+    "title": "Bank ATM Transaction Terminal Simulator",
+    "topic": "Projects & Applications",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "An interactive banking ATM machine simulator:\n- Account has a PIN (e.g. 1234) and initial balance B.\n- If PIN does not match, reject access: \"Access Denied: Incorrect PIN\" and exit.\n- If PIN matches:\n  - `DEPOSIT <amount>`: balance += amount. Print: \"Deposited $<amt> | Balance: $<bal>\"\n  - `WITHDRAW <amount>`: if balance >= amount, balance -= amount. Print: \"Withdrew $<amt> | Balance: $<bal>\". Otherwise: \"Insufficient Funds\"\n  - `STATEMENT`: print current balance.",
+    "inputFormat": "The first line contains correctPIN (string) and enteredPIN (string).\nThe second line contains initialBalance (int).\nThe next lines contain commands ending with 'EXIT'.",
+    "outputFormat": "Print transaction logs and current balance.",
+    "constraints": [
+      "PINs are 4-digit strings",
+      "Balances and amounts are positive integers"
+    ],
+    "sampleInput": "1234 1234\n500\nDEPOSIT 200\nWITHDRAW 100\nWITHDRAW 800\nEXIT",
+    "sampleOutput": "Deposited $200 | Balance: $700\nWithdrew $100 | Balance: $600\nInsufficient Funds\nATM Session Closed",
+    "testCases": [
+      {
+        "input": "1234 1234\n500\nDEPOSIT 200\nWITHDRAW 100\nWITHDRAW 800\nEXIT",
+        "expectedOutput": "Deposited $200 | Balance: $700\nWithdrew $100 | Balance: $600\nInsufficient Funds\nATM Session Closed",
+        "isHidden": false
+      },
+      {
+        "input": "1234 0000\n1000",
+        "expectedOutput": "Access Denied: Incorrect PIN",
+        "isHidden": false
+      },
+      {
+        "input": "9999 9999\n100\nDEPOSIT 50\nEXIT",
+        "expectedOutput": "Deposited $50 | Balance: $150\nATM Session Closed",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Project (ATM Machine)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String correct = sc.next();\n        String entered = sc.next();\n\n        if (!correct.equals(entered)) {\n            System.out.println(\"Access Denied: Incorrect PIN\");\n            sc.close();\n            return;\n        }\n\n        int bal = sc.nextInt();\n        while (sc.hasNext()) {\n            String cmd = sc.next();\n            if (cmd.equalsIgnoreCase(\"EXIT\")) break;\n\n            if (cmd.equalsIgnoreCase(\"DEPOSIT\")) {\n                int amt = sc.nextInt();\n                bal += amt;\n                System.out.println(\"Deposited $\" + amt + \" | Balance: $\" + bal);\n            } else if (cmd.equalsIgnoreCase(\"WITHDRAW\")) {\n                int amt = sc.nextInt();\n                if (bal >= amt) {\n                    bal -= amt;\n                    System.out.println(\"Withdrew $\" + amt + \" | Balance: $\" + bal);\n                } else {\n                    System.out.println(\"Insufficient Funds\");\n                }\n            } else if (cmd.equalsIgnoreCase(\"STATEMENT\")) {\n                System.out.println(\"Current Balance: $\" + bal);\n            }\n        }\n        System.out.println(\"ATM Session Closed\");\n        sc.close();\n    }\n}",
+    "explanation": "Implements an authenticated finite-state interactive banking transaction engine.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-031",
+    "bank": "bank4",
+    "title": "Dice Roller & Statistical Probability Engine",
+    "topic": "Projects & Applications",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "Bro Code's Random Numbers and Game Logic modules demonstrate dice simulation and statistical distribution.\n\nWhen rolling two standard 6-sided dice, the possible sums range from 2 to 12.\nGiven the outcomes of N rolls of two dice (each roll provided as two integers between 1 and 6):\n1. Compute the sum for each roll.\n2. Tally the frequency of each sum (2 through 12).\n3. Identify the most frequent sum (if tied, print the lower sum).",
+    "inputFormat": "The first line contains an integer N representing the number of rolls.\nThe next N lines each contain two integers d1 and d2 (1 <= d1, d2 <= 6).",
+    "outputFormat": "Print each occurring sum and its count: \"Sum <val>: <count> times\" (in ascending order of sum).\nOn the final line, print: \"Most Frequent Sum: <val>\".",
+    "constraints": [
+      "1 <= N <= 100",
+      "1 <= d1, d2 <= 6"
+    ],
+    "sampleInput": "5\n3 4\n1 6\n2 5\n1 1\n4 4",
+    "sampleOutput": "Sum 2: 1 times\nSum 7: 3 times\nSum 8: 1 times\nMost Frequent Sum: 7",
+    "testCases": [
+      {
+        "input": "5\n3 4\n1 6\n2 5\n1 1\n4 4",
+        "expectedOutput": "Sum 2: 1 times\nSum 7: 3 times\nSum 8: 1 times\nMost Frequent Sum: 7",
+        "isHidden": false
+      },
+      {
+        "input": "2\n6 6\n6 6",
+        "expectedOutput": "Sum 12: 2 times\nMost Frequent Sum: 12",
+        "isHidden": false
+      },
+      {
+        "input": "3\n2 3\n3 2\n1 4",
+        "expectedOutput": "Sum 5: 3 times\nMost Frequent Sum: 5",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Project (Dice Roller)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] freq = new int[13];\n\n        for (int i = 0; i < n; i++) {\n            int d1 = sc.nextInt();\n            int d2 = sc.nextInt();\n            freq[d1 + d2]++;\n        }\n\n        int maxCount = -1;\n        int mostFreqSum = 2;\n\n        for (int s = 2; s <= 12; s++) {\n            if (freq[s] > 0) {\n                System.out.println(\"Sum \" + s + \": \" + freq[s] + \" times\");\n            }\n            if (freq[s] > maxCount) {\n                maxCount = freq[s];\n                mostFreqSum = s;\n            }\n        }\n\n        System.out.println(\"Most Frequent Sum: \" + mostFreqSum);\n        sc.close();\n    }\n}",
+    "explanation": "Tabulates composite sum occurrences across simulated random experiment events.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-032",
+    "bank": "bank4",
+    "title": "Snake Board Grid Navigation Simulator",
+    "topic": "Projects & Applications",
+    "difficulty": "Hard",
+    "recommendedLanguage": "Java",
+    "description": "Bro Code's Java Snake Game tutorial is an iconic project featuring 2D coordinate movement, collision detection, and tail growth.\n\nSimulate a snake navigation engine on an N x N grid (0-indexed from (0,0) at top-left to (N-1, N-1)):\n- Snake starts at (0, 0) with initial length 1.\n- Move commands: 'U' (row - 1), 'D' (row + 1), 'L' (col - 1), 'R' (col + 1).\n- Food is located at given coordinates (foodR, foodC). When the head reaches the food, the snake eats it: length increments by 1, and food is consumed.\n- If the snake attempts to move outside the grid boundaries [0, N-1], the move causes a collision: print \"Collision at (<r>, <c>)! Game Over\" and stop immediately.\n- If all moves are executed without collision, print: \"Success: Final Position (<r>, <c>) | Length: <len>\".",
+    "inputFormat": "The first line contains grid size N.\nThe second line contains food coordinates foodR and foodC.\nThe third line contains move string (e.g. 'RRDLL').",
+    "outputFormat": "Print the game outcome and final statistics.",
+    "constraints": [
+      "2 <= N <= 20",
+      "0 <= foodR, foodC < N",
+      "Moves are letters U, D, L, R"
+    ],
+    "sampleInput": "5\n0 2\nRRDDL",
+    "sampleOutput": "Success: Final Position (2, 1) | Length: 2",
+    "testCases": [
+      {
+        "input": "5\n0 2\nRRDDL",
+        "expectedOutput": "Success: Final Position (2, 1) | Length: 2",
+        "isHidden": false
+      },
+      {
+        "input": "3\n1 1\nRRR",
+        "expectedOutput": "Collision at (0, 3)! Game Over",
+        "isHidden": false
+      },
+      {
+        "input": "4\n1 0\nDRRU",
+        "expectedOutput": "Success: Final Position (0, 2) | Length: 2",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Project (Snake Game)",
+    "starterCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution here\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int foodR = sc.nextInt();\n        int foodC = sc.nextInt();\n        String moves = sc.next();\n\n        int r = 0, c = 0;\n        int length = 1;\n        boolean foodEaten = false;\n\n        for (char m : moves.toCharArray()) {\n            int nextR = r, nextC = c;\n            if (m == 'U') nextR--;\n            else if (m == 'D') nextR++;\n            else if (m == 'L') nextC--;\n            else if (m == 'R') nextC++;\n\n            if (nextR < 0 || nextR >= n || nextC < 0 || nextC >= n) {\n                System.out.println(\"Collision at (\" + nextR + \", \" + nextC + \")! Game Over\");\n                sc.close();\n                return;\n            }\n\n            r = nextR;\n            c = nextC;\n            if (!foodEaten && r == foodR && c == foodC) {\n                length++;\n                foodEaten = true;\n            }\n        }\n\n        System.out.println(\"Success: Final Position (\" + r + \", \" + c + \") | Length: \" + length);\n        sc.close();\n    }\n}",
+    "explanation": "Simulates 2D state machine transitions, boundary clipping, and goal ingestion logic.",
+    "extractionStatus": "verified"
+  }
+]

@@ -27,7 +27,7 @@ import { soundManager } from '../services/sound';
 interface DBMSPracticeViewProps {
   questions: QuestionSummary[];
   onSelectQuestion: (questionId: string) => void;
-  onNavigateToBank?: (bank: 'bank1' | 'bank2' | 'bank3' | 'dbms' | 'all') => void;
+  onNavigateToBank?: (bank: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all') => void;
 }
 
 interface SQLTemplate {

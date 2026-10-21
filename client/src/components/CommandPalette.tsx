@@ -86,7 +86,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     },
     {
       id: 'tab-problems',
-      title: 'Problem Bank (All 45+ Java Problems)',
+      title: 'Problem Bank (All 145+ Questions across 5 Banks)',
       category: 'Navigation',
       icon: <BookOpen className="w-4 h-4 text-blue-400" />,
       perform: () => {

@@ -277,9 +277,42 @@ function seedQuestions() {
           q.recommendedLanguage || 'SQL'
         );
       }
-      console.log(`Synchronized ${dataDBMS.length} questions for Bank 4 (DBMS Lab Practice).`);
+      console.log(`Synchronized ${dataDBMS.length} questions for DBMS Lab Practice.`);
     } catch (e) {
       console.error('Error loading DBMS questions:', e.message);
+    }
+  }
+
+  // Bank 4: Video Projects & Java Spectrum (Bro Code Course - OOP to File Handling & Projects)
+  const bank4Path = path.join(__dirname, '..', '..', 'questions_bank4.json');
+  if (fs.existsSync(bank4Path)) {
+    try {
+      const data4 = JSON.parse(fs.readFileSync(bank4Path, 'utf8'));
+      for (const q of data4) {
+        insertOrReplace.run(
+          q.id,
+          q.title,
+          q.description,
+          q.inputFormat || '',
+          q.outputFormat || '',
+          JSON.stringify(q.constraints || []),
+          q.sampleInput || '',
+          q.sampleOutput || '',
+          JSON.stringify(q.testCases || []),
+          q.topic || 'Projects & Applications',
+          q.difficulty || 'Medium',
+          q.sourceScreenshot || 'Bro Code Java Course & Projects',
+          q.explanation || '',
+          q.referenceSolution || '',
+          q.starterCode || '',
+          q.extractionStatus || 'verified',
+          'bank4',
+          q.recommendedLanguage || 'Java'
+        );
+      }
+      console.log(`Synchronized ${data4.length} questions for Bank 4 (Video Projects & OOP to File Handling).`);
+    } catch (e) {
+      console.error('Error loading Bank 4 questions:', e.message);
     }
   }
 }
@@ -467,6 +500,7 @@ const dbHelpers = {
     const bank1Total = db.prepare("SELECT COUNT(*) as count FROM questions WHERE bank = 'bank1'").get().count;
     const bank2Total = db.prepare("SELECT COUNT(*) as count FROM questions WHERE bank = 'bank2'").get().count;
     const bank3Total = db.prepare("SELECT COUNT(*) as count FROM questions WHERE bank = 'bank3'").get().count;
+    const bank4Total = db.prepare("SELECT COUNT(*) as count FROM questions WHERE bank = 'bank4'").get().count;
     const dbmsTotal = db.prepare("SELECT COUNT(*) as count FROM questions WHERE bank = 'dbms'").get().count;
 
     const bank1Solved = db.prepare(`
@@ -488,6 +522,13 @@ const dbHelpers = {
       FROM questions q
       JOIN submissions s ON q.id = s.questionId
       WHERE q.bank = 'bank3' AND s.status = 'Accepted'
+    `).get().count;
+
+    const bank4Solved = db.prepare(`
+      SELECT COUNT(DISTINCT q.id) as count
+      FROM questions q
+      JOIN submissions s ON q.id = s.questionId
+      WHERE q.bank = 'bank4' AND s.status = 'Accepted'
     `).get().count;
 
     const dbmsSolved = db.prepare(`
@@ -564,6 +605,8 @@ const dbHelpers = {
       bank2Solved,
       bank3Total,
       bank3Solved,
+      bank4Total,
+      bank4Solved,
       dbmsTotal,
       dbmsSolved,
       solvedCount,

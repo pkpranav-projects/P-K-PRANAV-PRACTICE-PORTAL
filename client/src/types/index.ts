@@ -33,7 +33,7 @@ export interface QuestionSummary {
   title: string;
   topic: string;
   difficulty: Difficulty;
-  bank?: 'bank1' | 'bank2' | 'bank3' | 'dbms';
+  bank?: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms';
   recommendedLanguage?: 'Java' | 'C++' | 'Python' | 'SQL';
   solved: boolean;
   attempted: boolean;
@@ -56,7 +56,7 @@ export interface QuestionDetail {
   testCases: TestCase[];
   topic: string;
   difficulty: Difficulty;
-  bank?: 'bank1' | 'bank2' | 'bank3' | 'dbms';
+  bank?: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms';
   recommendedLanguage?: 'Java' | 'C++' | 'Python' | 'SQL';
   sourceScreenshot: string;
   starterCode?: string;
@@ -130,6 +130,8 @@ export interface DashboardStats {
   bank2Solved?: number;
   bank3Total?: number;
   bank3Solved?: number;
+  bank4Total?: number;
+  bank4Solved?: number;
   dbmsTotal?: number;
   dbmsSolved?: number;
   solvedCount: number;

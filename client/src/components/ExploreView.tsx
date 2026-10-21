@@ -255,7 +255,7 @@ export interface ExploreViewProps {
   stats: DashboardStats | null;
   questions: QuestionSummary[];
   onSelectQuestion: (questionId: string) => void;
-  onNavigateToBank: (bank: 'bank1' | 'bank2' | 'bank3' | 'dbms' | 'all') => void;
+  onNavigateToBank: (bank: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all') => void;
   onNavigateToDBMS?: () => void;
   onNavigateToTopicMode?: () => void;
   onNavigateToMasterclass: () => void;
@@ -294,6 +294,9 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
     (q) => q.bank === 'bank3' || (!q.bank && q.id.startsWith('bank3-'))
   );
   const bank4Questions = questions.filter(
+    (q) => q.bank === 'bank4' || (!q.bank && q.id.startsWith('bank4-'))
+  );
+  const dbmsQuestions = questions.filter(
     (q) => q.bank === 'dbms' || (!q.bank && q.id.startsWith('dbms-'))
   );
 
@@ -301,13 +304,15 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
   const bank2Solved = bank2Questions.filter((q) => q.solved).length;
   const bank3Solved = bank3Questions.filter((q) => q.solved).length;
   const bank4Solved = bank4Questions.filter((q) => q.solved).length;
+  const dbmsSolved = dbmsQuestions.filter((q) => q.solved).length;
   const totalSolved = stats?.solvedCount ?? questions.filter((q) => q.solved).length;
-  const totalQuestions = questions.length || 113;
+  const totalQuestions = questions.length || 145;
 
   const bank1Percent = Math.round((bank1Solved / (bank1Questions.length || 1)) * 100);
   const bank2Percent = Math.round((bank2Solved / (bank2Questions.length || 1)) * 100);
   const bank3Percent = Math.round((bank3Solved / (bank3Questions.length || 1)) * 100);
   const bank4Percent = Math.round((bank4Solved / (bank4Questions.length || 1)) * 100);
+  const dbmsPercent = Math.round((dbmsSolved / (dbmsQuestions.length || 1)) * 100);
   const totalPercent = Math.round((totalSolved / totalQuestions) * 100);
 
   const bookmarkCount = stats?.bookmarkCount ?? questions.filter((q) => q.isBookmarked).length;
@@ -362,16 +367,31 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
     },
     {
       id: 'bank-4',
+      badge: 'Video & Projects',
+      subtitle: 'Bro Code Full Spectrum',
+      title: 'Bank 4: Video Projects (OOP to File I/O)',
+      description: '32 comprehensive problems spanning Constructors, OOP Inheritance, Polymorphism, Exceptions, File Handling, and interactive projects like Tic-Tac-Toe, Quiz Game, ATM Simulator, and Snake Navigator.',
+      gradientClass: 'lc-gradient-crimson',
+      chaptersCount: 6,
+      chaptersLabel: 'Modules',
+      itemsCount: bank4Questions.length || 32,
+      itemsLabel: 'Projects',
+      progressPercent: bank4Percent,
+      actionText: 'Explore Bank 4',
+      onClick: () => onNavigateToBank('bank4')
+    },
+    {
+      id: 'bank-dbms',
       badge: 'MySQL 8.0 & Triggers',
       subtitle: 'DBMS & SQL Engineering Lab',
-      title: 'Question Bank 4: 12 DBMS & SQL Lab Challenges',
+      title: 'DBMS & SQL Lab: 12 Database Challenges',
       description: '12 authentic lab challenges covering automated triggers, audit logging, and stored procedures with live execution.',
       gradientClass: 'lc-gradient-algo',
       chaptersCount: 4,
       chaptersLabel: 'Lab Modules',
-      itemsCount: bank4Questions.length || 12,
+      itemsCount: dbmsQuestions.length || 12,
       itemsLabel: 'Challenges',
-      progressPercent: bank4Percent,
+      progressPercent: dbmsPercent,
       actionText: 'Explore DBMS Lab',
       onClick: () => {
         if (onNavigateToDBMS) onNavigateToDBMS();

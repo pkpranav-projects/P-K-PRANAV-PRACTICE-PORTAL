@@ -23,6 +23,7 @@ import {
   ChevronDown,
   ChevronRight,
   Database,
+  Video,
   ArrowUp,
   ArrowDown,
   ArrowUpDown
@@ -115,10 +116,17 @@ const RecommendedLanguageBadge: React.FC<{ language?: string; size?: 'sm' | 'md'
 };
 
 const getBankBadge = (q: QuestionSummary) => {
+  if (q.bank === 'bank4' || q.id.startsWith('bank4-')) {
+    return {
+      label: 'Bank 4 (Video Projects)',
+      shortLabel: 'Bank 4 (Projects)',
+      color: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
+    };
+  }
   if (q.bank === 'dbms' || q.id.startsWith('dbms-')) {
     return {
-      label: 'Bank 4 (DBMS & SQL Lab)',
-      shortLabel: 'Bank 4 (DBMS)',
+      label: 'DBMS & SQL Lab',
+      shortLabel: 'DBMS Lab',
       color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
     };
   }
@@ -149,7 +157,7 @@ interface QuestionBankViewProps {
   onToggleBookmark: (questionId: string) => Promise<void>;
   onToggleRevision: (questionId: string) => Promise<void>;
   initialFilterStatus?: string;
-  initialBank?: 'bank1' | 'bank2' | 'bank3' | 'dbms' | 'all';
+  initialBank?: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all';
   initialViewMode?: 'table' | 'cards' | 'topic';
   onPickRandom?: () => void;
 }
@@ -164,7 +172,7 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
   initialViewMode,
   onPickRandom
 }) => {
-  const [selectedBank, setSelectedBank] = useState<'bank1' | 'bank2' | 'bank3' | 'dbms' | 'all'>(initialBank);
+  const [selectedBank, setSelectedBank] = useState<'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all'>(initialBank);
   const [search, setSearch] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('All');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('All');
@@ -203,6 +211,10 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
   }, [questions]);
 
   const bank4Questions = useMemo(() => {
+    return questions.filter(q => (q.bank === 'bank4' || (!q.bank && q.id.startsWith('bank4-'))));
+  }, [questions]);
+
+  const dbmsQuestions = useMemo(() => {
     return questions.filter(q => (q.bank === 'dbms' || (!q.bank && q.id.startsWith('dbms-'))));
   }, [questions]);
 
@@ -210,15 +222,17 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
   const bank2SolvedCount = useMemo(() => bank2Questions.filter(q => q.solved).length, [bank2Questions]);
   const bank3SolvedCount = useMemo(() => bank3Questions.filter(q => q.solved).length, [bank3Questions]);
   const bank4SolvedCount = useMemo(() => bank4Questions.filter(q => q.solved).length, [bank4Questions]);
+  const dbmsSolvedCount = useMemo(() => dbmsQuestions.filter(q => q.solved).length, [dbmsQuestions]);
 
   // Questions in currently active bank
   const bankScopedQuestions = useMemo(() => {
     if (selectedBank === 'bank1') return bank1Questions;
     if (selectedBank === 'bank2') return bank2Questions;
     if (selectedBank === 'bank3') return bank3Questions;
-    if (selectedBank === 'dbms') return bank4Questions;
+    if (selectedBank === 'bank4') return bank4Questions;
+    if (selectedBank === 'dbms') return dbmsQuestions;
     return questions;
-  }, [selectedBank, bank1Questions, bank2Questions, bank3Questions, bank4Questions, questions]);
+  }, [selectedBank, bank1Questions, bank2Questions, bank3Questions, bank4Questions, dbmsQuestions, questions]);
 
   // Extract unique topics for the current bank
   const topics = useMemo(() => {
@@ -445,15 +459,21 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
             onClick={() => {
               setSelectedBank('all');
               setSelectedTopic('All');
+              setViewMode('topic');
+              try { localStorage.setItem('arena_question_view_mode', 'topic'); } catch {}
             }}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
               selectedBank === 'all'
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-bold shadow-sm'
+                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-bold shadow-sm ring-2 ring-amber-500/50'
                 : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
+            title="Combine all problems from all banks topic-wise"
           >
             <Layers className="w-3.5 h-3.5" />
             <span>All Problems ({questions.length})</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold">
+              Topic Mode
+            </span>
           </button>
 
           <button
@@ -512,6 +532,24 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
 
           <button
             onClick={() => {
+              setSelectedBank('bank4');
+              setSelectedTopic('All');
+            }}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
+              selectedBank === 'bank4'
+                ? 'bg-rose-500 text-white font-bold shadow-sm'
+                : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Video className="w-3.5 h-3.5" />
+            <span>Bank 4 (Video Projects - {bank4Questions.length})</span>
+            <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-black/20 text-white">
+              {bank4SolvedCount} Solved
+            </span>
+          </button>
+
+          <button
+            onClick={() => {
               setSelectedBank('dbms');
               setSelectedTopic('All');
             }}
@@ -522,9 +560,9 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
             }`}
           >
             <Database className="w-3.5 h-3.5" />
-            <span>Bank 4 (DBMS & SQL - {bank4Questions.length})</span>
+            <span>DBMS & SQL Lab ({dbmsQuestions.length})</span>
             <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-black/20 text-white">
-              {bank4SolvedCount} Solved
+              {dbmsSolvedCount} Solved
             </span>
           </button>
         </div>
