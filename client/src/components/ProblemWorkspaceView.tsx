@@ -261,6 +261,207 @@ function FormattedContent({ text, className = '' }: { text: string; className?: 
   );
 }
 
+// Built-in Live Templates & Snippets (sout -> System.out.println, souf, serr, psvm, fori, etc.)
+interface CodeSnippet {
+  label: string;
+  detail: string;
+  documentation: string;
+  snippet: string;
+  fallbackText: string;
+  cursorOffset: number;
+}
+
+const SNIPPETS: Record<string, CodeSnippet[]> = {
+  java: [
+    {
+      label: 'sout',
+      detail: 'System.out.println();',
+      documentation: 'Prints argument to standard output followed by a newline.',
+      snippet: 'System.out.println(${1});',
+      fallbackText: 'System.out.println();',
+      cursorOffset: 19
+    },
+    {
+      label: 'souf',
+      detail: 'System.out.printf("", ...);',
+      documentation: 'Prints formatted string to standard output.',
+      snippet: 'System.out.printf("${1:%s}\\n", ${2});',
+      fallbackText: 'System.out.printf("%s\\n", );',
+      cursorOffset: 23
+    },
+    {
+      label: 'serr',
+      detail: 'System.err.println();',
+      documentation: 'Prints argument to standard error followed by a newline.',
+      snippet: 'System.err.println(${1});',
+      fallbackText: 'System.err.println();',
+      cursorOffset: 19
+    },
+    {
+      label: 'psvm',
+      detail: 'public static void main(String[] args)',
+      documentation: 'Standard Java main method declaration.',
+      snippet: 'public static void main(String[] args) {\n    ${1}\n}',
+      fallbackText: 'public static void main(String[] args) {\n    \n}',
+      cursorOffset: 45
+    },
+    {
+      label: 'main',
+      detail: 'public static void main(String[] args)',
+      documentation: 'Standard Java main method declaration.',
+      snippet: 'public static void main(String[] args) {\n    ${1}\n}',
+      fallbackText: 'public static void main(String[] args) {\n    \n}',
+      cursorOffset: 45
+    },
+    {
+      label: 'fori',
+      detail: 'for (int i = 0; i < n; i++)',
+      documentation: 'Standard 0-indexed for loop.',
+      snippet: 'for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n    ${3}\n}',
+      fallbackText: 'for (int i = 0; i < n; i++) {\n    \n}',
+      cursorOffset: 35
+    },
+    {
+      label: 'foreach',
+      detail: 'for (Type item : collection)',
+      documentation: 'Enhanced for-each loop over an Iterable.',
+      snippet: 'for (${1:Object} ${2:item} : ${3:collection}) {\n    ${4}\n}',
+      fallbackText: 'for (Object item : collection) {\n    \n}',
+      cursorOffset: 36
+    },
+    {
+      label: 'sc',
+      detail: 'Scanner scanner = new Scanner(System.in);',
+      documentation: 'Initialize a standard Scanner instance from System.in.',
+      snippet: 'Scanner ${1:scanner} = new Scanner(System.in);',
+      fallbackText: 'Scanner scanner = new Scanner(System.in);',
+      cursorOffset: 40
+    },
+    {
+      label: 'scanner',
+      detail: 'Scanner scanner = new Scanner(System.in);',
+      documentation: 'Initialize a standard Scanner instance from System.in.',
+      snippet: 'Scanner ${1:scanner} = new Scanner(System.in);',
+      fallbackText: 'Scanner scanner = new Scanner(System.in);',
+      cursorOffset: 40
+    }
+  ],
+  python: [
+    {
+      label: 'sout',
+      detail: 'print(...)',
+      documentation: 'Prints expression to standard output.',
+      snippet: 'print(${1})',
+      fallbackText: 'print()',
+      cursorOffset: 6
+    },
+    {
+      label: 'print',
+      detail: 'print(...)',
+      documentation: 'Prints expression to standard output.',
+      snippet: 'print(${1})',
+      fallbackText: 'print()',
+      cursorOffset: 6
+    },
+    {
+      label: 'main',
+      detail: 'if __name__ == "__main__":',
+      documentation: 'Boilerplate main module check in Python.',
+      snippet: "if __name__ == '__main__':\n    ${1:main()}",
+      fallbackText: "if __name__ == '__main__':\n    main()",
+      cursorOffset: 33
+    }
+  ],
+  cpp: [
+    {
+      label: 'sout',
+      detail: 'cout << ... << endl;',
+      documentation: 'Prints expression to stdout with newline.',
+      snippet: 'cout << ${1} << endl;',
+      fallbackText: 'cout <<  << endl;',
+      cursorOffset: 8
+    },
+    {
+      label: 'cout',
+      detail: 'cout << ... << endl;',
+      documentation: 'Prints expression to stdout with newline.',
+      snippet: 'cout << ${1} << endl;',
+      fallbackText: 'cout <<  << endl;',
+      cursorOffset: 8
+    },
+    {
+      label: 'cin',
+      detail: 'cin >> ...;',
+      documentation: 'Reads standard input into variable.',
+      snippet: 'cin >> ${1};',
+      fallbackText: 'cin >> ;',
+      cursorOffset: 7
+    },
+    {
+      label: 'fori',
+      detail: 'for (int i = 0; i < n; i++)',
+      documentation: 'Standard 0-indexed for loop in C++.',
+      snippet: 'for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n    ${3}\n}',
+      fallbackText: 'for (int i = 0; i < n; i++) {\n    \n}',
+      cursorOffset: 35
+    }
+  ]
+};
+
+const SNIPPET_MAP: Record<string, Record<string, CodeSnippet>> = {
+  java: {},
+  python: {},
+  cpp: {}
+};
+
+for (const lang of Object.keys(SNIPPETS)) {
+  for (const item of SNIPPETS[lang]) {
+    SNIPPET_MAP[lang][item.label] = item;
+  }
+}
+
+let areSnippetsRegistered = false;
+
+function registerMonacoSnippets(monaco: any) {
+  if (areSnippetsRegistered || !monaco?.languages) return;
+  areSnippetsRegistered = true;
+
+  const languages = ['java', 'python', 'cpp'];
+  for (const lang of languages) {
+    const list = SNIPPETS[lang];
+    if (!list) continue;
+
+    try {
+      monaco.languages.registerCompletionItemProvider(lang, {
+        provideCompletionItems: (model: any, position: any) => {
+          const word = model.getWordUntilPosition(position);
+          const range = {
+            startLineNumber: position.lineNumber,
+            endLineNumber: position.lineNumber,
+            startColumn: word.startColumn,
+            endColumn: word.endColumn
+          };
+
+          const suggestions = list.map((snip, idx) => ({
+            label: snip.label,
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            documentation: snip.documentation,
+            detail: `${snip.detail} [Tab]`,
+            insertText: snip.snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range: range,
+            sortText: `000${idx}`
+          }));
+
+          return { suggestions };
+        }
+      });
+    } catch (e) {
+      console.warn('Failed to register snippet provider for ' + lang, e);
+    }
+  }
+}
+
 interface ProblemWorkspaceViewProps {
   questionId: string;
   theme: 'dark' | 'oled' | 'light' | 'system';
@@ -288,6 +489,10 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   const [question, setQuestion] = useState<QuestionDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>('java');
+  const selectedLanguageRef = useRef<SupportedLanguage>(selectedLanguage);
+  useEffect(() => {
+    selectedLanguageRef.current = selectedLanguage;
+  }, [selectedLanguage]);
   const [code, setCode] = useState('');
   const codeRef = useRef<string>('');
   const [customInput, setCustomInput] = useState('');
@@ -347,6 +552,15 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     lineNumbers: 'on',
     renderLineHighlight: 'all',
     fixedOverflowWidgets: true,
+    tabCompletion: 'on',
+    snippetSuggestions: 'top',
+    suggest: {
+      snippetsPreventQuickSuggestions: false
+    },
+    quickSuggestions: { other: true, comments: false, strings: false },
+    suggestOnTriggerCharacters: true,
+    acceptSuggestionOnEnter: 'on',
+    wordBasedSuggestions: 'currentDocument',
     scrollbar: {
       verticalScrollbarSize: 8,
       horizontalScrollbarSize: 8,
@@ -527,6 +741,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     }
 
     setSelectedLanguage(newLang);
+    selectedLanguageRef.current = newLang;
 
     // 3. Fetch or restore code for the selected new language
     let nextCode = '';
@@ -1536,6 +1751,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                 onChange={(value) => handleCodeChange(value || '')}
                 onMount={(editor, monaco) => {
                   editorRef.current = editor;
+                  registerMonacoSnippets(monaco);
                   try {
                     monaco.editor.defineTheme('oled-black', {
                       base: 'vs-dark',
@@ -1553,6 +1769,78 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                       monaco.editor.setTheme('oled-black');
                     }
                   } catch (e) {}
+
+                  // Instant Tab snippet expansion (e.g. typing "sout" and pressing Tab expands System.out.println)
+                  editor.onKeyDown((e: any) => {
+                    const isTab = (e.keyCode === monaco.KeyCode.Tab || e.code === 'Tab' || e.browserEvent?.key === 'Tab') &&
+                                  !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey;
+                    if (!isTab) return;
+
+                    // If user has a non-empty selection, let Monaco perform normal block indentation
+                    const selection = editor.getSelection();
+                    if (selection && !selection.isEmpty()) return;
+
+                    const pos = editor.getPosition();
+                    const model = editor.getModel();
+                    if (!pos || !model) return;
+
+                    const lineContent = model.getLineContent(pos.lineNumber);
+                    const textBefore = lineContent.substring(0, pos.column - 1);
+                    const textAfter = lineContent.substring(pos.column - 1);
+                    const currentLang = selectedLanguageRef.current;
+
+                    const langSnippets = SNIPPET_MAP[currentLang];
+                    if (!langSnippets) return;
+
+                    // Do not expand if preceded by a type keyword (e.g. int sout = 5)
+                    if (/(?:int|String|double|float|boolean|char|long|byte|short|void|auto|const)\s+[a-zA-Z0-9_]+$/.test(textBefore)) {
+                      return;
+                    }
+
+                    // Match keyword before cursor (must be preceded by start-of-line, whitespace, or punctuation)
+                    const match = textBefore.match(/(^|[\s;{}()])([a-zA-Z0-9_]+)$/);
+                    if (!match) return;
+
+                    const keyword = match[2];
+                    const entry = langSnippets[keyword];
+                    if (!entry) return;
+
+                    // Intercept Tab event immediately
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // If the statement snippet already ends with a semicolon and user already has a semicolon after cursor, overwrite it
+                    const hasTrailingSemi = textAfter.startsWith(';') && entry.snippet.endsWith(';');
+                    const overwriteAfter = hasTrailingSemi ? 1 : 0;
+
+                    try {
+                      const snippetCtrl = editor.getContribution('snippetController2') as any;
+                      if (snippetCtrl && typeof snippetCtrl.insert === 'function') {
+                        snippetCtrl.insert(entry.snippet, {
+                          overwriteBefore: keyword.length,
+                          overwriteAfter
+                        });
+                        return;
+                      }
+                    } catch (err) {
+                      console.warn('Monaco snippetController error, falling back:', err);
+                    }
+
+                    // Fallback using direct model edits with exact parenthesis cursor positioning
+                    const startCol = pos.column - keyword.length;
+                    const endCol = pos.column + overwriteAfter;
+                    editor.executeEdits('custom-snippet', [
+                      {
+                        range: new monaco.Range(pos.lineNumber, startCol, pos.lineNumber, endCol),
+                        text: entry.fallbackText,
+                        forceMoveMarkers: true
+                      }
+                    ]);
+                    editor.setPosition({
+                      lineNumber: pos.lineNumber,
+                      column: startCol + entry.cursorOffset
+                    });
+                  });
                 }}
                 options={editorOptions}
               />
@@ -1561,7 +1849,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             {/* Editor Action Bottom Bar */}
             <div className="flex items-center justify-between px-4 py-2.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60">
               <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-                Ctrl+Enter to Run · Ctrl+Shift+Enter to Submit · Alt+F to Format
+                Ctrl+Enter to Run · Ctrl+Shift+Enter to Submit · sout+Tab for println
               </span>
 
               <div className="flex items-center gap-2 ml-auto">
