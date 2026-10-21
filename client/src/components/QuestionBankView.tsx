@@ -22,9 +22,15 @@ import {
   FolderTree,
   ChevronDown,
   ChevronRight,
-  Database
+  Database,
+  ArrowUp,
+  ArrowDown,
+  ArrowUpDown
 } from 'lucide-react';
 import { Difficulty, QuestionSummary } from '../types';
+
+export type SortOption = 'id' | 'title' | 'difficulty' | 'topic' | 'status' | 'count';
+export type SortDirection = 'asc' | 'desc';
 
 // Visual color palette and icons per topic category
 const getTopicBadgeStyle = (topic: string) => {
@@ -164,7 +170,8 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>(initialFilterStatus);
   const [selectedLanguageFilter, setSelectedLanguageFilter] = useState<string>('All');
-  const [sortBy, setSortBy] = useState<'id' | 'title' | 'difficulty' | 'topic'>('id');
+  const [sortBy, setSortBy] = useState<SortOption>('id');
+  const [sortOrder, setSortOrder] = useState<SortDirection>('asc');
   const [viewMode, setViewMode] = useState<'table' | 'cards' | 'topic'>(() => {
     return initialViewMode || (localStorage.getItem('arena_question_view_mode') as any) || 'table';
   });
@@ -257,20 +264,28 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
 
       return true;
     }).sort((a, b) => {
-      if (sortBy === 'id') return a.id.localeCompare(b.id, undefined, { numeric: true });
-      if (sortBy === 'title') return a.title.localeCompare(b.title);
-      if (sortBy === 'topic') {
-        const tComp = a.topic.localeCompare(b.topic);
-        if (tComp !== 0) return tComp;
-        return a.id.localeCompare(b.id, undefined, { numeric: true });
-      }
-      if (sortBy === 'difficulty') {
+      let cmp = 0;
+      if (sortBy === 'id') {
+        cmp = a.id.localeCompare(b.id, undefined, { numeric: true });
+      } else if (sortBy === 'title') {
+        cmp = a.title.localeCompare(b.title);
+      } else if (sortBy === 'topic') {
+        cmp = a.topic.localeCompare(b.topic);
+        if (cmp === 0) cmp = a.id.localeCompare(b.id, undefined, { numeric: true });
+      } else if (sortBy === 'difficulty') {
         const weight: Record<Difficulty, number> = { Easy: 1, Medium: 2, Hard: 3 };
-        return weight[a.difficulty] - weight[b.difficulty];
+        cmp = weight[a.difficulty] - weight[b.difficulty];
+        if (cmp === 0) cmp = a.id.localeCompare(b.id, undefined, { numeric: true });
+      } else if (sortBy === 'status') {
+        const getStatusRank = (q: QuestionSummary) => (q.solved ? 3 : q.attempted ? 2 : 1);
+        cmp = getStatusRank(a) - getStatusRank(b);
+        if (cmp === 0) cmp = a.id.localeCompare(b.id, undefined, { numeric: true });
+      } else if (sortBy === 'count') {
+        cmp = a.id.localeCompare(b.id, undefined, { numeric: true });
       }
-      return 0;
+      return sortOrder === 'asc' ? cmp : -cmp;
     });
-  }, [bankScopedQuestions, search, selectedTopic, selectedDifficulty, selectedStatus, selectedLanguageFilter, sortBy]);
+  }, [bankScopedQuestions, search, selectedTopic, selectedDifficulty, selectedStatus, selectedLanguageFilter, sortBy, sortOrder]);
 
   // Group questions by topic for Topic Mode
   const topicGroups = useMemo(() => {
@@ -292,17 +307,29 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
       mediumCount: number;
       hardCount: number;
       progressPercent: number;
+      minId: string;
+      maxId: string;
     }[] = [];
 
     map.forEach((qList, topic) => {
-      // Sort questions inside this topic
+      // Sort questions inside this topic according to current active sort & direction
       const sortedInTopic = [...qList].sort((a, b) => {
-        if (sortBy === 'title') return a.title.localeCompare(b.title);
-        if (sortBy === 'difficulty') {
+        let cmp = 0;
+        if (sortBy === 'title') {
+          cmp = a.title.localeCompare(b.title);
+        } else if (sortBy === 'difficulty') {
           const weight: Record<Difficulty, number> = { Easy: 1, Medium: 2, Hard: 3 };
-          return weight[a.difficulty] - weight[b.difficulty];
+          cmp = weight[a.difficulty] - weight[b.difficulty];
+          if (cmp === 0) cmp = a.id.localeCompare(b.id, undefined, { numeric: true });
+        } else if (sortBy === 'status') {
+          const getStatusRank = (q: QuestionSummary) => (q.solved ? 3 : q.attempted ? 2 : 1);
+          cmp = getStatusRank(a) - getStatusRank(b);
+          if (cmp === 0) cmp = a.id.localeCompare(b.id, undefined, { numeric: true });
+        } else {
+          // 'id', 'topic', 'count', default: numeric ID
+          cmp = a.id.localeCompare(b.id, undefined, { numeric: true });
         }
-        return a.id.localeCompare(b.id, undefined, { numeric: true });
+        return sortOrder === 'asc' ? cmp : -cmp;
       });
 
       const totalCount = sortedInTopic.length;
@@ -312,6 +339,11 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
       const hardCount = sortedInTopic.filter(q => q.difficulty === 'Hard').length;
       const progressPercent = totalCount > 0 ? Math.round((solvedCount / totalCount) * 100) : 0;
 
+      // Extract minId and maxId across questions in this topic
+      const allIds = sortedInTopic.map(q => q.id).sort((x, y) => x.localeCompare(y, undefined, { numeric: true }));
+      const minId = allIds[0] || '';
+      const maxId = allIds[allIds.length - 1] || '';
+
       groups.push({
         topic,
         questions: sortedInTopic,
@@ -320,13 +352,36 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
         easyCount,
         mediumCount,
         hardCount,
-        progressPercent
+        progressPercent,
+        minId,
+        maxId
       });
     });
 
-    // Sort topic groups: topics with highest question count first, then alphabetical
-    return groups.sort((a, b) => b.totalCount - a.totalCount || a.topic.localeCompare(b.topic));
-  }, [filteredQuestions, sortBy]);
+    // Sort topic groups based on sortBy and sortOrder
+    return groups.sort((a, b) => {
+      let cmp = 0;
+      if (sortBy === 'id') {
+        // Natural Exam Order: topic containing the earliest problem ID comes first!
+        cmp = a.minId.localeCompare(b.minId, undefined, { numeric: true });
+      } else if (sortBy === 'title' || sortBy === 'topic') {
+        cmp = a.topic.localeCompare(b.topic);
+      } else if (sortBy === 'count') {
+        // Most problems first when desc, fewest when asc
+        cmp = b.totalCount - a.totalCount || a.topic.localeCompare(b.topic);
+        return sortOrder === 'asc' ? -cmp : cmp;
+      } else if (sortBy === 'status') {
+        // Unsolved first (lowest progress percentage first in asc)
+        cmp = a.progressPercent - b.progressPercent || (b.totalCount - a.totalCount);
+      } else if (sortBy === 'difficulty') {
+        // Topic with more easy questions first
+        cmp = (b.easyCount - b.hardCount) - (a.easyCount - a.hardCount);
+      } else {
+        cmp = a.minId.localeCompare(b.minId, undefined, { numeric: true });
+      }
+      return sortOrder === 'asc' ? cmp : -cmp;
+    });
+  }, [filteredQuestions, sortBy, sortOrder]);
 
   const toggleTopicCollapse = (topicName: string) => {
     setCollapsedTopics(prev => ({
@@ -351,9 +406,19 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
     setSelectedStatus('All');
     setSelectedLanguageFilter('All');
     setSortBy('id');
+    setSortOrder('asc');
   };
 
-  const isFiltered = search !== '' || selectedTopic !== 'All' || selectedDifficulty !== 'All' || selectedStatus !== 'All' || selectedLanguageFilter !== 'All';
+  const isFiltered = search !== '' || selectedTopic !== 'All' || selectedDifficulty !== 'All' || selectedStatus !== 'All' || selectedLanguageFilter !== 'All' || sortBy !== 'id' || sortOrder !== 'asc';
+
+  const handleHeaderSort = (field: SortOption) => {
+    if (sortBy === field) {
+      setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortBy(field);
+      setSortOrder('asc');
+    }
+  };
 
   // Local Pick Random handler if none provided
   const handlePickRandom = () => {
@@ -616,19 +681,55 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
             </select>
           </div>
 
-          {/* Sort By */}
+          {/* Sort By & Direction */}
           <div>
-            <label className="block text-[10px] font-bold uppercase text-slate-400 mb-1">Sort By</label>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500"
-            >
-              <option value="id">Problem ID</option>
-              <option value="title">Title (A-Z)</option>
-              <option value="difficulty">Difficulty</option>
-              <option value="topic">Topic</option>
-            </select>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-[10px] font-bold uppercase text-slate-400">Sort By</label>
+              <button
+                type="button"
+                onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
+                className="inline-flex items-center gap-0.5 text-[10px] font-bold text-amber-500 hover:text-amber-400 cursor-pointer"
+                title={`Current order: ${sortOrder === 'asc' ? 'Ascending (1 → N)' : 'Descending (N → 1)'}. Click to toggle.`}
+              >
+                {sortOrder === 'asc' ? (
+                  <>
+                    <ArrowUp className="w-3 h-3" />
+                    <span>ASC</span>
+                  </>
+                ) : (
+                  <>
+                    <ArrowDown className="w-3 h-3" />
+                    <span>DESC</span>
+                  </>
+                )}
+              </button>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500"
+              >
+                <option value="id">Problem # (Exam Order)</option>
+                <option value="title">Title (Alphabetical)</option>
+                <option value="difficulty">Difficulty Level</option>
+                <option value="topic">Topic Name</option>
+                <option value="status">Solved Status</option>
+                <option value="count">Problem Count</option>
+              </select>
+              <button
+                type="button"
+                onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
+                className="p-1.5 rounded-lg border border-slate-200 dark:border-[#333333] bg-slate-50 dark:bg-[#242424] hover:bg-slate-100 dark:hover:bg-[#2c2c2c] text-slate-700 dark:text-slate-200 cursor-pointer transition-colors flex-shrink-0"
+                title={sortOrder === 'asc' ? 'Switch to Descending (N → 1)' : 'Switch to Ascending (1 → N)'}
+              >
+                {sortOrder === 'asc' ? (
+                  <ArrowUp className="w-3.5 h-3.5 text-amber-500" />
+                ) : (
+                  <ArrowDown className="w-3.5 h-3.5 text-amber-500" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -650,12 +751,84 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="border-b border-slate-200 dark:border-[#282828] bg-slate-50/70 dark:bg-[#222222] text-slate-500 dark:text-slate-400 font-semibold uppercase text-[10px]">
-                  <th className="py-3 px-4 w-12 text-center">Status</th>
-                  <th className="py-3 px-4">Title</th>
-                  <th className="py-3 px-4 w-28">Bank</th>
-                  <th className="py-3 px-4 w-28">Difficulty</th>
-                  <th className="py-3 px-4">Topic</th>
-                  <th className="py-3 px-4 w-28 text-right">Action</th>
+                  <th
+                    onClick={() => handleHeaderSort('status')}
+                    className="py-3 px-3 w-12 text-center cursor-pointer select-none hover:text-amber-500 transition-colors"
+                    title="Click to sort by Status"
+                  >
+                    <div className="flex items-center justify-center gap-1">
+                      <span>Status</span>
+                      {sortBy === 'status' ? (
+                        sortOrder === 'asc' ? <ArrowUp className="w-3 h-3 text-amber-500" /> : <ArrowDown className="w-3 h-3 text-amber-500" />
+                      ) : (
+                        <ArrowUpDown className="w-2.5 h-2.5 opacity-20" />
+                      )}
+                    </div>
+                  </th>
+
+                  <th
+                    onClick={() => handleHeaderSort('id')}
+                    className="py-3 px-3 w-28 cursor-pointer select-none hover:text-amber-500 transition-colors"
+                    title="Click to sort by Problem # / Exam Order"
+                  >
+                    <div className="flex items-center gap-1">
+                      <span># (ID)</span>
+                      {sortBy === 'id' ? (
+                        sortOrder === 'asc' ? <ArrowUp className="w-3 h-3 text-amber-500" /> : <ArrowDown className="w-3 h-3 text-amber-500" />
+                      ) : (
+                        <ArrowUpDown className="w-2.5 h-2.5 opacity-20" />
+                      )}
+                    </div>
+                  </th>
+
+                  <th
+                    onClick={() => handleHeaderSort('title')}
+                    className="py-3 px-4 cursor-pointer select-none hover:text-amber-500 transition-colors"
+                    title="Click to sort by Title"
+                  >
+                    <div className="flex items-center gap-1">
+                      <span>Title</span>
+                      {sortBy === 'title' ? (
+                        sortOrder === 'asc' ? <ArrowUp className="w-3 h-3 text-amber-500" /> : <ArrowDown className="w-3 h-3 text-amber-500" />
+                      ) : (
+                        <ArrowUpDown className="w-2.5 h-2.5 opacity-20" />
+                      )}
+                    </div>
+                  </th>
+
+                  <th className="py-3 px-4 w-24">Bank</th>
+
+                  <th
+                    onClick={() => handleHeaderSort('difficulty')}
+                    className="py-3 px-4 w-28 cursor-pointer select-none hover:text-amber-500 transition-colors"
+                    title="Click to sort by Difficulty"
+                  >
+                    <div className="flex items-center gap-1">
+                      <span>Difficulty</span>
+                      {sortBy === 'difficulty' ? (
+                        sortOrder === 'asc' ? <ArrowUp className="w-3 h-3 text-amber-500" /> : <ArrowDown className="w-3 h-3 text-amber-500" />
+                      ) : (
+                        <ArrowUpDown className="w-2.5 h-2.5 opacity-20" />
+                      )}
+                    </div>
+                  </th>
+
+                  <th
+                    onClick={() => handleHeaderSort('topic')}
+                    className="py-3 px-4 cursor-pointer select-none hover:text-amber-500 transition-colors"
+                    title="Click to sort by Topic"
+                  >
+                    <div className="flex items-center gap-1">
+                      <span>Topic</span>
+                      {sortBy === 'topic' ? (
+                        sortOrder === 'asc' ? <ArrowUp className="w-3 h-3 text-amber-500" /> : <ArrowDown className="w-3 h-3 text-amber-500" />
+                      ) : (
+                        <ArrowUpDown className="w-2.5 h-2.5 opacity-20" />
+                      )}
+                    </div>
+                  </th>
+
+                  <th className="py-3 px-4 w-24 text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-[#282828]">
@@ -678,7 +851,7 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                       }`}
                     >
                       {/* Status Icon */}
-                      <td className="py-3 px-4 text-center">
+                      <td className="py-3 px-3 text-center">
                         {q.solved ? (
                           <CheckCircle2 className="w-4 h-4 text-emerald-500 mx-auto" />
                         ) : q.attempted ? (
@@ -688,10 +861,14 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                         )}
                       </td>
 
-                      {/* Title + ID */}
+                      {/* ID Column */}
+                      <td className="py-3 px-3 font-mono text-slate-400 font-semibold text-[11px] whitespace-nowrap">
+                        {q.id}
+                      </td>
+
+                      {/* Title */}
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-mono text-slate-400 text-[11px] font-semibold">{q.id}.</span>
                           <span className={`font-semibold hover:text-amber-500 transition-colors ${
                             q.solved ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-800 dark:text-slate-200'
                           }`}>
@@ -883,27 +1060,103 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
       {viewMode === 'topic' && filteredQuestions.length > 0 && (
         <div className="space-y-4">
           {/* Topic Mode Controls Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-white dark:bg-[#1a1a1a] rounded-xl border border-slate-200 dark:border-[#282828] text-xs shadow-sm">
-            <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
-              <FolderTree className="w-4 h-4 text-amber-500" />
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-4 bg-white dark:bg-[#1a1a1a] rounded-xl border border-slate-200 dark:border-[#282828] text-xs shadow-sm">
+            <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 flex-wrap">
+              <FolderTree className="w-4 h-4 text-amber-500 flex-shrink-0" />
               <span className="font-semibold">
                 Topic Mode: <strong className="text-slate-900 dark:text-white">{topicGroups.length}</strong> Topics
               </span>
-              <span className="text-slate-400 hidden sm:inline">
-                ({filteredQuestions.length} tests/problems sorted under their respective headings)
+              <span className="text-slate-400 hidden xl:inline">
+                ({filteredQuestions.length} problems grouped under topics)
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
+            {/* Quick Sort Pills for Topic Mode */}
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="text-[10px] font-bold uppercase text-slate-400 mr-1 hidden sm:inline">Sort Topics:</span>
+              <button
+                type="button"
+                onClick={() => { setSortBy('id'); setSortOrder('asc'); }}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 border ${
+                  sortBy === 'id' && sortOrder === 'asc'
+                    ? 'bg-amber-500 text-slate-950 border-amber-500 font-bold shadow-sm'
+                    : 'bg-slate-100 dark:bg-[#252525] border-slate-200 dark:border-[#333] text-slate-600 dark:text-slate-300 hover:border-amber-500/50'
+                }`}
+                title="Sort topics and questions in sequential Exam Order: 1 → N (bank3-001 to 056)"
+              >
+                <span>Exam Order (1 → N)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setSortBy('topic'); setSortOrder('asc'); }}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 border ${
+                  sortBy === 'topic' && sortOrder === 'asc'
+                    ? 'bg-amber-500 text-slate-950 border-amber-500 font-bold shadow-sm'
+                    : 'bg-slate-100 dark:bg-[#252525] border-slate-200 dark:border-[#333] text-slate-600 dark:text-slate-300 hover:border-amber-500/50'
+                }`}
+                title="Sort topics alphabetically A to Z"
+              >
+                <span>Topic (A → Z)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setSortBy('count'); setSortOrder('desc'); }}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 border ${
+                  sortBy === 'count' && sortOrder === 'desc'
+                    ? 'bg-amber-500 text-slate-950 border-amber-500 font-bold shadow-sm'
+                    : 'bg-slate-100 dark:bg-[#252525] border-slate-200 dark:border-[#333] text-slate-600 dark:text-slate-300 hover:border-amber-500/50'
+                }`}
+                title="Sort by topics with most questions first"
+              >
+                <span>Most Problems</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setSortBy('status'); setSortOrder('asc'); }}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 border ${
+                  sortBy === 'status' && sortOrder === 'asc'
+                    ? 'bg-amber-500 text-slate-950 border-amber-500 font-bold shadow-sm'
+                    : 'bg-slate-100 dark:bg-[#252525] border-slate-200 dark:border-[#333] text-slate-600 dark:text-slate-300 hover:border-amber-500/50'
+                }`}
+                title="Show topics with unsolved problems first"
+              >
+                <span>Unsolved First</span>
+              </button>
+
+              {/* Order direction toggle */}
+              <button
+                type="button"
+                onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
+                className="px-2 py-1 rounded-md bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] border border-slate-200 dark:border-[#333] text-slate-700 dark:text-slate-200 font-mono text-[11px] font-bold flex items-center gap-1 transition-colors cursor-pointer"
+                title={`Current sort direction: ${sortOrder.toUpperCase()}. Click to toggle.`}
+              >
+                {sortOrder === 'asc' ? (
+                  <>
+                    <ArrowUp className="w-3 h-3 text-amber-500" />
+                    <span>ASC</span>
+                  </>
+                ) : (
+                  <>
+                    <ArrowDown className="w-3 h-3 text-amber-500" />
+                    <span>DESC</span>
+                  </>
+                )}
+              </button>
+
+              <div className="h-4 w-[1px] bg-slate-200 dark:bg-[#333] mx-1 hidden sm:block" />
+
               <button
                 onClick={handleExpandAllTopics}
-                className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] text-slate-700 dark:text-slate-300 font-semibold transition-colors cursor-pointer text-xs"
+                className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] text-slate-700 dark:text-slate-300 font-semibold transition-colors cursor-pointer text-xs"
               >
                 Expand All
               </button>
               <button
                 onClick={handleCollapseAllTopics}
-                className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] text-slate-700 dark:text-slate-300 font-semibold transition-colors cursor-pointer text-xs"
+                className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] text-slate-700 dark:text-slate-300 font-semibold transition-colors cursor-pointer text-xs"
               >
                 Collapse All
               </button>
@@ -989,11 +1242,12 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                       <table className="w-full text-left border-collapse text-xs">
                         <thead>
                           <tr className="border-b border-slate-100 dark:border-[#282828] bg-slate-50/40 dark:bg-[#1e1e1e] text-slate-400 font-semibold uppercase text-[10px]">
-                            <th className="py-2.5 px-4 w-12 text-center">Status</th>
+                            <th className="py-2.5 px-3 w-12 text-center">Status</th>
+                            <th className="py-2.5 px-3 w-28"># (ID)</th>
                             <th className="py-2.5 px-4">Title</th>
-                            <th className="py-2.5 px-4 w-28">Bank</th>
+                            <th className="py-2.5 px-4 w-24">Bank</th>
                             <th className="py-2.5 px-4 w-28">Difficulty</th>
-                            <th className="py-2.5 px-4 w-28 text-right">Action</th>
+                            <th className="py-2.5 px-4 w-24 text-right">Action</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 dark:divide-[#252525]">
@@ -1016,7 +1270,7 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                                 }`}
                               >
                                 {/* Status */}
-                                <td className="py-2.5 px-4 text-center">
+                                <td className="py-2.5 px-3 text-center">
                                   {q.solved ? (
                                     <CheckCircle2 className="w-4 h-4 text-emerald-500 mx-auto" />
                                   ) : q.attempted ? (
@@ -1026,12 +1280,14 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                                   )}
                                 </td>
 
+                                {/* ID Column */}
+                                <td className="py-2.5 px-3 font-mono text-[11px] text-slate-400 font-semibold whitespace-nowrap">
+                                  {q.id}
+                                </td>
+
                                 {/* Title with ID */}
                                 <td className="py-2.5 px-4">
                                   <div className="flex items-center gap-2 flex-wrap">
-                                    <span className="font-mono text-[11px] text-slate-400">
-                                      {q.id}
-                                    </span>
                                     <span
                                       className={`font-semibold hover:underline ${
                                         q.solved
