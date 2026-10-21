@@ -458,7 +458,7 @@ export const App: React.FC = () => {
 
         {/* Main Content Area */}
         <main
-          className={`flex-1 overflow-x-hidden min-h-[calc(100vh-50px)] transition-all duration-300 ${
+          className={`flex-1 overflow-x-hidden min-h-[calc(100vh-50px)] ${
             isAbsoluteFullscreen || isSidebarFullyContracted
               ? 'p-2.5 sm:p-4 lg:p-6 pb-20 md:pb-6 w-full max-w-none'
               : 'p-3 sm:p-6 lg:p-8 pb-20 md:pb-8 max-w-[1600px]'

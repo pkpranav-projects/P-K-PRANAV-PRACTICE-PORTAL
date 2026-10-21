@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Editor from '@monaco-editor/react';
 import {
   Play,
@@ -289,6 +289,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   const [loading, setLoading] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>('java');
   const [code, setCode] = useState('');
+  const codeRef = useRef<string>('');
   const [customInput, setCustomInput] = useState('');
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [draftSavedAt, setDraftSavedAt] = useState<string | null>(null);
@@ -334,6 +335,28 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   const autoSaveTimeoutRef = useRef<any>(null);
   const isSwitchingLanguageRef = useRef<boolean>(false);
 
+  // Memoized Monaco Editor configuration with fixed overflow widgets to prevent page jumps
+  const editorOptions = useMemo<any>(() => ({
+    fontSize,
+    fontFamily: 'JetBrains Mono, Fira Code, Consolas, monospace',
+    minimap: { enabled: isMinimapEnabled },
+    scrollBeyondLastLine: false,
+    wordWrap: 'on',
+    automaticLayout: true,
+    tabSize: 4,
+    lineNumbers: 'on',
+    renderLineHighlight: 'all',
+    fixedOverflowWidgets: true,
+    scrollbar: {
+      verticalScrollbarSize: 8,
+      horizontalScrollbarSize: 8,
+      alwaysConsumeMouseWheel: false
+    },
+    overviewRulerBorder: false,
+    cursorBlinking: 'smooth',
+    smoothScrolling: true
+  }), [fontSize, isMinimapEnabled]);
+
   // Toggle Zen Focus Mode (Code Only Fullscreen)
   const toggleZenMode = useCallback(() => {
     setIsZenMode((prev) => {
@@ -359,7 +382,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [toggleZenMode]);
 
-  // Recalculate Monaco layout on window resize & container resize (resolves zoom & split layout lag)
+  // Recalculate Monaco layout on window resize (resolves zoom & split layout lag)
   useEffect(() => {
     const handleResize = () => {
       if (editorRef.current) {
@@ -369,20 +392,9 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     window.addEventListener('resize', handleResize);
     window.visualViewport?.addEventListener('resize', handleResize);
 
-    let ro: ResizeObserver | null = null;
-    if (editorContainerRef.current && typeof ResizeObserver !== 'undefined') {
-      ro = new ResizeObserver(() => {
-        if (editorRef.current) {
-          editorRef.current.layout();
-        }
-      });
-      ro.observe(editorContainerRef.current);
-    }
-
     return () => {
       window.removeEventListener('resize', handleResize);
       window.visualViewport?.removeEventListener('resize', handleResize);
-      if (ro) ro.disconnect();
     };
   }, []);
 
@@ -454,24 +466,36 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
 
   // Format code
   const handleFormatCode = useCallback(() => {
-    if (!code) return;
-    const formatted = formatSourceCode(code, selectedLanguage);
+    const current = editorRef.current?.getValue() ?? codeRef.current;
+    if (!current) return;
+    const formatted = formatSourceCode(current, selectedLanguage);
+    codeRef.current = formatted;
+    if (editorRef.current) {
+      const pos = editorRef.current.getPosition();
+      editorRef.current.setValue(formatted);
+      if (pos) editorRef.current.setPosition(pos);
+    }
     setCode(formatted);
-  }, [code, selectedLanguage]);
+  }, [selectedLanguage]);
 
   // Apply template
   const handleApplyTemplate = (templateCode: string) => {
+    codeRef.current = templateCode;
     setCode(templateCode);
+    if (editorRef.current) {
+      editorRef.current.setValue(templateCode);
+    }
     setShowTemplateMenu(false);
   };
 
   // Download code with extension based on active language
   const handleDownloadCode = () => {
+    const current = editorRef.current?.getValue() ?? codeRef.current;
     const filename =
       selectedLanguage === 'java' ? 'Main.java' :
       selectedLanguage === 'python' ? 'solution.py' :
       selectedLanguage === 'cpp' ? 'solution.cpp' : 'solution.sql';
-    const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([current], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -493,9 +517,10 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     isSwitchingLanguageRef.current = true;
 
     // 2. Save draft for current language if code exists
-    if (code.trim()) {
+    const current = editorRef.current?.getValue() ?? codeRef.current;
+    if (current && current.trim()) {
       try {
-        await api.saveDraft(questionId, code, selectedLanguage);
+        await api.saveDraft(questionId, current, selectedLanguage);
       } catch (err) {
         console.warn('Auto-save on language switch failed:', err);
       }
@@ -504,21 +529,26 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     setSelectedLanguage(newLang);
 
     // 3. Fetch or restore code for the selected new language
+    let nextCode = '';
     try {
       const draft = await api.getDraft(questionId, newLang);
       if (draft.draftCode && draft.draftCode.trim()) {
-        setCode(draft.draftCode);
-        setTimeout(() => {
-          isSwitchingLanguageRef.current = false;
-        }, 150);
-        return;
+        nextCode = draft.draftCode;
       }
     } catch (err) {}
 
-    if ((newLang === 'java' || newLang === 'sql') && question?.starterCode) {
-      setCode(question.starterCode);
-    } else {
-      setCode(DEFAULT_CODE[newLang]);
+    if (!nextCode) {
+      if ((newLang === 'java' || newLang === 'sql') && question?.starterCode) {
+        nextCode = question.starterCode;
+      } else {
+        nextCode = DEFAULT_CODE[newLang];
+      }
+    }
+
+    codeRef.current = nextCode;
+    setCode(nextCode);
+    if (editorRef.current) {
+      editorRef.current.setValue(nextCode);
     }
 
     setTimeout(() => {
@@ -534,7 +564,11 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     reader.onload = (event) => {
       const text = event.target?.result;
       if (typeof text === 'string') {
+        codeRef.current = text;
         setCode(text);
+        if (editorRef.current) {
+          editorRef.current.setValue(text);
+        }
       }
     };
     reader.readAsText(file);
@@ -596,7 +630,11 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         }
       }
 
+      codeRef.current = initialCode;
       setCode(initialCode);
+      if (editorRef.current) {
+        editorRef.current.setValue(initialCode);
+      }
       setCustomInput(q.sampleInput || '');
       setRunResult(null);
       setSubmitResult(null);
@@ -616,9 +654,10 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     loadQuestion();
   }, [loadQuestion]);
 
-  // Debounced auto-save draft code
-  useEffect(() => {
-    if (!question || loading || !code || isSwitchingLanguageRef.current) return;
+  // Debounced auto-save draft code without triggering React component re-renders
+  const handleCodeChange = useCallback((newVal: string) => {
+    codeRef.current = newVal;
+    if (isSwitchingLanguageRef.current || !questionId) return;
 
     if (autoSaveTimeoutRef.current) {
       clearTimeout(autoSaveTimeoutRef.current);
@@ -626,8 +665,10 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
 
     autoSaveTimeoutRef.current = setTimeout(async () => {
       try {
+        const textToSave = codeRef.current;
+        if (!textToSave || !textToSave.trim()) return;
         setIsSavingDraft(true);
-        await api.saveDraft(questionId, code, selectedLanguage);
+        await api.saveDraft(questionId, textToSave, selectedLanguage);
         setDraftSavedAt(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
       } catch (err) {
         console.error('Auto-save error:', err);
@@ -635,17 +676,21 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         setIsSavingDraft(false);
       }
     }, 1500);
+  }, [questionId, selectedLanguage]);
 
+  // Clean up auto-save on unmount
+  useEffect(() => {
     return () => {
       if (autoSaveTimeoutRef.current) {
         clearTimeout(autoSaveTimeoutRef.current);
       }
     };
-  }, [code, questionId, question, loading, selectedLanguage]);
+  }, []);
 
   // Run code against custom or sample input
   const handleRun = useCallback(async () => {
-    if (isRunning || isSubmitting || !code) return;
+    const currentCode = editorRef.current?.getValue() ?? codeRef.current;
+    if (isRunning || isSubmitting || !currentCode) return;
     try {
       soundManager.playRun();
       setIsRunning(true);
@@ -653,7 +698,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       if (typeof window !== 'undefined' && window.innerWidth < 1024) {
         setMobileWorkspaceTab('console');
       }
-      const res = await api.runCode(code, customInput, selectedLanguage, questionId);
+      const res = await api.runCode(currentCode, customInput, selectedLanguage, questionId);
       setRunResult(res);
       if (res.exitCode !== 0 || res.stderr) {
         soundManager.playError();
@@ -670,11 +715,12 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     } finally {
       setIsRunning(false);
     }
-  }, [isRunning, isSubmitting, code, customInput, selectedLanguage, questionId]);
+  }, [isRunning, isSubmitting, customInput, selectedLanguage, questionId]);
 
   // Submit code for full test-case evaluation
   const handleSubmit = useCallback(async () => {
-    if (isRunning || isSubmitting || !code) return;
+    const currentCode = editorRef.current?.getValue() ?? codeRef.current;
+    if (isRunning || isSubmitting || !currentCode) return;
     try {
       soundManager.playRun();
       setIsSubmitting(true);
@@ -682,7 +728,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       if (typeof window !== 'undefined' && window.innerWidth < 1024) {
         setMobileWorkspaceTab('console');
       }
-      const res = await api.submitCode(questionId, code, selectedLanguage);
+      const res = await api.submitCode(questionId, currentCode, selectedLanguage);
       setSubmitResult(res);
 
       if (res.status === 'Accepted') {
@@ -709,7 +755,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [isRunning, isSubmitting, code, questionId, selectedLanguage, question, onQuestionSolved]);
+  }, [isRunning, isSubmitting, questionId, selectedLanguage, question, onQuestionSolved]);
 
   // Keyboard shortcuts (Ctrl+Enter to Run, Ctrl+Shift+Enter to Submit, Alt+F to format, Alt+R to reset, Esc to step back)
   useEffect(() => {
@@ -784,10 +830,16 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   // Reset code to starter template
   const handleResetCode = () => {
     if (!question) return;
+    let nextCode = '';
     if ((selectedLanguage === 'java' || selectedLanguage === 'sql') && question.starterCode) {
-      setCode(question.starterCode);
+      nextCode = question.starterCode;
     } else {
-      setCode(DEFAULT_CODE[selectedLanguage]);
+      nextCode = DEFAULT_CODE[selectedLanguage];
+    }
+    codeRef.current = nextCode;
+    setCode(nextCode);
+    if (editorRef.current) {
+      editorRef.current.setValue(nextCode);
     }
     setShowResetConfirm(false);
   };
@@ -1348,15 +1400,17 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                   {selectedLanguage === 'java' ? 'Main.java' : selectedLanguage === 'python' ? 'solution.py' : selectedLanguage === 'cpp' ? 'solution.cpp' : 'query.sql'}
                 </span>
 
-                {isSavingDraft ? (
-                  <span className="text-[10px] text-amber-500 animate-pulse font-mono">
-                    Saving...
-                  </span>
-                ) : draftSavedAt ? (
-                  <span className="text-[10px] text-slate-400 font-mono hidden md:inline">
-                    Saved {draftSavedAt}
-                  </span>
-                ) : null}
+                <span className="text-[10px] font-mono min-w-[75px] inline-block">
+                  {isSavingDraft ? (
+                    <span className="text-amber-500 animate-pulse">
+                      Saving...
+                    </span>
+                  ) : draftSavedAt ? (
+                    <span className="text-slate-400 hidden md:inline">
+                      Saved {draftSavedAt}
+                    </span>
+                  ) : null}
+                </span>
               </div>
 
               {/* Editor controls: Templates, Format, Minimap, Download, Upload, Font, Zen, Reset */}
@@ -1474,11 +1528,12 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             {/* Monaco Editor Container */}
             <div ref={editorContainerRef} className={`w-full ${isZenMode ? 'h-[calc(100vh-270px)] min-h-[500px]' : activeFullscreen ? 'h-[520px]' : !isDesktop ? 'h-[calc(100vh-290px)] min-h-[440px]' : 'h-[430px]'}`}>
               <Editor
+                key={`${questionId}-${selectedLanguage}`}
                 height="100%"
                 language={selectedLanguage === 'cpp' ? 'cpp' : selectedLanguage === 'python' ? 'python' : selectedLanguage === 'sql' ? 'sql' : 'java'}
                 theme={editorTheme}
-                value={code}
-                onChange={(value) => setCode(value || '')}
+                defaultValue={code}
+                onChange={(value) => handleCodeChange(value || '')}
                 onMount={(editor, monaco) => {
                   editorRef.current = editor;
                   try {
@@ -1499,21 +1554,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                     }
                   } catch (e) {}
                 }}
-                options={{
-                  fontSize,
-                  fontFamily: 'JetBrains Mono, Fira Code, Consolas, monospace',
-                  minimap: { enabled: isMinimapEnabled },
-                  scrollBeyondLastLine: false,
-                  wordWrap: 'on',
-                  automaticLayout: true,
-                  tabSize: 4,
-                  lineNumbers: 'on',
-                  renderLineHighlight: 'all',
-                  scrollbar: {
-                    verticalScrollbarSize: 8,
-                    horizontalScrollbarSize: 8
-                  }
-                }}
+                options={editorOptions}
               />
             </div>
 
@@ -1868,7 +1909,13 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         isOpen={showSolutionModal}
         onClose={() => setShowSolutionModal(false)}
         solution={solutionData}
-        onLoadCodeToEditor={(newCode) => setCode(newCode)}
+        onLoadCodeToEditor={(newCode) => {
+          codeRef.current = newCode;
+          setCode(newCode);
+          if (editorRef.current) {
+            editorRef.current.setValue(newCode);
+          }
+        }}
       />
 
       {/* Reset Confirmation Modal */}
