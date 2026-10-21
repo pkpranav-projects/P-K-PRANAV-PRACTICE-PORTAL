@@ -191,6 +191,69 @@ function formatSourceCode(source: string, lang: SupportedLanguage): string {
   return formatted.join('\n');
 }
 
+function renderInlineMarkdown(text: string) {
+  const parts = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith('`') && part.endsWith('`') && part.length > 2) {
+      return (
+        <code
+          key={index}
+          className="px-1.5 py-0.5 mx-0.5 rounded bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-mono text-xs font-semibold border border-slate-200/50 dark:border-slate-700/50"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+      return (
+        <strong key={index} className="font-semibold text-slate-900 dark:text-white">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+}
+
+function FormattedContent({ text, className = '' }: { text: string; className?: string }) {
+  if (!text) return null;
+  // Defensively strip any accidental input format / duplicate markdown sections
+  const clean = text.split(/###\s*Input(?:\s*Format)?/i)[0].trim();
+  const paragraphs = clean.split(/\n\s*\n/);
+
+  return (
+    <div className={`space-y-3 leading-relaxed ${className}`}>
+      {paragraphs.map((p, pIdx) => {
+        const lines = p.split('\n');
+        const isList = lines.every((l) => /^\s*[-*•]\s+/.test(l));
+        if (isList) {
+          return (
+            <ul key={pIdx} className="space-y-1.5 pl-1">
+              {lines.map((l, lIdx) => (
+                <li key={lIdx} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
+                  <span>{renderInlineMarkdown(l.replace(/^\s*[-*•]\s+/, ''))}</span>
+                </li>
+              ))}
+            </ul>
+          );
+        }
+
+        return (
+          <p key={pIdx} className="text-slate-700 dark:text-slate-300">
+            {lines.map((l, lIdx) => (
+              <React.Fragment key={lIdx}>
+                {lIdx > 0 && <br />}
+                {renderInlineMarkdown(l)}
+              </React.Fragment>
+            ))}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 interface ProblemWorkspaceViewProps {
   questionId: string;
   theme: 'dark' | 'oled' | 'light' | 'system';
@@ -907,9 +970,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                     Description
                   </h4>
-                  <div className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
-                    {question.description}
-                  </div>
+                  <FormattedContent text={question.description} className="text-sm" />
                 </div>
 
                 {/* Input Format */}
@@ -918,8 +979,8 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                       Input Format
                     </h4>
-                    <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 font-mono whitespace-pre-line leading-relaxed">
-                      {question.inputFormat}
+                    <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs font-mono">
+                      <FormattedContent text={question.inputFormat} />
                     </div>
                   </div>
                 )}
@@ -930,8 +991,8 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                       Output Format
                     </h4>
-                    <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 font-mono whitespace-pre-line leading-relaxed">
-                      {question.outputFormat}
+                    <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs font-mono">
+                      <FormattedContent text={question.outputFormat} />
                     </div>
                   </div>
                 )}
@@ -942,9 +1003,15 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                       Constraints
                     </h4>
-                    <ul className="list-disc list-inside space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                    <ul className="grid grid-cols-1 gap-1.5 text-xs">
                       {question.constraints.map((c, i) => (
-                        <li key={i} className="font-mono">{c}</li>
+                        <li
+                          key={i}
+                          className="flex items-center gap-2.5 font-mono px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />
+                          <span>{c}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
