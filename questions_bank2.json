@@ -335,12 +335,12 @@
       },
       {
         "input": "1\n25",
-        "expectedOutput": "Index 6: Key 25",
+        "expectedOutput": "Index 62: Key 25",
         "isHidden": true
       }
     ],
     "starterCode": "import java.util.Scanner;\n\npublic class Solution {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        // Complete mid-square hashing logic\n    }\n}",
-    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static int midSquare(int key) {\n        long sq = (long)key * key;\n        String s = String.valueOf(sq);\n        int len = s.length();\n        if (len <= 2) return (int)sq % 100;\n        int mid = len / 2;\n        int idx;\n        if (len % 2 == 0) {\n            idx = Integer.parseInt(s.substring(mid - 1, mid + 1));\n        } else {\n            idx = Integer.parseInt(s.substring(mid - 1, mid + 1));\n        }\n        return idx % 100;\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] table = new int[100];\n        boolean[] occupied = new boolean[100];\n        for (int i = 0; i < n; i++) {\n            int key = sc.nextInt();\n            int idx = midSquare(key);\n            while (occupied[idx]) {\n                idx = (idx + 1) % 100;\n            }\n            occupied[idx] = true;\n            table[idx] = key;\n        }\n        for (int i = 0; i < 100; i++) {\n            if (occupied[i]) {\n                System.out.println(\"Index \" + i + \": Key \" + table[i]);\n            }\n        }\n    }\n}",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Solution {\n    public static int midSquare(int key) {\n        long sq = (long) key * key;\n        return (int) ((sq / 10) % 100);\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int[] table = new int[100];\n        boolean[] occupied = new boolean[100];\n        for (int i = 0; i < n; i++) {\n            int key = sc.nextInt();\n            int idx = midSquare(key);\n            while (occupied[idx]) {\n                idx = (idx + 1) % 100;\n            }\n            occupied[idx] = true;\n            table[idx] = key;\n        }\n        for (int i = 0; i < 100; i++) {\n            if (occupied[i]) {\n                System.out.println(\"Index \" + i + \": Key \" + table[i]);\n            }\n        }\n    }\n}",
     "explanation": "Calculates mid-square hash by squaring the key and extracting middle digits, resolving collisions with linear probing on a 100-slot table.",
     "extractionStatus": "verified"
   },
