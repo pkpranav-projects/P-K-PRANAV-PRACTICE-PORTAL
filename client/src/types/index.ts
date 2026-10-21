@@ -179,6 +179,9 @@ export interface CurriculumItem {
   description: string[];
   sizeBytes: number;
   sizeFormatted: string;
+  hasWebPdf?: boolean;
+  viewUrl?: string;
+  rawUrl?: string;
 }
 
 export interface MasterclassModule {

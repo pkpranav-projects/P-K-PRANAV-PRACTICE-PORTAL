@@ -381,7 +381,43 @@ app.get('/api/curriculum', (req, res) => {
   }
 });
 
-// Open document directly: PDFs in Microsoft Edge, others (PPTX, PPT, DOCX) in Microsoft Office
+// Inline PDF viewer endpoint (streams original PDF or companion web PDF for PPTX/DOCX/PPT)
+app.get('/api/documents/view/:filename', (req, res) => {
+  try {
+    const rawName = decodeURIComponent(req.params.filename);
+    const safeFilename = path.basename(rawName);
+    const originalPath = path.join(documentsDir, safeFilename);
+    const companionPdfPath = path.join(documentsDir, 'web_pdf', `${safeFilename}.pdf`);
+
+    const ext = path.extname(safeFilename).toLowerCase();
+    let servePath = null;
+    let serveName = safeFilename;
+
+    if (ext === '.pdf' && fs.existsSync(originalPath)) {
+      servePath = originalPath;
+    } else if (fs.existsSync(companionPdfPath)) {
+      servePath = companionPdfPath;
+      serveName = `${safeFilename}.pdf`;
+    } else if (fs.existsSync(originalPath)) {
+      servePath = originalPath;
+    }
+
+    if (!servePath || !fs.existsSync(servePath)) {
+      return res.status(404).json({ error: 'Document not found' });
+    }
+
+    const isPdf = servePath.toLowerCase().endsWith('.pdf');
+    if (isPdf) {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `inline; filename="${encodeURIComponent(serveName)}"`);
+    }
+    return res.sendFile(servePath);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// Open document directly: in Microsoft Edge or Office desktop app
 app.post('/api/documents/open', (req, res) => {
   const { filename, app: requestedApp } = req.body;
   if (!filename) {
@@ -390,6 +426,7 @@ app.post('/api/documents/open', (req, res) => {
 
   const safeFilename = path.basename(filename);
   const targetPath = path.join(documentsDir, safeFilename);
+  const companionPdfPath = path.join(documentsDir, 'web_pdf', `${safeFilename}.pdf`);
 
   if (!fs.existsSync(targetPath)) {
     return res.status(404).json({ error: 'Document file not found in documentss folder' });
@@ -397,65 +434,68 @@ app.post('/api/documents/open', (req, res) => {
 
   const ext = path.extname(safeFilename).toLowerCase();
   const isPdf = ext === '.pdf';
-  const edgeExe = getEdgeExecutable();
+  const hasCompanionPdf = fs.existsSync(companionPdfPath);
 
-  // ONLY PDFs should open in Microsoft Edge.
-  // PPTX, PPT, DOCX must ALWAYS open in Microsoft Office desktop applications (PowerPoint, Word).
-  if (!isPdf || requestedApp === 'office' || requestedApp === 'system' || !edgeExe) {
+  const viewUrl = `http://localhost:${PORT}/api/documents/view/${encodeURIComponent(safeFilename)}`;
+  const rawUrl = `http://localhost:${PORT}/api/documents/raw/${encodeURIComponent(safeFilename)}`;
+
+  if (requestedApp === 'edge') {
+    // Open in Microsoft Edge via PowerShell Start-Process (handles running Edge instances flawlessly)
+    const psCmd = `powershell -NoProfile -Command "Start-Process msedge -ArgumentList '${viewUrl}'"`;
+    exec(psCmd, (err) => {
+      if (err) {
+        // Fallback: Windows protocol launch
+        exec(`cmd.exe /c start microsoft-edge:"${viewUrl}"`, () => {});
+      }
+      return res.json({
+        success: true,
+        message: `Opened ${safeFilename} in Microsoft Edge (Zero download)`,
+        url: viewUrl,
+        filename: safeFilename
+      });
+    });
+    return;
+  }
+
+  if (requestedApp === 'office') {
     const isPpt = ext.includes('ppt');
     const isWord = ext.includes('doc');
     const appLabel = isPpt ? 'Microsoft PowerPoint' : isWord ? 'Microsoft Word' : 'Microsoft Office';
 
-    // Launch with Windows shell association (PowerPoint / Word)
     const cmd = `cmd.exe /c start "" "${targetPath}"`;
     exec(cmd, (err) => {
       if (err) {
-        // Fallback to powershell Start-Process
-        const psCmd = `powershell -NoProfile -Command "Start-Process -FilePath '${targetPath.replace(/'/g, "''")}'"`;
-        exec(psCmd, (psErr) => {
-          if (psErr) {
-            console.error('Failed to open document in Office:', psErr);
-            return res.status(500).json({ error: `Failed to launch ${appLabel}` });
-          }
-          return res.json({ success: true, message: `Opened ${safeFilename} in ${appLabel} (Zero download)` });
-        });
-        return;
-      }
-      return res.json({ success: true, message: `Opened ${safeFilename} in ${appLabel} (Zero download)` });
-    });
-  } else {
-    // File IS a PDF: open in Microsoft Edge built-in PDF viewer
-    const fileUrl = `http://localhost:${PORT}/api/documents/raw/${encodeURIComponent(safeFilename)}`;
-
-    // Windows has the native 'microsoft-edge:' protocol registered for MS Edge.
-    // This reliably brings Edge to the foreground with the PDF loaded in Edge's PDF viewer.
-    const cmdProtocol = `cmd.exe /c start microsoft-edge:"${fileUrl}"`;
-    exec(cmdProtocol, (err) => {
-      if (err) {
-        console.error('Failed to open via microsoft-edge protocol, trying direct path fallback:', err);
-        const cmdDirect = `cmd.exe /c start msedge "${targetPath}"`;
-        exec(cmdDirect, (err2) => {
-          if (err2 && edgeExe) {
-            try {
-              spawn(edgeExe, [targetPath], { detached: true, stdio: 'ignore' }).unref();
-            } catch (err3) {
-              exec(`cmd.exe /c start "" "${targetPath}"`, () => {});
-            }
-          }
+        return res.status(500).json({
+          error: `Failed to launch ${appLabel}`,
+          fallbackUrl: viewUrl
         });
       }
       return res.json({
         success: true,
-        message: `Opened ${safeFilename} in Microsoft Edge PDF Viewer (Zero download)`,
-        url: fileUrl,
+        message: `Opened ${safeFilename} in ${appLabel} (Zero download)`,
+        url: viewUrl,
+        fallbackUrl: viewUrl,
         filename: safeFilename
       });
     });
+    return;
   }
+
+  // System default handler
+  const cmd = `cmd.exe /c start "" "${targetPath}"`;
+  exec(cmd, (err) => {
+    return res.json({
+      success: true,
+      message: `Opened ${safeFilename}`,
+      url: viewUrl,
+      filename: safeFilename
+    });
+  });
 });
 
-// Optional static preview
+// Static preview routes
 app.use('/api/documents/raw', express.static(documentsDir));
+app.use('/api/documents/web_pdf', express.static(path.join(documentsDir, 'web_pdf')));
 
 // Full data export
 app.get('/api/export', (req, res) => {

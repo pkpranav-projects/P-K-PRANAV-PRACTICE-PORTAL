@@ -429,8 +429,12 @@ const curriculumList = [
 ];
 
 function getCurriculum() {
+  const webPdfDir = path.join(documentsDir, 'web_pdf');
   return curriculumList.map(item => {
     const fullPath = path.join(documentsDir, item.filename);
+    const companionPath = path.join(webPdfDir, `${item.filename}.pdf`);
+    const hasWebPdf = item.format === 'PDF' || fs.existsSync(companionPath);
+
     let sizeBytes = 0;
     try {
       const stat = fs.statSync(fullPath);
@@ -442,7 +446,10 @@ function getCurriculum() {
       sizeBytes,
       sizeFormatted: sizeBytes > 1024 * 1024 
         ? `${(sizeBytes / (1024 * 1024)).toFixed(1)} MB` 
-        : `${Math.round(sizeBytes / 1024)} KB`
+        : `${Math.round(sizeBytes / 1024)} KB`,
+      hasWebPdf,
+      viewUrl: `/api/documents/view/${encodeURIComponent(item.filename)}`,
+      rawUrl: `/api/documents/raw/${encodeURIComponent(item.filename)}`
     };
   });
 }
