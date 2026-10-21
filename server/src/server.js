@@ -425,24 +425,32 @@ app.post('/api/documents/open', (req, res) => {
     });
   } else {
     // File IS a PDF: open in Microsoft Edge built-in PDF viewer
-    try {
-      const child = spawn(edgeExe, [targetPath], {
-        detached: true,
-        stdio: 'ignore'
+    const fileUrl = `http://localhost:${PORT}/api/documents/raw/${encodeURIComponent(safeFilename)}`;
+
+    // Windows has the native 'microsoft-edge:' protocol registered for MS Edge.
+    // This reliably brings Edge to the foreground with the PDF loaded in Edge's PDF viewer.
+    const cmdProtocol = `cmd.exe /c start microsoft-edge:"${fileUrl}"`;
+    exec(cmdProtocol, (err) => {
+      if (err) {
+        console.error('Failed to open via microsoft-edge protocol, trying direct path fallback:', err);
+        const cmdDirect = `cmd.exe /c start msedge "${targetPath}"`;
+        exec(cmdDirect, (err2) => {
+          if (err2 && edgeExe) {
+            try {
+              spawn(edgeExe, [targetPath], { detached: true, stdio: 'ignore' }).unref();
+            } catch (err3) {
+              exec(`cmd.exe /c start "" "${targetPath}"`, () => {});
+            }
+          }
+        });
+      }
+      return res.json({
+        success: true,
+        message: `Opened ${safeFilename} in Microsoft Edge PDF Viewer (Zero download)`,
+        url: fileUrl,
+        filename: safeFilename
       });
-      child.unref();
-      return res.json({ success: true, message: `Opened ${safeFilename} in Microsoft Edge PDF Viewer (Zero download)` });
-    } catch (err) {
-      console.error('Failed to spawn Edge directly, trying cmd start msedge:', err);
-      const cmd = `cmd.exe /c start msedge "${targetPath}"`;
-      exec(cmd, (fbErr) => {
-        if (fbErr) {
-          // Fallback to default system PDF viewer
-          exec(`cmd.exe /c start "" "${targetPath}"`, () => {});
-        }
-        return res.json({ success: true, message: `Opened ${safeFilename} in Microsoft Edge` });
-      });
-    }
+    });
   }
 });
 

@@ -10,7 +10,8 @@ import {
   Sparkles,
   BookOpen,
   Presentation,
-  FileText
+  FileText,
+  ExternalLink
 } from 'lucide-react';
 import { CurriculumItem } from '../types';
 import { api } from '../services/api';
@@ -83,6 +84,13 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
       }
 
       setToastMessage(`Opening ${filename} in ${appName} (Zero download)...`);
+
+      // If already browsing in Microsoft Edge, open directly in a new tab immediately
+      const isEdgeBrowser = /Edg\//i.test(navigator.userAgent);
+      if (isPdf && targetApp === 'edge' && isEdgeBrowser) {
+        window.open(`/api/documents/raw/${encodeURIComponent(filename)}`, '_blank');
+      }
+
       const res = await api.openDocument(filename, targetApp);
       setTimeout(() => {
         setToastMessage(`✓ ${res.message}`);
@@ -269,23 +277,37 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
                     <button
                       onClick={() => handleOpenFile(doc.filename, 'edge')}
                       disabled={Boolean(openingFile)}
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white shadow-sm hover:shadow-indigo-500/20 transition-all hover:scale-[1.02] disabled:opacity-50 whitespace-nowrap cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white shadow-sm hover:shadow-indigo-500/20 transition-all hover:scale-[1.02] disabled:opacity-50 whitespace-nowrap cursor-pointer w-full"
                       title="Opens directly in Microsoft Edge's built-in PDF viewer without downloading"
                     >
                       <Globe className="w-3.5 h-3.5 text-sky-200" />
                       <span>{isOpeningEdge ? 'Opening Edge...' : 'Open in Microsoft Edge'}</span>
                     </button>
 
-                    {/* Secondary: Open in Desktop PDF Viewer */}
-                    <button
-                      onClick={() => handleOpenFile(doc.filename, 'system')}
-                      disabled={Boolean(openingFile)}
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 transition-colors whitespace-nowrap cursor-pointer"
-                      title="Opens in default desktop PDF viewer"
-                    >
-                      <Monitor className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{isOpeningSystem ? 'Launching...' : 'Open in Desktop App'}</span>
-                    </button>
+                    <div className="flex items-center gap-1.5 w-full">
+                      {/* Direct Browser Tab View Link */}
+                      <a
+                        href={`/api/documents/raw/${encodeURIComponent(doc.filename)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-xl text-[11px] font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 transition-colors whitespace-nowrap cursor-pointer border border-slate-200/50 dark:border-slate-700/50"
+                        title="View PDF directly in a new browser tab without downloading"
+                      >
+                        <ExternalLink className="w-3 h-3 text-slate-400" />
+                        <span>View Tab</span>
+                      </a>
+
+                      {/* Secondary: Open in Desktop PDF Viewer */}
+                      <button
+                        onClick={() => handleOpenFile(doc.filename, 'system')}
+                        disabled={Boolean(openingFile)}
+                        className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-xl text-[11px] font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 transition-colors whitespace-nowrap cursor-pointer border border-slate-200/50 dark:border-slate-700/50"
+                        title="Opens in default desktop PDF application"
+                      >
+                        <Monitor className="w-3 h-3 text-slate-400" />
+                        <span>{isOpeningSystem ? 'Launching...' : 'Desktop'}</span>
+                      </button>
+                    </div>
                   </>
                 ) : isPpt ? (
                   <>
