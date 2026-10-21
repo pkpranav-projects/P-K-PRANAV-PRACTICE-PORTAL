@@ -528,8 +528,13 @@
         "isHidden": false
       },
       {
-        "input": "1\n98.5",
-        "expectedOutput": "Sum: 98.50\nAverage: 98.50",
+        "input": "4\n70 80 90 100",
+        "expectedOutput": "Sum: 340.00\nAverage: 85.00",
+        "isHidden": true
+      },
+      {
+        "input": "2\n85.5 92.5",
+        "expectedOutput": "Sum: 178.00\nAverage: 89.00",
         "isHidden": true
       }
     ],

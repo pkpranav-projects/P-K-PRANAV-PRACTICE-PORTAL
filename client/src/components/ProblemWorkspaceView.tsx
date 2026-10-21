@@ -2052,16 +2052,16 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                         )}
                       </div>
 
-                      {/* Formatted compiler diagnostics if compilation failed */}
-                      {submitResult.errorMessage && (
+                      {/* Formatted compiler / runtime diagnostics if compilation or execution failed */}
+                      {submitResult.errorMessage && (submitResult.status === 'Compilation Error' || submitResult.status === 'Runtime Error') && (
                         <div className="p-4 rounded-xl bg-rose-950/40 border border-rose-800/80 space-y-3 animate-fadeIn">
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-mono">
                               <AlertTriangle className="w-4 h-4 text-rose-400" />
-                              <span>{selectedLanguage.toUpperCase()} Compiler / Execution Diagnostics</span>
+                              <span>{selectedLanguage.toUpperCase()} {submitResult.status === 'Compilation Error' ? 'Compilation Diagnostics' : 'Runtime Diagnostics'}</span>
                             </span>
                             <span className="text-[10px] font-mono text-rose-400 bg-rose-900/60 px-2 py-0.5 rounded border border-rose-700">
-                              Exit Code 1
+                              {submitResult.status}
                             </span>
                           </div>
 
@@ -2072,65 +2072,98 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                           <div className="text-[11px] text-slate-300 space-y-1 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">
                             <span className="font-semibold text-rose-300 block">💡 Troubleshooting Hints:</span>
                             <ul className="list-disc list-inside space-y-0.5 text-slate-400">
-                              <li>Check line numbers and carat markers (^) shown above.</li>
-                              <li>Verify syntax, punctuation, indentations, and imports.</li>
-                              <li>Ensure standard I/O format matches the problem specifications.</li>
+                              <li>Check line numbers and stack trace shown above.</li>
+                              <li>Verify data types: if input contains decimals, read with nextDouble() / parseFloat instead of nextInt().</li>
+                              <li>Verify array bounds, scanner inputs, and object null checks.</li>
                             </ul>
                           </div>
                         </div>
                       )}
 
                       {/* Test case breakdown list */}
-                      <div className="space-y-2">
-                        {submitResult.testResults.map((tr) => (
-                          <div
-                            key={tr.testIndex}
-                            className={`p-3 rounded-lg border text-xs ${
-                              tr.passed
-                                ? 'bg-emerald-500/5 border-emerald-500/20 text-slate-800 dark:text-slate-200'
-                                : 'bg-rose-500/5 border-rose-500/20 text-slate-800 dark:text-slate-200'
-                            }`}
-                          >
-                            <div className="flex items-center justify-between mb-1">
-                              <span className="font-semibold flex items-center gap-1.5">
-                                {tr.passed ? (
-                                  <Check className="w-3.5 h-3.5 text-emerald-500" />
-                                ) : (
-                                  <XCircle className="w-3.5 h-3.5 text-rose-500" />
-                                )}
-                                <span>Test Case #{tr.testIndex} {tr.isHidden ? '(Hidden Exam Test)' : '(Sample Test)'}</span>
-                              </span>
-                              <span className="font-mono text-[10px] text-slate-400">
-                                {tr.executionTimeMs ? `${tr.executionTimeMs}ms` : ''}
-                              </span>
+                      <div className="space-y-3">
+                        {submitResult.testResults.map((tr) => {
+                          const expOut = tr.expectedOutput || (tr as any).expected;
+                          const actOut = tr.actualOutput || (tr as any).actual;
+                          const tcInput = (tr as any).input;
+                          const tcError = tr.errorMessage || (tr as any).stderr;
+
+                          return (
+                            <div
+                              key={tr.testIndex}
+                              className={`p-3.5 rounded-xl border text-xs transition-all ${
+                                tr.passed
+                                  ? 'bg-emerald-500/5 border-emerald-500/30 text-slate-800 dark:text-slate-200'
+                                  : 'bg-rose-500/5 border-rose-500/30 text-slate-800 dark:text-slate-200'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="font-semibold flex items-center gap-1.5 text-xs sm:text-sm">
+                                  {tr.passed ? (
+                                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                                  ) : (
+                                    <XCircle className="w-4 h-4 text-rose-500 shrink-0" />
+                                  )}
+                                  <span>Test Case #{tr.testIndex} {tr.isHidden ? '(Hidden Exam Test)' : '(Sample Test)'}</span>
+                                </span>
+                                <span className={`font-mono text-[11px] px-2 py-0.5 rounded font-bold ${
+                                  tr.passed
+                                    ? 'bg-emerald-500/10 text-emerald-500'
+                                    : 'bg-rose-500/10 text-rose-500'
+                                }`}>
+                                  {tr.passed ? 'PASSED ✓' : tr.status || 'FAILED ✗'} {tr.executionTimeMs ? `(${tr.executionTimeMs}ms)` : ''}
+                                </span>
+                              </div>
+
+                              {/* Input, Expected, and Actual Diff view */}
+                              {!tr.passed && (
+                                <div className="mt-2.5 pt-2.5 border-t border-slate-200 dark:border-slate-800/80 space-y-2.5 font-mono text-[11px]">
+                                  {tcInput && (
+                                    <div>
+                                      <span className="text-slate-400 font-semibold text-[10px] uppercase tracking-wider block mb-1">
+                                        Test Input:
+                                      </span>
+                                      <pre className="p-2 rounded-lg bg-slate-900/90 text-slate-200 border border-slate-800 whitespace-pre-wrap overflow-x-auto leading-relaxed">
+                                        {tcInput}
+                                      </pre>
+                                    </div>
+                                  )}
+
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                    {expOut !== undefined && (
+                                      <div>
+                                        <span className="text-emerald-400 font-semibold text-[10px] uppercase tracking-wider block mb-1">
+                                          Expected Output:
+                                        </span>
+                                        <pre className="p-2 rounded-lg bg-emerald-950/40 text-emerald-300 border border-emerald-800/60 whitespace-pre-wrap overflow-x-auto leading-relaxed">
+                                          {expOut}
+                                        </pre>
+                                      </div>
+                                    )}
+
+                                    {actOut !== undefined && (
+                                      <div>
+                                        <span className="text-rose-400 font-semibold text-[10px] uppercase tracking-wider block mb-1">
+                                          Your Output:
+                                        </span>
+                                        <pre className="p-2 rounded-lg bg-rose-950/40 text-rose-300 border border-rose-800/60 whitespace-pre-wrap overflow-x-auto leading-relaxed">
+                                          {actOut}
+                                        </pre>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {tcError && (
+                                    <div className="p-2.5 rounded-lg bg-amber-950/40 text-amber-300 border border-amber-800/60 text-[11px] leading-relaxed">
+                                      <span className="font-bold block mb-0.5">💡 Diagnostic Detail:</span>
+                                      <span>{tcError}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
                             </div>
-
-                            {/* Failure details if sample test case */}
-                            {!tr.passed && !tr.isHidden && (
-                              <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1 font-mono text-[11px]">
-                                {tr.expectedOutput !== undefined && (
-                                  <div>
-                                    <span className="text-slate-400">Expected: </span>
-                                    <span className="text-emerald-400 font-bold">{tr.expectedOutput}</span>
-                                  </div>
-                                )}
-                                {tr.actualOutput !== undefined && (
-                                  <div>
-                                    <span className="text-slate-400">Your Output: </span>
-                                    <span className="text-rose-400 font-bold">{tr.actualOutput}</span>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-
-                            {/* Failure explanation for hidden test */}
-                            {!tr.passed && tr.isHidden && (
-                              <div className="mt-1 text-[11px] text-slate-400 italic">
-                                Hidden test case failed. Check corner cases, boundary conditions, zero values, or line breaks.
-                              </div>
-                            )}
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   )}

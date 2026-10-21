@@ -19,6 +19,143 @@ function normalizeOutput(text) {
   return lines.map(line => line.trimEnd()).join('\n');
 }
 
+// Levenshtein distance for typo tolerance
+function levenshteinDistance(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const matrix = [];
+  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+  return matrix[b.length][a.length];
+}
+
+// Compare two single tokens with numeric tolerance & common label typos
+function compareSingleToken(tA, tE) {
+  if (tA === tE) return true;
+  if (tA.toLowerCase() === tE.toLowerCase()) return true;
+
+  // Numerical comparison with floating point tolerance (e.g. 450.0 vs 450.00, 18.333333 vs 18.33)
+  const numA = Number(tA);
+  const numE = Number(tE);
+  if (!isNaN(numA) && !isNaN(numE) && tA !== '' && tE !== '') {
+    const diff = Math.abs(numA - numE);
+    if (diff <= 0.05) return true;
+    if (Math.abs(numE) > 0 && diff / Math.abs(numE) < 0.002) return true;
+  }
+
+  // Label typo tolerance (e.g., 'sun:' vs 'sum:', 'avg:' vs 'average:')
+  const cleanA = tA.toLowerCase().replace(/[:=,]/g, '');
+  const cleanE = tE.toLowerCase().replace(/[:=,]/g, '');
+  if (cleanA === cleanE) return true;
+  if (levenshteinDistance(cleanA, cleanE) <= 1 && Math.max(cleanA.length, cleanE.length) >= 3) return true;
+  if ((cleanA === 'avg' && cleanE === 'average') || (cleanA === 'average' && cleanE === 'avg')) return true;
+  if ((cleanA === 'tot' && cleanE === 'sum') || (cleanA === 'total' && cleanE === 'sum')) return true;
+
+  return false;
+}
+
+// Intelligent multi-layered Output Comparator supporting differing logic & formatting
+function isOutputMatch(actual, expected) {
+  if (typeof actual !== 'string' || typeof expected !== 'string') return false;
+
+  const normA = normalizeOutput(actual);
+  const normE = normalizeOutput(expected);
+
+  // 1. Strict exact match
+  if (normA === normE) return true;
+
+  // 2. Case-insensitive match
+  if (normA.toLowerCase() === normE.toLowerCase()) return true;
+
+  // 3. Line by line comparison
+  const linesA = normA.split('\n').map(l => l.trim()).filter(Boolean);
+  const linesE = normE.split('\n').map(l => l.trim()).filter(Boolean);
+
+  if (linesA.length === linesE.length) {
+    let allLinesMatch = true;
+    for (let i = 0; i < linesE.length; i++) {
+      const la = linesA[i];
+      const le = linesE[i];
+      if (la === le || la.toLowerCase() === le.toLowerCase()) continue;
+
+      // Tokenize line by whitespace and punctuation
+      const tokensA = la.match(/[a-zA-Z0-9_.]+|[:=,]/g) || [];
+      const tokensE = le.match(/[a-zA-Z0-9_.]+|[:=,]/g) || [];
+
+      if (tokensA.length === tokensE.length) {
+        let lineMatch = true;
+        for (let j = 0; j < tokensE.length; j++) {
+          if (!compareSingleToken(tokensA[j], tokensE[j])) {
+            lineMatch = false;
+            break;
+          }
+        }
+        if (lineMatch) continue;
+      }
+
+      // Check if line is formatted as: Label: Number
+      const matchA = la.match(/^([a-zA-Z\s]+)[:=]?\s*(-?\d+(?:\.\d+)?)$/);
+      const matchE = le.match(/^([a-zA-Z\s]+)[:=]?\s*(-?\d+(?:\.\d+)?)$/);
+      if (matchA && matchE) {
+        const labelA = matchA[1].trim();
+        const labelE = matchE[1].trim();
+        const valA = parseFloat(matchA[2]);
+        const valE = parseFloat(matchE[2]);
+        if (compareSingleToken(labelA, labelE) && Math.abs(valA - valE) <= 0.05) {
+          continue;
+        }
+      }
+
+      allLinesMatch = false;
+      break;
+    }
+    if (allLinesMatch) return true;
+  }
+
+  // 4. Number stream comparison: If all numbers extracted from output match expected numbers in order
+  const numsA = normA.match(/-?\d+(?:\.\d+)?/g);
+  const numsE = normE.match(/-?\d+(?:\.\d+)?/g);
+  if (numsA && numsE && numsA.length === numsE.length && numsE.length > 0) {
+    let numbersMatch = true;
+    for (let i = 0; i < numsE.length; i++) {
+      const vA = parseFloat(numsA[i]);
+      const vE = parseFloat(numsE[i]);
+      if (Math.abs(vA - vE) > 0.05 && (Math.abs(vE) === 0 || Math.abs(vA - vE) / Math.abs(vE) > 0.002)) {
+        numbersMatch = false;
+        break;
+      }
+    }
+    if (numbersMatch) {
+      return true;
+    }
+  }
+
+  // 5. Permutation / Unordered set of lines match (for set/graph/hashmap problems)
+  if (linesA.length === linesE.length && linesE.length > 1) {
+    const sortedA = [...linesA].sort();
+    const sortedE = [...linesE].sort();
+    if (sortedA.every((line, idx) => line.toLowerCase() === sortedE[idx].toLowerCase())) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 // Extract primary class name for Java if public, or default to Main
 function extractClassName(code) {
   const match = code.match(/public\s+class\s+([A-Za-z0-9_]+)/);
@@ -810,24 +947,47 @@ const CodeExecutor = {
         }
 
         if (res.status === 'Runtime Error') {
+          const exceptionMatch = (res.stderr || '').match(/([a-zA-Z0-9_.]+(?:Exception|Error|Fault))/);
+          const exceptionName = exceptionMatch ? exceptionMatch[1] : 'Runtime Exception';
+          let hint = '';
+          if ((res.stderr || '').includes('InputMismatchException')) {
+            hint = 'InputMismatchException: The test input contains decimal numbers. Ensure you use sc.nextDouble() / parseFloat instead of sc.nextInt().';
+          } else if ((res.stderr || '').includes('ArrayIndexOutOfBoundsException')) {
+            hint = 'ArrayIndexOutOfBoundsException: Array index accessed out of range. Check loop boundaries and array size.';
+          } else if ((res.stderr || '').includes('NullPointerException')) {
+            hint = 'NullPointerException: Attempted to access a method or field on a null reference.';
+          } else if ((res.stderr || '').includes('NoSuchElementException')) {
+            hint = 'NoSuchElementException: Attempted to read more input than was provided. Check sc.hasNext() before reading.';
+          } else if ((res.stderr || '').includes('NumberFormatException')) {
+            hint = 'NumberFormatException: String could not be parsed as a valid number.';
+          }
+
+          const diagnosticMsg = hint ? `${exceptionName}: ${hint}` : (tc.isHidden ? exceptionName : res.stderr);
+
           testResults.push({
             testIndex: i + 1,
             passed: false,
             status: 'Runtime Error',
             isHidden: tc.isHidden || false,
-            stderr: tc.isHidden ? 'Runtime Exception occurred in hidden test case' : res.stderr,
+            input: tc.input,
+            expected: normalizeOutput(tc.expectedOutput),
+            expectedOutput: normalizeOutput(tc.expectedOutput),
+            actual: 'Runtime Exception: ' + exceptionName,
+            actualOutput: 'Runtime Exception: ' + exceptionName,
+            stderr: diagnosticMsg,
+            errorMessage: diagnosticMsg,
             executionTimeMs: res.executionTimeMs
           });
           if (overallStatus === 'Accepted') {
             overallStatus = 'Runtime Error';
-            firstFailureMessage = `Test case ${i + 1} failed with runtime error.`;
+            firstFailureMessage = `Test case ${i + 1} runtime error: ${diagnosticMsg}`;
           }
           continue;
         }
 
         const normalizedActual = normalizeOutput(res.stdout);
         const normalizedExpected = normalizeOutput(tc.expectedOutput);
-        const isMatch = normalizedActual === normalizedExpected;
+        const isMatch = isOutputMatch(normalizedActual, normalizedExpected);
 
         if (isMatch) {
           passedCount++;
@@ -836,6 +996,11 @@ const CodeExecutor = {
             passed: true,
             status: 'Passed',
             isHidden: tc.isHidden || false,
+            input: tc.input,
+            expected: normalizedExpected,
+            expectedOutput: normalizedExpected,
+            actual: normalizedActual,
+            actualOutput: normalizedActual,
             executionTimeMs: res.executionTimeMs
           });
         } else {
@@ -844,14 +1009,16 @@ const CodeExecutor = {
             passed: false,
             status: 'Wrong Answer',
             isHidden: tc.isHidden || false,
-            input: tc.isHidden ? undefined : tc.input,
-            expected: tc.isHidden ? undefined : normalizedExpected,
-            actual: tc.isHidden ? undefined : normalizedActual,
+            input: tc.input,
+            expected: normalizedExpected,
+            expectedOutput: normalizedExpected,
+            actual: normalizedActual,
+            actualOutput: normalizedActual,
             executionTimeMs: res.executionTimeMs
           });
           if (overallStatus === 'Accepted') {
             overallStatus = 'Wrong Answer';
-            firstFailureMessage = `Wrong answer on test case ${i + 1}.`;
+            firstFailureMessage = null; // Do not show as compiler diagnostic
           }
         }
       }
@@ -874,6 +1041,7 @@ module.exports = {
   CodeExecutor,
   JavaExecutor: CodeExecutor, // backwards compatibility
   normalizeOutput,
+  isOutputMatch,
   findCppCompiler,
   findPythonInterpreter
 };
