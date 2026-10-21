@@ -28,7 +28,7 @@ interface LeetCodeDrawerProps {
   onClose: () => void;
   activeTab: LeetCodeTab;
   setActiveTab: (tab: LeetCodeTab) => void;
-  onSelectBank?: (bank: 'bank1' | 'bank2' | 'bank3' | 'all') => void;
+  onSelectBank?: (bank: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all') => void;
   dailyGoal: number;
   solvedToday: number;
   totalSolved: number;
@@ -39,6 +39,10 @@ interface LeetCodeDrawerProps {
   bank2Solved: number;
   bank3Total?: number;
   bank3Solved?: number;
+  bank4Total?: number;
+  bank4Solved?: number;
+  dbmsTotal?: number;
+  dbmsSolved?: number;
   accuracy: number;
   systemHealth: SystemHealth | null;
   onOpenSettings: () => void;
@@ -60,6 +64,10 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
   bank2Solved,
   bank3Total = 56,
   bank3Solved = 0,
+  bank4Total = 32,
+  bank4Solved = 0,
+  dbmsTotal = 12,
+  dbmsSolved = 0,
   accuracy,
   systemHealth,
   onOpenSettings
@@ -87,7 +95,7 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
     };
   }, [isOpen]);
 
-  const handleNavClick = (tab: LeetCodeTab, bank?: 'bank1' | 'bank2' | 'bank3' | 'all') => {
+  const handleNavClick = (tab: LeetCodeTab, bank?: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all') => {
     if (bank && onSelectBank) {
       onSelectBank(bank);
     }
@@ -241,6 +249,26 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
               <span className="truncate">✨ Bank 3 (Lab Tests)</span>
               <span className="text-[11px] font-mono text-purple-400 font-semibold">
                 {bank3Solved}/{bank3Total}
+              </span>
+            </button>
+
+            <button
+              onClick={() => handleNavClick('problems', 'bank4')}
+              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#282828] transition-colors pl-8"
+            >
+              <span className="truncate">🎥 Bank 4 (Video Projects)</span>
+              <span className="text-[11px] font-mono text-amber-400 font-semibold">
+                {bank4Solved}/{bank4Total}
+              </span>
+            </button>
+
+            <button
+              onClick={() => handleNavClick('problems', 'dbms')}
+              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#282828] transition-colors pl-8"
+            >
+              <span className="truncate">🗄️ SQL & DBMS</span>
+              <span className="text-[11px] font-mono text-blue-400 font-semibold">
+                {dbmsSolved}/{dbmsTotal}
               </span>
             </button>
 

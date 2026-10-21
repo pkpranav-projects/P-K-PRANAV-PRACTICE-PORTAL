@@ -296,9 +296,20 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   // Layout & Tabs
   const [leftTab, setLeftTab] = useState<'problem' | 'examples' | 'hints'>('problem');
   const [bottomTab, setBottomTab] = useState<'run' | 'submit' | 'history'>('run');
+  const [mobileWorkspaceTab, setMobileWorkspaceTab] = useState<'problem' | 'code' | 'console'>('problem');
+  const [isDesktop, setIsDesktop] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 1024);
   const [fontSize, setFontSize] = useState<number>(14);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isZenMode, setIsZenMode] = useState(false);
+
+  // Sync isDesktop on window resize
+  useEffect(() => {
+    const handleWinResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    window.addEventListener('resize', handleWinResize);
+    return () => window.removeEventListener('resize', handleWinResize);
+  }, []);
 
   // Split pane horizontal resizing: width percentage for left panel
   const [splitPercent, setSplitPercent] = useState<number>(() => {
@@ -639,6 +650,9 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       soundManager.playRun();
       setIsRunning(true);
       setBottomTab('run');
+      if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+        setMobileWorkspaceTab('console');
+      }
       const res = await api.runCode(code, customInput, selectedLanguage, questionId);
       setRunResult(res);
       if (res.exitCode !== 0 || res.stderr) {
@@ -665,6 +679,9 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       soundManager.playRun();
       setIsSubmitting(true);
       setBottomTab('submit');
+      if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+        setMobileWorkspaceTab('console');
+      }
       const res = await api.submitCode(questionId, code, selectedLanguage);
       setSubmitResult(res);
 
@@ -979,6 +996,55 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         </div>
       </div>
 
+      {/* Mobile Segmented Workspace Control (Only on <lg screens) */}
+      <div className="lg:hidden flex items-center bg-slate-200/90 dark:bg-[#181818] p-1 rounded-xl border border-slate-300/70 dark:border-neutral-800 text-xs font-semibold shadow-sm">
+        <button
+          onClick={() => setMobileWorkspaceTab('problem')}
+          className={`flex-1 py-2 rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+            mobileWorkspaceTab === 'problem'
+              ? 'bg-white dark:bg-[#282828] text-slate-900 dark:text-white shadow-sm font-bold'
+              : 'text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white'
+          }`}
+        >
+          <FileText className="w-3.5 h-3.5 text-amber-500" />
+          <span>Problem</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setMobileWorkspaceTab('code');
+            setTimeout(() => editorRef.current?.layout(), 60);
+          }}
+          className={`flex-1 py-2 rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+            mobileWorkspaceTab === 'code'
+              ? 'bg-white dark:bg-[#282828] text-slate-900 dark:text-white shadow-sm font-bold'
+              : 'text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white'
+          }`}
+        >
+          <FileCode className="w-3.5 h-3.5 text-indigo-500" />
+          <span>Code</span>
+        </button>
+
+        <button
+          onClick={() => setMobileWorkspaceTab('console')}
+          className={`flex-1 py-2 rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+            mobileWorkspaceTab === 'console'
+              ? 'bg-white dark:bg-[#282828] text-slate-900 dark:text-white shadow-sm font-bold'
+              : 'text-slate-600 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white'
+          }`}
+        >
+          <Play className="w-3.5 h-3.5 text-emerald-500" />
+          <span>Console</span>
+          {submitResult && (
+            <span
+              className={`w-2 h-2 rounded-full ${
+                submitResult.status === 'Accepted' ? 'bg-emerald-500' : 'bg-rose-500'
+              }`}
+            />
+          )}
+        </button>
+      </div>
+
       {/* Main Workspace Split Container */}
       <div
         ref={workspaceContainerRef}
@@ -987,11 +1053,13 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         }`}
       >
         
-        {/* Left Column: Problem Specs, Examples, Hints (Hidden in Zen Mode) */}
-        {!isZenMode && (
+        {/* Left Column: Problem Specs, Examples, Hints (Full width on mobile, split on desktop) */}
+        {(!isDesktop ? mobileWorkspaceTab === 'problem' : !isZenMode) && (
           <div
-            style={{ width: `${splitPercent}%` }}
-            className="w-full lg:w-auto bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-col h-[740px] overflow-hidden flex-shrink-0"
+            style={!isDesktop ? { width: '100%' } : { width: `${splitPercent}%` }}
+            className={`w-full lg:w-auto bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-col ${
+              !isDesktop ? 'min-h-[500px]' : 'h-[740px]'
+            } overflow-hidden flex-shrink-0`}
           >
           {/* Sub-tabs header */}
           <div className="flex items-center border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50 dark:bg-[#090d16] px-2 pt-2">
@@ -1221,7 +1289,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       )}
 
         {/* Draggable Vertical Splitter Handle (Desktop) */}
-        {!isZenMode && (
+        {isDesktop && !isZenMode && (
           <div
             onMouseDown={startSplitResize}
             onDoubleClick={() => setSplitPercent(42)}
@@ -1232,22 +1300,24 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
           </div>
         )}
 
-        {/* Right Column: Code Editor & Execution Drawers (Full width in Zen Mode) */}
-        <div
-          style={{ width: isZenMode ? '100%' : `calc(${100 - splitPercent}% - 14px)` }}
-          className="w-full lg:w-auto flex flex-col space-y-3 flex-1 min-w-0"
-        >
-          {/* Hidden File Input for code upload */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileUpload}
-            accept=".java,.py,.cpp,.cc,.cxx,.sql,.txt"
-            className="hidden"
-          />
+        {/* Right Column: Code Editor & Execution Drawers (Full width in Zen Mode or Mobile) */}
+        {(!isDesktop ? (mobileWorkspaceTab === 'code' || mobileWorkspaceTab === 'console') : true) && (
+          <div
+            style={!isDesktop ? { width: '100%' } : { width: isZenMode ? '100%' : `calc(${100 - splitPercent}% - 14px)` }}
+            className="w-full lg:w-auto flex flex-col space-y-3 flex-1 min-w-0"
+          >
+            {/* Hidden File Input for code upload */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileUpload}
+              accept=".java,.py,.cpp,.cc,.cxx,.sql,.txt"
+              className="hidden"
+            />
           
-          {/* Editor Header Bar */}
-          <div className="bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col">
+            {/* Editor Header Bar & Editor Container */}
+            {(!isDesktop ? mobileWorkspaceTab === 'code' : true) && (
+              <div className="bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col">
             <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50 dark:bg-[#090d16] flex-wrap gap-2">
               <div className="flex items-center gap-2 flex-wrap">
                 {/* Language Switcher Dropdown */}
@@ -1402,7 +1472,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             </div>
 
             {/* Monaco Editor Container */}
-            <div ref={editorContainerRef} className={`w-full ${isZenMode ? 'h-[calc(100vh-270px)] min-h-[500px]' : activeFullscreen ? 'h-[520px]' : 'h-[430px]'}`}>
+            <div ref={editorContainerRef} className={`w-full ${isZenMode ? 'h-[calc(100vh-270px)] min-h-[500px]' : activeFullscreen ? 'h-[520px]' : !isDesktop ? 'h-[calc(100vh-290px)] min-h-[440px]' : 'h-[430px]'}`}>
               <Editor
                 height="100%"
                 language={selectedLanguage === 'cpp' ? 'cpp' : selectedLanguage === 'python' ? 'python' : selectedLanguage === 'sql' ? 'sql' : 'java'}
@@ -1476,22 +1546,28 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
               </div>
             </div>
           </div>
+          )}
 
-          {/* Draggable Drawer Resize Handle */}
-          <div
-            onMouseDown={startDrawerResize}
-            onDoubleClick={() => setDrawerHeight(260)}
-            className="h-2.5 -my-1 cursor-row-resize flex items-center justify-center hover:bg-[#FFA116]/25 active:bg-[#FFA116]/40 transition-colors group relative z-10 rounded select-none"
-            title="Drag to resize console drawer (Double-click to reset to 260px)"
-          >
-            <div className="w-16 h-1 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-[#FFA116] group-active:bg-[#FFA116] transition-colors" />
-          </div>
+          {/* Draggable Drawer Resize Handle (Desktop only) */}
+          {isDesktop && (
+            <div
+              onMouseDown={startDrawerResize}
+              onDoubleClick={() => setDrawerHeight(260)}
+              className="h-2.5 -my-1 cursor-row-resize flex items-center justify-center hover:bg-[#FFA116]/25 active:bg-[#FFA116]/40 transition-colors group relative z-10 rounded select-none"
+              title="Drag to resize console drawer (Double-click to reset to 260px)"
+            >
+              <div className="w-16 h-1 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-[#FFA116] group-active:bg-[#FFA116] transition-colors" />
+            </div>
+          )}
 
           {/* Execution & Results Panel (Drawer) */}
-          <div
-            style={{ height: `${drawerHeight}px` }}
-            className="bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col flex-shrink-0"
-          >
+          {(!isDesktop ? mobileWorkspaceTab === 'console' : true) && (
+            <div
+              style={!isDesktop ? undefined : { height: `${drawerHeight}px` }}
+              className={`bg-white dark:bg-[#0c121e] rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden flex flex-col flex-shrink-0 ${
+                !isDesktop ? 'h-[calc(100vh-220px)] min-h-[460px]' : ''
+              }`}
+            >
             {/* Drawer Tabs */}
             <div className="flex items-center justify-between px-4 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50 dark:bg-[#090d16]">
               <div className="flex items-center gap-2">
@@ -1772,8 +1848,10 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
 
             </div>
           </div>
+          )}
 
         </div>
+        )}
 
       </div>
 

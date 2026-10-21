@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Minimize2 } from 'lucide-react';
 import { LeetCodeNavbar, LeetCodeTab } from './components/LeetCodeNavbar';
 import { LeetCodeSidebar } from './components/LeetCodeSidebar';
+import { LeetCodeDrawer } from './components/LeetCodeDrawer';
+import { MobileBottomNav } from './components/MobileBottomNav';
 import { ExploreView } from './components/ExploreView';
 import { QuestionBankView } from './components/QuestionBankView';
 import { ProblemWorkspaceView } from './components/ProblemWorkspaceView';
@@ -24,6 +26,7 @@ export const App: React.FC = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSidebarFullyContracted, setIsSidebarFullyContracted] = useState(false);
   const [isAbsoluteFullscreen, setIsAbsoluteFullscreen] = useState(false);
+  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [selectedBankFilter, setSelectedBankFilter] = useState<'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all'>('all');
   const [questionViewMode, setQuestionViewMode] = useState<'table' | 'cards' | 'topic'>(() => {
     try {
@@ -391,11 +394,41 @@ export const App: React.FC = () => {
         onToggleSound={toggleSound}
         onBack={handleBack}
         backLabel={getTabLabel(previousTab)}
+        onOpenMobileDrawer={() => setIsMobileDrawerOpen(true)}
+      />
+
+      {/* Slide-out Mobile Navigation Drawer */}
+      <LeetCodeDrawer
+        isOpen={isMobileDrawerOpen}
+        onClose={() => setIsMobileDrawerOpen(false)}
+        activeTab={activeTab}
+        setActiveTab={(tab) => navigateToTab(tab, undefined, true)}
+        onSelectBank={(bank) => {
+          setSelectedBankFilter(bank);
+          navigateToTab('problems', undefined, true);
+        }}
+        dailyGoal={stats?.dailyGoal || 3}
+        solvedToday={stats?.solvedToday || 0}
+        totalSolved={stats?.solvedCount || 0}
+        totalQuestions={stats?.totalQuestions || 145}
+        bank1Total={stats?.bank1Total || 30}
+        bank1Solved={stats?.bank1Solved || 0}
+        bank2Total={stats?.bank2Total || 15}
+        bank2Solved={stats?.bank2Solved || 0}
+        bank3Total={stats?.bank3Total || 56}
+        bank3Solved={stats?.bank3Solved || 0}
+        bank4Total={stats?.bank4Total || 32}
+        bank4Solved={stats?.bank4Solved || 0}
+        dbmsTotal={stats?.dbmsTotal || 12}
+        dbmsSolved={stats?.dbmsSolved || 0}
+        accuracy={stats?.accuracy || 0}
+        systemHealth={systemHealth}
+        onOpenSettings={() => setIsSettingsOpen(true)}
       />
 
       {/* Main Page Layout: Left Docked LeetCode Sidebar + Content */}
       <div className="flex w-full flex-1">
-        {/* LeetCode Docked Left Sidebar */}
+        {/* LeetCode Docked Left Sidebar (hidden on mobile, visible on desktop) */}
         {activeTab !== 'workspace' && (
           <LeetCodeSidebar
             isCollapsed={isSidebarCollapsed}
@@ -427,8 +460,8 @@ export const App: React.FC = () => {
         <main
           className={`flex-1 overflow-x-hidden min-h-[calc(100vh-50px)] transition-all duration-300 ${
             isAbsoluteFullscreen || isSidebarFullyContracted
-              ? 'p-4 lg:p-6 w-full max-w-none'
-              : 'p-6 lg:p-8 max-w-[1600px]'
+              ? 'p-2.5 sm:p-4 lg:p-6 pb-20 md:pb-6 w-full max-w-none'
+              : 'p-3 sm:p-6 lg:p-8 pb-20 md:pb-8 max-w-[1600px]'
           }`}
         >
           {loading ? (
@@ -616,6 +649,13 @@ export const App: React.FC = () => {
       <KeyboardShortcutsModal
         isOpen={isShortcutsOpen}
         onClose={() => setIsShortcutsOpen(false)}
+      />
+
+      {/* Mobile Bottom Navigation Bar (Hidden in Workspace & on desktop) */}
+      <MobileBottomNav
+        activeTab={activeTab}
+        setActiveTab={(tab) => navigateToTab(tab, undefined, true)}
+        onOpenDrawer={() => setIsMobileDrawerOpen(true)}
       />
     </div>
   );

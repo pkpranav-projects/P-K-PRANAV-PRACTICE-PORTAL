@@ -117,7 +117,7 @@ export const LeetCodeSidebar: React.FC<LeetCodeSidebarProps> = ({
       {isFullyContracted && (
         <button
           onClick={onToggleFullContract || onToggleCollapse}
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-40 bg-white dark:bg-[#252525] hover:bg-slate-100 dark:hover:bg-[#323232] text-amber-600 dark:text-[#FFA116] border border-slate-300 dark:border-[#3e3e3e] border-l-0 rounded-r-lg px-1.5 py-4 shadow-2xl flex items-center justify-center group transition-all duration-200 cursor-pointer"
+          className="hidden md:flex fixed left-0 top-1/2 -translate-y-1/2 z-40 bg-white dark:bg-[#252525] hover:bg-slate-100 dark:hover:bg-[#323232] text-amber-600 dark:text-[#FFA116] border border-slate-300 dark:border-[#3e3e3e] border-l-0 rounded-r-lg px-1.5 py-4 shadow-2xl items-center justify-center group transition-all duration-200 cursor-pointer"
           title="Expand Sidebar (Click to restore)"
           aria-label="Expand Sidebar"
         >
@@ -129,7 +129,7 @@ export const LeetCodeSidebar: React.FC<LeetCodeSidebarProps> = ({
         style={{
           width: isFullyContracted ? 0 : isCollapsed ? 64 : width
         }}
-        className={`relative sticky top-[50px] h-[calc(100vh-50px)] bg-white dark:bg-[#1a1a1a] text-slate-700 dark:text-[#eff1f6bf] select-none z-30 flex flex-col justify-between transition-colors ${
+        className={`hidden md:flex relative sticky top-[50px] h-[calc(100vh-50px)] bg-white dark:bg-[#1a1a1a] text-slate-700 dark:text-[#eff1f6bf] select-none z-30 flex-col justify-between transition-colors ${
           isResizing ? '' : 'transition-[width] duration-200'
         } ${
           isFullyContracted

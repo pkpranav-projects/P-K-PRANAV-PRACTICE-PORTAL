@@ -808,7 +808,7 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                     </div>
                   </th>
 
-                  <th className="py-3 px-4 w-24">Bank</th>
+                  <th className="hidden md:table-cell py-3 px-4 w-24">Bank</th>
 
                   <th
                     onClick={() => handleHeaderSort('difficulty')}
@@ -827,7 +827,7 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
 
                   <th
                     onClick={() => handleHeaderSort('topic')}
-                    className="py-3 px-4 cursor-pointer select-none hover:text-amber-500 transition-colors"
+                    className="hidden md:table-cell py-3 px-4 cursor-pointer select-none hover:text-amber-500 transition-colors"
                     title="Click to sort by Topic"
                   >
                     <div className="flex items-center gap-1">
@@ -891,7 +891,7 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                       </td>
 
                       {/* Bank Tag */}
-                      <td className="py-3 px-4">
+                      <td className="hidden md:table-cell py-3 px-4">
                         <span className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${bankBadge.color}`}>
                           {bankBadge.label}
                         </span>
@@ -903,7 +903,7 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                       </td>
 
                       {/* Topic */}
-                      <td className="py-3 px-4 text-slate-500 dark:text-slate-400">
+                      <td className="hidden md:table-cell py-3 px-4 text-slate-500 dark:text-slate-400">
                         {q.topic}
                       </td>
 

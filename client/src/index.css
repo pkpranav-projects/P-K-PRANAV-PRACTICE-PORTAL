@@ -169,3 +169,15 @@ html.oled .monaco-editor .margin {
   background-color: #000000 !important;
 }
 
+/* Mobile Safe Area & Touch Enhancements */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+@media (max-width: 768px) {
+  html, body {
+    -webkit-overflow-scrolling: touch;
+    touch-action: manipulation;
+  }
+}
+

@@ -14,7 +14,8 @@ import {
   VolumeX,
   HelpCircle,
   Database,
-  ArrowLeft
+  ArrowLeft,
+  Menu
 } from 'lucide-react';
 import { PranavJavaSymbol } from './PranavJavaSymbol';
 import { SystemHealth } from '../types';
@@ -52,6 +53,7 @@ interface LeetCodeNavbarProps {
   onToggleSound?: () => void;
   onBack?: () => void;
   backLabel?: string;
+  onOpenMobileDrawer?: () => void;
 }
 
 export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
@@ -71,7 +73,8 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
   isSoundEnabled = true,
   onToggleSound,
   onBack,
-  backLabel = 'Questions'
+  backLabel = 'Questions',
+  onOpenMobileDrawer
 }) => {
   const [isInterviewOpen, setIsInterviewOpen] = useState(false);
   const [isStoreOpen, setIsStoreOpen] = useState(false);
@@ -85,28 +88,40 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
 
   return (
     <nav className="flex h-[50px] w-full items-center border-b border-slate-200 dark:border-[#383838] bg-white dark:bg-[#282828] text-slate-700 dark:text-[#eff1f6bf] select-none sticky top-0 z-50 transition-colors">
-      <div className="w-full max-w-[1700px] h-full mx-auto px-4 sm:px-6 flex items-center justify-between">
+      <div className="w-full max-w-[1700px] h-full mx-auto px-2.5 sm:px-6 flex items-center justify-between">
         
-        {/* Left side: Authentic LeetCode Logo and Main Navigation Tabs */}
-        <div className="flex items-center h-full gap-6 lg:gap-8">
+        {/* Left side: Hamburger (mobile), Logo, Back button, and Desktop Nav Tabs */}
+        <div className="flex items-center h-full gap-2 sm:gap-4 lg:gap-8 min-w-0">
+          {/* Mobile Navigation Drawer Hamburger Button */}
+          {onOpenMobileDrawer && (
+            <button
+              onClick={onOpenMobileDrawer}
+              className="lg:hidden p-1.5 rounded-lg text-slate-600 hover:text-slate-900 dark:text-neutral-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#333] transition-colors cursor-pointer"
+              title="Open Navigation Menu"
+              aria-label="Open Navigation Menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+          )}
+
           {/* Brand Logo with Symbol and PRANAV Practice Portal title */}
           <button
             onClick={() => setActiveTab('explore')}
-            className="flex items-center gap-2.5 cursor-pointer focus:outline-none group pr-2"
+            className="flex items-center gap-2 cursor-pointer focus:outline-none group pr-1 sm:pr-2 shrink-0"
             aria-label="PRANAV Practice Portal"
           >
             {/* Custom PK Monogram Logo */}
-            <PranavJavaSymbol className="h-[27px] w-[27px] flex-shrink-0 group-hover:scale-105 transition-transform" />
+            <PranavJavaSymbol className="h-[26px] w-[26px] sm:h-[28px] sm:w-[28px] flex-shrink-0 group-hover:scale-105 transition-transform" />
 
-            {/* Brand Typography: PRANAV Practice Portal */}
-            <div className="flex items-baseline gap-1.5 whitespace-nowrap">
-              <span className="text-slate-900 dark:text-white font-extrabold text-[16px] tracking-tight font-sans">
+            {/* Brand Typography: PRANAV Practice Portal (Responsive) */}
+            <div className="flex items-baseline gap-1 whitespace-nowrap">
+              <span className="text-slate-900 dark:text-white font-extrabold text-[15px] sm:text-[16px] tracking-tight font-sans">
                 PRANAV
               </span>
-              <span className="text-slate-500 dark:text-neutral-300 font-medium text-[15px] font-sans">
+              <span className="hidden sm:inline text-slate-500 dark:text-neutral-300 font-medium text-[14px] sm:text-[15px] font-sans">
                 Practice
               </span>
-              <span className="text-[#FFA116] font-bold text-[15px] tracking-wide font-sans">
+              <span className="hidden md:inline text-[#FFA116] font-bold text-[14px] sm:text-[15px] tracking-wide font-sans">
                 Portal
               </span>
             </div>
@@ -116,16 +131,17 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
           {activeTab === 'workspace' && onBack && (
             <button
               onClick={onBack}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-[#333] dark:hover:bg-[#444] border border-slate-300/80 dark:border-neutral-700 transition-all cursor-pointer shadow-sm group shrink-0"
+              className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-md text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-[#333] dark:hover:bg-[#444] border border-slate-300/80 dark:border-neutral-700 transition-all cursor-pointer shadow-sm group shrink-0"
               title={`Back to ${backLabel || 'Questions'} (or Browser Back)`}
             >
-              <ArrowLeft className="w-3.5 h-3.5 text-amber-500 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Back to {backLabel || 'Questions'}</span>
+              <ArrowLeft className="w-3.5 h-3.5 text-amber-500 group-hover:-translate-x-0.5 transition-transform shrink-0" />
+              <span className="hidden sm:inline">Back to {backLabel || 'Questions'}</span>
+              <span className="sm:hidden">Back</span>
             </button>
           )}
 
-          {/* Navigation Links matching LeetCode (Problems, Contest, Discuss, Interview, Store) */}
-          <div className="flex items-center h-full gap-5 text-sm font-medium">
+          {/* Navigation Links (Desktop only: hidden on mobile) */}
+          <div className="hidden lg:flex items-center h-full gap-5 text-sm font-medium">
             
             {/* Explore Tab */}
             <button
@@ -302,9 +318,21 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
         </div>
 
         {/* Right side: Search + Timer + Flame + Sound + Shortcuts + Theme + Fullscreen + Profile */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-1 sm:gap-2">
           
-          {/* Quick Command Palette Search */}
+          {/* Mobile Search Button */}
+          {onOpenCommandPalette && (
+            <button
+              onClick={onOpenCommandPalette}
+              className="md:hidden p-1.5 rounded text-slate-600 hover:text-slate-900 dark:text-neutral-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer"
+              title="Search questions & commands"
+              aria-label="Search"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+          )}
+
+          {/* Quick Command Palette Search (Desktop) */}
           {onOpenCommandPalette && (
             <button
               onClick={onOpenCommandPalette}
