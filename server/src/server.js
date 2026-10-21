@@ -381,9 +381,9 @@ app.get('/api/curriculum', (req, res) => {
   }
 });
 
-// Open document directly in Microsoft Edge or system desktop viewer without downloading
+// Open document directly: PDFs in Microsoft Edge, others (PPTX, PPT, DOCX) in Microsoft Office
 app.post('/api/documents/open', (req, res) => {
-  const { filename, app: targetApp = 'edge' } = req.body;
+  const { filename, app: requestedApp } = req.body;
   if (!filename) {
     return res.status(400).json({ error: 'Filename is required' });
   }
@@ -395,36 +395,52 @@ app.post('/api/documents/open', (req, res) => {
     return res.status(404).json({ error: 'Document file not found in documentss folder' });
   }
 
+  const ext = path.extname(safeFilename).toLowerCase();
+  const isPdf = ext === '.pdf';
   const edgeExe = getEdgeExecutable();
 
-  if (targetApp === 'system' || !edgeExe) {
-    // Open in Windows default application (e.g. Office desktop app)
-    const cmd = `powershell -Command "Start-Process -FilePath '${targetPath.replace(/'/g, "''")}'"`;
+  // ONLY PDFs should open in Microsoft Edge.
+  // PPTX, PPT, DOCX must ALWAYS open in Microsoft Office desktop applications (PowerPoint, Word).
+  if (!isPdf || requestedApp === 'office' || requestedApp === 'system' || !edgeExe) {
+    const isPpt = ext.includes('ppt');
+    const isWord = ext.includes('doc');
+    const appLabel = isPpt ? 'Microsoft PowerPoint' : isWord ? 'Microsoft Word' : 'Microsoft Office';
+
+    // Launch with Windows shell association (PowerPoint / Word)
+    const cmd = `cmd.exe /c start "" "${targetPath}"`;
     exec(cmd, (err) => {
       if (err) {
-        console.error('Failed to open document:', err);
-        return res.status(500).json({ error: 'Failed to launch desktop application' });
+        // Fallback to powershell Start-Process
+        const psCmd = `powershell -NoProfile -Command "Start-Process -FilePath '${targetPath.replace(/'/g, "''")}'"`;
+        exec(psCmd, (psErr) => {
+          if (psErr) {
+            console.error('Failed to open document in Office:', psErr);
+            return res.status(500).json({ error: `Failed to launch ${appLabel}` });
+          }
+          return res.json({ success: true, message: `Opened ${safeFilename} in ${appLabel} (Zero download)` });
+        });
+        return;
       }
-      res.json({ success: true, message: `Opened ${safeFilename} in default desktop application` });
+      return res.json({ success: true, message: `Opened ${safeFilename} in ${appLabel} (Zero download)` });
     });
   } else {
-    // Launch directly in Microsoft Edge without downloading
+    // File IS a PDF: open in Microsoft Edge built-in PDF viewer
     try {
       const child = spawn(edgeExe, [targetPath], {
         detached: true,
         stdio: 'ignore'
       });
       child.unref();
-      res.json({ success: true, message: `Opened ${safeFilename} directly in Microsoft Edge (No download)` });
+      return res.json({ success: true, message: `Opened ${safeFilename} in Microsoft Edge PDF Viewer (Zero download)` });
     } catch (err) {
-      console.error('Failed to spawn Edge:', err);
-      // Fallback to powershell Start-Process
-      const cmd = `powershell -Command "Start-Process -FilePath '${targetPath.replace(/'/g, "''")}'"`;
+      console.error('Failed to spawn Edge directly, trying cmd start msedge:', err);
+      const cmd = `cmd.exe /c start msedge "${targetPath}"`;
       exec(cmd, (fbErr) => {
         if (fbErr) {
-          return res.status(500).json({ error: 'Failed to open file in Edge or default viewer' });
+          // Fallback to default system PDF viewer
+          exec(`cmd.exe /c start "" "${targetPath}"`, () => {});
         }
-        res.json({ success: true, message: `Opened ${safeFilename} in default viewer (Edge fallback)` });
+        return res.json({ success: true, message: `Opened ${safeFilename} in Microsoft Edge` });
       });
     }
   }

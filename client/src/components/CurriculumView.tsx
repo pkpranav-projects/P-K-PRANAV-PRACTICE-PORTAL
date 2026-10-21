@@ -8,7 +8,9 @@ import {
   Code2,
   CheckCircle2,
   Sparkles,
-  BookOpen
+  BookOpen,
+  Presentation,
+  FileText
 } from 'lucide-react';
 import { CurriculumItem } from '../types';
 import { api } from '../services/api';
@@ -61,11 +63,25 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
     }).sort((a, b) => a.sequence - b.sequence);
   }, [curriculum, selectedModule, search]);
 
-  const handleOpenFile = async (filename: string, targetApp: 'edge' | 'system' = 'edge') => {
+  const handleOpenFile = async (filename: string, targetApp: 'edge' | 'office' | 'system' = 'edge') => {
     const actionKey = `${filename}-${targetApp}`;
     try {
       setOpeningFile(actionKey);
-      const appName = targetApp === 'edge' ? 'Microsoft Edge' : 'Desktop Application';
+      const isPdf = filename.toLowerCase().endsWith('.pdf');
+      const isPpt = filename.toLowerCase().includes('.ppt');
+      const isWord = filename.toLowerCase().includes('.doc');
+
+      let appName = 'Desktop Application';
+      if (isPdf && targetApp === 'edge') {
+        appName = 'Microsoft Edge PDF Viewer';
+      } else if (isPpt) {
+        appName = 'Microsoft PowerPoint';
+      } else if (isWord) {
+        appName = 'Microsoft Word';
+      } else {
+        appName = 'Microsoft Office';
+      }
+
       setToastMessage(`Opening ${filename} in ${appName} (Zero download)...`);
       const res = await api.openDocument(filename, targetApp);
       setTimeout(() => {
@@ -118,7 +134,7 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
         <div className="relative z-10 max-w-3xl space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
             <GraduationCap className="w-4 h-4 text-indigo-400" />
-            <span>Master Study Order · 27 Curated Guides in Microsoft Edge</span>
+            <span>Master Study Order · 27 Curated Guides & Lectures</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white m-0">
@@ -126,13 +142,17 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
           </h1>
 
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Follow this sequential 27-step roadmap organized in chronological order from foundations to concurrency. Click <strong>Open in Microsoft Edge</strong> to view any document instantly in Edge without downloading.
+            Follow this sequential 27-step roadmap organized in chronological order from foundations to concurrency. Open <strong>PDFs in Microsoft Edge</strong> and <strong>presentations / documents in Microsoft Office</strong> directly with zero downloads.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-indigo-200/90 font-mono">
-            <span>📚 27 Guides in Strict Pedagogical Order</span>
+            <span>📚 27 Guides in Pedagogical Order</span>
             <span>·</span>
-            <span>🌐 Direct Microsoft Edge Launch</span>
+            <span>🌐 PDFs in Microsoft Edge</span>
+            <span>·</span>
+            <span>📊 Slides in PowerPoint</span>
+            <span>·</span>
+            <span>📝 Docs in Word</span>
             <span>·</span>
             <span>⚡ Zero Browser Downloads</span>
           </div>
@@ -176,15 +196,21 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
       {/* Curriculum Items List */}
       <div className="space-y-4">
         {filteredItems.map((doc) => {
-          const formatBadge = {
-            PDF: 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400 border-rose-200 dark:border-rose-900/60',
-            PPTX: 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border-amber-200 dark:border-amber-900/60',
-            PPT: 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border-amber-200 dark:border-amber-900/60',
-            DOCX: 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 border-blue-200 dark:border-blue-900/60'
-          }[doc.format] || 'bg-slate-100 text-slate-700 border-slate-200';
+          const isPdf = doc.format === 'PDF' || doc.filename.toLowerCase().endsWith('.pdf');
+          const isPpt = doc.format === 'PPTX' || doc.format === 'PPT' || doc.filename.toLowerCase().includes('.ppt');
+          const isWord = doc.format === 'DOCX' || doc.filename.toLowerCase().includes('.doc');
+
+          const formatBadge = isPdf
+            ? 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400 border-rose-200 dark:border-rose-900/60'
+            : isPpt
+            ? 'bg-orange-50 text-orange-700 dark:bg-orange-950/60 dark:text-orange-400 border-orange-200 dark:border-orange-900/60'
+            : isWord
+            ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 border-blue-200 dark:border-blue-900/60'
+            : 'bg-slate-100 text-slate-700 border-slate-200';
 
           const relatedQ = getRelatedQuestionId(doc.module, doc.title);
           const isOpeningEdge = openingFile === `${doc.filename}-edge`;
+          const isOpeningOffice = openingFile === `${doc.filename}-office`;
           const isOpeningSystem = openingFile === `${doc.filename}-system`;
 
           return (
@@ -237,33 +263,85 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
 
               {/* Actions & Related Question */}
               <div className="flex flex-col sm:flex-row md:flex-col items-stretch sm:items-center md:items-end justify-between gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 dark:border-slate-800/80 min-w-[210px]">
-                {/* Main Open in Microsoft Edge Button */}
-                <button
-                  onClick={() => handleOpenFile(doc.filename, 'edge')}
-                  disabled={Boolean(openingFile)}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white shadow-sm hover:shadow-indigo-500/20 transition-all hover:scale-[1.02] disabled:opacity-50 whitespace-nowrap"
-                  title="Opens directly in Microsoft Edge without downloading"
-                >
-                  <Globe className="w-3.5 h-3.5 text-sky-200" />
-                  <span>{isOpeningEdge ? 'Opening Edge...' : 'Open in Microsoft Edge'}</span>
-                </button>
+                {isPdf ? (
+                  <>
+                    {/* Primary: Open in Microsoft Edge (PDFs only) */}
+                    <button
+                      onClick={() => handleOpenFile(doc.filename, 'edge')}
+                      disabled={Boolean(openingFile)}
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white shadow-sm hover:shadow-indigo-500/20 transition-all hover:scale-[1.02] disabled:opacity-50 whitespace-nowrap cursor-pointer"
+                      title="Opens directly in Microsoft Edge's built-in PDF viewer without downloading"
+                    >
+                      <Globe className="w-3.5 h-3.5 text-sky-200" />
+                      <span>{isOpeningEdge ? 'Opening Edge...' : 'Open in Microsoft Edge'}</span>
+                    </button>
 
-                {/* Secondary Open in Desktop App Button */}
-                <button
-                  onClick={() => handleOpenFile(doc.filename, 'system')}
-                  disabled={Boolean(openingFile)}
-                  className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 transition-colors whitespace-nowrap"
-                  title="Opens directly in Microsoft Office / Desktop app without downloading"
-                >
-                  <Monitor className="w-3.5 h-3.5 text-slate-400" />
-                  <span>{isOpeningSystem ? 'Launching App...' : 'Open in Desktop App'}</span>
-                </button>
+                    {/* Secondary: Open in Desktop PDF Viewer */}
+                    <button
+                      onClick={() => handleOpenFile(doc.filename, 'system')}
+                      disabled={Boolean(openingFile)}
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 transition-colors whitespace-nowrap cursor-pointer"
+                      title="Opens in default desktop PDF viewer"
+                    >
+                      <Monitor className="w-3.5 h-3.5 text-slate-400" />
+                      <span>{isOpeningSystem ? 'Launching...' : 'Open in Desktop App'}</span>
+                    </button>
+                  </>
+                ) : isPpt ? (
+                  <>
+                    {/* Primary: Open in PowerPoint (Office) */}
+                    <button
+                      onClick={() => handleOpenFile(doc.filename, 'office')}
+                      disabled={Boolean(openingFile)}
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-orange-600 via-amber-600 to-rose-600 hover:from-orange-700 hover:to-rose-700 text-white shadow-sm hover:shadow-orange-500/20 transition-all hover:scale-[1.02] disabled:opacity-50 whitespace-nowrap cursor-pointer"
+                      title="Opens presentation directly in Microsoft PowerPoint (Office)"
+                    >
+                      <Presentation className="w-3.5 h-3.5 text-orange-200" />
+                      <span>{isOpeningOffice || isOpeningSystem ? 'Opening PowerPoint...' : 'Open in PowerPoint'}</span>
+                    </button>
+
+                    {/* Secondary: Open in Office / Desktop App */}
+                    <button
+                      onClick={() => handleOpenFile(doc.filename, 'system')}
+                      disabled={Boolean(openingFile)}
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 transition-colors whitespace-nowrap cursor-pointer"
+                      title="Opens in Microsoft Office / Desktop app without downloading"
+                    >
+                      <Monitor className="w-3.5 h-3.5 text-slate-400" />
+                      <span>{isOpeningSystem ? 'Launching...' : 'Open in Office'}</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {/* Primary: Open in Word (Office) */}
+                    <button
+                      onClick={() => handleOpenFile(doc.filename, 'office')}
+                      disabled={Boolean(openingFile)}
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-blue-700 via-indigo-700 to-cyan-700 hover:from-blue-800 hover:to-cyan-800 text-white shadow-sm hover:shadow-blue-500/20 transition-all hover:scale-[1.02] disabled:opacity-50 whitespace-nowrap cursor-pointer"
+                      title="Opens document directly in Microsoft Word (Office)"
+                    >
+                      <FileText className="w-3.5 h-3.5 text-blue-200" />
+                      <span>{isOpeningOffice || isOpeningSystem ? 'Opening Word...' : 'Open in Word'}</span>
+                    </button>
+
+                    {/* Secondary: Open in Office / Desktop App */}
+                    <button
+                      onClick={() => handleOpenFile(doc.filename, 'system')}
+                      disabled={Boolean(openingFile)}
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700/80 transition-colors whitespace-nowrap cursor-pointer"
+                      title="Opens in Microsoft Office / Desktop app without downloading"
+                    >
+                      <Monitor className="w-3.5 h-3.5 text-slate-400" />
+                      <span>{isOpeningSystem ? 'Launching...' : 'Open in Office'}</span>
+                    </button>
+                  </>
+                )}
 
                 {/* Related Practice Challenge Button */}
                 {relatedQ && (
                   <button
                     onClick={() => onSelectQuestion(relatedQ)}
-                    className="inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800/60 transition-colors mt-1"
+                    className="inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800/60 transition-colors mt-1 cursor-pointer"
                     title={`Practice related portal challenge (${relatedQ})`}
                   >
                     <Code2 className="w-3 h-3" />

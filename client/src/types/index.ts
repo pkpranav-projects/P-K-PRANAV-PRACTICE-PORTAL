@@ -174,7 +174,7 @@ export interface CurriculumItem {
   title: string;
   filename: string;
   module: string;
-  format: 'PDF' | 'PPTX' | 'DOCX';
+  format: 'PDF' | 'PPTX' | 'PPT' | 'DOCX';
   estimatedMinutes: number;
   description: string[];
   sizeBytes: number;

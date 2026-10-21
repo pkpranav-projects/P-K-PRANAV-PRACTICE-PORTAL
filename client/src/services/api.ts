@@ -171,7 +171,7 @@ export const api = {
     return res.json();
   },
 
-  async openDocument(filename: string, app: 'edge' | 'system' = 'edge'): Promise<{ success: boolean; message: string }> {
+  async openDocument(filename: string, app: 'edge' | 'office' | 'system' = 'edge'): Promise<{ success: boolean; message: string }> {
     const res = await fetch(`${API_BASE}/documents/open`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
