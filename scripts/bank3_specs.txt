@@ -1,0 +1,893 @@
+=== bank3-001: Meera's Product Price Comparator ===
+DESC: Meera manages a small shop and wants to display her products sorted by price in descending order so the most expensive items appear at the top of her catalogue. She uses Java's Comparator interface to
+SAMPLE_IN:
+3
+Laptop Phone Watch
+50000 30000 8000
+SAMPLE_OUT:
+Laptop 50000
+Phone 30000
+Watch 8000
+TEST_CASES_COUNT: 4
+  TC1_IN: '3\nLaptop Phone Watch\n50000 30000 8000'
+  TC1_OUT: 'Laptop 50000\nPhone 30000\nWatch 8000'
+  TC2_IN: '3\nGold Silver Bronze\n900 400 150'
+  TC2_OUT: 'Gold 900\nSilver 400\nBronze 150'
+  TC3_IN: '4\nPen Book Bag Desk\n10 50 120 300'
+  TC3_OUT: 'Desk 300\nBag 120\nBook 50\nPen 10'
+  TC4_IN: '2\nApple Orange\n25 25'
+  TC4_OUT: 'Apple 25\nOrange 25'
+
+=== bank3-002: Karan's Shopping Cart Vector ===
+DESC: Karan is building a basic shopping cart system. He uses a Vector to store the item prices added to a customer's cart. After all items are added, the system displays the total number of items, lists al
+SAMPLE_IN:
+3
+100 200 300
+SAMPLE_OUT:
+Items: 3
+100
+200
+300
+Total: 600
+TEST_CASES_COUNT: 4
+  TC1_IN: '3\n100 200 300'
+  TC1_OUT: 'Items: 3\n100\n200\n300\nTotal: 600'
+  TC2_IN: '4\n25 75 50 100'
+  TC2_OUT: 'Items: 4\n25\n75\n50\n100\nTotal: 250'
+  TC3_IN: '1\n500'
+  TC3_OUT: 'Items: 1\n500\nTotal: 500'
+  TC4_IN: '5\n10 20 30 40 50'
+  TC4_OUT: 'Items: 5\n10\n20\n30\n40\n50\nTotal: 150'
+
+=== bank3-003: Divya's Student Rank List Comparable ===
+DESC: Divya is a class teacher who needs to print the rank list of her students sorted by their marks in ascending order. She decides to use Java's Comparable interface to define the natural ordering for a 
+SAMPLE_IN:
+3
+Priya Rahul Sita
+78 55 90
+SAMPLE_OUT:
+Rahul 55
+Priya 78
+Sita 90
+TEST_CASES_COUNT: 4
+  TC1_IN: '3\nPriya Rahul Sita\n78 55 90'
+  TC1_OUT: 'Rahul 55\nPriya 78\nSita 90'
+  TC2_IN: '3\nTom Jerry Spike\n45 90 30'
+  TC2_OUT: 'Spike 30\nTom 45\nJerry 90'
+  TC3_IN: '4\nAlice Bob Charlie Dave\n95 60 75 88'
+  TC3_OUT: 'Bob 60\nCharlie 75\nDave 88\nAlice 95'
+  TC4_IN: '2\nJohn Doe\n80 70'
+  TC4_OUT: 'Doe 70\nJohn 80'
+
+=== bank3-004: Sunita's Roll Number Attendance Iterator ===
+DESC: Sunita is a college coordinator who maintains an attendance list of student roll numbers. She stores the roll numbers in a Vector and uses an Iterator to traverse the list, printing each roll number a
+SAMPLE_IN:
+4
+11 22 33 44
+SAMPLE_OUT:
+11
+22
+33
+44
+Count: 4
+TEST_CASES_COUNT: 4
+  TC1_IN: '4\n11 22 33 44'
+  TC1_OUT: '11\n22\n33\n44\nCount: 4'
+  TC2_IN: '3\n100 200 300'
+  TC2_OUT: '100\n200\n300\nCount: 3'
+  TC3_IN: '5\n1 2 3 4 5'
+  TC3_OUT: '1\n2\n3\n4\n5\nCount: 5'
+  TC4_IN: '2\n505 506'
+  TC4_OUT: '505\n506\nCount: 2'
+
+=== bank3-005: Anita's Employee Multi-Level Comparable ===
+DESC: Anita is an HR manager who needs to generate a payroll report where employees are listed sorted by salary in ascending order. When two employees have the same salary, they must be listed in alphabetic
+SAMPLE_IN:
+3
+Lina Mark Nora
+45000 65000 45000
+SAMPLE_OUT:
+Lina 45000
+Nora 45000
+Mark 65000
+TEST_CASES_COUNT: 3
+  TC1_IN: '3\nLina Mark Nora\n45000 65000 45000'
+  TC1_OUT: 'Lina 45000\nNora 45000\nMark 65000'
+  TC2_IN: '3\nCarlos Ben Amy\n30000 20000 20000'
+  TC2_OUT: 'Amy 20000\nBen 20000\nCarlos 30000'
+  TC3_IN: '4\nZara Adam Zara Bob\n50000 50000 60000 50000'
+  TC3_OUT: 'Adam 50000\nBob 50000\nZara 50000\nZara 60000'
+
+=== bank3-006: Vikram's Score Threshold Vector Filtering ===
+DESC: Vikram is a game developer who maintains player scores in a Vector. After each round, he wants to filter out all scores that fall below a given threshold, keeping only the qualifying scores. He uses a
+SAMPLE_IN:
+7
+10 25 5 40 15 50 8
+20
+SAMPLE_OUT:
+25
+40
+50
+Remaining: 3
+TEST_CASES_COUNT: 4
+  TC1_IN: '7\n10 25 5 40 15 50 8\n20'
+  TC1_OUT: '25\n40\n50\nRemaining: 3'
+  TC2_IN: '5\n300 100 500 200 400\n250'
+  TC2_OUT: '300\n500\n400\nRemaining: 3'
+  TC3_IN: '4\n10 20 30 40\n50'
+  TC3_OUT: 'Remaining: 0'
+  TC4_IN: '3\n100 200 150\n50'
+  TC4_OUT: '100\n200\n150\nRemaining: 3'
+
+=== bank3-007: Deepa's StepRange Iterable & StepIterator ===
+DESC: Deepa is a maths teacher who wants to generate number sequences with a fixed step value for her classroom exercises. Given a start value, an end value, and a step size, she needs to produce all number
+SAMPLE_IN:
+1 9 2
+SAMPLE_OUT:
+1
+3
+5
+7
+9
+Count: 5
+TEST_CASES_COUNT: 4
+  TC1_IN: '1 9 2'
+  TC1_OUT: '1\n3\n5\n7\n9\nCount: 5'
+  TC2_IN: '0 15 5'
+  TC2_OUT: '0\n5\n10\n15\nCount: 4'
+  TC3_IN: '2 10 3'
+  TC3_OUT: '2\n5\n8\nCount: 3'
+  TC4_IN: '5 5 2'
+  TC4_OUT: '5\nCount: 1'
+
+=== bank3-008: Rahul's Word Length & Alphabetical Comparator ===
+DESC: Rahul is building a word processing utility. He needs to sort a list of words first by their length in ascending order, and when two words have the same length, they should appear in alphabetical orde
+SAMPLE_IN:
+5
+rose tulip lily oak pine
+SAMPLE_OUT:
+oak
+lily
+pine
+rose
+tulip
+TEST_CASES_COUNT: 3
+  TC1_IN: '5\nrose tulip lily oak pine'
+  TC1_OUT: 'oak\nlily\npine\nrose\ntulip'
+  TC2_IN: '4\ndog elephant cat bee'
+  TC2_OUT: 'bee\ncat\ndog\nelephant'
+  TC3_IN: '3\nbanana apple fig'
+  TC3_OUT: 'fig\napple\nbanana'
+
+=== bank3-009: Sita's Library Book Page Sorter ===
+DESC: Sita manages a library catalogue. She needs to sort books first by number of pages in ascending order. When two books have the same page count, they should appear in alphabetical order by title. She f
+SAMPLE_IN:
+3
+Zeta Beta Alpha
+100 200 100
+SAMPLE_OUT:
+Alpha 100
+Zeta 100
+Beta 200
+TEST_CASES_COUNT: 3
+  TC1_IN: '3\nZeta Beta Alpha\n100 200 100'
+  TC1_OUT: 'Alpha 100\nZeta 100\nBeta 200'
+  TC2_IN: '4\nDelta Gamma Alpha Beta\n300 300 150 450'
+  TC2_OUT: 'Alpha 150\nDelta 300\nGamma 300\nBeta 450'
+  TC3_IN: '2\nNovel Comic\n150 50'
+  TC3_OUT: 'Comic 50\nNovel 150'
+
+=== bank3-010: Priya's Logistics Delivery Time Window ===
+DESC: Priya is a logistics coordinator who tracks delivery time values (in minutes) stored in a Vector. Her manager asks her how many deliveries were completed within a given time window — that is, how many
+SAMPLE_IN:
+6
+5 15 25 35 45 55
+20 50
+SAMPLE_OUT:
+3
+TEST_CASES_COUNT: 3
+  TC1_IN: '6\n5 15 25 35 45 55\n20 50'
+  TC1_OUT: '3'
+  TC2_IN: '5\n12 8 30 45 22\n10 30'
+  TC2_OUT: '3'
+  TC3_IN: '4\n10 20 30 40\n60 100'
+  TC3_OUT: '0'
+
+=== bank3-011: Rajan's Sensor Reading Vector Extremes ===
+DESC: Rajan is a data analyst who stores a batch of sensor readings in a Vector. He needs to find the maximum and minimum values in the batch. He uses an Iterator to traverse the entire Vector in a single p
+SAMPLE_IN:
+5
+50 20 80 10 60
+SAMPLE_OUT:
+Max: 80
+Min: 10
+TEST_CASES_COUNT: 3
+  TC1_IN: '5\n50 20 80 10 60'
+  TC1_OUT: 'Max: 80\nMin: 10'
+  TC2_IN: '4\n300 100 700 500'
+  TC2_OUT: 'Max: 700\nMin: 100'
+  TC3_IN: '1\n42'
+  TC3_OUT: 'Max: 42\nMin: 42'
+
+=== bank3-012: Arjun's Player Score Threshold Filter ===
+DESC: Arjun is a game server developer who stores player scores in a Vector. After each game session, he needs to extract the top K scores in descending order to display on the leaderboard. He sorts the Vec
+SAMPLE_IN:
+5
+40 10 50 30 20
+30
+SAMPLE_OUT:
+50
+40
+TEST_CASES_COUNT: 3
+  TC1_IN: '5\n40 10 50 30 20\n30'
+  TC1_OUT: '50\n40'
+  TC2_IN: '6\n15 45 30 60 10 25\n25'
+  TC2_OUT: '60\n45\n30'
+  TC3_IN: '3\n10 20 30\n40'
+  TC3_OUT: ''
+
+=== bank3-013: Office Inventory Deposit & Daily Cost Tracker ===
+DESC: a store manager, needs a program to manage inventory items. Define a class ItemType with private attributes for name, deposit, and cost per day. Create an ArrayList in the Main class to store ItemType
+SAMPLE_IN:
+3
+Laptop 10000.0 250.0
+Light 1000.0 50.0
+Fan 1000.0 100.0
+SAMPLE_OUT:
+Laptop 10000.0 250.0
+Light 1000.0 50.0
+Fan 1000.0 100.0
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\nLaptop 10000.0 250.0\nLight 1000.0 50.0\nFan 1000.0 100.0'
+  TC1_OUT: 'Laptop 10000.0 250.0\nLight 1000.0 50.0\nFan 1000.0 100.0'
+  TC2_IN: '2\nHeadphones 300.0 15.0\nMouse 100.0 5.0'
+  TC2_OUT: 'Headphones 300.0 15.0\nMouse 100.0 5.0'
+
+=== bank3-014: Toll Booth Vehicle Registry using HashSet ===
+DESC: A city traffic management system needs to track vehicles entering a toll booth. Each vehicle is uniquely identified by its registration number. The system should allow adding vehicles to a record, ens
+SAMPLE_IN:
+5
+KA01AB1234 John Car
+MH02CD5678 Alice Bike
+DL03EF9012 Bob Truck
+TN04GH3456 Mike Car
+KA01AB1234 John Car
+SAMPLE_OUT:
+KA01AB1234 John Car
+MH02CD5678 Alice Bike
+DL03EF9012 Bob Truck
+TN04GH3456 Mike Car
+TEST_CASES_COUNT: 2
+  TC1_IN: '5\nKA01AB1234 John Car\nMH02CD5678 Alice Bike\nDL03EF9012 Bob Truck\nTN04GH3456 Mike Car\nKA01AB1234 John Car'
+  TC1_OUT: 'KA01AB1234 John Car\nMH02CD5678 Alice Bike\nDL03EF9012 Bob Truck\nTN04GH3456 Mike Car'
+  TC2_IN: '3\nKA01A1000 Alex Car\nKA01A1000 Alex Car\nDL02B2000 Ben Bike'
+  TC2_OUT: 'KA01A1000 Alex Car\nDL02B2000 Ben Bike'
+
+=== bank3-015: Arjun's Prime Number Combinations ===
+DESC: Arjun is working on a project where he needs to find all possible combinations of prime numbers that sum up to a given target. The prime numbers in the combinations should be greater than a specific v
+SAMPLE_IN:
+10 2
+SAMPLE_OUT:
+3 7
+5 5
+TEST_CASES_COUNT: 3
+  TC1_IN: '10 2'
+  TC1_OUT: '3 7\n5 5'
+  TC2_IN: '8 2'
+  TC2_OUT: '3 5'
+  TC3_IN: '6 2'
+  TC3_OUT: '3 3'
+
+=== bank3-016: Online Bookstore Price & Title Sorting ===
+DESC: An online bookstore wants to maintain a list of books sorted based on their price. Each book has a title, author name, and price. You are required to: • • • • • • • • Create a class named Book with th
+SAMPLE_IN:
+3
+JavaGuide 450
+PythonPro 300
+DataStructures 600
+SAMPLE_OUT:
+PythonPro 300
+JavaGuide 450
+DataStructures 600
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\nJavaGuide 450\nPythonPro 300\nDataStructures 600'
+  TC1_OUT: 'PythonPro 300\nJavaGuide 450\nDataStructures 600'
+  TC2_IN: '2\nBookB 100\nBookA 100'
+  TC2_OUT: 'BookA 100\nBookB 100'
+
+=== bank3-017: Hospital Patient ID Priority Queue Triage ===
+DESC: A hospital emergency room uses a priority queue triage system to prioritize incoming patients based on the urgency of their condition. Each patient record contains a Patient ID, condition severity des
+SAMPLE_IN:
+3
+P101 Emergency 1
+P102 General 3
+P103 Urgent 2
+SAMPLE_OUT:
+P101 Emergency 1
+P103 Urgent 2
+P102 General 3
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\nP101 Emergency 1\nP102 General 3\nP103 Urgent 2'
+  TC1_OUT: 'P101 Emergency 1\nP103 Urgent 2\nP102 General 3'
+  TC2_IN: '2\nP1 Normal 2\nP2 Critical 1'
+  TC2_OUT: 'P2 Critical 1\nP1 Normal 2'
+
+=== bank3-018: Sarah's Warehouse Inventory Unique Products ===
+DESC: Sarah, a warehouse manager, is managing a list of product names in her store's inventory system. She needs to perform basic operations like adding (inserting) new products, removing products that are 
+SAMPLE_IN:
+6
+Apples Oranges Apples Bananas Oranges Grapes
+SAMPLE_OUT:
+Apples Bananas Grapes Oranges
+TEST_CASES_COUNT: 2
+  TC1_IN: '6\nApples Oranges Apples Bananas Oranges Grapes'
+  TC1_OUT: 'Apples Bananas Grapes Oranges'
+  TC2_IN: '4\nPen Pencil Pen Eraser'
+  TC2_OUT: 'Eraser Pen Pencil'
+
+=== bank3-019: String Word Reversal & Character Preservation ===
+DESC: Given a sentence composed of space-separated words, reverse the order of the words in the sentence while keeping the internal characters of each word unchanged.  ### Input Format A single line of text
+SAMPLE_IN:
+Hello World Java
+SAMPLE_OUT:
+Java World Hello
+TEST_CASES_COUNT: 2
+  TC1_IN: 'Hello World Java'
+  TC1_OUT: 'Java World Hello'
+  TC2_IN: 'Data Structures Algorithms'
+  TC2_OUT: 'Algorithms Structures Data'
+
+=== bank3-020: Ananya's Coding Competition Leaderboard ===
+DESC: Ananya is organizing a coding competition at her college. After the evaluation round, she receives a list of participants along with their scores and submission times. To declare the final rankings, s
+SAMPLE_IN:
+3
+Ananya 95 120
+Rohan 95 110
+Vikram 90 90
+SAMPLE_OUT:
+Rohan 95 110
+Ananya 95 120
+Vikram 90 90
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\nAnanya 95 120\nRohan 95 110\nVikram 90 90'
+  TC1_OUT: 'Rohan 95 110\nAnanya 95 120\nVikram 90 90'
+  TC2_IN: '2\nBob 100 80\nAlice 100 70'
+  TC2_OUT: 'Alice 100 70\nBob 100 80'
+
+=== bank3-021: Raman's Student Course Registration System ===
+DESC: Raman, a computer science teacher, is responsible for registering students for his programming class. To streamline the registration process, he wants to develop a program that stores students' names 
+SAMPLE_IN:
+4
+Alice CS101
+Bob CS102
+Alice CS101
+Charlie CS101
+SAMPLE_OUT:
+Alice CS101
+Bob CS102
+Charlie CS101
+TEST_CASES_COUNT: 2
+  TC1_IN: '4\nAlice CS101\nBob CS102\nAlice CS101\nCharlie CS101'
+  TC1_OUT: 'Alice CS101\nBob CS102\nCharlie CS101'
+  TC2_IN: '2\nTom M1\nTom M1'
+  TC2_OUT: 'Tom M1'
+
+=== bank3-022: Classroom Attendance Duplicate Filter ===
+DESC: A college professor wants to keep track of students who attend classes. Each student has a unique roll number and their attendance count increases every time they attend a class. The system should all
+SAMPLE_IN:
+5
+101 102 101 103 102
+SAMPLE_OUT:
+101 102 103
+TEST_CASES_COUNT: 2
+  TC1_IN: '5\n101 102 101 103 102'
+  TC1_OUT: '101 102 103'
+  TC2_IN: '3\n1 1 1'
+  TC2_OUT: '1'
+
+=== bank3-023: Character Frequency & Vowel Subsequence Extractor ===
+DESC: (11) Arjun is working on a program that checks if one set of numbers is a subset of another. If Set B is a subset of Set A, the program should print "YES" followed by the sorted elements of Set B. If 
+SAMPLE_IN:
+programming
+SAMPLE_OUT:
+oai
+TEST_CASES_COUNT: 2
+  TC1_IN: 'programming'
+  TC1_OUT: 'oai'
+  TC2_IN: 'education'
+  TC2_OUT: 'euaio'
+
+=== bank3-024: Word Length Threshold Slicing Filter ===
+DESC: A teacher is filtering a list of words provided by students. Some words contain too many vowels, making them difficult for a spelling competition. The teacher decides to remove all words that contain 
+SAMPLE_IN:
+4
+apple pie banana kiwi
+4
+SAMPLE_OUT:
+apple banana kiwi
+TEST_CASES_COUNT: 2
+  TC1_IN: '4\napple pie banana kiwi\n4'
+  TC1_OUT: 'apple banana kiwi'
+  TC2_IN: '3\ncat elephant dog\n4'
+  TC2_OUT: 'elephant'
+
+=== bank3-025: C++ Linked List Stack Implementation ===
+DESC: Raghav is learning about stacks and has implemented a simple stack using a linked list. The stack supports three operations: push, pop and display. However, he is facing some issues with the functiona
+SAMPLE_IN:
+push 10
+push 20
+pop
+peek
+exit
+SAMPLE_OUT:
+20
+10
+TEST_CASES_COUNT: 2
+  TC1_IN: 'push 10\npush 20\npop\npeek\nexit'
+  TC1_OUT: '20\n10'
+  TC2_IN: 'push 5\npeek\npop\nexit'
+  TC2_OUT: '5\n5'
+
+=== bank3-026: Linear Queue Implementation using Array ===
+DESC: Sita is developing an order processing system for a company. To efficiently manage incoming orders, she decides to implement a queue data structure using an array. The queue will store order IDs. Impl
+SAMPLE_IN:
+enqueue 10
+enqueue 20
+dequeue
+peek
+exit
+SAMPLE_OUT:
+10
+20
+TEST_CASES_COUNT: 2
+  TC1_IN: 'enqueue 10\nenqueue 20\ndequeue\npeek\nexit'
+  TC1_OUT: '10\n20'
+  TC2_IN: 'enqueue 100\npeek\ndequeue\nexit'
+  TC2_OUT: '100\n100'
+
+=== bank3-027: Jansi's Double-Ended Queue (Deque) Operations ===
+DESC: program. She wants to perform a series of insertions at both the front and back of the deque and display the final state of the deque after all operations. Implement the following operations for Jansi
+SAMPLE_IN:
+insertFront 10
+insertRear 20
+deleteFront
+deleteRear
+SAMPLE_OUT:
+10
+20
+TEST_CASES_COUNT: 2
+  TC1_IN: 'insertFront 10\ninsertRear 20\ndeleteFront\ndeleteRear'
+  TC1_OUT: '10\n20'
+  TC2_IN: 'insertRear 5\ninsertFront 1\ndeleteRear'
+  TC2_OUT: '5'
+
+=== bank3-028: Minimum Bracket Reversals for Balanced Curly Braces ===
+DESC: You are given a string S consisting only of the opening { and closing curly brackets. Your task is to determine the minimum number of reversals required to make the expression balanced. Use a stack to
+SAMPLE_IN:
+}{{}}{{{
+SAMPLE_OUT:
+3
+TEST_CASES_COUNT: 3
+  TC1_IN: '}{{}}{{{'
+  TC1_OUT: '3'
+  TC2_IN: '{{}{{{}{{}}{{'
+  TC2_OUT: '-1'
+  TC3_IN: '}{'
+  TC3_OUT: '2'
+
+=== bank3-029: Restaurant Waitlist Queue Management System ===
+DESC: You have been assigned to develop a waitlist management system for a popular restaurant. The restaurant experiences high customer demand and often has a waitlist for customers to secure a table. Your 
+SAMPLE_IN:
+add Alice
+add Bob
+serve
+add Charlie
+serve
+SAMPLE_OUT:
+Served: Alice
+Served: Bob
+TEST_CASES_COUNT: 2
+  TC1_IN: 'add Alice\nadd Bob\nserve\nadd Charlie\nserve'
+  TC1_OUT: 'Served: Alice\nServed: Bob'
+  TC2_IN: 'add Guest1\nserve'
+  TC2_OUT: 'Served: Guest1'
+
+=== bank3-030: John's Circular Buffer Sensor Queue ===
+DESC: John is working on a project to manage and analyze the data from various sensors in a manufacturing plant. Each sensor provides a sequence of integer readings, and John needs to process this data to g
+SAMPLE_IN:
+3
+write 10
+write 20
+write 30
+read
+write 40
+read
+SAMPLE_OUT:
+10
+20
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\nwrite 10\nwrite 20\nwrite 30\nread\nwrite 40\nread'
+  TC1_OUT: '10\n20'
+  TC2_IN: '2\nwrite 5\nread'
+  TC2_OUT: '5'
+
+=== bank3-031: Ram's Smart Editor Balanced Brackets Checker ===
+DESC: Ram is working on a smart text editor that helps developers by checking if round, square, and curly brackets are balanced. Developers frequently write code using combinations of (), and [l. It's impor
+SAMPLE_IN:
+{[()]}
+SAMPLE_OUT:
+Balanced
+TEST_CASES_COUNT: 3
+  TC1_IN: '{[()]}'
+  TC1_OUT: 'Balanced'
+  TC2_IN: '{[(])}'
+  TC2_OUT: 'Not Balanced'
+  TC3_IN: '{{[[(())]]}}'
+  TC3_OUT: 'Balanced'
+
+=== bank3-032: Implement Two Stacks in a Single Array ===
+DESC: Create a data structure with twoStacks that represent two stacks. Implementation of twoStacks should use only one array, i.e., both stacks should use the same array for storing elements. The following
+SAMPLE_IN:
+push1 5
+push2 10
+pop1
+pop2
+SAMPLE_OUT:
+5
+10
+TEST_CASES_COUNT: 2
+  TC1_IN: 'push1 5\npush2 10\npop1\npop2'
+  TC1_OUT: '5\n10'
+  TC2_IN: 'push1 1\npush1 2\npop1'
+  TC2_OUT: '2'
+
+=== bank3-033: Rajesh's Deque Double-Ended Dispatcher ===
+DESC: Rajesh is working on a project that requires implementing a deque (double-ended queue) using an array-based circular structure. He needs to insert elements one by one at the front of the deque and ret
+SAMPLE_IN:
+pushBack 10
+pushFront 20
+popFront
+popBack
+SAMPLE_OUT:
+20
+10
+TEST_CASES_COUNT: 2
+  TC1_IN: 'pushBack 10\npushFront 20\npopFront\npopBack'
+  TC1_OUT: '20\n10'
+  TC2_IN: 'pushFront 42\npopBack'
+  TC2_OUT: '42'
+
+=== bank3-034: Movie Theater Ticket Booking Queue System ===
+DESC: You are assigned to develop a simple ticket-booking system for a local movie theater. The theater has a single ticket counter, and customers arrive to purchase tickets for the movie of their choice. I
+SAMPLE_IN:
+book T101
+book T102
+process
+process
+SAMPLE_OUT:
+Confirmed: T101
+Confirmed: T102
+TEST_CASES_COUNT: 2
+  TC1_IN: 'book T101\nbook T102\nprocess\nprocess'
+  TC1_OUT: 'Confirmed: T101\nConfirmed: T102'
+  TC2_IN: 'book T1\nprocess'
+  TC2_OUT: 'Confirmed: T1'
+
+=== bank3-035: Redundant Parentheses Detector in Expressions ===
+DESC: Given a string of balanced expressions, find if it contains a redundant parenthesis or not. A set of parenthesis is redundant if the same sub-expression is surrounded by unnecessary or multiple bracke
+SAMPLE_IN:
+((a+b))
+SAMPLE_OUT:
+Yes
+TEST_CASES_COUNT: 3
+  TC1_IN: '((a+b))'
+  TC1_OUT: 'Yes'
+  TC2_IN: '(a+(b)/c)'
+  TC2_OUT: 'Yes'
+  TC3_IN: '(a+b*(c-d))'
+  TC3_OUT: 'No'
+
+=== bank3-036: Stack Text Word Reversal ===
+DESC: Neo is experimenting with text transformations and decides to use a stack to reverse the sequence of words in his sentence. He provides a line of text and expects the program to utilize a stack to reo
+SAMPLE_IN:
+hello world
+SAMPLE_OUT:
+olleh dlrow
+TEST_CASES_COUNT: 2
+  TC1_IN: 'hello world'
+  TC1_OUT: 'olleh dlrow'
+  TC2_IN: 'data structures'
+  TC2_OUT: 'atad serutcurts'
+
+=== bank3-037: Student Grades HashMap Registry ===
+DESC: A teacher stores student names and their grades in a HashMap. Given a list of student- grade entries and a list of names to look up, the program should print the grade for each queried student, or "No
+SAMPLE_IN:
+3
+Alice A
+Bob B
+Charlie A
+Alice
+SAMPLE_OUT:
+A
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\nAlice A\nBob B\nCharlie A\nAlice'
+  TC1_OUT: 'A'
+  TC2_IN: '2\nTom 90\nJerry 85\nJerry'
+  TC2_OUT: '85'
+
+=== bank3-038: Generic FizzBuzz<T extends Number> Implementation ===
+DESC: Implement a generic class FizzBuzz<T extends Number> that works with any numeric type. The program prints numbers from 1 to N, replacing multiples of: • 3 and 5-4 "FizzBuzz" The generic class accepts 
+SAMPLE_IN:
+15
+SAMPLE_OUT:
+1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz
+TEST_CASES_COUNT: 2
+  TC1_IN: '15'
+  TC1_OUT: '1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz'
+  TC2_IN: '5'
+  TC2_OUT: '1 2 Fizz 4 Buzz'
+
+=== bank3-039: ElementCounter Generic Occurrences Counter ===
+DESC: Implement a program called ElementCounter that counts the occurrences of a specified element in an array. The program should include a generic method named countOccurrences that takes an array and an 
+SAMPLE_IN:
+5
+10 20 10 30 10
+10
+SAMPLE_OUT:
+3
+TEST_CASES_COUNT: 2
+  TC1_IN: '5\n10 20 10 30 10\n10'
+  TC1_OUT: '3'
+  TC2_IN: '4\napple banana apple kiwi\napple'
+  TC2_OUT: '2'
+
+=== bank3-040: EventManager Calendar Organizer with TreeMap ===
+DESC: (11) Riya is building a calendar event scheduler where each event is stored in chronological order using a TreeMap. The key represents the event time in 24-hour format (HH:MM), and the value is the ev
+SAMPLE_IN:
+3
+2026-11-05 Hackathon
+2026-10-25 Orientation
+2026-12-01 Finals
+SAMPLE_OUT:
+2026-10-25: Orientation
+2026-11-05: Hackathon
+2026-12-01: Finals
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\n2026-11-05 Hackathon\n2026-10-25 Orientation\n2026-12-01 Finals'
+  TC1_OUT: '2026-10-25: Orientation\n2026-11-05: Hackathon\n2026-12-01: Finals'
+  TC2_IN: '2\n10:00 Meeting\n09:00 Standup'
+  TC2_OUT: '09:00: Standup\n10:00: Meeting'
+
+=== bank3-041: Rajesh's Royal Event Halls Capacity Comparator ===
+DESC: Rajesh, the owner of "Royal Event Halls," manages multiple event halls available for booking. Each hall contains the following details: • Hall Name • Contact Number • Cost Per Day • Owner Name Rajesh 
+SAMPLE_IN:
+3
+HallA 500
+HallB 1200
+HallC 800
+SAMPLE_OUT:
+HallB 1200
+HallC 800
+HallA 500
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\nHallA 500\nHallB 1200\nHallC 800'
+  TC1_OUT: 'HallB 1200\nHallC 800\nHallA 500'
+  TC2_IN: '2\nHall1 100\nHall2 300'
+  TC2_OUT: 'Hall2 300\nHall1 100'
+
+=== bank3-042: Arjun's Generic Array Reversal Utility ===
+DESC: Arjun is working on a utility that allows reversing an array of any type (e.g., integers, strings, or custom objects). He needs to implement a method that can handle arrays of different data types and
+SAMPLE_IN:
+4
+1 2 3 4
+SAMPLE_OUT:
+4 3 2 1
+TEST_CASES_COUNT: 2
+  TC1_IN: '4\n1 2 3 4'
+  TC1_OUT: '4 3 2 1'
+  TC2_IN: '3\na b c'
+  TC2_OUT: 'c b a'
+
+=== bank3-043: Sophia's Word Categorization Tool by Length ===
+DESC: Sophia is developing a word categorization tool for a language learning app. She needs to group words that are anagrams words that contain the same letters but in a different order. Users often search
+SAMPLE_IN:
+4
+cat elephant dog bird
+SAMPLE_OUT:
+3: [cat, dog]
+4: [bird]
+8: [elephant]
+TEST_CASES_COUNT: 2
+  TC1_IN: '4\ncat elephant dog bird'
+  TC1_OUT: '3: [cat, dog]\n4: [bird]\n8: [elephant]'
+  TC2_IN: '2\nhi go'
+  TC2_OUT: '2: [hi, go]'
+
+=== bank3-044: Priya's Encrypted Message Character Frequency ===
+DESC: Priya is analyzing encrypted messages in a research project. She wants to analyze the frequency of each character in a given paragraph. The characters should be stored in a TreeMap so that the output 
+SAMPLE_IN:
+banana
+SAMPLE_OUT:
+a: 3
+b: 1
+n: 2
+TEST_CASES_COUNT: 2
+  TC1_IN: 'banana'
+  TC1_OUT: 'a: 3\nb: 1\nn: 2'
+  TC2_IN: 'test'
+  TC2_OUT: 'e: 1\ns: 1\nt: 2'
+
+=== bank3-045: Generic Cache Memory Key-Value Store ===
+DESC: Megna, an avid fitness enthusiast, seeks a program to track her daily workouts. The program must allow her to input calorie burn rates. With the ability to specify exercise counts, Megna desires a too
+SAMPLE_IN:
+put user1 Alice
+put user2 Bob
+get user1
+SAMPLE_OUT:
+Alice
+TEST_CASES_COUNT: 2
+  TC1_IN: 'put user1 Alice\nput user2 Bob\nget user1'
+  TC1_OUT: 'Alice'
+  TC2_IN: 'put k1 v1\nget k1'
+  TC2_OUT: 'v1'
+
+=== bank3-046: Vikram's Sales Call History with TreeMap ===
+DESC: Vikram, a busy sales executive, wants to review his call history. He maintains a log of calls with the dialled number, duration (in minutes), and the date of the call. To identify which calls were the
+SAMPLE_IN:
+3
+10:30 ClientA
+09:15 ClientB
+11:00 ClientC
+SAMPLE_OUT:
+09:15: ClientB
+10:30: ClientA
+11:00: ClientC
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\n10:30 ClientA\n09:15 ClientB\n11:00 ClientC'
+  TC1_OUT: '09:15: ClientB\n10:30: ClientA\n11:00: ClientC'
+  TC2_IN: '2\n14:00 Boss\n08:00 Team'
+  TC2_OUT: '08:00: Team\n14:00: Boss'
+
+=== bank3-047: Aryan's College Election Majority Voting Counter ===
+DESC: Aryan is organizing a college election vote tally. Given the total number of ballots cast N, followed by N candidate IDs, determine the majority candidate who received more than half of the total vote
+SAMPLE_IN:
+7
+1 2 1 1 3 1 2
+SAMPLE_OUT:
+Majority Winner: Candidate 1 with 4 votes
+TEST_CASES_COUNT: 2
+  TC1_IN: '7\n1 2 1 1 3 1 2'
+  TC1_OUT: 'Majority Winner: Candidate 1 with 4 votes'
+  TC2_IN: '5\n2 2 2 1 1'
+  TC2_OUT: 'Majority Winner: Candidate 2 with 3 votes'
+
+=== bank3-048: Employee Department Directory using HashMap ===
+DESC: A company maintains an employee registry where each employee belongs to a specific department. Given a list of N employee name and department pairs, store them in an appropriate map structure. Finally
+SAMPLE_IN:
+3
+John IT
+Sarah HR
+Mike IT
+IT
+SAMPLE_OUT:
+John
+Mike
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\nJohn IT\nSarah HR\nMike IT\nIT'
+  TC1_OUT: 'John\nMike'
+  TC2_IN: '2\nAlice Sales\nBob Marketing\nSales'
+  TC2_OUT: 'Alice'
+
+=== bank3-049: Alexa's Alternating Even and Odd Number Printing Threads ===
+DESC: Alexa is a developer tasked with an application that takes a range of numbers as input and employs two threads to concurrently calculate and print the squares and cubes of these numbers. If the number
+SAMPLE_IN:
+10
+SAMPLE_OUT:
+1 2 3 4 5 6 7 8 9 10
+TEST_CASES_COUNT: 2
+  TC1_IN: '10'
+  TC1_OUT: '1 2 3 4 5 6 7 8 9 10'
+  TC2_IN: '4'
+  TC2_OUT: '1 2 3 4'
+
+=== bank3-050: Sarah's Synchronized Pattern Printing Threads ===
+DESC: Sarah is working on a pattern printing application that generates a sequence of stars (*) and dashes (-) using multithreading. The application uses two threads: • One thread prints the star ( * ) • An
+SAMPLE_IN:
+3
+SAMPLE_OUT:
+*
+**
+***
+TEST_CASES_COUNT: 2
+  TC1_IN: '3'
+  TC1_OUT: '*\n**\n***'
+  TC2_IN: '2'
+  TC2_OUT: '*\n**'
+
+=== bank3-051: Classroom Alternating Vowel and Consonant Threads ===
+DESC: You are building a classroom participation tracker that alternates printing vowels and consonants using multithreading. One thread prints vowels (A, E, l, O, U in order, repeating cyclically if n > 5)
+SAMPLE_IN:
+education
+SAMPLE_OUT:
+e d u c a t i o n
+TEST_CASES_COUNT: 2
+  TC1_IN: 'education'
+  TC1_OUT: 'e d u c a t i o n'
+  TC2_IN: 'java'
+  TC2_OUT: 'j a v a'
+
+=== bank3-052: Lisa's Smart Thermostat Temperature Monitor Thread ===
+DESC: temperatures in a building. Each room has a temperature sensor, and the program needs to simulate reading temperature values concurrently using threads. For a given building: • Each thread represents 
+SAMPLE_IN:
+3
+22.5
+28.0
+18.5
+SAMPLE_OUT:
+Normal: 22.5
+High Alert: 28.0
+Low Alert: 18.5
+TEST_CASES_COUNT: 2
+  TC1_IN: '3\n22.5\n28.0\n18.5'
+  TC1_OUT: 'Normal: 22.5\nHigh Alert: 28.0\nLow Alert: 18.5'
+  TC2_IN: '2\n21.0\n30.5'
+  TC2_OUT: 'Normal: 21.0\nHigh Alert: 30.5'
+
+=== bank3-053: Multi-Threaded Number Squaring and Cubing ===
+DESC: Write a Java program to implement a multi-threaded application that has three threads. The first thread generates a random integer every 1 second. If the value is even, the second thread computes the 
+SAMPLE_IN:
+4
+SAMPLE_OUT:
+Square: 16
+Cube: 64
+TEST_CASES_COUNT: 2
+  TC1_IN: '4'
+  TC1_OUT: 'Square: 16\nCube: 64'
+  TC2_IN: '3'
+  TC2_OUT: 'Square: 9\nCube: 27'
+
+=== bank3-054: Sharon's Multi-Threaded Word Printing System ===
+DESC: Sharon is developing a multi-threaded application that simulates a word printing system. The application will have two threads, each responsible for printing words from a given sentence. However, the 
+SAMPLE_IN:
+Thread1 Thread2 2
+SAMPLE_OUT:
+Thread1: 1
+Thread2: 1
+Thread1: 2
+Thread2: 2
+TEST_CASES_COUNT: 2
+  TC1_IN: 'Thread1 Thread2 2'
+  TC1_OUT: 'Thread1: 1\nThread2: 1\nThread1: 2\nThread2: 2'
+  TC2_IN: 'Ping Pong 1'
+  TC2_OUT: 'Ping: 1\nPong: 1'
+
+=== bank3-055: Concurrent BankAccount Thread-Safe Balance Operations ===
+DESC: You are tasked with implementing the BankAccount class which maintains the account balance and ensures safe deposit and withdrawal operations using synchronized methods. The account operations will be
+SAMPLE_IN:
+1000
+deposit 500
+withdraw 200
+SAMPLE_OUT:
+Balance: 1300
+TEST_CASES_COUNT: 2
+  TC1_IN: '1000\ndeposit 500\nwithdraw 200'
+  TC1_OUT: 'Balance: 1300'
+  TC2_IN: '500\nwithdraw 600'
+  TC2_OUT: 'Insufficient Funds\nBalance: 500'
+
+=== bank3-056: Distribution Center Dual Order Fulfillment Worker Threads ===
+DESC: In a bustling distribution center, two processors handle order fulfillment. The tasks are evenly distributed, and the processors work alternately to complete the job. Due to the high volume of orders,
+SAMPLE_IN:
+4
+Order1 Order2 Order3 Order4
+SAMPLE_OUT:
+WorkerA processed Order1
+WorkerB processed Order2
+WorkerA processed Order3
+WorkerB processed Order4
+TEST_CASES_COUNT: 2
+  TC1_IN: '4\nOrder1 Order2 Order3 Order4'
+  TC1_OUT: 'WorkerA processed Order1\nWorkerB processed Order2\nWorkerA processed Order3\nWorkerB processed Order4'
+  TC2_IN: '2\nItem1 Item2'
+  TC2_OUT: 'WorkerA processed Item1\nWorkerB processed Item2'
+
