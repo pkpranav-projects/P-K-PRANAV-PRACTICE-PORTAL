@@ -128,16 +128,15 @@ export const MasterclassView: React.FC<MasterclassViewProps> = ({
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border border-slate-800 p-8 shadow-xl">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <GraduationCap className="w-3.5 h-3.5" />
-              <span>Modern Java SE 21+ Masterclass</span>
+              <span>Java SE 21+ Masterclass</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
-              Java Full Masterclass & A-to-Z Reference
+            <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+              Java Masterclass & Reference
             </h1>
-            <p className="text-slate-400 text-sm md:text-base max-w-2xl leading-relaxed">
-              Complete reference manual adapted from <span className="text-emerald-400 font-medium">Modern Java</span> (by Bob McCue).
-              Explore all Java methods, signatures, parameters, pitfalls, and structured curriculum modules.
+            <p className="text-slate-400 text-xs md:text-sm max-w-2xl leading-relaxed">
+              Standard library methods, signatures, parameters, and 18 structured textbook modules.
             </p>
           </div>
 
@@ -145,43 +144,43 @@ export const MasterclassView: React.FC<MasterclassViewProps> = ({
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 text-center">
               <div className="text-xl font-bold text-white">{data.stats.totalModules}</div>
-              <div className="text-xs text-slate-400 font-medium">Curriculum Modules</div>
+              <div className="text-xs text-slate-400 font-medium">Modules</div>
             </div>
             <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 text-center">
               <div className="text-xl font-bold text-emerald-400">{data.stats.totalMethods}</div>
-              <div className="text-xs text-slate-400 font-medium">A-Z Methods</div>
+              <div className="text-xs text-slate-400 font-medium">Methods</div>
             </div>
             <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 text-center col-span-2 sm:col-span-1">
               <div className="text-xl font-bold text-cyan-400">{data.stats.categories.length}</div>
-              <div className="text-xs text-slate-400 font-medium">Core Categories</div>
+              <div className="text-xs text-slate-400 font-medium">Categories</div>
             </div>
           </div>
         </div>
 
         {/* Tab Switcher */}
-        <div className="mt-8 pt-6 border-t border-slate-800/80 flex flex-wrap items-center gap-3">
+        <div className="mt-6 pt-5 border-t border-slate-800/80 flex flex-wrap items-center gap-3">
           <button
             onClick={() => setActiveTab('methods')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-sm ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition-all shadow-sm ${
               activeTab === 'methods'
                 ? 'bg-emerald-500 text-slate-950 shadow-emerald-500/20 font-bold'
                 : 'bg-slate-800/70 text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-700/50'
             }`}
           >
             <Code2 className="w-4 h-4" />
-            <span>🔤 A-to-Z Methods & Functions Encyclopedia ({data.methods.length})</span>
+            <span>A-Z Methods ({data.methods.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('curriculum')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-sm ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition-all shadow-sm ${
               activeTab === 'curriculum'
                 ? 'bg-emerald-500 text-slate-950 shadow-emerald-500/20 font-bold'
                 : 'bg-slate-800/70 text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-700/50'
             }`}
           >
             <BookOpen className="w-4 h-4" />
-            <span>📚 Modern Java Textbook Curriculum (18 Chapters)</span>
+            <span>Textbook Curriculum (18 Chapters)</span>
           </button>
         </div>
       </div>

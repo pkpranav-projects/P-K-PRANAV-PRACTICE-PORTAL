@@ -299,34 +299,23 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
       )}
 
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-indigo-900/40 p-6 sm:p-8 text-white shadow-xl">
-        <div className="relative z-10 max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
-            <GraduationCap className="w-4 h-4 text-indigo-400" />
-            <span>Master Study Order · 27 Curated Guides & Lectures</span>
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-indigo-900/40 p-6 text-white shadow-lg">
+        <div className="relative z-10 space-y-2">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
+            <GraduationCap className="w-3.5 h-3.5 text-indigo-400" />
+            <span>27 Study Guides & Lectures</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white m-0">
-            Recommended Java Study Curriculum
+          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white m-0">
+            Java Study Curriculum
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Follow this sequential 27-step roadmap organized in pedagogical order from foundations to concurrency. 
-            All guides can now be <strong>viewed inline in the interactive reader</strong>, opened directly in <strong>Microsoft Edge</strong>, or launched in <strong>Microsoft Office</strong> with zero downloads.
+          <p className="text-xs sm:text-sm text-slate-300">
+            Step-by-step roadmap from foundations to concurrency. View inline, open in Edge, or launch in Office.
           </p>
-
-          <div className="flex flex-wrap items-center gap-3 pt-2 text-xs text-indigo-200/90 font-mono">
-            <span>📚 27 Guides in Pedagogical Order</span>
-            <span>·</span>
-            <span>🌐 100% Microsoft Edge Compatible</span>
-            <span>·</span>
-            <span>📖 In-App Fullscreen Reader</span>
-            <span>·</span>
-            <span>⚡ Zero Downloads Required</span>
-          </div>
         </div>
 
-        <div className="absolute right-0 bottom-0 w-80 h-80 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute right-0 bottom-0 w-60 h-60 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
       </div>
 
       {/* Controls Bar: Search, Sorting, and Module Filters */}
@@ -439,13 +428,11 @@ export const CurriculumView: React.FC<CurriculumViewProps> = ({ onSelectQuestion
                   </span>
                 </div>
 
-                {/* Exact 4-Line Structured Description */}
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/60 space-y-1.5 text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                {/* Description */}
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/60 space-y-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
                   {doc.description.map((line, idx) => (
                     <div key={idx} className="flex items-start gap-2">
-                      <span className="text-indigo-500 font-mono font-bold text-[10px] select-none mt-0.5">
-                        L{idx + 1}:
-                      </span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0 mt-1.5" />
                       <span>{line}</span>
                     </div>
                   ))}

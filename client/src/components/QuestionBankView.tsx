@@ -104,13 +104,12 @@ const RecommendedLanguageBadge: React.FC<{ language?: string; size?: 'sm' | 'md'
 
   return (
     <span
-      className={`inline-flex items-center gap-1 font-semibold rounded-md border ${color} ${
-        size === 'sm' ? 'text-[10px] px-2 py-0.5' : 'text-xs px-2.5 py-1'
+      className={`inline-flex items-center font-mono font-bold rounded border ${color} ${
+        size === 'sm' ? 'text-[10px] px-1.5 py-0.2' : 'text-xs px-2 py-0.5'
       }`}
-      title={`Recommended Language: ${lang}`}
+      title={`Language: ${lang}`}
     >
-      <span className="opacity-70 font-normal">Recommended:</span>
-      <span className="font-bold">{lang}</span>
+      {lang}
     </span>
   );
 };
@@ -118,34 +117,34 @@ const RecommendedLanguageBadge: React.FC<{ language?: string; size?: 'sm' | 'md'
 const getBankBadge = (q: QuestionSummary) => {
   if (q.bank === 'bank4' || q.id.startsWith('bank4-')) {
     return {
-      label: 'Bank 4 (Video Projects)',
-      shortLabel: 'Bank 4 (Projects)',
+      label: 'Bank 4',
+      shortLabel: 'Bank 4',
       color: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
     };
   }
   if (q.bank === 'dbms' || q.id.startsWith('dbms-')) {
     return {
-      label: 'DBMS & SQL Lab',
-      shortLabel: 'DBMS Lab',
+      label: 'DBMS',
+      shortLabel: 'DBMS',
       color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
     };
   }
   if (q.bank === 'bank3' || q.id.startsWith('bank3-')) {
     return {
-      label: 'Bank 3 (Lab Tests)',
+      label: 'Bank 3',
       shortLabel: 'Bank 3',
       color: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30'
     };
   }
   if (q.bank === 'bank2' || q.id.startsWith('bank2-')) {
     return {
-      label: 'Bank 2 (Masterclass)',
+      label: 'Bank 2',
       shortLabel: 'Bank 2',
       color: 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30'
     };
   }
   return {
-    label: 'Bank 1 (Photos)',
+    label: 'Bank 1',
     shortLabel: 'Bank 1',
     color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
   };
@@ -454,7 +453,7 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
       {/* Top Header Row with Bank Switcher Pills + Pick Random Button */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Bank Selection Tabs (LeetCode style tab pills) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
           <button
             onClick={() => {
               setSelectedBank('all');
@@ -462,18 +461,15 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
               setViewMode('topic');
               try { localStorage.setItem('arena_question_view_mode', 'topic'); } catch {}
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
               selectedBank === 'all'
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-bold shadow-sm ring-2 ring-amber-500/50'
+                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950 font-bold shadow-sm'
                 : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
-            title="Combine all problems from all banks topic-wise"
+            title="Combine all problems topic-wise"
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>All Problems ({questions.length})</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold">
-              Topic Mode
-            </span>
+            <span>All ({questions.length})</span>
           </button>
 
           <button
@@ -481,17 +477,19 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
               setSelectedBank('bank1');
               setSelectedTopic('All');
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
               selectedBank === 'bank1'
                 ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
                 : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <ImageIcon className="w-3.5 h-3.5" />
-            <span>Bank 1 (Photo Portal - {bank1Questions.length})</span>
-            <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-black/20 text-slate-800 dark:text-white">
-              {bank1SolvedCount} Solved
-            </span>
+            <span>Bank 1 ({bank1Questions.length})</span>
+            {bank1SolvedCount > 0 && (
+              <span className="text-[10px] font-mono font-bold px-1 rounded bg-black/20 text-slate-900 dark:text-white">
+                {bank1SolvedCount}
+              </span>
+            )}
           </button>
 
           <button
@@ -499,17 +497,19 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
               setSelectedBank('bank2');
               setSelectedTopic('All');
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
               selectedBank === 'bank2'
                 ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
                 : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Rocket className="w-3.5 h-3.5" />
-            <span>Bank 2 (Masterclass - {bank2Questions.length})</span>
-            <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-black/20 text-slate-800 dark:text-white">
-              {bank2SolvedCount} Solved
-            </span>
+            <span>Bank 2 ({bank2Questions.length})</span>
+            {bank2SolvedCount > 0 && (
+              <span className="text-[10px] font-mono font-bold px-1 rounded bg-black/20 text-slate-900 dark:text-white">
+                {bank2SolvedCount}
+              </span>
+            )}
           </button>
 
           <button
@@ -517,17 +517,19 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
               setSelectedBank('bank3');
               setSelectedTopic('All');
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
               selectedBank === 'bank3'
                 ? 'bg-purple-600 text-white font-bold shadow-sm'
                 : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Bank 3 (Lab Tests - {bank3Questions.length})</span>
-            <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-black/20 text-white">
-              {bank3SolvedCount} Solved
-            </span>
+            <span>Bank 3 ({bank3Questions.length})</span>
+            {bank3SolvedCount > 0 && (
+              <span className="text-[10px] font-mono font-bold px-1 rounded bg-black/20 text-white">
+                {bank3SolvedCount}
+              </span>
+            )}
           </button>
 
           <button
@@ -535,17 +537,19 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
               setSelectedBank('bank4');
               setSelectedTopic('All');
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
               selectedBank === 'bank4'
                 ? 'bg-rose-500 text-white font-bold shadow-sm'
                 : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Video className="w-3.5 h-3.5" />
-            <span>Bank 4 (Video Projects - {bank4Questions.length})</span>
-            <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-black/20 text-white">
-              {bank4SolvedCount} Solved
-            </span>
+            <span>Bank 4 ({bank4Questions.length})</span>
+            {bank4SolvedCount > 0 && (
+              <span className="text-[10px] font-mono font-bold px-1 rounded bg-black/20 text-white">
+                {bank4SolvedCount}
+              </span>
+            )}
           </button>
 
           <button
@@ -553,17 +557,19 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
               setSelectedBank('dbms');
               setSelectedTopic('All');
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-2 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
               selectedBank === 'dbms'
                 ? 'bg-emerald-600 text-white font-bold shadow-sm'
                 : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Database className="w-3.5 h-3.5" />
-            <span>DBMS & SQL Lab ({dbmsQuestions.length})</span>
-            <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-black/20 text-white">
-              {dbmsSolvedCount} Solved
-            </span>
+            <span>DBMS ({dbmsQuestions.length})</span>
+            {dbmsSolvedCount > 0 && (
+              <span className="text-[10px] font-mono font-bold px-1 rounded bg-black/20 text-white">
+                {dbmsSolvedCount}
+              </span>
+            )}
           </button>
         </div>
 
@@ -643,13 +649,13 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
       </div>
 
       {/* LeetCode Search & Filter Bar */}
-      <div className="bg-white dark:bg-[#1a1a1a] p-4 rounded-xl border border-slate-200 dark:border-[#282828] shadow-sm space-y-3">
+      <div className="bg-white dark:bg-[#1a1a1a] p-3.5 rounded-xl border border-slate-200 dark:border-[#282828] shadow-sm space-y-2.5">
         {/* Search row */}
         <div className="relative">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Search problems by name, ID (e.g. java-005, bank2-001), or topic..."
+            placeholder="Search problems by name, ID (e.g. java-005, bank4-010), or topic..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-500 transition-all"
@@ -657,117 +663,78 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
         </div>
 
         {/* Filter selectors row */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
           {/* Difficulty */}
-          <div>
-            <label className="block text-[10px] font-bold uppercase text-slate-400 mb-1">Difficulty</label>
-            <select
-              value={selectedDifficulty}
-              onChange={(e) => setSelectedDifficulty(e.target.value)}
-              className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500"
-            >
-              <option value="All">All Difficulties</option>
-              <option value="Easy">Easy</option>
-              <option value="Medium">Medium</option>
-              <option value="Hard">Hard</option>
-            </select>
-          </div>
+          <select
+            value={selectedDifficulty}
+            onChange={(e) => setSelectedDifficulty(e.target.value)}
+            className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
+          >
+            <option value="All">Difficulty: All</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
 
           {/* Status */}
-          <div>
-            <label className="block text-[10px] font-bold uppercase text-slate-400 mb-1">Status</label>
-            <select
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-              className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500"
-            >
-              <option value="All">All Statuses</option>
-              <option value="Solved">Solved</option>
-              <option value="Attempted">Attempted</option>
-              <option value="Unsolved">Todo / Unsolved</option>
-              <option value="Bookmarked">Bookmarked</option>
-              <option value="Revision">Marked for Revision</option>
-            </select>
-          </div>
+          <select
+            value={selectedStatus}
+            onChange={(e) => setSelectedStatus(e.target.value)}
+            className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
+          >
+            <option value="All">Status: All</option>
+            <option value="Solved">Solved</option>
+            <option value="Attempted">Attempted</option>
+            <option value="Unsolved">Unsolved</option>
+            <option value="Bookmarked">Bookmarked</option>
+            <option value="Revision">Revision</option>
+          </select>
 
           {/* Recommended Language */}
-          <div>
-            <label className="block text-[10px] font-bold uppercase text-slate-400 mb-1">Language</label>
-            <select
-              value={selectedLanguageFilter}
-              onChange={(e) => setSelectedLanguageFilter(e.target.value)}
-              className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500"
-            >
-              <option value="All">All Languages</option>
-              <option value="Java">Java</option>
-              <option value="C++">C++</option>
-              <option value="Python">Python</option>
-            </select>
-          </div>
+          <select
+            value={selectedLanguageFilter}
+            onChange={(e) => setSelectedLanguageFilter(e.target.value)}
+            className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
+          >
+            <option value="All">Language: All</option>
+            <option value="Java">Java</option>
+            <option value="C++">C++</option>
+            <option value="Python">Python</option>
+          </select>
 
           {/* Topic */}
-          <div>
-            <label className="block text-[10px] font-bold uppercase text-slate-400 mb-1">Topic</label>
-            <select
-              value={selectedTopic}
-              onChange={(e) => setSelectedTopic(e.target.value)}
-              className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500"
-            >
-              {topics.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
-          </div>
+          <select
+            value={selectedTopic}
+            onChange={(e) => setSelectedTopic(e.target.value)}
+            className="w-full px-3 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
+          >
+            <option value="All">Topic: All</option>
+            {topics.filter(t => t !== 'All').map((t) => (
+              <option key={t} value={t}>{t}</option>
+            ))}
+          </select>
 
           {/* Sort By & Direction */}
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="text-[10px] font-bold uppercase text-slate-400">Sort By</label>
-              <button
-                type="button"
-                onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
-                className="inline-flex items-center gap-0.5 text-[10px] font-bold text-amber-500 hover:text-amber-400 cursor-pointer"
-                title={`Current order: ${sortOrder === 'asc' ? 'Ascending (1 → N)' : 'Descending (N → 1)'}. Click to toggle.`}
-              >
-                {sortOrder === 'asc' ? (
-                  <>
-                    <ArrowUp className="w-3 h-3" />
-                    <span>ASC</span>
-                  </>
-                ) : (
-                  <>
-                    <ArrowDown className="w-3 h-3" />
-                    <span>DESC</span>
-                  </>
-                )}
-              </button>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-500"
-              >
-                <option value="id">Problem # (Exam Order)</option>
-                <option value="title">Title (Alphabetical)</option>
-                <option value="difficulty">Difficulty Level</option>
-                <option value="topic">Topic Name</option>
-                <option value="status">Solved Status</option>
-                <option value="count">Problem Count</option>
-              </select>
-              <button
-                type="button"
-                onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
-                className="p-1.5 rounded-lg border border-slate-200 dark:border-[#333333] bg-slate-50 dark:bg-[#242424] hover:bg-slate-100 dark:hover:bg-[#2c2c2c] text-slate-700 dark:text-slate-200 cursor-pointer transition-colors flex-shrink-0"
-                title={sortOrder === 'asc' ? 'Switch to Descending (N → 1)' : 'Switch to Ascending (1 → N)'}
-              >
-                {sortOrder === 'asc' ? (
-                  <ArrowUp className="w-3.5 h-3.5 text-amber-500" />
-                ) : (
-                  <ArrowDown className="w-3.5 h-3.5 text-amber-500" />
-                )}
-              </button>
-            </div>
+          <div className="flex items-center gap-1.5">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-[#242424] border border-slate-200 dark:border-[#333333] rounded-lg text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-amber-500"
+            >
+              <option value="id">Sort: # ID</option>
+              <option value="title">Sort: Title</option>
+              <option value="difficulty">Sort: Difficulty</option>
+              <option value="topic">Sort: Topic</option>
+              <option value="status">Sort: Status</option>
+            </select>
+            <button
+              type="button"
+              onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
+              className="px-2 py-1.5 rounded-lg border border-slate-200 dark:border-[#333333] bg-slate-50 dark:bg-[#242424] hover:bg-slate-100 dark:hover:bg-[#2c2c2c] text-[11px] font-mono font-bold text-amber-500 cursor-pointer flex-shrink-0"
+              title={sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+            >
+              {sortOrder.toUpperCase()}
+            </button>
           </div>
         </div>
 
@@ -913,11 +880,6 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                             {q.title}
                           </span>
                           <RecommendedLanguageBadge language={q.recommendedLanguage} />
-                          {q.solved && (
-                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-emerald-600 text-white font-mono">
-                              SOLVED ✓
-                            </span>
-                          )}
                         </div>
                       </td>
 
@@ -995,19 +957,15 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
                       }`}>
                         #{q.id}
                       </span>
-                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border ${bankBadge.color}`}>
-                        {bankBadge.label}
-                      </span>
+                      {selectedBank === 'all' && (
+                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border ${bankBadge.color}`}>
+                          {bankBadge.label}
+                        </span>
+                      )}
                       <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded-md border ${diffColors}`}>
                         {q.difficulty}
                       </span>
                       <RecommendedLanguageBadge language={q.recommendedLanguage} />
-                      {q.solved && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-emerald-600 text-white shadow-sm shadow-emerald-600/30">
-                          <CheckCircle2 className="w-3 h-3" />
-                          <span>SOLVED</span>
-                        </span>
-                      )}
                     </div>
 
                     <div className="flex items-center gap-1">
@@ -1109,67 +1067,25 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
               </span>
             </div>
 
-            {/* Quick Sort Pills for Topic Mode */}
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="text-[10px] font-bold uppercase text-slate-400 mr-1 hidden sm:inline">Sort Topics:</span>
-              <button
-                type="button"
-                onClick={() => { setSortBy('id'); setSortOrder('asc'); }}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 border ${
-                  sortBy === 'id' && sortOrder === 'asc'
-                    ? 'bg-amber-500 text-slate-950 border-amber-500 font-bold shadow-sm'
-                    : 'bg-slate-100 dark:bg-[#252525] border-slate-200 dark:border-[#333] text-slate-600 dark:text-slate-300 hover:border-amber-500/50'
-                }`}
-                title="Sort topics and questions in sequential Exam Order: 1 → N (bank3-001 to 056)"
+            {/* Quick Sort Dropdown for Topic Mode */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-[#252525] border border-slate-200 dark:border-[#333] text-[11px] font-semibold text-slate-700 dark:text-slate-300 focus:outline-none"
               >
-                <span>Exam Order (1 → N)</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => { setSortBy('topic'); setSortOrder('asc'); }}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 border ${
-                  sortBy === 'topic' && sortOrder === 'asc'
-                    ? 'bg-amber-500 text-slate-950 border-amber-500 font-bold shadow-sm'
-                    : 'bg-slate-100 dark:bg-[#252525] border-slate-200 dark:border-[#333] text-slate-600 dark:text-slate-300 hover:border-amber-500/50'
-                }`}
-                title="Sort topics alphabetically A to Z"
-              >
-                <span>Topic (A → Z)</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => { setSortBy('count'); setSortOrder('desc'); }}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 border ${
-                  sortBy === 'count' && sortOrder === 'desc'
-                    ? 'bg-amber-500 text-slate-950 border-amber-500 font-bold shadow-sm'
-                    : 'bg-slate-100 dark:bg-[#252525] border-slate-200 dark:border-[#333] text-slate-600 dark:text-slate-300 hover:border-amber-500/50'
-                }`}
-                title="Sort by topics with most questions first"
-              >
-                <span>Most Problems</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => { setSortBy('status'); setSortOrder('asc'); }}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1 border ${
-                  sortBy === 'status' && sortOrder === 'asc'
-                    ? 'bg-amber-500 text-slate-950 border-amber-500 font-bold shadow-sm'
-                    : 'bg-slate-100 dark:bg-[#252525] border-slate-200 dark:border-[#333] text-slate-600 dark:text-slate-300 hover:border-amber-500/50'
-                }`}
-                title="Show topics with unsolved problems first"
-              >
-                <span>Unsolved First</span>
-              </button>
+                <option value="id">Sort: Exam Order (1 → N)</option>
+                <option value="topic">Sort: Topic (A → Z)</option>
+                <option value="count">Sort: Most Problems</option>
+                <option value="status">Sort: Unsolved First</option>
+              </select>
 
               {/* Order direction toggle */}
               <button
                 type="button"
                 onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
                 className="px-2 py-1 rounded-md bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] border border-slate-200 dark:border-[#333] text-slate-700 dark:text-slate-200 font-mono text-[11px] font-bold flex items-center gap-1 transition-colors cursor-pointer"
-                title={`Current sort direction: ${sortOrder.toUpperCase()}. Click to toggle.`}
+                title={`Current sort direction: ${sortOrder.toUpperCase()}`}
               >
                 {sortOrder === 'asc' ? (
                   <>
@@ -1188,13 +1104,13 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
 
               <button
                 onClick={handleExpandAllTopics}
-                className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] text-slate-700 dark:text-slate-300 font-semibold transition-colors cursor-pointer text-xs"
+                className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] text-slate-700 dark:text-slate-300 font-semibold transition-colors cursor-pointer text-[11px]"
               >
                 Expand All
               </button>
               <button
                 onClick={handleCollapseAllTopics}
-                className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] text-slate-700 dark:text-slate-300 font-semibold transition-colors cursor-pointer text-xs"
+                className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-[#252525] hover:bg-slate-200 dark:hover:bg-[#333] text-slate-700 dark:text-slate-300 font-semibold transition-colors cursor-pointer text-[11px]"
               >
                 Collapse All
               </button>

@@ -292,28 +292,23 @@ export const DBMSPracticeView: React.FC<DBMSPracticeViewProps> = ({
         <div className="absolute left-1/3 bottom-0 w-64 h-64 bg-amber-500/10 rounded-full blur-2xl pointer-events-none -mb-20" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-3 max-w-3xl">
+          <div className="space-y-2 max-w-3xl">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 <Database className="w-3.5 h-3.5 text-emerald-400" />
-                <span>DBMS & SQL Engineering Lab</span>
+                <span>DBMS & SQL Lab</span>
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30">
                 MySQL 8.0 & ANSI SQL
-              </span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                VTU / Lab Exam Tests
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-              Database Management Systems & SQL Arena
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
+              Database & SQL Arena
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-              Master automated business rules with <strong>BEFORE/AFTER Triggers</strong>, temporal <strong>Audit Logging</strong>, 
-              and parameterized <strong>Stored Procedures</strong>. Complete with original exam screenshots, full schema constraints, 
-              and an instant sub-20ms SQL execution runner.
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Triggers, Stored Procedures, and schema queries with instant sandbox execution.
             </p>
           </div>
 
