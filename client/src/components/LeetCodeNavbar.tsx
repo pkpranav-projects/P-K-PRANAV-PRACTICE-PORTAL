@@ -89,16 +89,16 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
         
         {/* Left side: Authentic LeetCode Logo and Main Navigation Tabs */}
         <div className="flex items-center h-full gap-6 lg:gap-8">
-          {/* Brand Logo with Symbol and PRANAV Practice JAVA title */}
+          {/* Brand Logo with Symbol and PRANAV Practice Portal title */}
           <button
             onClick={() => setActiveTab('explore')}
             className="flex items-center gap-2.5 cursor-pointer focus:outline-none group pr-2"
-            aria-label="PRANAV Practice JAVA"
+            aria-label="PRANAV Practice Portal"
           >
-            {/* Custom Symbol for PRANAV Practice JAVA */}
-            <PranavJavaSymbol className="h-[26px] w-[26px] flex-shrink-0 group-hover:scale-105 transition-transform" />
+            {/* Custom PK Monogram Logo */}
+            <PranavJavaSymbol className="h-[27px] w-[27px] flex-shrink-0 group-hover:scale-105 transition-transform" />
 
-            {/* Brand Typography: PRANAV Practice JAVA */}
+            {/* Brand Typography: PRANAV Practice Portal */}
             <div className="flex items-baseline gap-1.5 whitespace-nowrap">
               <span className="text-slate-900 dark:text-white font-extrabold text-[16px] tracking-tight font-sans">
                 PRANAV
@@ -107,7 +107,7 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
                 Practice
               </span>
               <span className="text-[#FFA116] font-bold text-[15px] tracking-wide font-sans">
-                JAVA
+                Portal
               </span>
             </div>
           </button>

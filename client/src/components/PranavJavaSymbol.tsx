@@ -15,75 +15,88 @@ export const PranavJavaSymbol: React.FC<PranavJavaSymbolProps> = ({
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        {/* Luxury Carbon Dark Gradient */}
+        {/* Luxury Obsidian Base Gradient */}
         <linearGradient id="pkBgGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#1e1e24" />
-          <stop offset="50%" stopColor="#131317" />
-          <stop offset="100%" stopColor="#0a0a0d" />
+          <stop offset="0%" stopColor="#1a1c26" />
+          <stop offset="50%" stopColor="#0f1118" />
+          <stop offset="100%" stopColor="#06070a" />
         </linearGradient>
 
-        {/* Ambient Warm Golden Glow */}
-        <radialGradient id="pkGlow" cx="50" cy="50" r="45" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#FFA116" stopOpacity="0.22" />
+        {/* Precision Metallic Border Gradient */}
+        <linearGradient id="pkBorderGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFA116" />
+          <stop offset="35%" stopColor="#FFC01E" stopOpacity="0.85" />
+          <stop offset="70%" stopColor="#FF5500" stopOpacity="0.45" />
+          <stop offset="100%" stopColor="#2e3245" />
+        </linearGradient>
+
+        {/* Ambient Core Glow */}
+        <radialGradient id="pkCoreGlow" cx="50" cy="50" r="46" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFA116" stopOpacity="0.32" />
+          <stop offset="60%" stopColor="#FFA116" stopOpacity="0.08" />
           <stop offset="100%" stopColor="#FFA116" stopOpacity="0" />
         </radialGradient>
 
-        {/* Outer Rim Highlight */}
-        <linearGradient id="pkBorderGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#FFA116" stopOpacity="0.85" />
-          <stop offset="35%" stopColor="#FFC01E" stopOpacity="0.4" />
-          <stop offset="70%" stopColor="#383842" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#202026" stopOpacity="0.8" />
+        {/* Radiant Flame Gold Gradient for P loop & K lower leg */}
+        <linearGradient id="pkGoldGrad" x1="10" y1="20" x2="90" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFE566" />
+          <stop offset="30%" stopColor="#FFA116" />
+          <stop offset="75%" stopColor="#FF5500" />
+          <stop offset="100%" stopColor="#CC3700" />
         </linearGradient>
 
-        {/* Platinum White Gradient for Stems */}
-        <linearGradient id="pkStemGrad" x1="0" y1="20" x2="0" y2="80" gradientUnits="userSpaceOnUse">
+        {/* Platinum Titanium Gradient for Stems */}
+        <linearGradient id="pkSilverGrad" x1="20" y1="20" x2="20" y2="80" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="100%" stopColor="#CBD5E1" />
+          <stop offset="60%" stopColor="#E2E8F0" />
+          <stop offset="100%" stopColor="#94A3B8" />
         </linearGradient>
 
-        {/* Vibrant Amber / Gold Flame Gradient for P Loop & K Arms */}
-        <linearGradient id="pkAmberGrad" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#FFD026" />
+        {/* Radiant Sunset Gradient for K Upper Wing */}
+        <linearGradient id="pkWingGrad" x1="60" y1="20" x2="90" y2="50" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFF275" />
           <stop offset="45%" stopColor="#FFA116" />
-          <stop offset="100%" stopColor="#FF5E00" />
+          <stop offset="100%" stopColor="#FF4500" />
         </linearGradient>
       </defs>
 
-      {/* Dark Rounded Squircle Badge with Inner Glow */}
-      <rect width="100" height="100" rx="22" fill="url(#pkBgGrad)" />
-      <rect width="100" height="100" rx="22" fill="url(#pkGlow)" />
-      <rect x="1.5" y="1.5" width="97" height="97" rx="20.5" stroke="url(#pkBorderGrad)" strokeWidth="1.8" />
+      {/* Luxury Obsidian Squircle Base */}
+      <rect width="100" height="100" rx="24" fill="url(#pkBgGrad)" />
+      <rect width="100" height="100" rx="24" fill="url(#pkCoreGlow)" />
+      <rect x="1" y="1" width="98" height="98" rx="23" stroke="url(#pkBorderGrad)" strokeWidth="1.6" />
 
-      {/* ===== LETTER 'P' ===== */}
-      {/* P Vertical Stem (Platinum White) */}
-      <line x1="21" y1="23" x2="21" y2="77" stroke="url(#pkStemGrad)" strokeWidth="8.5" strokeLinecap="round" />
+      {/* Glass Specular Reflection Sheen */}
+      <path d="M2 24 C2 11.8 11.8 2 24 2 H76 C65 14 35 38 4 48 C2.8 44 2 34 2 24 Z" fill="white" fillOpacity="0.04" />
 
-      {/* P Upper Loop (Amber-Gold Ribbon) */}
-      <path
-        d="M21 23 H35 C45.5 23 45.5 49 35 49 H21"
-        stroke="url(#pkAmberGrad)"
-        strokeWidth="8.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      {/* Dynamic PK Monogram with 7° Forward Athletic Posture */}
+      <g transform="matrix(1 0 -0.12 1 6 0)">
+        {/* ===== LETTER P ===== */}
+        {/* P Left Titanium Pillar */}
+        <path d="M21 21 H31.5 V79 H21 Z" fill="url(#pkSilverGrad)" rx="3" />
+        
+        {/* P Sculpted Loop */}
+        <path
+          d="M31.5 21 H45 C54 21 60 26.5 60 36.5 C60 46.5 54 52 45 52 H31.5 V42.5 H43.5 C48 42.5 50.5 40 50.5 36.5 C50.5 33 48 30.5 43.5 30.5 H31.5 Z"
+          fill="url(#pkGoldGrad)"
+        />
 
-      {/* ===== LETTER 'K' ===== */}
-      {/* K Vertical Stem (Platinum White) */}
-      <line x1="56" y1="23" x2="56" y2="77" stroke="url(#pkStemGrad)" strokeWidth="8.5" strokeLinecap="round" />
+        {/* ===== LETTER K ===== */}
+        {/* K Titanium Spine */}
+        <path d="M58 21 H67.5 V79 H58 Z" fill="url(#pkSilverGrad)" rx="3" />
 
-      {/* K Upper Arm (Amber-Gold) */}
-      <line x1="57" y1="47" x2="79" y2="23" stroke="url(#pkAmberGrad)" strokeWidth="8.5" strokeLinecap="round" />
+        {/* K Upper Chevron Blade */}
+        <path d="M67.5 44 L81 25.5 H93 L76 49.5 Z" fill="url(#pkWingGrad)" />
 
-      {/* K Lower Leg (Amber-Gold / Code Chevron) */}
-      <line x1="57" y1="53" x2="79" y2="77" stroke="url(#pkAmberGrad)" strokeWidth="8.5" strokeLinecap="round" />
+        {/* K Lower Chevron Blade */}
+        <path d="M74 47.5 L93 74.5 H81 L67.5 55 Z" fill="url(#pkGoldGrad)" />
 
-      {/* Java Glowing Ember Spark / Dot at top right */}
-      <circle cx="81" cy="18" r="4.5" fill="#FFA116" />
-      <circle cx="81" cy="18" r="2" fill="#FFFFFF" />
+        {/* Glowing Execution Spark at Top-Right Apex */}
+        <circle cx="87" cy="22" r="3.5" fill="#FFA116" />
+        <circle cx="87" cy="22" r="1.8" fill="#FFFFFF" />
 
-      {/* Code Terminal Prompt Accent Under 'P' */}
-      <line x1="32" y1="68" x2="43" y2="68" stroke="#FFA116" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
+        {/* Terminal Code Prompt Accent Under P */}
+        <line x1="33" y1="71" x2="48" y2="71" stroke="#FFA116" strokeWidth="2.8" strokeLinecap="round" opacity="0.85" />
+      </g>
     </svg>
   );
 };

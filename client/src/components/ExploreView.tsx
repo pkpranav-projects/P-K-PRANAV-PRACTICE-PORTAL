@@ -421,7 +421,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
                   Practice
                 </span>
                 <span className="text-[#FFA116] font-bold text-lg">
-                  JAVA
+                  Portal
                 </span>
               </div>
             </div>

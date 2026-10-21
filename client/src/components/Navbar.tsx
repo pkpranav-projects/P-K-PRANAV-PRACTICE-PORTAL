@@ -61,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   Java Practice Arena
                 </span>
                 <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
-                  Pranav Portal
+                  PRANAV Practice Portal
                 </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400">
