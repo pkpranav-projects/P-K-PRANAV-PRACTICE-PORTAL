@@ -22,7 +22,8 @@ import {
   Download,
   Upload,
   Wand2,
-  FileText
+  FileText,
+  ArrowLeft
 } from 'lucide-react';
 import {
   QuestionDetail,
@@ -198,6 +199,8 @@ interface ProblemWorkspaceViewProps {
   allQuestionIds: string[];
   isAbsoluteFullscreen?: boolean;
   onToggleAbsoluteFullscreen?: () => void;
+  onBack?: () => void;
+  backLabel?: string;
 }
 
 export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
@@ -207,7 +210,9 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   onQuestionSolved,
   allQuestionIds,
   isAbsoluteFullscreen = false,
-  onToggleAbsoluteFullscreen
+  onToggleAbsoluteFullscreen,
+  onBack,
+  backLabel = 'Questions'
 }) => {
   // Data states
   const [question, setQuestion] = useState<QuestionDetail | null>(null);
@@ -595,11 +600,21 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       } else if (e.altKey && (e.key === 'r' || e.key === 'R')) {
         e.preventDefault();
         setShowResetConfirm(true);
+      } else if (e.key === 'Escape' && !showSolutionModal && !showScreenshot && !showResetConfirm && !showTemplateMenu) {
+        if (onBack) {
+          e.preventDefault();
+          onBack();
+        }
+      } else if (e.altKey && e.key === 'ArrowLeft') {
+        if (onBack) {
+          e.preventDefault();
+          onBack();
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleRun, handleSubmit, handleFormatCode]);
+  }, [handleRun, handleSubmit, handleFormatCode, onBack, showSolutionModal, showScreenshot, showResetConfirm, showTemplateMenu]);
 
   // Toggle Bookmark
   const handleToggleBookmark = async () => {
@@ -665,8 +680,19 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
       
       {/* Workspace Top Bar */}
       <div className="bg-white dark:bg-[#0c121e] px-4 py-3 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        {/* Left: ID, Title, Badges */}
-        <div className="flex items-center gap-3">
+        {/* Left: Back Button, ID, Title, Badges */}
+        <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/90 dark:hover:bg-slate-700 border border-slate-300/80 dark:border-slate-700 transition-all hover:scale-[1.02] cursor-pointer shadow-sm group shrink-0"
+              title={`Return to ${backLabel} (or press Browser Back / Esc)`}
+            >
+              <ArrowLeft className="w-4 h-4 text-amber-500 group-hover:-translate-x-1 transition-transform" />
+              <span>Back to {backLabel}</span>
+            </button>
+          )}
+
           <div className="flex items-center gap-1.5">
             <button
               disabled={!prevId}

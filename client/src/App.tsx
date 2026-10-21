@@ -229,10 +229,105 @@ export const App: React.FC = () => {
     }
   };
 
+  // Navigation history & previous tab tracking for seamless back button support
+  const [previousTab, setPreviousTab] = useState<LeetCodeTab>('problems');
+
+  const getTabLabel = useCallback((tab: LeetCodeTab): string => {
+    switch (tab) {
+      case 'explore': return 'Explore';
+      case 'problems': return 'Problem List';
+      case 'dbms': return 'DBMS Lab';
+      case 'curriculum': return 'Curriculum';
+      case 'masterclass': return 'Masterclass';
+      case 'exam': return 'Contest Mode';
+      case 'revision': return 'Revision';
+      case 'dashboard': return 'Dashboard';
+      default: return 'Questions';
+    }
+  }, []);
+
+  const parseHash = useCallback((hash: string): { tab: LeetCodeTab; questionId?: string } => {
+    const clean = hash.replace(/^#\/?/, '').trim();
+    if (!clean) return { tab: 'explore' };
+    const parts = clean.split('/');
+    const tabName = parts[0] as LeetCodeTab;
+    const qId = parts[1];
+    const validTabs: LeetCodeTab[] = ['explore', 'problems', 'workspace', 'dbms', 'masterclass', 'curriculum', 'exam', 'revision', 'dashboard'];
+    if (validTabs.includes(tabName)) {
+      return { tab: tabName, questionId: qId };
+    }
+    return { tab: 'explore' };
+  }, []);
+
+  // Centralized tab & question navigation with browser history sync
+  const navigateToTab = useCallback((newTab: LeetCodeTab, questionId?: string, push = true) => {
+    setActiveTab((curr) => {
+      if (newTab === 'workspace' && curr !== 'workspace') {
+        setPreviousTab(curr);
+      }
+      return newTab;
+    });
+
+    if (questionId) {
+      setActiveQuestionId(questionId);
+    }
+
+    const hash = newTab === 'workspace' && questionId
+      ? `#workspace/${questionId}`
+      : `#${newTab}`;
+
+    if (push && window.location.hash !== hash) {
+      window.history.pushState({ tab: newTab, questionId }, '', hash);
+    }
+  }, []);
+
+  // Back button handler for UI buttons and shortcut keys
+  const handleBack = useCallback(() => {
+    if (window.history.length > 1 && window.location.hash.startsWith('#workspace')) {
+      window.history.back();
+    } else {
+      navigateToTab(previousTab || 'problems', undefined, true);
+    }
+  }, [previousTab, navigateToTab]);
+
+  // Sync with browser Back and Forward navigation (popstate)
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      if (e.state && e.state.tab) {
+        setActiveTab(e.state.tab);
+        if (e.state.questionId) {
+          setActiveQuestionId(e.state.questionId);
+        }
+      } else {
+        const parsed = parseHash(window.location.hash);
+        setActiveTab(parsed.tab);
+        if (parsed.questionId) {
+          setActiveQuestionId(parsed.questionId);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [parseHash]);
+
+  // Initialize view from URL hash on first load
+  useEffect(() => {
+    if (window.location.hash) {
+      const parsed = parseHash(window.location.hash);
+      setActiveTab(parsed.tab);
+      if (parsed.questionId) {
+        setActiveQuestionId(parsed.questionId);
+      }
+      window.history.replaceState({ tab: parsed.tab, questionId: parsed.questionId }, '', window.location.hash);
+    } else {
+      window.history.replaceState({ tab: 'explore' }, '', '#explore');
+    }
+  }, [parseHash]);
+
   // Select question and open workspace
   const handleSelectQuestion = (questionId: string) => {
-    setActiveQuestionId(questionId);
-    setActiveTab('workspace');
+    navigateToTab('workspace', questionId, true);
   };
 
   // Pick a random question
@@ -263,7 +358,7 @@ export const App: React.FC = () => {
       {/* Authentic LeetCode Top Navigation Bar (Fixed 50px) */}
       <LeetCodeNavbar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(tab) => navigateToTab(tab, undefined, true)}
         dailyGoal={stats?.dailyGoal || 3}
         solvedToday={stats?.solvedToday || 0}
         totalSolved={stats?.solvedCount || 0}
@@ -280,6 +375,8 @@ export const App: React.FC = () => {
         onOpenShortcutsModal={() => setIsShortcutsOpen(true)}
         isSoundEnabled={isSoundEnabled}
         onToggleSound={toggleSound}
+        onBack={handleBack}
+        backLabel={getTabLabel(previousTab)}
       />
 
       {/* Main Page Layout: Left Docked LeetCode Sidebar + Content */}
@@ -292,10 +389,10 @@ export const App: React.FC = () => {
             isFullyContracted={isSidebarFullyContracted}
             onToggleFullContract={() => setIsSidebarFullyContracted((prev) => !prev)}
             activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            setActiveTab={(tab) => navigateToTab(tab, undefined, true)}
             onSelectBank={(bank) => {
               setSelectedBankFilter(bank);
-              setActiveTab('problems');
+              navigateToTab('problems', undefined, true);
             }}
             totalQuestions={stats?.totalQuestions || 101}
             totalSolved={stats?.solvedCount || 0}
@@ -335,23 +432,23 @@ export const App: React.FC = () => {
                   onSelectQuestion={handleSelectQuestion}
                   onNavigateToBank={(bank) => {
                     setSelectedBankFilter(bank);
-                    setActiveTab('problems');
+                    navigateToTab('problems', undefined, true);
                   }}
-                  onNavigateToDBMS={() => setActiveTab('dbms')}
+                  onNavigateToDBMS={() => navigateToTab('dbms', undefined, true)}
                   onNavigateToTopicMode={() => {
                     setQuestionViewMode('topic');
                     try { localStorage.setItem('arena_question_view_mode', 'topic'); } catch {}
                     setSelectedBankFilter('all');
-                    setActiveTab('problems');
+                    navigateToTab('problems', undefined, true);
                   }}
-                  onNavigateToMasterclass={() => setActiveTab('masterclass')}
-                  onNavigateToCurriculum={() => setActiveTab('curriculum')}
-                  onNavigateToExam={() => setActiveTab('exam')}
-                  onNavigateToRevision={() => setActiveTab('revision')}
-                  onNavigateToDashboard={() => setActiveTab('dashboard')}
+                  onNavigateToMasterclass={() => navigateToTab('masterclass', undefined, true)}
+                  onNavigateToCurriculum={() => navigateToTab('curriculum', undefined, true)}
+                  onNavigateToExam={() => navigateToTab('exam', undefined, true)}
+                  onNavigateToRevision={() => navigateToTab('revision', undefined, true)}
+                  onNavigateToDashboard={() => navigateToTab('dashboard', undefined, true)}
                   onNavigateToWorkspace={() => {
                     if (activeQuestionId) {
-                      setActiveTab('workspace');
+                      navigateToTab('workspace', activeQuestionId, true);
                     } else {
                       handlePickRandom();
                     }
@@ -384,6 +481,8 @@ export const App: React.FC = () => {
                   allQuestionIds={allQuestionIds}
                   isAbsoluteFullscreen={isAbsoluteFullscreen}
                   onToggleAbsoluteFullscreen={toggleAbsoluteFullscreen}
+                  onBack={handleBack}
+                  backLabel={getTabLabel(previousTab)}
                 />
               )}
 
@@ -394,7 +493,7 @@ export const App: React.FC = () => {
                   onSelectQuestion={handleSelectQuestion}
                   onNavigateToBank={(bank) => {
                     setSelectedBankFilter(bank);
-                    setActiveTab('problems');
+                    navigateToTab('problems', undefined, true);
                   }}
                 />
               )}
@@ -405,7 +504,7 @@ export const App: React.FC = () => {
                   onSelectQuestion={handleSelectQuestion}
                   onNavigateToBank={(bank) => {
                     setSelectedBankFilter(bank);
-                    setActiveTab('problems');
+                    navigateToTab('problems', undefined, true);
                   }}
                 />
               )}
@@ -443,8 +542,8 @@ export const App: React.FC = () => {
                 <DashboardView
                   stats={stats}
                   onSelectQuestion={handleSelectQuestion}
-                  onNavigateToBank={() => setActiveTab('problems')}
-                  onNavigateToRevision={() => setActiveTab('revision')}
+                  onNavigateToBank={() => navigateToTab('problems', undefined, true)}
+                  onNavigateToRevision={() => navigateToTab('revision', undefined, true)}
                 />
               )}
             </>

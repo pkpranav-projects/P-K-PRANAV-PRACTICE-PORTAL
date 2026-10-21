@@ -13,7 +13,8 @@ import {
   Volume2,
   VolumeX,
   HelpCircle,
-  Database
+  Database,
+  ArrowLeft
 } from 'lucide-react';
 import { PranavJavaSymbol } from './PranavJavaSymbol';
 import { SystemHealth } from '../types';
@@ -49,6 +50,8 @@ interface LeetCodeNavbarProps {
   onOpenShortcutsModal?: () => void;
   isSoundEnabled?: boolean;
   onToggleSound?: () => void;
+  onBack?: () => void;
+  backLabel?: string;
 }
 
 export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
@@ -66,7 +69,9 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
   onOpenCommandPalette,
   onOpenShortcutsModal,
   isSoundEnabled = true,
-  onToggleSound
+  onToggleSound,
+  onBack,
+  backLabel = 'Questions'
 }) => {
   const [isInterviewOpen, setIsInterviewOpen] = useState(false);
   const [isStoreOpen, setIsStoreOpen] = useState(false);
@@ -106,6 +111,18 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               </span>
             </div>
           </button>
+
+          {/* Back Button when in Workspace */}
+          {activeTab === 'workspace' && onBack && (
+            <button
+              onClick={onBack}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-[#333] dark:hover:bg-[#444] border border-slate-300/80 dark:border-neutral-700 transition-all cursor-pointer shadow-sm group shrink-0"
+              title={`Back to ${backLabel || 'Questions'} (or Browser Back)`}
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-amber-500 group-hover:-translate-x-0.5 transition-transform" />
+              <span>Back to {backLabel || 'Questions'}</span>
+            </button>
+          )}
 
           {/* Navigation Links matching LeetCode (Problems, Contest, Discuss, Interview, Store) */}
           <div className="flex items-center h-full gap-5 text-sm font-medium">
