@@ -1,4 +1,4 @@
-# ☕ Java Practice Arena — Complete Exam-Style Coding Platform
+# ⚡ P K PRANAV Practice Portal — Multi-Language & DBMS Practice Arena
 
 A personal, production-grade Java programming practice and exam portal built from real skipped university lab exam screenshots.
 
