@@ -1259,5 +1259,142 @@
     "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int foodR = sc.nextInt();\n        int foodC = sc.nextInt();\n        String moves = sc.next();\n\n        int r = 0, c = 0;\n        int length = 1;\n        boolean foodEaten = false;\n\n        for (char m : moves.toCharArray()) {\n            int nextR = r, nextC = c;\n            if (m == 'U') nextR--;\n            else if (m == 'D') nextR++;\n            else if (m == 'L') nextC--;\n            else if (m == 'R') nextC++;\n\n            if (nextR < 0 || nextR >= n || nextC < 0 || nextC >= n) {\n                System.out.println(\"Collision at (\" + nextR + \", \" + nextC + \")! Game Over\");\n                sc.close();\n                return;\n            }\n\n            r = nextR;\n            c = nextC;\n            if (!foodEaten && r == foodR && c == foodC) {\n                length++;\n                foodEaten = true;\n            }\n        }\n\n        System.out.println(\"Success: Final Position (\" + r + \", \" + c + \") | Length: \" + length);\n        sc.close();\n    }\n}",
     "explanation": "Simulates 2D state machine transitions, boundary clipping, and goal ingestion logic.",
     "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-033",
+    "bank": "bank4",
+    "title": "Dynamic Grocery Cart Manager (ArrayList CRUD Operations)",
+    "topic": "ArrayLists & Collections",
+    "difficulty": "Easy",
+    "recommendedLanguage": "Java",
+    "description": "In Bro Code's Java Course (Chapter: ArrayList), `ArrayList<String>` is introduced as a resizable dynamic array that provides built-in methods to add, retrieve, modify, and delete elements.\n\nImplement a Grocery Cart Management Engine that starts with an empty `ArrayList<String>` and processes Q operations:\n- `ADD <item>`: Append <item> to the end of the cart.\n- `INSERT <index> <item>`: If index is valid (0 <= index <= cart.size()), insert <item> at index. Otherwise ignore.\n- `UPDATE <index> <item>`: If index is valid (0 <= index < cart.size()), replace the element at index with <item>. Otherwise ignore.\n- `REMOVE <item>`: If <item> exists in the cart, remove its first occurrence.\n- `REMOVEAT <index>`: If index is valid (0 <= index < cart.size()), remove the item at that index. Otherwise ignore.\n- `SIZE`: Print \"Size: <count>\".\n- `PRINT`: Output all items in the cart separated by spaces. If the cart is empty, print \"Cart is empty\".",
+    "inputFormat": "The first line contains integer Q (number of operations).\nThe next Q lines each contain an operation command.",
+    "outputFormat": "Print the output for each SIZE or PRINT command on a new line.",
+    "constraints": [
+      "1 <= Q <= 100",
+      "Item names are single words consisting of letters",
+      "Indices are integers"
+    ],
+    "sampleInput": "7\nADD Apple\nADD Banana\nINSERT 1 Orange\nUPDATE 2 Mango\nREMOVE Apple\nSIZE\nPRINT",
+    "sampleOutput": "Size: 2\nOrange Mango",
+    "testCases": [
+      {
+        "input": "7\nADD Apple\nADD Banana\nINSERT 1 Orange\nUPDATE 2 Mango\nREMOVE Apple\nSIZE\nPRINT",
+        "expectedOutput": "Size: 2\nOrange Mango",
+        "isHidden": false
+      },
+      {
+        "input": "5\nADD Milk\nADD Eggs\nREMOVEAT 0\nREMOVEAT 0\nPRINT",
+        "expectedOutput": "Cart is empty",
+        "isHidden": false
+      },
+      {
+        "input": "8\nADD Bread\nADD Butter\nADD Jam\nINSERT 10 Cheese\nUPDATE 5 Milk\nREMOVE Water\nSIZE\nPRINT",
+        "expectedOutput": "Size: 3\nBread Butter Jam",
+        "isHidden": true
+      },
+      {
+        "input": "6\nADD Laptop\nINSERT 0 Mouse\nADD Keyboard\nUPDATE 1 Monitor\nSIZE\nPRINT",
+        "expectedOutput": "Size: 3\nMouse Monitor Keyboard",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Course (ArrayList Chapter)",
+    "starterCode": "import java.util.ArrayList;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution using ArrayList<String>\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.ArrayList;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int q = sc.nextInt();\n        ArrayList<String> cart = new ArrayList<>();\n\n        for (int i = 0; i < q; i++) {\n            String op = sc.next();\n            if (op.equals(\"ADD\")) {\n                cart.add(sc.next());\n            } else if (op.equals(\"INSERT\")) {\n                int idx = sc.nextInt();\n                String item = sc.next();\n                if (idx >= 0 && idx <= cart.size()) {\n                    cart.add(idx, item);\n                }\n            } else if (op.equals(\"UPDATE\")) {\n                int idx = sc.nextInt();\n                String item = sc.next();\n                if (idx >= 0 && idx < cart.size()) {\n                    cart.set(idx, item);\n                }\n            } else if (op.equals(\"REMOVE\")) {\n                String item = sc.next();\n                cart.remove(item);\n            } else if (op.equals(\"REMOVEAT\")) {\n                int idx = sc.nextInt();\n                if (idx >= 0 && idx < cart.size()) {\n                    cart.remove(idx);\n                }\n            } else if (op.equals(\"SIZE\")) {\n                System.out.println(\"Size: \" + cart.size());\n            } else if (op.equals(\"PRINT\")) {\n                if (cart.isEmpty()) {\n                    System.out.println(\"Cart is empty\");\n                } else {\n                    System.out.println(String.join(\" \", cart));\n                }\n            }\n        }\n        sc.close();\n    }\n}",
+    "explanation": "Demonstrates core ArrayList methods: add, add(index), set(index), remove(item), remove(index), size, and isEmpty.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-034",
+    "bank": "bank4",
+    "title": "Supermarket Department Aisles (2D ArrayList Processing)",
+    "topic": "ArrayLists & Collections",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "In Bro Code's Java Course (Chapter: 2D ArrayList), an `ArrayList<ArrayList<String>>` represents a dynamic list of lists, perfect for modeling multi-category inventories with varying shelf capacities.\n\nA supermarket organizes its products across N aisles. Each aisle contains an arbitrary number of items.\nGiven the aisle inventories and Q lookup queries:\n- `FIND <item>`: Search across all aisles. If found, print \"Found at Aisle <i> Position <j>\" (1-indexed for both aisle and position within aisle). If it occurs multiple times, print the first occurrence. If not found in any aisle, print \"Not in stock\". Comparison should be case-insensitive.\n- `AISLE <i>`: Print all items in aisle i (1-indexed) separated by commas: \"Aisle <i>: item1, item2\". If the aisle is empty, print \"Aisle <i>: Empty\".\n- `COUNT`: Print the total number of items stored across all aisles: \"Total Items: <total>\".",
+    "inputFormat": "First line: integer N (number of aisles).\nNext N lines: integer K (items in this aisle) followed by K space-separated item names.\nNext line: integer Q (number of queries).\nNext Q lines: each query command.",
+    "outputFormat": "Print the result for each query on a new line.",
+    "constraints": [
+      "1 <= N <= 50",
+      "0 <= K <= 100",
+      "1 <= Q <= 100",
+      "Item names are alphanumeric strings without spaces"
+    ],
+    "sampleInput": "3\n3 Bread Donuts Cookies\n3 Apples Oranges Bananas\n2 Soda Coffee\n3\nFIND Oranges\nAISLE 1\nCOUNT",
+    "sampleOutput": "Found at Aisle 2 Position 2\nAisle 1: Bread, Donuts, Cookies\nTotal Items: 8",
+    "testCases": [
+      {
+        "input": "3\n3 Bread Donuts Cookies\n3 Apples Oranges Bananas\n2 Soda Coffee\n3\nFIND Oranges\nAISLE 1\nCOUNT",
+        "expectedOutput": "Found at Aisle 2 Position 2\nAisle 1: Bread, Donuts, Cookies\nTotal Items: 8",
+        "isHidden": false
+      },
+      {
+        "input": "2\n2 Milk Cheese\n1 Yogurt\n2\nFIND IceCream\nCOUNT",
+        "expectedOutput": "Not in stock\nTotal Items: 3",
+        "isHidden": false
+      },
+      {
+        "input": "4\n1 Chips\n0\n2 Cola Water\n3 Apple Pear Peach\n4\nAISLE 2\nFIND water\nAISLE 4\nCOUNT",
+        "expectedOutput": "Aisle 2: Empty\nFound at Aisle 3 Position 2\nAisle 4: Apple, Pear, Peach\nTotal Items: 6",
+        "isHidden": true
+      },
+      {
+        "input": "1\n3 Pen Pencil Eraser\n2\nFIND Eraser\nAISLE 1",
+        "expectedOutput": "Found at Aisle 1 Position 3\nAisle 1: Pen, Pencil, Eraser",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java Course (2D ArrayList Chapter)",
+    "starterCode": "import java.util.ArrayList;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution using 2D ArrayList<ArrayList<String>>\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.ArrayList;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n\n        ArrayList<ArrayList<String>> aisles = new ArrayList<>();\n        for (int i = 0; i < n; i++) {\n            int k = sc.nextInt();\n            ArrayList<String> row = new ArrayList<>();\n            for (int j = 0; j < k; j++) {\n                row.add(sc.next());\n            }\n            aisles.add(row);\n        }\n\n        if (!sc.hasNextInt()) return;\n        int q = sc.nextInt();\n        for (int qIdx = 0; qIdx < q; qIdx++) {\n            String cmd = sc.next();\n            if (cmd.equals(\"FIND\")) {\n                String target = sc.next();\n                boolean found = false;\n                for (int i = 0; i < aisles.size(); i++) {\n                    ArrayList<String> row = aisles.get(i);\n                    for (int j = 0; j < row.size(); j++) {\n                        if (row.get(j).equalsIgnoreCase(target)) {\n                            System.out.println(\"Found at Aisle \" + (i + 1) + \" Position \" + (j + 1));\n                            found = true;\n                            break;\n                        }\n                    }\n                    if (found) break;\n                }\n                if (!found) {\n                    System.out.println(\"Not in stock\");\n                }\n            } else if (cmd.equals(\"AISLE\")) {\n                int idx = sc.nextInt();\n                if (idx >= 1 && idx <= aisles.size()) {\n                    ArrayList<String> row = aisles.get(idx - 1);\n                    if (row.isEmpty()) {\n                        System.out.println(\"Aisle \" + idx + \": Empty\");\n                    } else {\n                        System.out.println(\"Aisle \" + idx + \": \" + String.join(\", \", row));\n                    }\n                } else {\n                    System.out.println(\"Aisle \" + idx + \": Empty\");\n                }\n            } else if (cmd.equals(\"COUNT\")) {\n                int total = 0;\n                for (ArrayList<String> row : aisles) {\n                    total += row.size();\n                }\n                System.out.println(\"Total Items: \" + total);\n            }\n        }\n\n        sc.close();\n    }\n}",
+    "explanation": "Illustrates nested dynamic collections, multi-level coordinate traversal, and dynamic list-of-lists management.",
+    "extractionStatus": "verified"
+  },
+  {
+    "id": "bank4-035",
+    "bank": "bank4",
+    "title": "Student Marks Leaderboard & Grade Filter (ArrayList of Objects)",
+    "topic": "ArrayLists & Collections",
+    "difficulty": "Medium",
+    "recommendedLanguage": "Java",
+    "description": "In professional Java development and Bro Code's OOP chapters, custom objects are aggregated into collections like `ArrayList<Student>` for filtering, aggregation, and custom sorting.\n\nYou are given records of N students, each with name (String), rollNo (int), and exam score (double).\nPerform the following tasks:\n1. Compute and print the class average rounded to 2 decimal places: \"Class Average: <avg>\".\n2. Filter out any students whose score is strictly less than passing threshold T.\n3. Sort the qualifying students in DESCENDING order of score. If two students have the exact same score, break the tie by sorting their names in ASCENDING alphabetical order (case-insensitive).\n4. Print each qualifying student on a new line in the format:\n   \"Rank <r>: <name> (Roll: <rollNo>) - <score formatted to 2 decimal places>\"\n   (Rank starts at 1 and increments by 1 for each qualifying student).\n5. If no student scored >= T, print \"No qualifying students\".",
+    "inputFormat": "First line: integer N (number of students).\nNext N lines: <name> <rollNo> <score>.\nLast line: double T (passing threshold).",
+    "outputFormat": "First line prints the class average.\nNext lines print the ranked leaderboard or \"No qualifying students\".",
+    "constraints": [
+      "1 <= N <= 100",
+      "1 <= rollNo <= 100000",
+      "0.0 <= score, T <= 100.0",
+      "Name is a single alphabetical word"
+    ],
+    "sampleInput": "5\nAlice 101 88.5\nBob 102 64.0\nCharlie 103 92.0\nDiana 104 88.5\nEvan 105 45.0\n75.0",
+    "sampleOutput": "Class Average: 75.60\nRank 1: Charlie (Roll: 103) - 92.00\nRank 2: Alice (Roll: 101) - 88.50\nRank 3: Diana (Roll: 104) - 88.50",
+    "testCases": [
+      {
+        "input": "5\nAlice 101 88.5\nBob 102 64.0\nCharlie 103 92.0\nDiana 104 88.5\nEvan 105 45.0\n75.0",
+        "expectedOutput": "Class Average: 75.60\nRank 1: Charlie (Roll: 103) - 92.00\nRank 2: Alice (Roll: 101) - 88.50\nRank 3: Diana (Roll: 104) - 88.50",
+        "isHidden": false
+      },
+      {
+        "input": "3\nAlex 1 50.0\nBrian 2 55.0\nChloe 3 58.0\n60.0",
+        "expectedOutput": "Class Average: 54.33\nNo qualifying students",
+        "isHidden": false
+      },
+      {
+        "input": "3\nZara 20 95.0\nAdam 10 95.0\nMaya 15 95.0\n90.0",
+        "expectedOutput": "Class Average: 95.00\nRank 1: Adam (Roll: 10) - 95.00\nRank 2: Maya (Roll: 15) - 95.00\nRank 3: Zara (Roll: 20) - 95.00",
+        "isHidden": true
+      },
+      {
+        "input": "1\nSolo 99 100.0\n50.0",
+        "expectedOutput": "Class Average: 100.00\nRank 1: Solo (Roll: 99) - 100.00",
+        "isHidden": true
+      }
+    ],
+    "sourceScreenshot": "Bro Code Java OOP & Collections",
+    "starterCode": "import java.util.ArrayList;\nimport java.util.Scanner;\n\nclass Student {\n    String name;\n    int rollNo;\n    double score;\n    // Define constructor\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Write your solution using ArrayList<Student>\n        \n        sc.close();\n    }\n}",
+    "referenceSolution": "import java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.Comparator;\nimport java.util.Scanner;\n\nclass Student {\n    String name;\n    int rollNo;\n    double score;\n\n    Student(String name, int rollNo, double score) {\n        this.name = name;\n        this.rollNo = rollNo;\n        this.score = score;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n\n        ArrayList<Student> list = new ArrayList<>();\n        double sum = 0.0;\n        for (int i = 0; i < n; i++) {\n            String name = sc.next();\n            int roll = sc.nextInt();\n            double score = sc.nextDouble();\n            list.add(new Student(name, roll, score));\n            sum += score;\n        }\n\n        double threshold = sc.nextDouble();\n        double avg = (n > 0) ? sum / n : 0.0;\n        System.out.printf(\"Class Average: %.2f\\n\", avg);\n\n        ArrayList<Student> qualified = new ArrayList<>();\n        for (Student s : list) {\n            if (s.score >= threshold) {\n                qualified.add(s);\n            }\n        }\n\n        if (qualified.isEmpty()) {\n            System.out.println(\"No qualifying students\");\n        } else {\n            Collections.sort(qualified, new Comparator<Student>() {\n                @Override\n                public int compare(Student s1, Student s2) {\n                    int c = Double.compare(s2.score, s1.score);\n                    if (c != 0) return c;\n                    return s1.name.compareToIgnoreCase(s2.name);\n                }\n            });\n\n            for (int i = 0; i < qualified.size(); i++) {\n                Student s = qualified.get(i);\n                System.out.printf(\"Rank %d: %s (Roll: %d) - %.2f\\n\", (i + 1), s.name, s.rollNo, s.score);\n            }\n        }\n\n        sc.close();\n    }\n}",
+    "explanation": "Combines object-oriented modeling with custom Comparator sorting, multi-attribute tie-breaking, and dynamic list filtering.",
+    "extractionStatus": "verified"
   }
 ]
