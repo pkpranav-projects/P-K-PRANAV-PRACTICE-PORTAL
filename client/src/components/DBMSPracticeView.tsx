@@ -17,7 +17,9 @@ import {
   ArrowRight,
   ShieldCheck,
   FileCode2,
-  AlertCircle
+  AlertCircle,
+  GraduationCap,
+  BookOpen
 } from 'lucide-react';
 import { QuestionSummary } from '../types';
 import { ScreenshotModal } from './ScreenshotModal';
@@ -29,7 +31,147 @@ interface DBMSPracticeViewProps {
   onSelectQuestion: (questionId: string) => void;
   onNavigateToBank?: (bank: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all') => void;
   onNavigateToSQLCourse?: () => void;
+  onNavigateToSQLTopic?: (topicId: string) => void;
 }
+
+interface VivaTopic {
+  id: string;
+  topicNumber: number;
+  title: string;
+  categoryBadge: string;
+  summary: string;
+  vivaTrap: string;
+  lessonId: string;
+  externalLinks: Array<{ label: string; url: string }>;
+}
+
+const LAB_EXAM_VIVA_TOPICS: VivaTopic[] = [
+  {
+    id: 'ddl-dml',
+    topicNumber: 1,
+    title: 'DDL, DML & SQL Queries',
+    categoryBadge: 'Schema & Data',
+    summary: 'CREATE, ALTER, DROP, TRUNCATE vs INSERT, UPDATE, DELETE and core querying clauses (SELECT, WHERE, ORDER BY, LIMIT).',
+    vivaTrap: 'DELETE vs TRUNCATE vs DROP: TRUNCATE is DDL, resets auto-increment, cannot be rolled back, and deallocates data pages directly.',
+    lessonId: 'sql_ddl_dml_queries',
+    externalLinks: [
+      { label: 'W3Schools SQL', url: 'https://www.w3schools.com/sql/' },
+      { label: 'TutorialsPoint SQL', url: 'https://www.tutorialspoint.com/sql/index.htm' }
+    ]
+  },
+  {
+    id: 'aggregates',
+    topicNumber: 2,
+    title: 'Aggregate Functions & Grouping',
+    categoryBadge: 'Math & Sets',
+    summary: 'MIN, MAX, COUNT, AVG, SUM, multi-column GROUP BY, and aggregate filtering using HAVING.',
+    vivaTrap: 'WHERE filters rows BEFORE grouping; HAVING filters groups AFTER aggregation. Aggregates cannot be placed in WHERE clauses.',
+    lessonId: 'sql_aggregates_grouping',
+    externalLinks: [
+      { label: 'W3Schools Aggregates', url: 'https://www.w3schools.com/sql/sql_aggregate_functions.asp' }
+    ]
+  },
+  {
+    id: 'joins',
+    topicNumber: 3,
+    title: 'SQL JOINS (All 6 Types)',
+    categoryBadge: 'Relational Joins',
+    summary: 'INNER JOIN, LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL OUTER JOIN, CROSS JOIN, and SELF JOIN.',
+    vivaTrap: 'Self Join joins a table with itself via table aliases (e.g. Employee E JOIN Employee M ON E.ManagerID = M.EmpID).',
+    lessonId: 'sql_joins_all_types',
+    externalLinks: [
+      { label: 'W3Schools Joins', url: 'https://www.w3schools.com/sql/sql_join.asp' }
+    ]
+  },
+  {
+    id: 'constraints',
+    topicNumber: 4,
+    title: 'Database Constraints & Integrity',
+    categoryBadge: 'Integrity Rules',
+    summary: 'NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, CHECK, and DEFAULT constraints at column and table levels.',
+    vivaTrap: 'Primary Key allows NO nulls (1 per table); Unique Key allows 1 null. ON DELETE CASCADE automatically deletes child records.',
+    lessonId: 'sql_constraints_master',
+    externalLinks: [
+      { label: 'W3Schools Constraints', url: 'https://www.w3schools.com/sql/sql_constraints.asp' }
+    ]
+  },
+  {
+    id: 'nested-queries',
+    topicNumber: 5,
+    title: 'Nested Queries & Correlated Subqueries',
+    categoryBadge: 'Advanced Queries',
+    summary: 'Single-row, multi-row, and correlated subqueries with IN, NOT IN, EXISTS, NOT EXISTS, ANY, and ALL.',
+    vivaTrap: 'Correlated subquery evaluates once per candidate row of outer query. EXISTS short-circuits on first match and is null-safe.',
+    lessonId: 'sql_nested_queries',
+    externalLinks: [
+      { label: 'GeeksforGeeks Nested Queries', url: 'https://www.geeksforgeeks.org/sql/nested-queries-in-sql/' }
+    ]
+  },
+  {
+    id: 'normalization',
+    topicNumber: 6,
+    title: 'Normalization (1NF, 2NF, 3NF, BCNF, 4NF, 5NF)',
+    categoryBadge: 'Relational Theory',
+    summary: 'Functional dependencies, eliminating Insertion, Update, and Deletion anomalies, and step-by-step normal forms.',
+    vivaTrap: '2NF removes Partial Dependencies; 3NF removes Transitive Dependencies (X -> Y -> Z); BCNF requires determinant to be Super Key.',
+    lessonId: 'dbms_normalization',
+    externalLinks: [
+      { label: 'GeeksforGeeks Normal Forms', url: 'https://www.geeksforgeeks.org/dbms/normal-forms-in-dbms/' },
+      { label: 'Medium Normalization Guide', url: 'https://medium.com/@nkharshbachhav/normalization-in-dbms-1nf-2nf-3nf-bcnf-4cnf-5cnf-1ef07f82e39d' }
+    ]
+  },
+  {
+    id: 'views-synonyms',
+    topicNumber: 7,
+    title: 'Views, Synonyms, Sequences, Index',
+    categoryBadge: 'Database Objects',
+    summary: 'Virtual Views, Object Synonyms, Auto-Incrementing Sequences, and B-Tree / Clustered Indexes.',
+    vivaTrap: 'Clustered Index alters physical storage order on disk (1 per table); Non-Clustered index stores pointers (multiple per table).',
+    lessonId: 'sql_views_synonyms_sequences_index',
+    externalLinks: [
+      { label: 'TutorialsPoint Views', url: 'https://www.tutorialspoint.com/sql/sql-create-view.htm' },
+      { label: 'GeeksforGeeks Synonyms', url: 'https://www.geeksforgeeks.org/sql/sql-synonym/' },
+      { label: 'TutorialsPoint Auto-Increment', url: 'https://www.tutorialspoint.com/sql/sql-auto-increment.htm' },
+      { label: 'TutorialsPoint Indexes', url: 'https://www.tutorialspoint.com/sql/sql-indexes.htm' }
+    ]
+  },
+  {
+    id: 'transactions',
+    topicNumber: 8,
+    title: 'Transactions & ACID Properties',
+    categoryBadge: 'TCL & Concurrency',
+    summary: 'ACID properties (Atomicity, Consistency, Isolation, Durability), COMMIT, ROLLBACK, SAVEPOINT, and 4 Isolation Levels.',
+    vivaTrap: 'Dirty Read (reading uncommitted data); Non-Repeatable Read (row values change); Phantom Read (new rows appear in range scan).',
+    lessonId: 'sql_transactions_acid',
+    externalLinks: [
+      { label: 'TutorialsPoint Transactions', url: 'https://www.tutorialspoint.com/sql/sql-transactions.htm' }
+    ]
+  },
+  {
+    id: 'triggers',
+    topicNumber: 9,
+    title: 'PL/SQL & MySQL Triggers',
+    categoryBadge: 'Event Automation',
+    summary: 'Event-driven triggers: BEFORE/AFTER INSERT/UPDATE/DELETE, FOR EACH ROW, and NEW/OLD pseudo-record qualifiers.',
+    vivaTrap: 'NEW is available on INSERT/UPDATE; OLD is available on UPDATE/DELETE. BEFORE triggers can alter NEW values prior to storage.',
+    lessonId: 'plsql_triggers_procedures',
+    externalLinks: [
+      { label: 'GeeksforGeeks MySQL Triggers', url: 'https://www.geeksforgeeks.org/mysql/different-types-of-mysql-triggers-with-examples/' }
+    ]
+  },
+  {
+    id: 'procedures',
+    topicNumber: 10,
+    title: 'PL/SQL & MySQL Stored Procedures',
+    categoryBadge: 'Procedural SQL',
+    summary: 'Compiled routines with IN, OUT, INOUT parameters, control flow (IF/CASE), loops, and performance benefits.',
+    vivaTrap: 'Procedure is invoked via CALL, can return multiple OUT parameters and manage transactions; Function returns 1 scalar and is callable in SELECT.',
+    lessonId: 'plsql_triggers_procedures',
+    externalLinks: [
+      { label: 'W3Schools Stored Procedures', url: 'https://www.w3schools.com/mysql/mysql_stored_procedures.asp' }
+    ]
+  }
+];
 
 interface SQLTemplate {
   name: string;
@@ -186,10 +328,12 @@ export const DBMSPracticeView: React.FC<DBMSPracticeViewProps> = ({
   questions,
   onSelectQuestion,
   onNavigateToBank,
-  onNavigateToSQLCourse
+  onNavigateToSQLCourse,
+  onNavigateToSQLTopic
 }) => {
   const [selectedModule, setSelectedModule] = useState<string>('all');
   const [expandedDetails, setExpandedDetails] = useState<Record<string, boolean>>({});
+  const [isVivaSectionOpen, setIsVivaSectionOpen] = useState(true);
   
   // Playground state
   const [activeTemplate, setActiveTemplate] = useState<SQLTemplate>(PRELOADED_SQL_TEMPLATES[0]);
@@ -354,7 +498,119 @@ export const DBMSPracticeView: React.FC<DBMSPracticeViewProps> = ({
         </div>
       </div>
 
-      {/* 2. Interactive SQL Playground & Sandbox */}
+      {/* 2. Lab Exam & Viva Revision Syllabus Hub */}
+      <div className="rounded-2xl bg-white dark:bg-[#181818] border border-amber-500/30 dark:border-amber-500/20 shadow-xl overflow-hidden">
+        {/* Hub Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-6 py-4 bg-gradient-to-r from-amber-500/10 via-slate-100 dark:via-[#1e1e1e] to-emerald-500/10 border-b border-amber-500/20 gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-500 border border-amber-500/30">
+              <GraduationCap className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
+                  TOPIC AND LINKS FOR LAB EXAM AND VIVA
+                </h2>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500 text-slate-950 font-extrabold uppercase">
+                  10 Core Topics
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 dark:text-neutral-300">
+                Official syllabus checklist covering DDL/DML, Joins, Aggregates, Nested Queries, Normalization, ACID, and PL/SQL.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {onNavigateToSQLTopic && (
+              <button
+                onClick={() => onNavigateToSQLTopic('sql_viva_cheatsheet')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all cursor-pointer shadow-xs"
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>Open Full Viva Guide</span>
+              </button>
+            )}
+            <button
+              onClick={() => setIsVivaSectionOpen((prev) => !prev)}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#282828] transition-colors cursor-pointer"
+              title={isVivaSectionOpen ? 'Collapse Syllabus' : 'Expand Syllabus'}
+            >
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-200 ${
+                  isVivaSectionOpen ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+
+        {/* Hub Topics Grid */}
+        {isVivaSectionOpen && (
+          <div className="p-5 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            {LAB_EXAM_VIVA_TOPICS.map((topic) => (
+              <div
+                key={topic.id}
+                className="rounded-xl border border-slate-200 dark:border-neutral-800 bg-slate-50/50 dark:bg-[#202020]/60 p-4 hover:border-amber-400 dark:hover:border-amber-500/50 transition-all flex flex-col justify-between gap-3 group"
+              >
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-md bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono text-xs font-extrabold flex items-center justify-center border border-amber-500/30">
+                        {topic.topicNumber}
+                      </span>
+                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors">
+                        {topic.title}
+                      </h3>
+                    </div>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">
+                      {topic.categoryBadge}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-slate-600 dark:text-neutral-300 leading-relaxed">
+                    {topic.summary}
+                  </p>
+
+                  <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-700 dark:text-amber-300">
+                    <span className="font-bold">Viva Favorite: </span>
+                    <span>{topic.vivaTrap}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 dark:border-neutral-800/80 gap-2 flex-wrap">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {topic.externalLinks.map((link, lIdx) => (
+                      <a
+                        key={lIdx}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] font-medium text-slate-500 dark:text-neutral-400 hover:text-amber-500 dark:hover:text-amber-400 transition-colors"
+                      >
+                        <span>{link.label}</span>
+                        <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                      </a>
+                    ))}
+                  </div>
+
+                  {onNavigateToSQLTopic && (
+                    <button
+                      onClick={() => onNavigateToSQLTopic(topic.lessonId)}
+                      className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer ml-auto"
+                    >
+                      <span>Read Topic</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* 3. Interactive SQL Playground & Sandbox */}
       <div className="rounded-2xl bg-white dark:bg-[#181818] border border-slate-200 dark:border-neutral-800 shadow-lg overflow-hidden">
         {/* Playground Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-neutral-800 bg-slate-50 dark:bg-[#202020] gap-3">

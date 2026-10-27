@@ -574,10 +574,11 @@ export const App: React.FC = () => {
                     navigateToTab('problems', undefined, true);
                   }}
                   onNavigateToSQLCourse={() => navigateToTab('sql-course', undefined, true)}
+                  onNavigateToSQLTopic={(topicId) => navigateToTab('sql-course', topicId, true)}
                 />
               )}
 
-              {/* W3Schools SQL Master Handbook (77 Topics, Continuous Single-Page Reader) */}
+              {/* SQL & DBMS Master Guide (87 Topics & Lab Exam Syllabus, Continuous Single-Page Reader) */}
               {activeTab === 'sql-course' && (
                 <SQLCourseView
                   initialJumpId={activeQuestionId}
