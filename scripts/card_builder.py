@@ -1,12 +1,25 @@
 import html
 
-def make_card(badge, title, what_it_does, sql, headers=None, rows=None, card_class="", status_badge=None, extra_notes=None):
+def make_card(
+    badge,
+    title,
+    what_it_does,
+    sql,
+    headers=None,
+    rows=None,
+    card_class="",
+    status_badge=None,
+    extra_notes=None,
+    status_line=None,
+    output_title="Expected Output:"
+):
     """
     Renders an OLED-styled granular command card:
     1. Badge + Title
     2. What it does (Plain English ELI5 explanation)
     3. Dedicated standalone SQL code block with Copy button
-    4. Expected output table or status table
+    4. Optional Execution Status line (e.g. Query OK, 1 row affected)
+    5. Expected detailed table data (showing exact resulting rows and columns)
     """
     badge_html = f'<span class="cmd-badge {status_badge or ""}">{html.escape(badge)}</span>'
     title_html = f'<h4 class="cmd-title">{html.escape(title)}</h4>'
@@ -30,10 +43,17 @@ def make_card(badge, title, what_it_does, sql, headers=None, rows=None, card_cla
             tr_rows.append(f"<tr>{td_cells}</tr>")
         rows_str = "".join(tr_rows)
         
+        status_line_html = ""
+        if status_line:
+            status_line_html = f'''<div class="status-line">
+  <span class="status-dot">●</span> <span>Execution Status:</span> <code>{html.escape(status_line)}</code>
+</div>'''
+        
         output_html = f'''<div class="output-wrap">
+  {status_line_html}
   <div class="output-label">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-    Expected Output:
+    {html.escape(output_title)}
   </div>
   <table class="output-table">
     <thead><tr>{th_cells}</tr></thead>

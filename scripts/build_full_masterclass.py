@@ -81,8 +81,10 @@ def build_masterclass_content():
         title="1. Create a New Database Schema",
         what_it_does="Allocates a new relational namespace on the server to hold related college tables.",
         sql="CREATE DATABASE college;",
-        headers=["Query Status", "Rows Affected", "Duration"],
-        rows=[["Query OK", "1 row affected", "0.01 sec"]],
+        status_line="Query OK, 1 row affected (0.01 sec)",
+        output_title="Server Catalogs (SHOW DATABASES LIKE 'college'):",
+        headers=["Database (%college%)"],
+        rows=[["college"]],
         card_class="card-success",
         status_badge="badge-success"
     ))
@@ -91,6 +93,7 @@ def build_masterclass_content():
         title="2. List All Active Databases",
         what_it_does="Displays all catalogs and schemas currently residing on the MySQL server instance.",
         sql="SHOW DATABASES;",
+        output_title="Active Databases on Server:",
         headers=["Database"],
         rows=[["college"], ["information_schema"], ["mysql"], ["performance_schema"], ["sys"]]
     ))
@@ -99,8 +102,10 @@ def build_masterclass_content():
         title="3. Set the Active Working Database Context",
         what_it_does="Tells MySQL which database schema subsequent queries, table creations, and inserts should target.",
         sql="USE college;",
-        headers=["Query Status", "Execution"],
-        rows=[["Database changed", "Session context set to 'college'"]]
+        status_line="Database changed",
+        output_title="Active Connection Schema (SELECT DATABASE()):",
+        headers=["DATABASE()"],
+        rows=[["college"]]
     ))
     sections.append(f'''<div class="topic-card" id="t4">
   <h2>4. Create Database &amp; USE</h2>
@@ -114,16 +119,8 @@ def build_masterclass_content():
         title="1. Create Table with Primary Key, Auto-Increment & Data Types",
         what_it_does="Builds the Student relation schema. <code>id</code> auto-increments unique IDs, <code>name</code> is required, and <code>marks</code> supports exact 2-decimal arithmetic.",
         sql="CREATE TABLE Student (\n    id INT PRIMARY KEY AUTO_INCREMENT,\n    name VARCHAR(50) NOT NULL,\n    age INT,\n    department VARCHAR(30),\n    marks DECIMAL(5, 2)\n);",
-        headers=["Query Status", "Rows Affected", "Duration"],
-        rows=[["Query OK", "0 rows affected", "0.02 sec"]],
-        card_class="card-success",
-        status_badge="badge-success"
-    ))
-    t5_cards.append(make_card(
-        badge="DESCRIBE",
-        title="2. Inspect Table Schema with DESCRIBE",
-        what_it_does="Returns column metadata, data types, nullability, keys, default values, and extra attributes.",
-        sql="DESCRIBE Student;",
+        status_line="Query OK, 0 rows affected (0.02 sec)",
+        output_title="Resulting Schema Structure (DESCRIBE Student):",
         headers=["Field", "Type", "Null", "Key", "Default", "Extra"],
         rows=[
             ["id", "int", "NO", "PRI", "NULL", "auto_increment"],
@@ -131,7 +128,9 @@ def build_masterclass_content():
             ["age", "int", "YES", "", "NULL", ""],
             ["department", "varchar(30)", "YES", "", "NULL", ""],
             ["marks", "decimal(5,2)", "YES", "", "NULL", ""]
-        ]
+        ],
+        card_class="card-success",
+        status_badge="badge-success"
     ))
     sections.append(f'''<div class="topic-card" id="t5">
   <h2>5. Create Table &amp; Data Types</h2>
@@ -145,8 +144,16 @@ def build_masterclass_content():
         title="1. Batch Insert Multiple Student Rows",
         what_it_does="Inserts 5 student records in a single statement. MySQL automatically generates auto-incrementing sequential integers for <code>id</code> (1 through 5).",
         sql="INSERT INTO Student (name, age, department, marks) VALUES\n('Arun', 19, 'CYS', 85.50),\n('Priya', 20, 'CSE', 92.00),\n('Rahul', 19, 'CYS', 76.00),\n('Divya', 21, 'ECE', 88.50),\n('Kiran', 20, 'CSE', 67.00);",
-        headers=["Query Status", "Rows Affected", "Records", "Duplicates", "Warnings"],
-        rows=[["Query OK", "5 rows affected", "5", "0", "0"]],
+        status_line="Query OK, 5 rows affected (0.01 sec) | Records: 5  Duplicates: 0  Warnings: 0",
+        output_title="Resulting Table State (SELECT * FROM Student):",
+        headers=["id (PK)", "name", "age", "department", "marks"],
+        rows=[
+            [1, "Arun", 19, "CYS", "85.50"],
+            [2, "Priya", 20, "CSE", "92.00"],
+            [3, "Rahul", 19, "CYS", "76.00"],
+            [4, "Divya", 21, "ECE", "88.50"],
+            [5, "Kiran", 20, "CSE", "67.00"]
+        ],
         card_class="card-success",
         status_badge="badge-success"
     ))
@@ -155,6 +162,7 @@ def build_masterclass_content():
         title="2. Query All Rows and Columns (SELECT *)",
         what_it_does="Retrieves all data rows and columns from the Student table.",
         sql="SELECT * FROM Student;",
+        output_title="Query Output (All Columns & Rows):",
         headers=["id", "name", "age", "department", "marks"],
         rows=[
             [1, "Arun", 19, "CYS", "85.50"],
@@ -169,6 +177,7 @@ def build_masterclass_content():
         title="3. Project Specific Columns (Name and Marks)",
         what_it_does="Fetches only specified fields, saving bandwidth and cache memory.",
         sql="SELECT name, marks FROM Student;",
+        output_title="Query Output (Column Projection):",
         headers=["name", "marks"],
         rows=[
             ["Arun", "85.50"],
@@ -188,20 +197,33 @@ def build_masterclass_content():
     t7_cards.append(make_card(
         badge="UPDATE",
         title="1. Update Specific Record Marks with WHERE Condition",
-        what_it_does="Selects Priya's record and updates her marks to 95.00 without modifying any other student's record.",
+        what_it_does="Selects Priya's record and updates her marks from 92.00 to 95.00 without modifying any other student's record.",
         sql="UPDATE Student\nSET marks = 95.00\nWHERE name = 'Priya';",
-        headers=["Query Status", "Rows Matched", "Changed", "Warnings"],
-        rows=[["Query OK", "1", "1", "0"]],
+        status_line="Query OK, 1 row affected (0.01 sec) | Rows matched: 1  Changed: 1  Warnings: 0",
+        output_title="Resulting Table State (SELECT * FROM Student WHERE name = 'Priya'):",
+        headers=["id", "name", "age", "department", "marks (Updated)"],
+        rows=[
+            [2, "Priya", 20, "CSE", "95.00 (Updated from 92.00)"]
+        ],
         card_class="card-amber",
-        status_badge="badge-amber"
+        status_badge="badge-amber",
+        extra_notes="<b>State:</b> Priya's score is now 95.00."
     ))
     t7_cards.append(make_card(
         badge="DELETE",
         title="2. Delete a Targeted Student Record by Primary Key",
         what_it_does="Permanently purges Kiran's record (id = 5) from the database.",
         sql="DELETE FROM Student\nWHERE id = 5;",
-        headers=["Query Status", "Rows Affected", "Duration"],
-        rows=[["Query OK", "1 row affected", "0.01 sec"]]
+        status_line="Query OK, 1 row affected (0.01 sec)",
+        output_title="Resulting Table State (SELECT * FROM Student):",
+        headers=["id (PK)", "name", "age", "department", "marks"],
+        rows=[
+            [1, "Arun", 19, "CYS", "85.50"],
+            [2, "Priya", 20, "CSE", "95.00"],
+            [3, "Rahul", 19, "CYS", "76.00"],
+            [4, "Divya", 21, "ECE", "88.50"]
+        ],
+        extra_notes="<b>State:</b> Kiran (id 5) is removed; 4 student records remain."
     ))
     sections.append(f'''<div class="topic-card" id="t7">
   <h2>7. Update &amp; Delete Data</h2>
@@ -215,24 +237,37 @@ def build_masterclass_content():
         title="1. DELETE — Selective Row Removal (DML)",
         what_it_does="Removes designated rows using WHERE. Allows transaction rollback. Does NOT reset the AUTO_INCREMENT counter.",
         sql="DELETE FROM Student WHERE id = 1;",
-        headers=["Query Status", "Rows Affected", "Action"],
-        rows=[["Query OK", "1 row affected", "Row 1 removed; counter remains at next id (6)"]]
+        status_line="Query OK, 1 row affected (0.01 sec)",
+        output_title="Resulting Table State (SELECT * FROM Student):",
+        headers=["id", "name", "age", "department", "marks"],
+        rows=[
+            [2, "Priya", 20, "CSE", "95.00"],
+            [3, "Rahul", 19, "CYS", "76.00"],
+            [4, "Divya", 21, "ECE", "88.50"]
+        ],
+        extra_notes="Row 1 removed; next insert will still receive id = 6."
     ))
     t8_cards.append(make_card(
         badge="TRUNCATE",
         title="2. TRUNCATE — Complete Table Wipe & Counter Reset (DDL)",
         what_it_does="Deallocates all data pages. Empties the entire table and resets AUTO_INCREMENT back to 1. Cannot be rolled back.",
         sql="TRUNCATE TABLE Student;",
-        headers=["Query Status", "Rows Affected", "Action"],
-        rows=[["Query OK", "0 rows affected", "All rows removed; counter reset back to 1"]]
+        status_line="Query OK, 0 rows affected (0.01 sec)",
+        output_title="Resulting Table State (SELECT * FROM Student):",
+        headers=["id", "name", "age", "department", "marks"],
+        rows=[
+            ["-", "Empty set (0.00 sec)", "All rows removed; counter reset back to 1", "-", "-"]
+        ]
     ))
     t8_cards.append(make_card(
         badge="DROP",
         title="3. DROP TABLE — Complete Object Deletion (DDL)",
         what_it_does="Permanently removes the table schema, indexes, and triggers from the database catalog.",
         sql="DROP TABLE IF EXISTS Student;",
-        headers=["Query Status", "Rows Affected", "Action"],
-        rows=[["Query OK", "0 rows affected", "Table definition and data completely deleted"]]
+        status_line="Query OK, 0 rows affected (0.01 sec)",
+        output_title="Catalog Verification (SHOW TABLES LIKE 'Student'):",
+        headers=["Tables_in_college (Student)"],
+        rows=[["Empty set (0.00 sec) — Table completely purged from schema"]]
     ))
     sections.append(f'''<div class="topic-card" id="t8">
   <h2>8. DELETE vs TRUNCATE vs DROP</h2>
@@ -249,6 +284,7 @@ def build_masterclass_content():
         title="1. Greater Than Operator (>)",
         what_it_does="Filters students whose academic marks exceed 80.00.",
         sql="SELECT name, department, marks FROM Student WHERE marks > 80.00;",
+        output_title="Query Output:",
         headers=["name", "department", "marks"],
         rows=[
             ["Arun", "CYS", "85.50"],
@@ -261,6 +297,7 @@ def build_masterclass_content():
         title="2. Logical AND Operator",
         what_it_does="Filters students who satisfy both criteria: enrolled in 'CYS' AND score > 80.00.",
         sql="SELECT name, marks FROM Student WHERE department = 'CYS' AND marks > 80.00;",
+        output_title="Query Output:",
         headers=["name", "marks"],
         rows=[["Arun", "85.50"]]
     ))
@@ -269,6 +306,7 @@ def build_masterclass_content():
         title="3. Logical OR Operator",
         what_it_does="Filters students belonging to either 'CYS' or 'CSE' department.",
         sql="SELECT name, department FROM Student WHERE department = 'CYS' OR department = 'CSE';",
+        output_title="Query Output:",
         headers=["name", "department"],
         rows=[
             ["Arun", "CYS"],
@@ -288,6 +326,7 @@ def build_masterclass_content():
         title="1. DISTINCT — Deduplicating Department Values",
         what_it_does="Discards duplicate department rows, displaying each department name once.",
         sql="SELECT DISTINCT department FROM Student;",
+        output_title="Query Output:",
         headers=["department"],
         rows=[["CYS"], ["CSE"], ["ECE"]]
     ))
@@ -303,6 +342,7 @@ def build_masterclass_content():
         title="1. Sort by Marks Descending (Highest First)",
         what_it_does="Sorts students by academic marks in descending order.",
         sql="SELECT name, department, marks FROM Student ORDER BY marks DESC;",
+        output_title="Query Output:",
         headers=["name", "department", "marks"],
         rows=[
             ["Priya", "CSE", "95.00"],
@@ -316,6 +356,7 @@ def build_masterclass_content():
         title="2. Multi-Column Sort (Department ASC, Marks DESC)",
         what_it_does="Sorts alphabetically by department first; for ties within the same department, sorts by marks descending.",
         sql="SELECT department, name, marks FROM Student ORDER BY department ASC, marks DESC;",
+        output_title="Query Output:",
         headers=["department", "name", "marks"],
         rows=[
             ["CSE", "Priya", "95.00"],
@@ -336,6 +377,7 @@ def build_masterclass_content():
         title="1. Top-3 Rankers with ORDER BY and LIMIT",
         what_it_does="Combines descending sort with LIMIT 3 to retrieve the 3 highest scoring students.",
         sql="SELECT name, marks FROM Student ORDER BY marks DESC LIMIT 3;",
+        output_title="Query Output:",
         headers=["name", "marks"],
         rows=[
             ["Priya", "95.00"],
@@ -355,6 +397,7 @@ def build_masterclass_content():
         title="1. BETWEEN Range Filtering (75 to 90 Inclusive)",
         what_it_does="Filters students with marks between 75.00 and 90.00 inclusive.",
         sql="SELECT name, marks FROM Student WHERE marks BETWEEN 75.00 AND 90.00;",
+        output_title="Query Output:",
         headers=["name", "marks"],
         rows=[
             ["Arun", "85.50"],
@@ -367,6 +410,7 @@ def build_masterclass_content():
         title="2. IN Operator for Discrete List Matching",
         what_it_does="Matches students who belong to either 'CYS' or 'CSE'.",
         sql="SELECT name, department FROM Student WHERE department IN ('CYS', 'CSE');",
+        output_title="Query Output:",
         headers=["name", "department"],
         rows=[
             ["Arun", "CYS"],
@@ -379,6 +423,7 @@ def build_masterclass_content():
         title="3. LIKE with Wildcards (% and _)",
         what_it_does="Prefix match with <code>%</code> (starts with A) and exact length with <code>_</code> (exactly 5 characters).",
         sql="-- Names starting with A\nSELECT name FROM Student WHERE name LIKE 'A%';\n\n-- Names with exactly 5 characters\nSELECT name FROM Student WHERE name LIKE '_____';",
+        output_title="Query Output:",
         headers=["name (Starts with A)", "name (5 Chars)"],
         rows=[
             ["Arun", "Priya"],
@@ -398,6 +443,7 @@ def build_masterclass_content():
         title="1. IS NULL and IS NOT NULL — Handling Missing Values",
         what_it_does="Filters records where an attribute is missing. Remember: <code>age = NULL</code> returns UNKNOWN; always write <code>IS NULL</code>.",
         sql="SELECT name, age FROM Student WHERE age IS NOT NULL;",
+        output_title="Query Output:",
         headers=["name", "age"],
         rows=[
             ["Arun", 19],
@@ -421,6 +467,7 @@ def build_masterclass_content():
         title="1. COUNT(*) — Total Rows",
         what_it_does="Counts total active rows in the Student table.",
         sql="SELECT COUNT(*) AS total_students FROM Student;",
+        output_title="Query Output:",
         headers=["total_students"],
         rows=[[4]]
     ))
@@ -429,6 +476,7 @@ def build_masterclass_content():
         title="2. AVG and ROUND — Calculating Decimal Mean",
         what_it_does="Calculates the arithmetic average marks rounded to 2 decimal places.",
         sql="SELECT ROUND(AVG(marks), 2) AS average_marks FROM Student;",
+        output_title="Query Output:",
         headers=["average_marks"],
         rows=[["86.25"]]
     ))
@@ -437,6 +485,7 @@ def build_masterclass_content():
         title="3. GROUP BY Department — Summaries per Department",
         what_it_does="Partitions rows by department and calculates student count and average marks for each.",
         sql="SELECT department, COUNT(*) AS student_count, ROUND(AVG(marks), 2) AS dept_avg\nFROM Student\nGROUP BY department;",
+        output_title="Query Output:",
         headers=["department", "student_count", "dept_avg"],
         rows=[
             ["CYS", 2, "80.75"],
@@ -456,6 +505,7 @@ def build_masterclass_content():
         title="1. HAVING — Filtering Aggregated Groups",
         what_it_does="Filters groups after aggregation. Keeps only departments with an average score above 85.00.",
         sql="SELECT department, ROUND(AVG(marks), 2) AS dept_avg\nFROM Student\nGROUP BY department\nHAVING AVG(marks) > 85.00;",
+        output_title="Query Output:",
         headers=["department", "dept_avg"],
         rows=[
             ["CSE", "95.00"],
@@ -476,6 +526,7 @@ def build_masterclass_content():
         title="1. INNER JOIN — Matching Students with Departments",
         what_it_does="Joins Student and Department on department name/code, returning only rows present in both.",
         sql="SELECT s.name, s.marks, d.building\nFROM Student s\nINNER JOIN Department d ON s.department = d.dept_name;",
+        output_title="Query Output:",
         headers=["name", "marks", "building"],
         rows=[
             ["Arun", "85.50", "Block A"],
@@ -489,6 +540,7 @@ def build_masterclass_content():
         title="2. LEFT JOIN — All Students Even If Department Missing",
         what_it_does="Preserves all rows from the left table (Student). Unmatched department fields return NULL.",
         sql="SELECT s.name, s.department, d.building\nFROM Student s\nLEFT JOIN Department d ON s.department = d.dept_name;",
+        output_title="Query Output:",
         headers=["name", "department", "building"],
         rows=[
             ["Arun", "CYS", "Block A"],
@@ -510,6 +562,7 @@ def build_masterclass_content():
         title="1. Subquery in WHERE — Students Scoring Above Average",
         what_it_does="Calculates class average marks in the inner query (86.25), then returns students with marks higher than that average.",
         sql="SELECT name, marks\nFROM Student\nWHERE marks > (SELECT AVG(marks) FROM Student);",
+        output_title="Query Output:",
         headers=["name", "marks"],
         rows=[
             ["Priya", "95.00"],
@@ -528,8 +581,13 @@ def build_masterclass_content():
         title="1. CREATE VIEW & WITH CHECK OPTION",
         what_it_does="Creates a virtual table abstraction for CYS students with predicate enforcement.",
         sql="CREATE VIEW CYS_Students AS\nSELECT id, name, marks\nFROM Student\nWHERE department = 'CYS'\nWITH CHECK OPTION;",
-        headers=["Query Status", "Rows Affected"],
-        rows=[["Query OK", "0 rows affected"]]
+        status_line="Query OK, 0 rows affected (0.01 sec)",
+        output_title="Resulting View State (SELECT * FROM CYS_Students):",
+        headers=["id", "name", "marks"],
+        rows=[
+            [1, "Arun", "85.50"],
+            [3, "Rahul", "76.00"]
+        ]
     ))
     sections.append(f'''<div class="topic-card" id="t24">
   <h2>24. Views (Updatable &amp; WITH CHECK OPTION)</h2>
@@ -541,10 +599,14 @@ def build_masterclass_content():
     t26_cards.append(make_card(
         badge="TRIGGER",
         title="1. BEFORE INSERT Trigger — Data Normalization",
-        what_it_does="Forces student names to uppercase before writing to disk.",
-        sql="DELIMITER //\nCREATE TRIGGER trg_upper_name\nBEFORE INSERT ON Student\nFOR EACH ROW\nBEGIN\n    SET NEW.name = UPPER(NEW.name);\nEND //\nDELIMITER ;",
-        headers=["Query Status", "Rows Affected"],
-        rows=[["Query OK", "0 rows affected"]]
+        what_it_does="Forces student names to uppercase automatically before writing to disk.",
+        sql="DELIMITER //\nCREATE TRIGGER trg_upper_name\nBEFORE INSERT ON Student\nFOR EACH ROW\nBEGIN\n    SET NEW.name = UPPER(NEW.name);\nEND //\nDELIMITER ;\n\n-- Test insertion:\nINSERT INTO Student (name, age, department, marks) VALUES ('kavya', 21, 'CSE', 91.00);",
+        status_line="Query OK, 1 row affected (0.01 sec)",
+        output_title="Resulting Table State (SELECT * FROM Student WHERE id = LAST_INSERT_ID()):",
+        headers=["id", "name (Auto-Uppercased)", "age", "department", "marks"],
+        rows=[
+            [6, "KAVYA", 21, "CSE", "91.00"]
+        ]
     ))
     sections.append(f'''<div class="topic-card" id="t26">
   <h2>26. Stored Procedures, Triggers &amp; Cursors</h2>
@@ -556,10 +618,15 @@ def build_masterclass_content():
     t28_cards.append(make_card(
         badge="TRANSACTION",
         title="1. START TRANSACTION with COMMIT and ROLLBACK",
-        what_it_does="Demonstrates atomic execution block with rollback capability.",
-        sql="START TRANSACTION;\nUPDATE Student SET marks = marks + 5 WHERE department = 'CYS';\n-- To keep permanently:\nCOMMIT;\n-- Or to revert:\n-- ROLLBACK;",
-        headers=["Query Status", "Rows Affected"],
-        rows=[["Query OK", "2 rows affected"]]
+        what_it_does="Demonstrates atomic execution block with permanent commit.",
+        sql="START TRANSACTION;\nUPDATE Student SET marks = marks + 5 WHERE department = 'CYS';\nCOMMIT;",
+        status_line="Query OK, 2 rows affected (0.01 sec) | Rows matched: 2  Changed: 2  Warnings: 0",
+        output_title="Resulting Table State (SELECT name, department, marks FROM Student WHERE department = 'CYS'):",
+        headers=["name", "department", "marks (Boosted by 5)"],
+        rows=[
+            ["Arun", "CYS", "90.50 (was 85.50)"],
+            ["Rahul", "CYS", "81.00 (was 76.00)"]
+        ]
     ))
     sections.append(f'''<div class="topic-card" id="t28">
   <h2>28. COMMIT, ROLLBACK &amp; SAVEPOINT</h2>
@@ -580,4 +647,4 @@ def build_masterclass_content():
 
     return "\n\n".join(sections)
 
-print("build_full_masterclass module compiled successfully.")
+print("build_full_masterclass updated successfully.")
