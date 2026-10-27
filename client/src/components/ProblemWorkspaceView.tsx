@@ -125,15 +125,20 @@ const TEMPLATES_BY_LANGUAGE: Record<SupportedLanguage, BoilerplateTemplate[]> = 
       name: 'Standard SQL Query (SELECT/JOIN)',
       description: 'Standard SQL select query with filtering and aggregation',
       code: `SELECT \n    column1, \n    COUNT(*) AS total\nFROM table_name\nWHERE condition\nGROUP BY column1\nORDER BY total DESC;\n`
+    },
+    {
+      name: 'DDL Table & Constraints',
+      description: 'CREATE TABLE template with PRIMARY KEY and CHECK constraints',
+      code: `CREATE TABLE table_name (\n    id INT PRIMARY KEY AUTO_INCREMENT,\n    name VARCHAR(50) NOT NULL,\n    status VARCHAR(20) DEFAULT 'ACTIVE',\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n`
     }
   ]
 };
 
 const DEFAULT_CODE: Record<SupportedLanguage, string> = {
-  java: `import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        // Write your solution here\n        \n        scanner.close();\n    }\n}\n`,
-  python: `import sys\n\ndef main():\n    input_data = sys.stdin.read().split()\n    if not input_data:\n        return\n    \n    # Write your solution here\n\nif __name__ == '__main__':\n    main()\n`,
-  cpp: `#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    \n    // Write your solution here\n    \n    return 0;\n}\n`,
-  sql: `-- Write your SQL / MySQL Trigger or Stored Procedure here\n-- Ready for instant execution\n`
+  java: '',
+  python: '',
+  cpp: '',
+  sql: ''
 };
 
 // Clean terminal ANSI escape sequences from execution diagnostics
@@ -764,7 +769,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     setSelectedLanguage(newLang);
     selectedLanguageRef.current = newLang;
 
-    // 3. Fetch or restore code for the selected new language
+    // 3. Fetch or restore code for the selected new language (plain blank by default)
     let nextCode = '';
     try {
       const draft = await api.getDraft(questionId, newLang);
@@ -772,14 +777,6 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         nextCode = draft.draftCode;
       }
     } catch (err) {}
-
-    if (!nextCode) {
-      if ((newLang === 'java' || newLang === 'sql') && question?.starterCode) {
-        nextCode = question.starterCode;
-      } else {
-        nextCode = DEFAULT_CODE[newLang];
-      }
-    }
 
     codeRef.current = nextCode;
     setCode(nextCode);
@@ -859,7 +856,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         rec.includes('python') || rec.includes('py') ? 'python' : 'java';
       setSelectedLanguage(defaultLang);
 
-      // Check if draft exists for this language
+      // Check if personal saved draft exists for this language
       let initialCode = '';
       try {
         const draft = await api.getDraft(questionId, defaultLang);
@@ -868,14 +865,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
         }
       } catch (e) {}
 
-      if (!initialCode) {
-        if (defaultLang === 'sql' || defaultLang === 'java') {
-          initialCode = q.userDraft || q.starterCode || DEFAULT_CODE[defaultLang];
-        } else {
-          initialCode = DEFAULT_CODE[defaultLang];
-        }
-      }
-
+      // Plain blank by default: user adds format/structure by manually clicking "Templates"
       codeRef.current = initialCode;
       setCode(initialCode);
       if (editorRef.current) {
@@ -1073,15 +1063,9 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     }
   };
 
-  // Reset code to starter template
+  // Reset code to plain blank canvas
   const handleResetCode = () => {
-    if (!question) return;
-    let nextCode = '';
-    if ((selectedLanguage === 'java' || selectedLanguage === 'sql') && question.starterCode) {
-      nextCode = question.starterCode;
-    } else {
-      nextCode = DEFAULT_CODE[selectedLanguage];
-    }
+    const nextCode = '';
     codeRef.current = nextCode;
     setCode(nextCode);
     if (editorRef.current) {
@@ -1723,20 +1707,37 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                   </button>
 
                   {showTemplateMenu && (
-                    <div className="absolute right-0 top-full mt-1.5 w-64 bg-white dark:bg-[#1f1f1f] border border-slate-200 dark:border-[#383838] rounded-xl shadow-2xl py-1.5 z-50 text-xs">
+                    <div className="absolute right-0 top-full mt-1.5 w-72 bg-white dark:bg-[#0c0c0c] border border-slate-200 dark:border-[#222222] rounded-xl shadow-2xl py-1.5 z-50 text-xs">
                       <div className="px-3 py-1 font-semibold text-[10px] uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-neutral-800">
                         {selectedLanguage.toUpperCase()} Boilerplate Templates
                       </div>
-                      {TEMPLATES_BY_LANGUAGE[selectedLanguage].map((tmpl, idx) => (
+                      {question?.starterCode && (
+                        <button
+                          onClick={() => handleApplyTemplate(question.starterCode!)}
+                          className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-neutral-800/70 flex flex-col gap-0.5 transition-colors cursor-pointer border-b border-slate-100 dark:border-neutral-800"
+                        >
+                          <span className="font-semibold text-emerald-500 dark:text-emerald-400">Problem Starter Template</span>
+                          <span className="text-[10px] text-slate-500 dark:text-neutral-400 leading-tight">Original question boilerplate for this problem</span>
+                        </button>
+                      )}
+                      {TEMPLATES_BY_LANGUAGE[selectedLanguage]?.map((tmpl, idx) => (
                         <button
                           key={idx}
                           onClick={() => handleApplyTemplate(tmpl.code)}
-                          className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-neutral-800 flex flex-col gap-0.5 transition-colors cursor-pointer"
+                          className="w-full text-left px-3 py-2 hover:bg-slate-100 dark:hover:bg-neutral-800/70 flex flex-col gap-0.5 transition-colors cursor-pointer"
                         >
                           <span className="font-semibold text-slate-800 dark:text-white">{tmpl.name}</span>
                           <span className="text-[10px] text-slate-500 dark:text-neutral-400 leading-tight">{tmpl.description}</span>
                         </button>
                       ))}
+                      <div className="border-t border-slate-100 dark:border-neutral-800 my-1"></div>
+                      <button
+                        onClick={() => handleApplyTemplate('')}
+                        className="w-full text-left px-3 py-2 hover:bg-rose-500/10 text-rose-500 dark:text-rose-400 flex flex-col gap-0.5 transition-colors cursor-pointer"
+                      >
+                        <span className="font-semibold">Clear / Blank Canvas</span>
+                        <span className="text-[10px] opacity-80 leading-tight">Wipe editor to completely empty blank document</span>
+                      </button>
                     </div>
                   )}
                 </div>
