@@ -15,7 +15,8 @@ import {
   HelpCircle,
   Database,
   ArrowLeft,
-  Menu
+  Menu,
+  BookOpen
 } from 'lucide-react';
 import { PranavJavaSymbol } from './PranavJavaSymbol';
 import { SystemHealth } from '../types';
@@ -26,6 +27,7 @@ export type LeetCodeTab =
   | 'problems'
   | 'workspace'
   | 'dbms'
+  | 'sql-course'
   | 'masterclass'
   | 'curriculum'
   | 'exam'
@@ -189,6 +191,26 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
                 SQL
               </span>
               {activeTab === 'dbms' && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
+              )}
+            </button>
+
+            {/* SQL Handbook Tab (W3Schools 77 Lessons Ad-Free) */}
+            <button
+              onClick={() => setActiveTab('sql-course')}
+              className={`relative h-full flex items-center gap-1.5 px-1 transition-colors ${
+                activeTab === 'sql-course'
+                  ? 'text-slate-900 dark:text-white font-semibold'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
+              }`}
+              title="W3Schools SQL Master Handbook (77 Topics, Ad-Free Continuous Reader)"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-emerald-500" />
+              <span>SQL Guide</span>
+              <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/30">
+                W3
+              </span>
+              {activeTab === 'sql-course' && (
                 <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
               )}
             </button>

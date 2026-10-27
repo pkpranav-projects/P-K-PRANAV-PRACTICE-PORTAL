@@ -106,6 +106,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       }
     },
     {
+      id: 'tab-sql-course',
+      title: 'W3Schools SQL Master Handbook (77 Topics, Continuous Reader & Runner)',
+      category: 'Navigation',
+      icon: <BookOpen className="w-4 h-4 text-emerald-400" />,
+      perform: () => {
+        setActiveTab('sql-course');
+        onClose();
+      }
+    },
+    {
       id: 'tab-masterclass',
       title: 'Java Masterclass (18 Modules & 64 A-Z Methods)',
       category: 'Navigation',

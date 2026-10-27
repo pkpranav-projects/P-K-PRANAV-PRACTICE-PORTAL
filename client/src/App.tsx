@@ -8,6 +8,7 @@ import { ExploreView } from './components/ExploreView';
 import { QuestionBankView } from './components/QuestionBankView';
 import { ProblemWorkspaceView } from './components/ProblemWorkspaceView';
 import { DBMSPracticeView } from './components/DBMSPracticeView';
+import { SQLCourseView } from './components/SQLCourseView';
 import { CurriculumView } from './components/CurriculumView';
 import { MasterclassView } from './components/MasterclassView';
 import { ExamModeView } from './components/ExamModeView';
@@ -255,7 +256,7 @@ export const App: React.FC = () => {
     const parts = clean.split('/');
     const tabName = parts[0] as LeetCodeTab;
     const qId = parts[1];
-    const validTabs: LeetCodeTab[] = ['explore', 'problems', 'workspace', 'dbms', 'masterclass', 'curriculum', 'exam', 'revision', 'dashboard'];
+    const validTabs: LeetCodeTab[] = ['explore', 'problems', 'workspace', 'dbms', 'sql-course', 'masterclass', 'curriculum', 'exam', 'revision', 'dashboard'];
     if (validTabs.includes(tabName)) {
       return { tab: tabName, questionId: qId };
     }
@@ -275,9 +276,12 @@ export const App: React.FC = () => {
       setActiveQuestionId(questionId);
     }
 
-    const hash = newTab === 'workspace' && questionId
-      ? `#workspace/${questionId}`
-      : `#${newTab}`;
+    const hash =
+      newTab === 'workspace' && questionId
+        ? `#workspace/${questionId}`
+        : newTab === 'sql-course' && questionId
+        ? `#sql-course/${questionId}`
+        : `#${newTab}`;
 
     if (push && window.location.hash !== hash) {
       window.history.pushState({ tab: newTab, questionId }, '', hash);
@@ -544,6 +548,15 @@ export const App: React.FC = () => {
                     setSelectedBankFilter(bank);
                     navigateToTab('problems', undefined, true);
                   }}
+                  onNavigateToSQLCourse={() => navigateToTab('sql-course', undefined, true)}
+                />
+              )}
+
+              {/* W3Schools SQL Master Handbook (77 Topics, Continuous Single-Page Reader) */}
+              {activeTab === 'sql-course' && (
+                <SQLCourseView
+                  initialJumpId={activeQuestionId}
+                  onNavigateToDBMS={() => navigateToTab('dbms', undefined, true)}
                 />
               )}
 

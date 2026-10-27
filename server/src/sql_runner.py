@@ -4,6 +4,11 @@ import json
 import re
 import time
 import sqlite3
+try:
+    from northwind_seed import seed_northwind
+except ImportError:
+    seed_northwind = None
+
 
 def run_dbms_special(q_id, user_code, test_input):
     """
@@ -156,6 +161,11 @@ def execute_generic_sql(sql_code):
     """
     con = sqlite3.connect(':memory:')
     cur = con.cursor()
+    if seed_northwind:
+        try:
+            seed_northwind(cur)
+        except Exception:
+            pass
     
     # Strip delimiters like DELIMITER //
     cleaned = re.sub(r'DELIMITER\s+.*', '', sql_code, flags=re.I)

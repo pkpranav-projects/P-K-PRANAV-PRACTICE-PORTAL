@@ -345,6 +345,27 @@ export const LeetCodeSidebar: React.FC<LeetCodeSidebarProps> = ({
           {!isCollapsed && <span className="truncate">DBMS Practice</span>}
         </button>
 
+        {/* W3Schools SQL Handbook */}
+        <button
+          onClick={() => setActiveTab('sql-course')}
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'sql-course'
+              ? 'bg-slate-100 text-slate-900 font-semibold dark:bg-[#2a2a2a] dark:text-white'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-[#8c8c8c] dark:hover:text-white dark:hover:bg-[#222222]'
+          }`}
+          title="W3Schools SQL Master Handbook (77 Topics, Continuous Reader)"
+        >
+          <BookOpen className="w-5 h-5 flex-shrink-0 text-emerald-500 dark:text-emerald-400" />
+          {!isCollapsed && (
+            <div className="flex items-center justify-between w-full">
+              <span className="truncate">SQL Handbook</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20">
+                W3
+              </span>
+            </div>
+          )}
+        </button>
+
         {/* Masterclass (Discuss / Encyclopedia) */}
         <button
           onClick={() => setActiveTab('masterclass')}

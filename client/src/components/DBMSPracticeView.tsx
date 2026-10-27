@@ -28,6 +28,7 @@ interface DBMSPracticeViewProps {
   questions: QuestionSummary[];
   onSelectQuestion: (questionId: string) => void;
   onNavigateToBank?: (bank: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all') => void;
+  onNavigateToSQLCourse?: () => void;
 }
 
 interface SQLTemplate {
@@ -184,7 +185,8 @@ const MODULE_DEFINITIONS = [
 export const DBMSPracticeView: React.FC<DBMSPracticeViewProps> = ({
   questions,
   onSelectQuestion,
-  onNavigateToBank
+  onNavigateToBank,
+  onNavigateToSQLCourse
 }) => {
   const [selectedModule, setSelectedModule] = useState<string>('all');
   const [expandedDetails, setExpandedDetails] = useState<Record<string, boolean>>({});
@@ -310,6 +312,16 @@ export const DBMSPracticeView: React.FC<DBMSPracticeViewProps> = ({
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
               Triggers, Stored Procedures, and schema queries with instant sandbox execution.
             </p>
+
+            {onNavigateToSQLCourse && (
+              <button
+                onClick={onNavigateToSQLCourse}
+                className="mt-2 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition-all hover:scale-[1.02]"
+              >
+                <span>📚 W3Schools SQL Master Handbook (77 Topics, Ad-Free)</span>
+                <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
+              </button>
+            )}
           </div>
 
           {/* Stat Tile */}

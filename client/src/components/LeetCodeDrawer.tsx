@@ -311,6 +311,23 @@ export const LeetCodeDrawer: React.FC<LeetCodeDrawerProps> = ({
             </button>
 
             <button
+              onClick={() => handleNavClick('sql-course')}
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeTab === 'sql-course'
+                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold'
+                  : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#282828]'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <BookOpen className="w-4 h-4 text-emerald-500" />
+                <span>W3Schools SQL Handbook</span>
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
+                77 Lessons
+              </span>
+            </button>
+
+            <button
               onClick={() => handleNavClick('curriculum')}
               className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === 'curriculum'
