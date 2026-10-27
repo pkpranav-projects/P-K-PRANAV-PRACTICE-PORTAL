@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Flame,
   Sun,
   Moon,
   Laptop,
@@ -10,8 +9,6 @@ import {
   Maximize2,
   Minimize2,
   Search,
-  Volume2,
-  VolumeX,
   HelpCircle,
   Database,
   ArrowLeft,
@@ -368,30 +365,10 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
           {/* Practice Stopwatch & Pomodoro Timer */}
           <PracticeTimer />
 
-          {/* Practice Streak Flame Indicator */}
-          <div
-            className="flex items-center gap-1 px-1.5 sm:px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-neutral-300 hover:text-slate-900 dark:hover:text-white cursor-pointer"
-            title="Daily Practice Streak"
-          >
-            <Flame className="w-4 h-4 fill-current text-orange-500 shrink-0" />
-            <span className="font-mono text-xs">{Math.max(1, solvedToday)}</span>
-          </div>
-
-          {/* Audio Sound Toggle */}
-          {onToggleSound && (
-            <button
-              onClick={onToggleSound}
-              className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer text-slate-600 dark:text-neutral-300 hidden sm:flex"
-              title={isSoundEnabled ? 'Audio Effects: Enabled (Click to mute)' : 'Audio Effects: Muted'}
-            >
-              {isSoundEnabled ? <Volume2 className="w-4 h-4 text-emerald-500 dark:text-emerald-400" /> : <VolumeX className="w-4 h-4 text-slate-400 dark:text-neutral-500" />}
-            </button>
-          )}
-
           {/* 1-Click OLED Pitch Black Toggle */}
           <button
             onClick={() => setTheme(theme === 'oled' ? 'dark' : 'oled')}
-            className={`flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
               theme === 'oled'
                 ? 'bg-black text-[#FFA116] border border-[#FFA116] shadow-[0_0_12px_rgba(255,161,22,0.35)] ring-1 ring-[#FFA116]'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:bg-[#1f1f1f] dark:hover:bg-[#282828] border border-slate-200 dark:border-[#383838]'
