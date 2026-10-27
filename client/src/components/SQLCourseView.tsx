@@ -335,8 +335,29 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
         });
       }
     };
+        (window as any).answer = (qNum: number, opt: string, isCorrect: boolean) => {
+      const block = document.getElementById('q' + qNum);
+      if (!block) return;
+      const btns = block.querySelectorAll('.quiz-option');
+      btns.forEach(b => {
+        (b as HTMLButtonElement).disabled = true;
+      });
+      const evt = window.event as any;
+      if (evt?.target) {
+        evt.target.classList.add(isCorrect ? 'correct' : 'wrong');
+      }
+      const exp = document.getElementById('exp-' + qNum);
+      if (exp) {
+        exp.style.display = 'block';
+        exp.style.background = isCorrect ? 'rgba(16, 185, 129, 0.12)' : 'rgba(239, 68, 68, 0.12)';
+        exp.style.border = isCorrect ? '1px solid #10b981' : '1px solid #ef4444';
+        exp.style.color = isCorrect ? '#34d399' : '#fca5a5';
+      }
+    };
+
     return () => {
       delete (window as any).copyCode;
+      delete (window as any).answer;
     };
   }, []);
 
