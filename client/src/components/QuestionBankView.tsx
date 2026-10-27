@@ -26,9 +26,11 @@ import {
   Video,
   ArrowUp,
   ArrowDown,
-  ArrowUpDown
+  ArrowUpDown,
+  BookOpen
 } from 'lucide-react';
 import { Difficulty, QuestionSummary } from '../types';
+import sqlCourseData from '../assets/w3schools_sql_full_course.json';
 
 export type SortOption = 'id' | 'title' | 'difficulty' | 'topic' | 'status' | 'count';
 export type SortDirection = 'asc' | 'desc';
@@ -159,6 +161,7 @@ interface QuestionBankViewProps {
   initialBank?: 'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all';
   initialViewMode?: 'table' | 'cards' | 'topic';
   onPickRandom?: () => void;
+  onNavigateToSQLTopic?: (topicId?: string) => void;
 }
 
 export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
@@ -169,7 +172,8 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
   initialFilterStatus = 'All',
   initialBank = 'all',
   initialViewMode,
-  onPickRandom
+  onPickRandom,
+  onNavigateToSQLTopic
 }) => {
   const [selectedBank, setSelectedBank] = useState<'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all'>(initialBank);
   const [search, setSearch] = useState('');
@@ -306,6 +310,32 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
       return sortOrder === 'asc' ? cmp : -cmp;
     });
   }, [bankScopedQuestions, search, selectedTopic, selectedDifficulty, selectedStatus, selectedLanguageFilter, sortBy, sortOrder]);
+
+  // Check if search query has matches in other question banks
+  const crossBankMatches = useMemo(() => {
+    if (!search.trim()) return [];
+    const query = search.toLowerCase();
+    return questions.filter(
+      q =>
+        q.title.toLowerCase().includes(query) ||
+        q.id.toLowerCase().includes(query) ||
+        q.topic.toLowerCase().includes(query) ||
+        (q.bank && q.bank.toLowerCase().includes(query))
+    );
+  }, [search, questions]);
+
+  // Check if search query matches SQL & Viva guide topics
+  const matchingSQLCourseTopics = useMemo(() => {
+    if (!search.trim()) return [];
+    const query = search.toLowerCase();
+    return (sqlCourseData as Array<{ id: string; title: string; category: string; summary: string }>).filter(
+      t =>
+        t.title.toLowerCase().includes(query) ||
+        t.category.toLowerCase().includes(query) ||
+        (t.summary && t.summary.toLowerCase().includes(query)) ||
+        t.id.toLowerCase().includes(query)
+    );
+  }, [search]);
 
   // Group questions by topic for Topic Mode
   const topicGroups = useMemo(() => {
@@ -1321,23 +1351,106 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
         </div>
       )}
 
-      {/* Empty State */}
+      {/* Empty State / Cross-Bank Search Results */}
       {filteredQuestions.length === 0 && (
-        <div className="p-12 text-center bg-white dark:bg-[#1a1a1a] rounded-xl border border-slate-200 dark:border-[#282828]">
-          <AlertTriangle className="w-8 h-8 text-amber-500 mx-auto mb-2" />
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
-            No matching problems found
-          </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Try adjusting your search query, bank selection, or reset the filters.
-          </p>
-          <button
-            onClick={resetFilters}
-            className="mt-4 px-4 py-2 text-xs font-bold rounded-lg bg-amber-500 text-slate-950 hover:bg-amber-400"
-          >
-            Clear All Filters
-          </button>
-        </div>
+        <>
+          {search.trim() && crossBankMatches.length > 0 ? (
+            <div className="p-8 sm:p-10 text-center bg-white dark:bg-[#1a1a1a] rounded-xl border border-emerald-500/30 shadow-lg space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-1">
+                <Database className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                Found {crossBankMatches.length} matching problem{crossBankMatches.length === 1 ? '' : 's'} in other question banks!
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-neutral-400 max-w-md mx-auto">
+                Your current tab (<span className="font-semibold text-amber-500">{selectedBank}</span>) has 0 matches, but "{search}" was found in other question banks.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
+                <button
+                  onClick={() => {
+                    setSelectedBank('all');
+                    setSelectedTopic('All');
+                    setSelectedDifficulty('All');
+                    setSelectedStatus('All');
+                    setSelectedLanguageFilter('All');
+                  }}
+                  className="px-4 py-2 text-xs font-bold rounded-xl bg-[#FFA116] text-black hover:bg-[#ffb03a] transition-all cursor-pointer shadow-md"
+                >
+                  Show All {crossBankMatches.length} Results (All Banks)
+                </button>
+                {crossBankMatches.some(q => q.bank === 'dbms' || q.id.startsWith('dbms-')) && (
+                  <button
+                    onClick={() => {
+                      setSelectedBank('dbms');
+                      setSelectedTopic('All');
+                      setSelectedDifficulty('All');
+                      setSelectedStatus('All');
+                      setSelectedLanguageFilter('All');
+                    }}
+                    className="px-4 py-2 text-xs font-bold rounded-xl bg-emerald-500 text-black hover:bg-emerald-400 transition-all cursor-pointer shadow-md flex items-center gap-1.5"
+                  >
+                    <Database className="w-3.5 h-3.5" />
+                    <span>Switch to DBMS Lab ({crossBankMatches.filter(q => q.bank === 'dbms' || q.id.startsWith('dbms-')).length} Problems)</span>
+                  </button>
+                )}
+                {matchingSQLCourseTopics.length > 0 && onNavigateToSQLTopic && (
+                  <button
+                    onClick={() => onNavigateToSQLTopic(matchingSQLCourseTopics[0].id)}
+                    className="px-4 py-2 text-xs font-bold rounded-xl bg-cyan-500 text-black hover:bg-cyan-400 transition-all cursor-pointer shadow-md flex items-center gap-1.5"
+                  >
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>Open in SQL & Viva Guide ({matchingSQLCourseTopics.length} Topics)</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          ) : search.trim() && matchingSQLCourseTopics.length > 0 ? (
+            <div className="p-8 sm:p-10 text-center bg-white dark:bg-[#1a1a1a] rounded-xl border border-cyan-500/30 shadow-lg space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mx-auto mb-1">
+                <BookOpen className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                Found {matchingSQLCourseTopics.length} matching topic{matchingSQLCourseTopics.length === 1 ? '' : 's'} in SQL & Viva Guide!
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-neutral-400 max-w-md mx-auto">
+                No coding problem matched "{search}", but the full explanation, syntax, and examples exist in the W3Schools SQL Handbook.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
+                {onNavigateToSQLTopic && (
+                  <button
+                    onClick={() => onNavigateToSQLTopic(matchingSQLCourseTopics[0].id)}
+                    className="px-4 py-2 text-xs font-bold rounded-xl bg-cyan-500 text-black hover:bg-cyan-400 transition-all cursor-pointer shadow-md flex items-center gap-1.5"
+                  >
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>Read "{matchingSQLCourseTopics[0].title}"</span>
+                  </button>
+                )}
+                <button
+                  onClick={resetFilters}
+                  className="px-4 py-2 text-xs font-bold rounded-xl bg-slate-200 dark:bg-[#282828] text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-[#333] transition-colors cursor-pointer"
+                >
+                  Clear Search
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="p-12 text-center bg-white dark:bg-[#1a1a1a] rounded-xl border border-slate-200 dark:border-[#282828]">
+              <AlertTriangle className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
+                No matching problems found
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                Try adjusting your search query, bank selection, or reset the filters.
+              </p>
+              <button
+                onClick={resetFilters}
+                className="mt-4 px-4 py-2 text-xs font-bold rounded-lg bg-amber-500 text-slate-950 hover:bg-amber-400 cursor-pointer"
+              >
+                Clear All Filters
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

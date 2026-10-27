@@ -146,6 +146,21 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
       .filter(([_, list]) => list.length > 0);
   }, [categories, searchQuery]);
 
+  // Displayed lessons for the continuous single-page reading feed
+  const displayedLessons = useMemo(() => {
+    if (!searchQuery.trim()) return lessons;
+    const q = searchQuery.toLowerCase().trim();
+    return lessons.filter(
+      l =>
+        l.title.toLowerCase().includes(q) ||
+        l.navText.toLowerCase().includes(q) ||
+        l.category.toLowerCase().includes(q) ||
+        l.summary.toLowerCase().includes(q) ||
+        l.id.toLowerCase().includes(q) ||
+        (l.rawHtml && l.rawHtml.toLowerCase().includes(q))
+    );
+  }, [lessons, searchQuery]);
+
   // Save font size preference
   const changeFontSize = (scale: TextScale) => {
     setTextScale(scale);
@@ -347,7 +362,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
               className="lg:hidden flex items-center gap-1.5 px-3 py-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs min-h-[44px] touch-manipulation cursor-pointer"
             >
               <Menu className="w-4 h-4" />
-              <span>Topics (77)</span>
+              <span>Topics ({lessons.length})</span>
             </button>
 
             <div className="flex items-center gap-3">
@@ -360,7 +375,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
                     W3Schools SQL Master Handbook
                   </h1>
                   <span className="hidden sm:inline-flex text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                    77 Topics • Ad-Free
+                    {lessons.length} Topics • Ad-Free
                   </span>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-neutral-400 hidden md:block">
@@ -373,21 +388,41 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
           {/* Action Toolbar: Search, Text Zoom, Fullscreen, Console */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Search Input */}
-            <div className="relative w-36 sm:w-56 md:w-64">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-cyan-400/70" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Jump topic (e.g. JOIN)..."
-                className="w-full pl-9 pr-7 py-2 text-xs sm:text-sm rounded-xl bg-slate-100 dark:bg-[#151e33] border border-slate-200 dark:border-cyan-500/20 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 min-h-[44px] touch-manipulation"
-              />
-              {searchQuery && (
+            <div className="relative flex items-center w-40 sm:w-60 md:w-72">
+              <div className="relative w-full">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-cyan-400/70" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      if (displayedLessons.length > 0) {
+                        jumpToLesson(displayedLessons[0].id);
+                      }
+                    }
+                  }}
+                  placeholder="Search (e.g. Normalization, Triggers)..."
+                  className="w-full pl-9 pr-7 py-2 text-xs sm:text-sm rounded-xl bg-slate-100 dark:bg-[#151e33] border border-slate-200 dark:border-cyan-500/20 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 min-h-[44px] touch-manipulation"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white p-1 cursor-pointer"
+                    title="Clear search"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+              {searchQuery && displayedLessons.length > 0 && (
                 <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white p-1"
+                  onClick={() => jumpToLesson(displayedLessons[0].id)}
+                  className="ml-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-cyan-500 text-slate-950 hover:bg-cyan-400 transition-colors cursor-pointer shrink-0 min-h-[40px]"
+                  title="Jump directly to first match"
                 >
-                  <X className="w-4 h-4" />
+                  Jump
                 </button>
               )}
             </div>
@@ -574,8 +609,67 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
             </div>
           </div>
 
-          {/* Sequential 77 Lessons */}
-          {lessons.map((lesson, idx) => {
+          {/* Active Search Filter Banner */}
+          {searchQuery.trim() && (
+            <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+              <div className="flex items-center gap-2">
+                <Search className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="text-sm font-semibold text-slate-900 dark:text-cyan-300">
+                  Showing {displayedLessons.length} topic{displayedLessons.length === 1 ? '' : 's'} matching "{searchQuery}"
+                </span>
+              </div>
+              <button
+                onClick={() => setSearchQuery('')}
+                className="px-3 py-1.5 rounded-xl text-xs font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 transition-colors cursor-pointer"
+              >
+                Clear Search & Show All ({lessons.length})
+              </button>
+            </div>
+          )}
+
+          {/* Empty search results state with quick suggestions */}
+          {searchQuery.trim() && displayedLessons.length === 0 && (
+            <div className="p-8 sm:p-12 text-center rounded-3xl border border-slate-200 dark:border-cyan-500/20 bg-white dark:bg-[#0e1628] shadow-lg space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto">
+                <AlertCircle className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                No SQL topics found matching "{searchQuery}"
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-neutral-400 max-w-md mx-auto">
+                Try searching for key university lab & viva topics:
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 pt-2">
+                {[
+                  'Normalization',
+                  'Triggers & Procedures',
+                  'Joins',
+                  'Nested Queries',
+                  'Transactions (ACID)',
+                  'Database Constraints',
+                  'Views & Indexes',
+                  'Aggregate Functions'
+                ].map(term => (
+                  <button
+                    key={term}
+                    onClick={() => setSearchQuery(term)}
+                    className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#151e33] dark:hover:bg-[#1c2740] border border-slate-200 dark:border-cyan-500/30 text-slate-700 dark:text-cyan-300 transition-colors cursor-pointer"
+                  >
+                    {term}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setSearchQuery('')}
+                className="inline-flex items-center gap-2 px-4 py-2 mt-2 rounded-xl text-xs font-bold bg-cyan-500 text-slate-950 hover:bg-cyan-400 transition-colors cursor-pointer"
+              >
+                Reset Search
+              </button>
+            </div>
+          )}
+
+          {/* Continuous Lessons Feed */}
+          {displayedLessons.map((lesson, idx) => {
             const isBookmarked = bookmarkedIds.has(lesson.id);
             return (
               <section

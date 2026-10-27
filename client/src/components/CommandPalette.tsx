@@ -16,17 +16,21 @@ import {
   Shuffle,
   X,
   CornerDownLeft,
-  FolderTree
+  FolderTree,
+  Database,
+  CheckCircle2
 } from 'lucide-react';
 import { QuestionSummary } from '../types';
 import { LeetCodeTab } from './LeetCodeNavbar';
 import { soundManager } from '../services/sound';
+import sqlCourseData from '../assets/w3schools_sql_full_course.json';
 
 interface CommandPaletteProps {
   isOpen: boolean;
   onClose: () => void;
   questions: QuestionSummary[];
   onSelectQuestion: (questionId: string) => void;
+  onSelectSQLTopic?: (topicId: string) => void;
   setActiveTab: (tab: LeetCodeTab) => void;
   onPickRandom: () => void;
   theme: 'dark' | 'oled' | 'light' | 'system';
@@ -50,6 +54,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   onClose,
   questions,
   onSelectQuestion,
+  onSelectSQLTopic,
   setActiveTab,
   onPickRandom,
   theme,
@@ -85,8 +90,28 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       }
     },
     {
+      id: 'tab-dbms',
+      title: 'DBMS & SQL Engineering Lab Arena (Triggers, Procedures, Normalization)',
+      category: 'Navigation',
+      icon: <Database className="w-4 h-4 text-emerald-400" />,
+      perform: () => {
+        setActiveTab('dbms');
+        onClose();
+      }
+    },
+    {
+      id: 'tab-sql-course',
+      title: 'W3Schools SQL Master Handbook (87 Topics & Lab Exam Syllabus)',
+      category: 'Navigation',
+      icon: <BookOpen className="w-4 h-4 text-cyan-400" />,
+      perform: () => {
+        setActiveTab('sql-course');
+        onClose();
+      }
+    },
+    {
       id: 'tab-problems',
-      title: 'Problem Bank (All 145+ Questions across 5 Banks)',
+      title: 'Problem Bank (All 150+ Coding Questions across 5 Banks)',
       category: 'Navigation',
       icon: <BookOpen className="w-4 h-4 text-blue-400" />,
       perform: () => {
@@ -102,16 +127,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       perform: () => {
         try { localStorage.setItem('arena_question_view_mode', 'topic'); } catch {}
         setActiveTab('problems');
-        onClose();
-      }
-    },
-    {
-      id: 'tab-sql-course',
-      title: 'W3Schools SQL Master Handbook (77 Topics, Continuous Reader & Runner)',
-      category: 'Navigation',
-      icon: <BookOpen className="w-4 h-4 text-emerald-400" />,
-      perform: () => {
-        setActiveTab('sql-course');
         onClose();
       }
     },
@@ -225,7 +240,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     ? baseActions.filter((a) => a.title.toLowerCase().includes(qLower) || a.category.toLowerCase().includes(qLower))
     : baseActions;
 
-  // Question search matches
+  // Question search matches (across Java, C++, and SQL/DBMS banks)
   const filteredQuestions = qLower
     ? questions
         .filter(
@@ -233,12 +248,28 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             q.title.toLowerCase().includes(qLower) ||
             q.id.toLowerCase().includes(qLower) ||
             q.topic.toLowerCase().includes(qLower) ||
-            q.difficulty.toLowerCase().includes(qLower)
+            q.difficulty.toLowerCase().includes(qLower) ||
+            (q.bank && q.bank.toLowerCase().includes(qLower))
         )
         .slice(0, 10)
     : [];
 
-  const totalResults = filteredActions.length + filteredQuestions.length;
+  // SQL Course & Viva topics matches (87 comprehensive topics)
+  const filteredCourseTopics = qLower
+    ? (sqlCourseData as Array<{ id: string; title: string; category: string; summary: string }>).filter(
+        (t) =>
+          t.title.toLowerCase().includes(qLower) ||
+          t.category.toLowerCase().includes(qLower) ||
+          (t.summary && t.summary.toLowerCase().includes(qLower)) ||
+          t.id.toLowerCase().includes(qLower)
+      ).slice(0, 8)
+    : [];
+
+  // When searching: Questions first, then SQL Topics, then Actions
+  // When idle: Actions first
+  const totalResults = qLower
+    ? filteredQuestions.length + filteredCourseTopics.length + filteredActions.length
+    : filteredActions.length;
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -253,15 +284,30 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         setSelectedIndex((prev) => (prev - 1 + Math.max(1, totalResults)) % Math.max(1, totalResults));
       } else if (e.key === 'Enter') {
         e.preventDefault();
-        if (selectedIndex < filteredActions.length) {
-          filteredActions[selectedIndex]?.perform();
-        } else {
-          const qIndex = selectedIndex - filteredActions.length;
-          const q = filteredQuestions[qIndex];
-          if (q) {
-            onSelectQuestion(q.id);
-            onClose();
+        if (qLower) {
+          if (selectedIndex < filteredQuestions.length) {
+            const q = filteredQuestions[selectedIndex];
+            if (q) {
+              onSelectQuestion(q.id);
+              onClose();
+            }
+          } else if (selectedIndex < filteredQuestions.length + filteredCourseTopics.length) {
+            const topicIndex = selectedIndex - filteredQuestions.length;
+            const topic = filteredCourseTopics[topicIndex];
+            if (topic) {
+              if (onSelectSQLTopic) {
+                onSelectSQLTopic(topic.id);
+              } else {
+                setActiveTab('sql-course');
+              }
+              onClose();
+            }
+          } else {
+            const actionIndex = selectedIndex - (filteredQuestions.length + filteredCourseTopics.length);
+            filteredActions[actionIndex]?.perform();
           }
+        } else {
+          filteredActions[selectedIndex]?.perform();
         }
       } else if (e.key === 'Escape') {
         e.preventDefault();
@@ -271,7 +317,19 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, selectedIndex, totalResults, filteredActions, filteredQuestions, onSelectQuestion, onClose]);
+  }, [
+    isOpen,
+    selectedIndex,
+    totalResults,
+    qLower,
+    filteredActions,
+    filteredQuestions,
+    filteredCourseTopics,
+    onSelectQuestion,
+    onSelectSQLTopic,
+    setActiveTab,
+    onClose
+  ]);
 
   if (!isOpen) return null;
 
@@ -292,7 +350,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               setQuery(e.target.value);
               setSelectedIndex(0);
             }}
-            placeholder="Type a command or search Java questions (e.g. 'reverse', 'array', 'exam', 'oled')..."
+            placeholder="Search questions, SQL topics, or commands (e.g. 'normalization', 'trigger', 'join', 'reverse')..."
             className="w-full bg-transparent border-none outline-none text-sm text-white placeholder-neutral-500 font-sans"
           />
           {query && (
@@ -301,7 +359,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                 setQuery('');
                 inputRef.current?.focus();
               }}
-              className="p-1 rounded text-neutral-400 hover:text-white"
+              className="p-1 rounded text-neutral-400 hover:text-white cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -312,15 +370,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         </div>
 
         {/* Results List */}
-        <div ref={listRef} className="max-h-[380px] overflow-y-auto p-2 space-y-1">
+        <div ref={listRef} className="max-h-[420px] overflow-y-auto p-2 space-y-2">
           {/* Question Matches Section */}
           {filteredQuestions.length > 0 && (
-            <div className="mb-2">
-              <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-neutral-400 font-mono">
-                Questions ({filteredQuestions.length})
+            <div>
+              <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-neutral-400 font-mono flex items-center justify-between">
+                <span>Practice Questions ({filteredQuestions.length})</span>
+                <span className="text-[10px] text-neutral-500 font-normal">Java • C++ • DBMS Lab</span>
               </div>
               {filteredQuestions.map((q, idx) => {
-                const itemIndex = filteredActions.length + idx;
+                const itemIndex = idx;
                 const isSelected = selectedIndex === itemIndex;
                 const diffColor =
                   q.difficulty === 'Easy'
@@ -328,6 +387,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     : q.difficulty === 'Medium'
                     ? 'text-amber-400 bg-amber-950/60'
                     : 'text-rose-400 bg-rose-950/60';
+
+                const isDBMS = q.bank === 'dbms' || q.id.startsWith('dbms-');
 
                 return (
                   <button
@@ -342,16 +403,68 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     }`}
                   >
                     <div className="flex items-center gap-2.5 truncate">
-                      <Code2 className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-black' : 'text-blue-400'}`} />
+                      {isDBMS ? (
+                        <Database className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-black' : 'text-emerald-400'}`} />
+                      ) : (
+                        <Code2 className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-black' : 'text-blue-400'}`} />
+                      )}
                       <span className="font-mono text-[11px] opacity-75">{q.id}</span>
                       <span className="truncate">{q.title}</span>
                       {q.solved && (
-                        <span className="text-[10px] text-emerald-400 font-bold ml-1">✓</span>
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 ml-1 shrink-0" />
                       )}
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                      {isDBMS && (
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold ${isSelected ? 'bg-black/20 text-black' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'}`}>
+                          DBMS
+                        </span>
+                      )}
                       <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${isSelected ? 'bg-black/20 text-black' : diffColor}`}>
                         {q.difficulty}
+                      </span>
+                      {isSelected && <CornerDownLeft className="w-3.5 h-3.5 opacity-70" />}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* SQL Course & Viva Handbook Topics Section */}
+          {filteredCourseTopics.length > 0 && (
+            <div>
+              <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-cyan-400 font-mono flex items-center justify-between">
+                <span>SQL Guide & Viva Topics ({filteredCourseTopics.length})</span>
+                <span className="text-[10px] text-cyan-500/80 font-normal">W3Schools & University Syllabus</span>
+              </div>
+              {filteredCourseTopics.map((topic, idx) => {
+                const itemIndex = filteredQuestions.length + idx;
+                const isSelected = selectedIndex === itemIndex;
+
+                return (
+                  <button
+                    key={topic.id}
+                    onClick={() => {
+                      if (onSelectSQLTopic) {
+                        onSelectSQLTopic(topic.id);
+                      } else {
+                        setActiveTab('sql-course');
+                      }
+                      onClose();
+                    }}
+                    onMouseEnter={() => setSelectedIndex(itemIndex)}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-left text-xs transition-colors cursor-pointer ${
+                      isSelected ? 'bg-cyan-400 text-black font-semibold' : 'text-neutral-300 hover:bg-[#20293a]'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 truncate">
+                      <BookOpen className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-black' : 'text-cyan-400'}`} />
+                      <span className="truncate">{topic.title}</span>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${isSelected ? 'bg-black/20 text-black' : 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/20'}`}>
+                        {topic.category.replace(/^[0-9.]+\s*/, '')}
                       </span>
                       {isSelected && <CornerDownLeft className="w-3.5 h-3.5 opacity-70" />}
                     </div>
@@ -365,16 +478,17 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           {filteredActions.length > 0 && (
             <div>
               <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-neutral-400 font-mono">
-                {qLower ? 'Matching Actions' : 'Quick Actions & Pages'}
+                {qLower ? 'Commands & Tools' : 'Quick Actions & Pages'}
               </div>
               {filteredActions.map((action, idx) => {
-                const isSelected = selectedIndex === idx;
+                const itemIndex = qLower ? filteredQuestions.length + filteredCourseTopics.length + idx : idx;
+                const isSelected = selectedIndex === itemIndex;
 
                 return (
                   <button
                     key={action.id}
                     onClick={action.perform}
-                    onMouseEnter={() => setSelectedIndex(idx)}
+                    onMouseEnter={() => setSelectedIndex(itemIndex)}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-left text-xs transition-colors cursor-pointer ${
                       isSelected ? 'bg-[#FFA116] text-black font-semibold' : 'text-neutral-300 hover:bg-[#2a2a2a]'
                     }`}
@@ -398,8 +512,11 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           )}
 
           {totalResults === 0 && (
-            <div className="py-12 text-center text-sm text-neutral-400">
-              No matching questions or commands found for "{query}".
+            <div className="py-12 text-center text-sm text-neutral-400 space-y-2">
+              <p>No matching questions, topics, or commands found for "{query}".</p>
+              <p className="text-xs text-neutral-500">
+                Try searching for <span className="text-cyan-400">"normalization"</span>, <span className="text-emerald-400">"triggers"</span>, <span className="text-amber-400">"procedures"</span>, or <span className="text-blue-400">"joins"</span>.
+              </p>
             </div>
           )}
         </div>
@@ -411,9 +528,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             <span>↵ Select</span>
             <span>ESC Close</span>
           </div>
-          <div className="flex items-center gap-1.5 text-neutral-400">
-            <span className="text-[#FFA116] font-bold">45</span>
-            <span>Problems Indexed</span>
+          <div className="flex items-center gap-2 text-neutral-400">
+            <span className="text-[#FFA116] font-bold">{questions.length}</span>
+            <span>Problems</span>
+            <span>•</span>
+            <span className="text-cyan-400 font-bold">{sqlCourseData.length}</span>
+            <span>SQL Topics</span>
           </div>
         </div>
       </div>

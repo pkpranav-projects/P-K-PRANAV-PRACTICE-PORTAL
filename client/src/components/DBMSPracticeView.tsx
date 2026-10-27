@@ -288,15 +288,53 @@ BEGIN
     END WHILE;
 END //
 DELIMITER ;`
+  },
+  {
+    name: '5. Schema 3NF Normalization Decomposition',
+    category: 'Normalization',
+    questionId: 'dbms-013',
+    description: 'Decomposes unnormalized sales orders into Customers, Products, Orders, and OrderItems in 3NF.',
+    code: `-- Relational Schema Decomposition into 3NF
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    CustomerName VARCHAR(100),
+    CustomerCity VARCHAR(100)
+);
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100),
+    UnitPrice DECIMAL(10,2)
+);
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE
+);
+
+CREATE TABLE OrderItems (
+    OrderID INT,
+    ProductID INT,
+    Quantity INT,
+    PRIMARY KEY (OrderID, ProductID)
+);
+
+-- Query across decomposed 3NF relations
+SELECT o.OrderID, c.CustomerName, p.ProductName, oi.Quantity, (oi.Quantity * p.UnitPrice) AS TotalCost
+FROM Orders o
+JOIN Customers c ON o.CustomerID = c.CustomerID
+JOIN OrderItems oi ON o.OrderID = oi.OrderID
+JOIN Products p ON oi.ProductID = p.ProductID;`
   }
 ];
 
 const MODULE_DEFINITIONS = [
   {
     id: 'all',
-    label: 'All Modules (12)',
+    label: 'All Modules (15)',
     testCode: 'ALL',
-    description: 'All 12 DBMS lab challenges across Triggers & Stored Procedures'
+    description: 'All 15 DBMS lab challenges across Triggers, Procedures & Normalization'
   },
   {
     id: '4FDF1',
@@ -321,6 +359,12 @@ const MODULE_DEFINITIONS = [
     label: 'Module 4: String Analytics Procedures',
     testCode: 'F5867',
     description: 'Average Score & Grade, Longest Word Length & Word Count Procedures'
+  },
+  {
+    id: 'NORM',
+    label: 'Module 5: Normalization (3NF & BCNF)',
+    testCode: 'NORM',
+    description: 'Decomposition into 1NF, 2NF, 3NF, BCNF, and 4NF Multi-Valued Dependencies'
   }
 ];
 
@@ -370,7 +414,8 @@ export const DBMSPracticeView: React.FC<DBMSPracticeViewProps> = ({
       '4FDF1': ['dbms-001', 'dbms-002', 'dbms-003'],
       '2AEFB': ['dbms-004', 'dbms-005', 'dbms-006'],
       '35167': ['dbms-007', 'dbms-008', 'dbms-009'],
-      'F5867': ['dbms-010', 'dbms-011', 'dbms-012']
+      'F5867': ['dbms-010', 'dbms-011', 'dbms-012'],
+      'NORM': ['dbms-013', 'dbms-014', 'dbms-015']
     };
 
     const targetIds = moduleMappings[selectedModule] || [];

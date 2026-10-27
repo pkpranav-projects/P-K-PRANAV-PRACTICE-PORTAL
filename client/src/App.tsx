@@ -546,6 +546,7 @@ export const App: React.FC = () => {
                   initialBank={selectedBankFilter}
                   initialViewMode={questionViewMode}
                   onPickRandom={handlePickRandom}
+                  onNavigateToSQLTopic={(topicId) => navigateToTab('sql-course', topicId, true)}
                 />
               )}
 
@@ -675,6 +676,7 @@ export const App: React.FC = () => {
         onClose={() => setIsCommandPaletteOpen(false)}
         questions={questions}
         onSelectQuestion={handleSelectQuestion}
+        onSelectSQLTopic={(topicId) => navigateToTab('sql-course', topicId, true)}
         setActiveTab={setActiveTab}
         onPickRandom={handlePickRandom}
         theme={theme}
