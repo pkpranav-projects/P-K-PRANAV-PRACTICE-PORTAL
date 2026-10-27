@@ -203,7 +203,7 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               )}
             </button>
 
-            {/* SQL Handbook Tab (W3Schools 77 Lessons Ad-Free) */}
+            {/* SQL Handbook Tab (W3Schools & Lab Exam Syllabus) */}
             <button
               onClick={() => setActiveTab('sql-course')}
               className={`relative h-full flex items-center gap-1.5 px-1 transition-colors whitespace-nowrap shrink-0 ${
@@ -211,7 +211,7 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
                   ? 'text-slate-900 dark:text-white font-semibold'
                   : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
               }`}
-              title="W3Schools SQL Master Handbook (77 Topics, Continuous Reader)"
+              title="W3Schools SQL Master Handbook (Complete Lab Syllabus & Viva Cheatsheet)"
             >
               <BookOpen className="w-3.5 h-3.5 text-emerald-500" />
               <span>SQL Guide</span>

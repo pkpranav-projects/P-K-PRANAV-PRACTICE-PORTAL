@@ -101,7 +101,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     },
     {
       id: 'tab-sql-course',
-      title: 'W3Schools SQL Master Handbook (87 Topics & Lab Exam Syllabus)',
+      title: 'W3Schools SQL Master Handbook (89 Topics & Lab Exam Syllabus)',
       category: 'Navigation',
       icon: <BookOpen className="w-4 h-4 text-cyan-400" />,
       perform: () => {
@@ -254,7 +254,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         .slice(0, 10)
     : [];
 
-  // SQL Course & Viva topics matches (87 comprehensive topics)
+  // SQL Course & Viva topics matches (89 comprehensive topics)
   const filteredCourseTopics = qLower
     ? (sqlCourseData as Array<{ id: string; title: string; category: string; summary: string }>).filter(
         (t) =>

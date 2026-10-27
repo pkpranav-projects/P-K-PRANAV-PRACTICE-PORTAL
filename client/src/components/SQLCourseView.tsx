@@ -320,6 +320,27 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  // Register global copyCode handler for inline handbook HTML copy buttons
+  useEffect(() => {
+    (window as any).copyCode = (btn: HTMLElement) => {
+      const code = btn.parentElement?.querySelector('pre code') || btn.parentElement?.querySelector('pre');
+      if (code) {
+        const text = (code as HTMLElement).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const original = btn.textContent;
+          btn.textContent = '✓ Copied!';
+          setTimeout(() => {
+            btn.textContent = original;
+          }, 2000);
+        });
+      }
+    };
+    return () => {
+      delete (window as any).copyCode;
+    };
+  }, []);
+
+
   // Parse columnar stdout into table for the console
   const parsedTable = useMemo(() => {
     if (!consoleResult) return null;
@@ -341,12 +362,12 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
     <div
       className={`min-h-screen ${scaleClass} ${
         isZenFullscreen
-          ? 'fixed inset-0 z-50 overflow-y-auto bg-slate-50 dark:bg-[#0a0e17]'
-          : 'bg-slate-50 dark:bg-[#0a0e17]'
+          ? 'fixed inset-0 z-50 overflow-y-auto bg-slate-50 dark:bg-black'
+          : 'bg-slate-50 dark:bg-black'
       } text-slate-900 dark:text-neutral-100 transition-colors select-text`}
     >
       {/* Top Sticky Header */}
-      <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#0e1422]/95 backdrop-blur-xl border-b border-slate-200 dark:border-cyan-500/20 shadow-md px-3 sm:px-6 lg:px-8 py-3.5">
+      <header className="sticky top-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-slate-200 dark:border-[#1e2430] shadow-md px-3 sm:px-6 lg:px-8 py-3.5">
         <div className="max-w-[1700px] mx-auto flex flex-wrap items-center justify-between gap-3">
           {/* Logo & Course Info */}
           <div className="flex items-center gap-3">
@@ -406,7 +427,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
                     }
                   }}
                   placeholder="Search (e.g. Normalization, Triggers)..."
-                  className="w-full pl-9 pr-7 py-2 text-xs sm:text-sm rounded-xl bg-slate-100 dark:bg-[#151e33] border border-slate-200 dark:border-cyan-500/20 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 min-h-[44px] touch-manipulation"
+                  className="w-full pl-9 pr-7 py-2 text-xs sm:text-sm rounded-xl bg-slate-100 dark:bg-[#0a0a0a] border border-slate-200 dark:border-[#1e2430] text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 min-h-[44px] touch-manipulation"
                 />
                 {searchQuery && (
                   <button
@@ -430,7 +451,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
             </div>
 
             {/* Font Size Touch Controls */}
-            <div className="flex items-center rounded-xl border border-slate-200 dark:border-cyan-500/30 bg-slate-100 dark:bg-[#151e33] p-0.5 min-h-[44px]">
+            <div className="flex items-center rounded-xl border border-slate-200 dark:border-[#1e2430] bg-slate-100 dark:bg-[#0a0a0a] p-0.5 min-h-[44px]">
               <button
                 onClick={() => changeFontSize('normal')}
                 className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors touch-manipulation cursor-pointer ${
@@ -472,7 +493,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
               className={`p-2.5 rounded-xl border transition-all min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer ${
                 isZenFullscreen
                   ? 'border-cyan-500 bg-cyan-500/20 text-cyan-400'
-                  : 'border-slate-200 dark:border-cyan-500/30 bg-slate-100 dark:bg-[#151e33] text-slate-600 dark:text-slate-300 hover:text-cyan-400'
+                  : 'border-slate-200 dark:border-[#1e2430] bg-slate-100 dark:bg-[#0a0a0a] text-slate-600 dark:text-slate-300 hover:text-cyan-400'
               }`}
               title={isZenFullscreen ? 'Exit Full Screen (Esc)' : 'Full Screen Reading Mode'}
             >
@@ -554,7 +575,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
 
           {/* Empty search results state with quick suggestions */}
           {searchQuery.trim() && displayedLessons.length === 0 && (
-            <div className="p-8 sm:p-12 text-center rounded-3xl border border-slate-200 dark:border-cyan-500/20 bg-white dark:bg-[#0e1628] shadow-lg space-y-4">
+            <div className="p-8 sm:p-12 text-center rounded-3xl border border-slate-200 dark:border-[#1e2430] bg-white dark:bg-black shadow-lg space-y-4">
               <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto">
                 <AlertCircle className="w-6 h-6" />
               </div>
@@ -578,7 +599,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
                   <button
                     key={term}
                     onClick={() => setSearchQuery(term)}
-                    className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#151e33] dark:hover:bg-[#1c2740] border border-slate-200 dark:border-cyan-500/30 text-slate-700 dark:text-cyan-300 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-[#0a0a0a] dark:hover:bg-[#1c2740] border border-slate-200 dark:border-[#1e2430] text-slate-700 dark:text-cyan-300 transition-colors cursor-pointer"
                   >
                     {term}
                   </button>
@@ -600,15 +621,15 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
               <section
                 key={lesson.id}
                 id={`sql-${lesson.id}`}
-                className="scroll-mt-28 rounded-3xl border border-slate-200 dark:border-cyan-500/20 bg-white dark:bg-[#0e1628] shadow-lg overflow-hidden transition-all hover:border-slate-300 dark:hover:border-cyan-500/40"
+                className="scroll-mt-28 rounded-3xl border border-slate-200 dark:border-[#1e2430] bg-white dark:bg-black shadow-lg overflow-hidden transition-all hover:border-slate-300 dark:hover:border-cyan-500/40"
               >
                 {/* Section Header */}
-                <div className="flex flex-wrap items-center justify-between gap-4 px-6 sm:px-8 py-4 bg-slate-50/90 dark:bg-[#121c33]/90 border-b border-slate-200 dark:border-cyan-500/20">
+                <div className="flex flex-wrap items-center justify-between gap-4 px-6 sm:px-8 py-4 bg-slate-50/90 dark:bg-[#080808] border-b border-slate-200 dark:border-[#1e2430]">
                   <div className="flex items-center gap-3 flex-wrap">
                     <span className="flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 text-white font-mono text-xs font-extrabold shadow-sm">
                       {lesson.order}
                     </span>
-                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-slate-200/80 dark:bg-[#1b2640] text-slate-700 dark:text-cyan-300 border border-slate-300/60 dark:border-cyan-500/30">
+                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-slate-200/80 dark:bg-[#111111] text-slate-700 dark:text-cyan-300 border border-slate-300/60 dark:border-[#1e2430]">
                       {lesson.category}
                     </span>
                     <h3 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white">
@@ -623,7 +644,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
                         const url = `${window.location.origin}${window.location.pathname}#sql-course/${lesson.id}`;
                         handleCopy(url, `link-${lesson.id}`);
                       }}
-                      className="px-3 py-1.5 text-xs font-bold rounded-xl border border-slate-200 dark:border-cyan-500/30 hover:bg-slate-100 dark:hover:bg-[#1b2742] text-slate-700 dark:text-cyan-300 transition-colors flex items-center gap-1.5 cursor-pointer min-h-[38px]"
+                      className="px-3 py-1.5 text-xs font-bold rounded-xl border border-slate-200 dark:border-[#1e2430] hover:bg-slate-100 dark:hover:bg-[#1b2742] text-slate-700 dark:text-cyan-300 transition-colors flex items-center gap-1.5 cursor-pointer min-h-[38px]"
                       title="Copy Direct Link to Section"
                     >
                       {copiedId === `link-${lesson.id}` ? (
@@ -645,7 +666,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
                       className={`p-2 rounded-xl border transition-all cursor-pointer min-h-[38px] min-w-[38px] flex items-center justify-center ${
                         isBookmarked
                           ? 'border-amber-500/50 bg-amber-500/15 text-amber-400 shadow-sm'
-                          : 'border-slate-200 dark:border-cyan-500/30 hover:bg-slate-100 dark:hover:bg-[#1b2742] text-slate-400 hover:text-slate-600 dark:hover:text-white'
+                          : 'border-slate-200 dark:border-[#1e2430] hover:bg-slate-100 dark:hover:bg-[#1b2742] text-slate-400 hover:text-slate-600 dark:hover:text-white'
                       }`}
                       title={isBookmarked ? 'Remove Bookmark' : 'Bookmark Topic'}
                     >
@@ -663,7 +684,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
                 </div>
 
                 {/* Section Quick Action Footer */}
-                <div className="flex items-center justify-between px-6 sm:px-8 py-4 bg-slate-50/60 dark:bg-[#0a101d] border-t border-slate-100 dark:border-cyan-500/10 text-xs sm:text-sm text-slate-500">
+                <div className="flex items-center justify-between px-6 sm:px-8 py-4 bg-slate-50/60 dark:bg-[#050505] border-t border-slate-100 dark:border-[#141922] text-xs sm:text-sm text-slate-500">
                   <span className="font-mono text-xs text-slate-400">Anchor: #sql-{lesson.id}</span>
                   <div className="flex items-center gap-4">
                     {idx < lessons.length - 1 && (
@@ -686,7 +707,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
       {/* Touch Mobile Drawer for Jump Points */}
       {isMobileDrawerOpen && (
         <div className="fixed inset-0 z-50 flex flex-col justify-end bg-black/60 backdrop-blur-sm lg:hidden animate-in fade-in">
-          <div className="bg-white dark:bg-[#0f172a] rounded-t-3xl max-h-[80vh] flex flex-col p-4 shadow-2xl border-t border-cyan-500/30">
+          <div className="bg-white dark:bg-black rounded-t-3xl max-h-[80vh] flex flex-col p-4 shadow-2xl border-t border-cyan-500/30">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white">
                 <Layers className="w-4 h-4 text-emerald-500" />
@@ -727,9 +748,9 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
 
       {/* Floating Interactive SQL Console Drawer */}
       {isConsoleOpen && (
-        <div className="fixed bottom-0 right-0 z-50 w-full md:w-[650px] lg:w-[750px] h-[550px] max-h-[90vh] bg-white dark:bg-[#0d1424] border-t md:border-l border-slate-200 dark:border-cyan-500/30 shadow-2xl rounded-t-3xl md:rounded-tl-3xl flex flex-col transition-all animate-in slide-in-from-bottom duration-200">
+        <div className="fixed bottom-0 right-0 z-50 w-full md:w-[650px] lg:w-[750px] h-[550px] max-h-[90vh] bg-white dark:bg-black border-t md:border-l border-slate-200 dark:border-[#1e2430] shadow-2xl rounded-t-3xl md:rounded-tl-3xl flex flex-col transition-all animate-in slide-in-from-bottom duration-200">
           {/* Drawer Header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-cyan-500/20 bg-slate-100/80 dark:bg-[#131d33] rounded-t-3xl">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-[#1e2430] bg-slate-100/80 dark:bg-[#0a0a0a] rounded-t-3xl">
             <div className="flex items-center gap-2.5">
               <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400">
                 <Terminal className="w-4 h-4" />
@@ -750,7 +771,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
                   setConsoleQuery(PRESET_QUERIES[0].sql);
                   executeSQL(PRESET_QUERIES[0].sql);
                 }}
-                className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-slate-200 dark:bg-[#1b2742] hover:bg-slate-300 dark:hover:bg-[#233152] text-slate-700 dark:text-cyan-300 transition-colors cursor-pointer min-h-[36px]"
+                className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-slate-200 dark:bg-[#161616] hover:bg-slate-300 dark:hover:bg-[#233152] text-slate-700 dark:text-cyan-300 transition-colors cursor-pointer min-h-[36px]"
               >
                 Reset
               </button>
@@ -764,7 +785,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
           </div>
 
           {/* Quick Preset Query Pills (Touch Screen Friendly) */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-[#0a0f1c] border-b border-slate-200 dark:border-slate-800 overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-black border-b border-slate-200 dark:border-slate-800 overflow-x-auto scrollbar-none">
             <span className="text-[11px] font-bold text-slate-400 shrink-0">Presets:</span>
             {PRESET_QUERIES.map((preset, pIdx) => (
               <button
@@ -773,7 +794,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
                   setConsoleQuery(preset.sql);
                   executeSQL(preset.sql);
                 }}
-                className="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-200/70 dark:bg-[#162138] hover:bg-emerald-500/20 text-slate-700 dark:text-cyan-300 border border-slate-300/50 dark:border-cyan-500/20 transition-all touch-manipulation cursor-pointer"
+                className="shrink-0 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-200/70 dark:bg-[#111111] hover:bg-emerald-500/20 text-slate-700 dark:text-cyan-300 border border-slate-300/50 dark:border-[#1e2430] transition-all touch-manipulation cursor-pointer"
               >
                 {preset.name}
               </button>
@@ -808,7 +829,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
           </div>
 
           {/* Drawer Results View */}
-          <div className="flex-1 p-4 overflow-auto bg-slate-50 dark:bg-[#070b14] text-xs sm:text-sm font-mono -webkit-overflow-scrolling-touch">
+          <div className="flex-1 p-4 overflow-auto bg-slate-50 dark:bg-black text-xs sm:text-sm font-mono -webkit-overflow-scrolling-touch">
             {consoleError && (
               <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
@@ -820,10 +841,10 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
             )}
 
             {!consoleError && parsedTable && (
-              <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-cyan-500/20 shadow-md">
+              <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-[#1e2430] shadow-md">
                 <table className="w-full border-collapse text-left">
                   <thead>
-                    <tr className="bg-slate-200 dark:bg-[#141f38] text-slate-900 dark:text-cyan-300">
+                    <tr className="bg-slate-200 dark:bg-[#0a0a0a] text-slate-900 dark:text-cyan-300">
                       {parsedTable.headers.map((h, i) => (
                         <th key={i} className="p-3 border-b border-slate-300 dark:border-[#202e4d] font-bold">
                           {h}

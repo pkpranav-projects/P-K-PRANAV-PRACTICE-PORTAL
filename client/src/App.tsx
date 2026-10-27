@@ -591,7 +591,7 @@ export const App: React.FC = () => {
                 />
               )}
 
-              {/* SQL & DBMS Master Guide (87 Topics & Lab Exam Syllabus, Continuous Single-Page Reader) */}
+              {/* SQL & DBMS Master Guide (89 Topics & Lab Exam Syllabus, Continuous Single-Page Reader) */}
               {activeTab === 'sql-course' && (
                 <SQLCourseView
                   initialJumpId={activeQuestionId}

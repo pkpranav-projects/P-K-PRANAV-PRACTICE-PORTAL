@@ -507,7 +507,7 @@ export const DBMSPracticeView: React.FC<DBMSPracticeViewProps> = ({
                 onClick={onNavigateToSQLCourse}
                 className="mt-2 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition-all hover:scale-[1.02]"
               >
-                <span>📚 W3Schools SQL Master Handbook (77 Topics, Ad-Free)</span>
+                <span>📚 W3Schools SQL Master Handbook (89 Topics & Lab Syllabus)</span>
                 <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
               </button>
             )}
