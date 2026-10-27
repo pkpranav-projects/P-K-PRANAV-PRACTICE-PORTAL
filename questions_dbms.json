@@ -2,11 +2,6 @@
   {
     "id": "dbms-001",
     "title": "Bank Account Transaction Security & Fraud Prevention Trigger",
-    "topic": "Database Triggers & Business Constraints",
-    "difficulty": "Hard",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (604).png - Screenshot (608).png",
     "description": "A bank requires an automated trigger system to manage account balances and enforce strict fraud and security rules when records are inserted into the `transactions` table. ### Problem Requirements\nThe trigger must implement the following business logic:\n1. **Prevent Withdrawal on Insufficient Funds**: If an account balance is less than the requested withdrawal amount, do not allow balance deduction and mark transaction status accordingly. 2. **Restrict Daily Withdrawal**: Verify that cumulative daily withdrawals do not violate the account limits. 3.\n\n**Fraud Flagging**: If the transaction amount exceeds `50,000` (`amount > 50000`), automatically flag the transaction as `'FRAUD'`. 4. **Automatic Balance Update**:\n- For valid `'withdraw'` transactions, deduct the amount from `accounts.balance`. - For valid `'deposit'` transactions, add the amount to `accounts.balance`. 5. **Mark Transaction Status**: Ensure the status is recorded as `'SUCCESS'`, `'FRAUD'`, or `'FAILED'`. ---\n### Database Schema\n#### Table 1: `accounts`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `account_id` | `INT PRIMARY KEY` | Unique account identifier |\n| `account_name` | `VARCHAR(50)` | Name of account holder |\n| `balance` | `DECIMAL(12,2)` | Current available balance |\n| `account_type` | `VARCHAR(20)` | Savings / Current |\n| `branch` | `VARCHAR(50)` | Bank branch name |\n| `created_at` | `DATE` | Account opening date |\n#### Table 2: `transactions`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `txn_id` | `INT PRIMARY KEY` | Transaction identifier |\n| `account_id` | `INT` | Account foreign reference |\n| `txn_type` | `VARCHAR(20)` | `withdraw` or `deposit` |\n| `amount` | `DECIMAL(12,2)` | Transaction amount |\n| `txn_date` | `DATE` | Date of transaction |\n| `status` | `VARCHAR(20)` | Transaction outcome (`SUCCESS`, `FRAUD`, `FAILED`) |",
     "inputFormat": "Prepopulated database tables (`accounts` and `transactions`). No console input.",
     "outputFormat": "The output displays all records from `transactions` followed by all updated records from `accounts`.",
@@ -24,19 +19,19 @@
         "expectedOutput": "txn_id account_id txn_type amount txn_date status\n1 101 withdraw 2000.00 2023-10-01 SUCCESS\n2 101 withdraw 6000.00 2023-10-01 SUCCESS\n3 101 withdraw 3000.00 2023-10-01 SUCCESS\n4 101 deposit 1000.00 2023-10-01 SUCCESS\naccount_id account_name balance account_type branch created_at\n101 Ravi 110000.00 Savings Chennai 2023-01-01\n102 Kumar 50000.00 Current Madurai 2023-02-10"
       }
     ],
-    "starterCode": "-- Write your MySQL trigger and transaction processing logic below\nDELIMITER //\n\nCREATE TRIGGER trg_bank_transaction_before_insert\nBEFORE INSERT ON transactions\nFOR EACH ROW\nBEGIN\n    -- 1. Check fraud condition (amount > 50000)\n    -- 2. Check sufficient balance\n    -- 3. Set NEW.status accordingly\nEND //\n\nCREATE TRIGGER trg_bank_transaction_after_insert\nAFTER INSERT ON transactions\nFOR EACH ROW\nBEGIN\n    -- Update balance in accounts table when status = 'SUCCESS'\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER trg_bank_transaction_before_insert\nBEFORE INSERT ON transactions\nFOR EACH ROW\nBEGIN\n    DECLARE cur_balance DECIMAL(12,2);\n    SELECT balance INTO cur_balance FROM accounts WHERE account_id = NEW.account_id;\n    \n    IF NEW.txn_type = 'withdraw' AND NEW.amount > 50000 THEN\n        SET NEW.status = 'FRAUD';\n    ELSEIF NEW.txn_type = 'withdraw' AND cur_balance < NEW.amount THEN\n        SET NEW.status = 'FAILED';\n    ELSE\n        SET NEW.status = 'SUCCESS';\n    END IF;\nEND //\n\nCREATE TRIGGER trg_bank_transaction_after_insert\nAFTER INSERT ON transactions\nFOR EACH ROW\nBEGIN\n    IF NEW.status = 'SUCCESS' THEN\n        IF NEW.txn_type = 'withdraw' THEN\n            UPDATE accounts SET balance = balance - NEW.amount WHERE account_id = NEW.account_id;\n        ELSEIF NEW.txn_type = 'deposit' THEN\n            UPDATE accounts SET balance = balance + NEW.amount WHERE account_id = NEW.account_id;\n        END IF;\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "topic": "Database Triggers & Business Constraints",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (604).png - Screenshot (608).png",
     "explanation": "A BEFORE INSERT trigger validates business rules, checks for fraud when the withdrawal amount exceeds 50,000, and verifies balance sufficiency. An AFTER INSERT trigger updates the accounts balance when the transaction is successful.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER trg_bank_transaction_before_insert\nBEFORE INSERT ON transactions\nFOR EACH ROW\nBEGIN\n    DECLARE cur_balance DECIMAL(12,2);\n    SELECT balance INTO cur_balance FROM accounts WHERE account_id = NEW.account_id;\n    \n    IF NEW.txn_type = 'withdraw' AND NEW.amount > 50000 THEN\n        SET NEW.status = 'FRAUD';\n    ELSEIF NEW.txn_type = 'withdraw' AND cur_balance < NEW.amount THEN\n        SET NEW.status = 'FAILED';\n    ELSE\n        SET NEW.status = 'SUCCESS';\n    END IF;\nEND //\n\nCREATE TRIGGER trg_bank_transaction_after_insert\nAFTER INSERT ON transactions\nFOR EACH ROW\nBEGIN\n    IF NEW.status = 'SUCCESS' THEN\n        IF NEW.txn_type = 'withdraw' THEN\n            UPDATE accounts SET balance = balance - NEW.amount WHERE account_id = NEW.account_id;\n        ELSEIF NEW.txn_type = 'deposit' THEN\n            UPDATE accounts SET balance = balance + NEW.amount WHERE account_id = NEW.account_id;\n        END IF;\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL trigger and transaction processing logic below\nDELIMITER //\n\nCREATE TRIGGER trg_bank_transaction_before_insert\nBEFORE INSERT ON transactions\nFOR EACH ROW\nBEGIN\n    -- 1. Check fraud condition (amount > 50000)\n    -- 2. Check sufficient balance\n    -- 3. Set NEW.status accordingly\nEND //\n\nCREATE TRIGGER trg_bank_transaction_after_insert\nAFTER INSERT ON transactions\nFOR EACH ROW\nBEGIN\n    -- Update balance in accounts table when status = 'SUCCESS'\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-002",
     "title": "E-Commerce Dynamic Inventory & Price Adjustment Trigger",
-    "topic": "Database Triggers & Business Constraints",
-    "difficulty": "Hard",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (609).png - Screenshot (613).png",
     "description": "An e-commerce company wants to automate inventory control and dynamic pricing using database triggers on the `products` and `orders` tables. ### Problem Requirements\nThe trigger system must:\n1. **Prevent orders if available stock is insufficient** (raise error / reject invalid order). 2. **Automatically reduce product stock** after every order is placed.\n\n3. **Dynamically update product price based on stock level**:\n- If remaining `stock < 10`: increase product price by 20% (`price = price * 1.20`). - If remaining `stock > 100`: decrease product price by 10% (`price = price * 0.90`). 4. **Mark order status as `'PLACED'`** if successful. ---\n### Database Schema\n#### Table 1: `products`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `product_id` | `INT PRIMARY KEY` | Unique product identifier |\n| `name` | `VARCHAR(50)` | Product title |\n| `price` | `DECIMAL(10,2)` | Current unit price |\n| `stock` | `INT` | Available inventory count |\n| `category` | `VARCHAR(50)` | Product category |\n| `supplier` | `VARCHAR(50)` | Supplier vendor name |\n#### Table 2: `orders`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `order_id` | `INT PRIMARY KEY` | Unique order identifier |\n| `product_id` | `INT` | Ordered product reference |\n| `quantity` | `INT` | Quantity ordered |\n| `order_date` | `DATE` | Date of placement |\n| `customer` | `VARCHAR(50)` | Customer name |\n| `status` | `VARCHAR(20)` | Status (`PLACED` or rejected) |",
     "inputFormat": "Prepopulated database tables (`products` and `orders`). No console input.",
     "outputFormat": "Displays updated products table followed by all placed records from the orders table.",
@@ -54,19 +49,19 @@
         "expectedOutput": "product_id name price stock category supplier\n1 Laptop 60000.00 5 Electronics Dell\n2 Mobile 18000.00 110 Electronics Samsung\norder_id product_id quantity order_date customer status\n1 1 5 2023-10-01 Ram PLACED\n2 1 40 2023-10-01 Sita PLACED\n3 2 10 2023-10-01 Raj PLACED"
       }
     ],
-    "starterCode": "-- Write your inventory management and dynamic pricing trigger below\nDELIMITER //\n\nCREATE TRIGGER trg_inventory_after_order\nAFTER INSERT ON orders\nFOR EACH ROW\nBEGIN\n    -- 1. Deduct ordered quantity from stock\n    -- 2. If stock < 10, price = price * 1.20\n    -- 3. If stock > 100, price = price * 0.90\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER trg_inventory_after_order\nAFTER INSERT ON orders\nFOR EACH ROW\nBEGIN\n    DECLARE new_stock INT;\n    \n    UPDATE products \n    SET stock = stock - NEW.quantity \n    WHERE product_id = NEW.product_id;\n    \n    SELECT stock INTO new_stock FROM products WHERE product_id = NEW.product_id;\n    \n    IF new_stock < 10 THEN\n        UPDATE products SET price = price * 1.20 WHERE product_id = NEW.product_id;\n    ELSEIF new_stock > 100 THEN\n        UPDATE products SET price = price * 0.90 WHERE product_id = NEW.product_id;\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "topic": "Database Triggers & Business Constraints",
+    "difficulty": "Hard",
+    "sourceScreenshot": "Screenshot (609).png - Screenshot (613).png",
     "explanation": "An AFTER INSERT trigger on orders reduces product stock by the ordered quantity. Next, it inspects remaining stock: if stock < 10, it increases price by 20%; if stock > 100, it decreases price by 10%.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER trg_inventory_after_order\nAFTER INSERT ON orders\nFOR EACH ROW\nBEGIN\n    DECLARE new_stock INT;\n    \n    UPDATE products \n    SET stock = stock - NEW.quantity \n    WHERE product_id = NEW.product_id;\n    \n    SELECT stock INTO new_stock FROM products WHERE product_id = NEW.product_id;\n    \n    IF new_stock < 10 THEN\n        UPDATE products SET price = price * 1.20 WHERE product_id = NEW.product_id;\n    ELSEIF new_stock > 100 THEN\n        UPDATE products SET price = price * 0.90 WHERE product_id = NEW.product_id;\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your inventory management and dynamic pricing trigger below\nDELIMITER //\n\nCREATE TRIGGER trg_inventory_after_order\nAFTER INSERT ON orders\nFOR EACH ROW\nBEGIN\n    -- 1. Deduct ordered quantity from stock\n    -- 2. If stock < 10, price = price * 1.20\n    -- 3. If stock > 100, price = price * 0.90\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-003",
     "title": "Courier Customer Phone Number Standardization Trigger",
-    "topic": "Database Triggers & Business Constraints",
-    "difficulty": "Medium",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (614).png - Screenshot (618).png",
     "description": "Create a trigger named `phone_format_enforcer` that activates `BEFORE UPDATE` on records in the `courier_customers` table. ### Problem Requirements\nThe trigger must ensure that whenever a customer's `phone_number` is updated, the new value begins with `+91`. - If the updated `phone_number` does not start with `+91`, the trigger should automatically prepend `+91` to the value.\n\n- If the `phone_number` already follows the required format (`+91...`), the update should proceed without any modification. - Existing records that are not part of the update operation should remain unaffected. ---\n### Database Schema: `courier_customers`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `cust_id` | `INT PRIMARY KEY` | Customer identifier |\n| `cust_name` | `VARCHAR(60)` | Customer full name |\n| `phone_number` | `VARCHAR(20)` | Contact phone number |\n| `city` | `VARCHAR(60)` | Delivery destination city |",
     "inputFormat": "The input table is already created and prepopulated. No console input.",
     "outputFormat": "The output displays all records from the updated `courier_customers` table.",
@@ -84,19 +79,19 @@
         "expectedOutput": "cust_id cust_name phone_number city\n1 Arjun +919876543210 Chennai\n2 Meera +918765432109 Mumbai\n3 Ravi 9988776655 Delhi\n4 Sneha +917654321098 Kolkata\n5 Kiran +919944332211 Bangalore"
       }
     ],
-    "starterCode": "-- Write your MySQL trigger definition below\nDELIMITER //\n\nCREATE TRIGGER phone_format_enforcer\nBEFORE UPDATE ON courier_customers\nFOR EACH ROW\nBEGIN\n    -- Check if NEW.phone_number starts with '+91'\n    -- If not, prepend '+91'\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER phone_format_enforcer\nBEFORE UPDATE ON courier_customers\nFOR EACH ROW\nBEGIN\n    IF NEW.phone_number NOT LIKE '+91%' THEN\n        SET NEW.phone_number = CONCAT('+91', NEW.phone_number);\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "topic": "Database Triggers & Business Constraints",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (614).png - Screenshot (618).png",
     "explanation": "A BEFORE UPDATE trigger checks if NEW.phone_number starts with '+91'. If false, it modifies NEW.phone_number by prepending '+91' using CONCAT before the row is committed to storage.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER phone_format_enforcer\nBEFORE UPDATE ON courier_customers\nFOR EACH ROW\nBEGIN\n    IF NEW.phone_number NOT LIKE '+91%' THEN\n        SET NEW.phone_number = CONCAT('+91', NEW.phone_number);\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL trigger definition below\nDELIMITER //\n\nCREATE TRIGGER phone_format_enforcer\nBEFORE UPDATE ON courier_customers\nFOR EACH ROW\nBEGIN\n    -- Check if NEW.phone_number starts with '+91'\n    -- If not, prepend '+91'\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-004",
     "title": "Food Delivery Late Order Audit Trigger",
-    "topic": "Audit Logging & Event Tracking Triggers",
-    "difficulty": "Medium",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (619).png - Screenshot (623).png",
     "description": "In a food delivery logistics system, the administrator wants to automatically audit and track all late deliveries. ### Problem Requirements\nCreate a trigger named `delivery_after_insert` that executes `AFTER INSERT` on the `deliveries` table.\n\n- The trigger must check whether `NEW.Delivery_time > 60` minutes. - If true, insert the following attributes into the `late_deliveries` audit table:\n- `Delivery_id`\n- `Customer_name`\n- `Restaurant_name`\n- `Delivery_time`\n---\n### Database Schema\n#### Table 1: `deliveries`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `Delivery_id` | `INT PRIMARY KEY` | Delivery ticket ID |\n| `Customer_name` | `VARCHAR(50)` | Customer name |\n| `Restaurant_name` | `VARCHAR(50)` | Origin restaurant |\n| `Delivery_time` | `INT` | Total delivery duration in minutes |\n| `Order_date` | `DATE` | Order placement date |\n| `City` | `VARCHAR(30)` | City |\n#### Table 2: `late_deliveries`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `Delivery_id` | `INT` | Delivery reference |\n| `Customer_name` | `VARCHAR(50)` | Customer name |\n| `Restaurant_name` | `VARCHAR(50)` | Origin restaurant |\n| `Delivery_time` | `INT` | Total duration (> 60 min) |",
     "inputFormat": "Prepopulated deliveries table. No console input.",
     "outputFormat": "The output displays all records from the `late_deliveries` table.",
@@ -114,19 +109,19 @@
         "expectedOutput": "Delivery_id Customer_name Restaurant_name Delivery_time\n702 Arun Dominos 75\n704 Meena KFC 90"
       }
     ],
-    "starterCode": "-- Write your MySQL trigger definition below\nDELIMITER //\n\nCREATE TRIGGER delivery_after_insert\nAFTER INSERT ON deliveries\nFOR EACH ROW\nBEGIN\n    -- Check if NEW.Delivery_time > 60\n    -- If true, insert into late_deliveries\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER delivery_after_insert\nAFTER INSERT ON deliveries\nFOR EACH ROW\nBEGIN\n    IF NEW.Delivery_time > 60 THEN\n        INSERT INTO late_deliveries (Delivery_id, Customer_name, Restaurant_name, Delivery_time)\n        VALUES (NEW.Delivery_id, NEW.Customer_name, NEW.Restaurant_name, NEW.Delivery_time);\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "topic": "Audit Logging & Event Tracking Triggers",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (619).png - Screenshot (623).png",
     "explanation": "An AFTER INSERT trigger evaluates NEW.Delivery_time for each newly inserted delivery. When Delivery_time exceeds 60 minutes, it automatically inserts a copy of the delivery details into late_deliveries.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER delivery_after_insert\nAFTER INSERT ON deliveries\nFOR EACH ROW\nBEGIN\n    IF NEW.Delivery_time > 60 THEN\n        INSERT INTO late_deliveries (Delivery_id, Customer_name, Restaurant_name, Delivery_time)\n        VALUES (NEW.Delivery_id, NEW.Customer_name, NEW.Restaurant_name, NEW.Delivery_time);\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL trigger definition below\nDELIMITER //\n\nCREATE TRIGGER delivery_after_insert\nAFTER INSERT ON deliveries\nFOR EACH ROW\nBEGIN\n    -- Check if NEW.Delivery_time > 60\n    -- If true, insert into late_deliveries\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-005",
     "title": "Student Course Low Attendance Alert Trigger",
-    "topic": "Audit Logging & Event Tracking Triggers",
-    "difficulty": "Medium",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (624).png - Screenshot (627).png",
     "description": "In an online course academic platform, the administration tracks students whose course attendance falls below academic thresholds. ### Problem Requirements\nCreate a trigger named `attendance_after_insert` that executes `AFTER INSERT` on the `attendance` table.\n\n- The trigger must check whether `NEW.Attendance_percentage < 60`. - If true, insert the following details into the `low_attendance` table:\n- `Student_id`\n- `Student_name`\n- `Course_name`\n- `Attendance_percentage`\n---\n### Database Schema\n#### Table 1: `attendance`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `Student_id` | `INT` | Student registration number |\n| `Student_name` | `VARCHAR(50)` | Full name of student |\n| `Course_name` | `VARCHAR(50)` | Enrolled course title |\n| `Attendance_percentage` | `INT` | Current attendance percentage |\n| `Date_recorded` | `DATE` | Record date |\n| `City` | `VARCHAR(30)` | City |\n#### Table 2: `low_attendance`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `Student_id` | `INT` | Student ID |\n| `Student_name` | `VARCHAR(50)` | Student Name |\n| `Course_name` | `VARCHAR(50)` | Course Title |\n| `Attendance_percentage` | `INT` | Attendance (< 60) |",
     "inputFormat": "Prepopulated attendance table. No console input.",
     "outputFormat": "The output displays all records from the `low_attendance` table.",
@@ -144,19 +139,19 @@
         "expectedOutput": "Student_id Student_name Course_name Attendance_percentage\n802 Arun Java 55\n804 Meena AI 50"
       }
     ],
-    "starterCode": "-- Write your MySQL trigger definition below\nDELIMITER //\n\nCREATE TRIGGER attendance_after_insert\nAFTER INSERT ON attendance\nFOR EACH ROW\nBEGIN\n    -- Check if NEW.Attendance_percentage < 60\n    -- If true, insert into low_attendance\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER attendance_after_insert\nAFTER INSERT ON attendance\nFOR EACH ROW\nBEGIN\n    IF NEW.Attendance_percentage < 60 THEN\n        INSERT INTO low_attendance (Student_id, Student_name, Course_name, Attendance_percentage)\n        VALUES (NEW.Student_id, NEW.Student_name, NEW.Course_name, NEW.Attendance_percentage);\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "topic": "Audit Logging & Event Tracking Triggers",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (624).png - Screenshot (627).png",
     "explanation": "An AFTER INSERT trigger evaluates Attendance_percentage upon insertion. If the percentage is less than 60, it inserts the student's ID, name, course, and attendance percentage into the low_attendance table.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER attendance_after_insert\nAFTER INSERT ON attendance\nFOR EACH ROW\nBEGIN\n    IF NEW.Attendance_percentage < 60 THEN\n        INSERT INTO low_attendance (Student_id, Student_name, Course_name, Attendance_percentage)\n        VALUES (NEW.Student_id, NEW.Student_name, NEW.Course_name, NEW.Attendance_percentage);\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL trigger definition below\nDELIMITER //\n\nCREATE TRIGGER attendance_after_insert\nAFTER INSERT ON attendance\nFOR EACH ROW\nBEGIN\n    -- Check if NEW.Attendance_percentage < 60\n    -- If true, insert into low_attendance\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-006",
     "title": "Gym Membership Activation Audit Trigger",
-    "topic": "Audit Logging & Event Tracking Triggers",
-    "difficulty": "Medium",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (628).png - Screenshot (632).png",
     "description": "In a gym and fitness club management database, the administrator wants to log members whose membership status changes to `'Active'`. ### Problem Requirements\nCreate a trigger named `membership_after_update` that executes `AFTER UPDATE` on the `gym_members` table.\n\n- The trigger must check whether the updated `Membership_status` is `'Active'` (`NEW.Membership_status = 'Active'`). - If true, insert the following details into the `active_members` table:\n- `Member_id`\n- `Member_name`\n- `Membership_status`\n---\n### Database Schema\n#### Table 1: `gym_members`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `Member_id` | `INT PRIMARY KEY` | Member unique ID |\n| `Member_name` | `VARCHAR(50)` | Member name |\n| `Membership_status` | `VARCHAR(20)` | Status (`Active`, `Inactive`, `Expired`) |\n| `Plan_type` | `VARCHAR(30)` | Membership duration plan |\n#### Table 2: `active_members`\n| Column Name | Data Type | Description |\n| :--- | :--- | :--- |\n| `Member_id` | `INT` | Member ID |\n| `Member_name` | `VARCHAR(50)` | Member Name |\n| `Membership_status` | `VARCHAR(20)` | Status (`Active`) |",
     "inputFormat": "Prepopulated gym_members table. No console input.",
     "outputFormat": "The output displays all records from the `active_members` table.",
@@ -174,19 +169,19 @@
         "expectedOutput": "Member_id Member_name Membership_status\n2 Divya Active\n4 Meera Active"
       }
     ],
-    "starterCode": "-- Write your MySQL trigger definition below\nDELIMITER //\n\nCREATE TRIGGER membership_after_update\nAFTER UPDATE ON gym_members\nFOR EACH ROW\nBEGIN\n    -- Check if NEW.Membership_status = 'Active'\n    -- If true, insert into active_members\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER membership_after_update\nAFTER UPDATE ON gym_members\nFOR EACH ROW\nBEGIN\n    IF NEW.Membership_status = 'Active' THEN\n        INSERT INTO active_members (Member_id, Member_name, Membership_status)\n        VALUES (NEW.Member_id, NEW.Member_name, NEW.Membership_status);\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "topic": "Audit Logging & Event Tracking Triggers",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (628).png - Screenshot (632).png",
     "explanation": "An AFTER UPDATE trigger verifies if the updated Membership_status equals 'Active'. If true, it records the member into active_members.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE TRIGGER membership_after_update\nAFTER UPDATE ON gym_members\nFOR EACH ROW\nBEGIN\n    IF NEW.Membership_status = 'Active' THEN\n        INSERT INTO active_members (Member_id, Member_name, Membership_status)\n        VALUES (NEW.Member_id, NEW.Member_name, NEW.Membership_status);\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL trigger definition below\nDELIMITER //\n\nCREATE TRIGGER membership_after_update\nAFTER UPDATE ON gym_members\nFOR EACH ROW\nBEGIN\n    -- Check if NEW.Membership_status = 'Active'\n    -- If true, insert into active_members\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-007",
     "title": "Sum of Digits Using Stored Procedure",
-    "topic": "Control Flow & Mathematical Stored Procedures",
-    "difficulty": "Easy",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (633).png - Screenshot (634).png",
     "description": "David needs to calculate the sum of the digits of a given integer using a MySQL stored procedure. ### Problem Requirements\nWrite a stored procedure named `SumOfDigits` that takes an integer parameter `num`. - Use the `MOD` function to extract the last digit during each loop iteration (`remainder = num % 10`). - Use the `FLOOR` or integer division function to remove the last digit (`num = FLOOR(num / 10)`).\n\n- Continue while `num > 0`. - Output `\"Result\"` followed by `\"Sum of digits is: <sum>\"`. Test the procedure using the number `359`. ---\n### Procedure Specification\n```sql\nPROCEDURE SumOfDigits(IN num INT)\n```",
     "inputFormat": "No console input. Execution is invoked by calling `CALL SumOfDigits(359);`.",
     "outputFormat": "The output prints 'Result' followed by 'Sum of digits is: 17'.",
@@ -204,19 +199,19 @@
         "expectedOutput": "Result\nSum of digits is: 17"
       }
     ],
-    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE SumOfDigits(IN num INT)\nBEGIN\n    -- Declare variables for sum and remainder\n    -- Implement WHILE loop extracting digits via MOD and FLOOR\n    -- Output Result and message\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE SumOfDigits(IN num INT)\nBEGIN\n    DECLARE total INT DEFAULT 0;\n    DECLARE remainder INT;\n    \n    WHILE num > 0 DO\n        SET remainder = MOD(num, 10);\n        SET total = total + remainder;\n        SET num = FLOOR(num / 10);\n    END WHILE;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('Sum of digits is: ', total) AS '';\nEND //\n\nDELIMITER ;\n",
+    "topic": "Control Flow & Mathematical Stored Procedures",
+    "difficulty": "Easy",
+    "sourceScreenshot": "Screenshot (633).png - Screenshot (634).png",
     "explanation": "A WHILE loop extracts the rightmost digit using MOD(num, 10), adds it to the running total, and truncates the digit using FLOOR(num / 10) until the number reaches 0.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE SumOfDigits(IN num INT)\nBEGIN\n    DECLARE total INT DEFAULT 0;\n    DECLARE remainder INT;\n    \n    WHILE num > 0 DO\n        SET remainder = MOD(num, 10);\n        SET total = total + remainder;\n        SET num = FLOOR(num / 10);\n    END WHILE;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('Sum of digits is: ', total) AS '';\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE SumOfDigits(IN num INT)\nBEGIN\n    -- Declare variables for sum and remainder\n    -- Implement WHILE loop extracting digits via MOD and FLOOR\n    -- Output Result and message\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-008",
     "title": "Number Palindrome Verification Procedure",
-    "topic": "Control Flow & Mathematical Stored Procedures",
-    "difficulty": "Easy",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (635).png - Screenshot (636).png",
     "description": "Harish is working on a data validation module and needs to determine whether a given integer is a palindrome using a MySQL stored procedure. A number is considered a palindrome if it reads the same forwards and backwards (e.g. `141` is a palindrome, while `123` is not). ### Problem Requirements\nWrite a stored procedure named `CheckPalindrome` that accepts an integer parameter `num`.\n\n- Reverse the number by extracting digits using `MOD(n, 10)` and integer division `DIV 10`. - Compare the reversed number against the original value. - Output `\"Result\"` followed by `\"<number> is a palindrome\"` or `\"<number> is not a palindrome\"`. Test the procedure with `141` and `123`. ---\n### Procedure Specification\n```sql\nPROCEDURE CheckPalindrome(IN num INT)\n```",
     "inputFormat": "No console input. Invoked via `CALL CheckPalindrome(141);` and `CALL CheckPalindrome(123);`.",
     "outputFormat": "The output prints 'Result' followed by '<number> is <a palindrome / not a palindrome>'.",
@@ -233,19 +228,19 @@
         "expectedOutput": "Result\n141 is a palindrome\nResult\n123 is not a palindrome"
       }
     ],
-    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE CheckPalindrome(IN num INT)\nBEGIN\n    -- Declare variables for original copy and reversed number\n    -- Reverse num using MOD and DIV in a loop\n    -- Output Result and palindrome message\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE CheckPalindrome(IN num INT)\nBEGIN\n    DECLARE original_num INT;\n    DECLARE reversed_num INT DEFAULT 0;\n    DECLARE temp_num INT;\n    DECLARE remainder INT;\n    \n    SET original_num = num;\n    SET temp_num = num;\n    \n    WHILE temp_num > 0 DO\n        SET remainder = MOD(temp_num, 10);\n        SET reversed_num = (reversed_num * 10) + remainder;\n        SET temp_num = temp_num DIV 10;\n    END WHILE;\n    \n    SELECT 'Result' AS '';\n    IF original_num = reversed_num THEN\n        SELECT CONCAT(original_num, ' is a palindrome') AS '';\n    ELSE\n        SELECT CONCAT(original_num, ' is not a palindrome') AS '';\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "topic": "Control Flow & Mathematical Stored Procedures",
+    "difficulty": "Easy",
+    "sourceScreenshot": "Screenshot (635).png - Screenshot (636).png",
     "explanation": "The procedure retains the original number, loops through its digits using MOD and DIV to build the reversed number, and finally compares both values to display whether it is a palindrome.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE CheckPalindrome(IN num INT)\nBEGIN\n    DECLARE original_num INT;\n    DECLARE reversed_num INT DEFAULT 0;\n    DECLARE temp_num INT;\n    DECLARE remainder INT;\n    \n    SET original_num = num;\n    SET temp_num = num;\n    \n    WHILE temp_num > 0 DO\n        SET remainder = MOD(temp_num, 10);\n        SET reversed_num = (reversed_num * 10) + remainder;\n        SET temp_num = temp_num DIV 10;\n    END WHILE;\n    \n    SELECT 'Result' AS '';\n    IF original_num = reversed_num THEN\n        SELECT CONCAT(original_num, ' is a palindrome') AS '';\n    ELSE\n        SELECT CONCAT(original_num, ' is not a palindrome') AS '';\n    END IF;\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE CheckPalindrome(IN num INT)\nBEGIN\n    -- Declare variables for original copy and reversed number\n    -- Reverse num using MOD and DIV in a loop\n    -- Output Result and palindrome message\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-009",
     "title": "Find Greatest Among Three Numbers Procedure",
-    "topic": "Control Flow & Mathematical Stored Procedures",
-    "difficulty": "Easy",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (637).png - Screenshot (638).png",
     "description": "Reena is participating in a technical interview and is given a task to find the greatest among three given numbers using a MySQL stored procedure. ### Problem Requirements\nWrite a stored procedure named `FindGreatest` that takes three integer parameters (`n1`, `n2`, `n3`). - Compare the three numbers using conditional logic (`IF ... ELSEIF ...\n\nELSE`). - Identify the maximum value. - Output `\"Result\"` followed by `\"The greatest number is: <max_value>\"`. Test the procedure using the arguments `10`, `20`, and `15`. ---\n### Procedure Specification\n```sql\nPROCEDURE FindGreatest(IN n1 INT, IN n2 INT, IN n3 INT)\n```",
     "inputFormat": "No console input. Invoked via `CALL FindGreatest(10, 20, 15);`.",
     "outputFormat": "The output prints 'Result' followed by 'The greatest number is: 20'.",
@@ -262,19 +257,19 @@
         "expectedOutput": "Result\nThe greatest number is: 20"
       }
     ],
-    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE FindGreatest(IN n1 INT, IN n2 INT, IN n3 INT)\nBEGIN\n    -- Declare variable for greatest\n    -- Compare n1, n2, n3 using IF/ELSEIF\n    -- Output Result and maximum value\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE FindGreatest(IN n1 INT, IN n2 INT, IN n3 INT)\nBEGIN\n    DECLARE greatest INT;\n    \n    IF n1 >= n2 AND n1 >= n3 THEN\n        SET greatest = n1;\n    ELSEIF n2 >= n1 AND n2 >= n3 THEN\n        SET greatest = n2;\n    ELSE\n        SET greatest = n3;\n    END IF;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('The greatest number is: ', greatest) AS '';\nEND //\n\nDELIMITER ;\n",
+    "topic": "Control Flow & Mathematical Stored Procedures",
+    "difficulty": "Easy",
+    "sourceScreenshot": "Screenshot (637).png - Screenshot (638).png",
     "explanation": "The procedure compares n1, n2, and n3 using boolean conditional operators to determine the largest value, then displays the result.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE FindGreatest(IN n1 INT, IN n2 INT, IN n3 INT)\nBEGIN\n    DECLARE greatest INT;\n    \n    IF n1 >= n2 AND n1 >= n3 THEN\n        SET greatest = n1;\n    ELSEIF n2 >= n1 AND n2 >= n3 THEN\n        SET greatest = n2;\n    ELSE\n        SET greatest = n3;\n    END IF;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('The greatest number is: ', greatest) AS '';\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE FindGreatest(IN n1 INT, IN n2 INT, IN n3 INT)\nBEGIN\n    -- Declare variable for greatest\n    -- Compare n1, n2, n3 using IF/ELSEIF\n    -- Output Result and maximum value\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-010",
     "title": "Calculate Average Performance Score from Comma-Separated String",
-    "topic": "String Processing & Delimited Data Procedures",
-    "difficulty": "Medium",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (639).png - Screenshot (640).png, Screenshot 2026-10-20 210601.png",
     "description": "Michael is developing an analytical reporting script to evaluate employee performance. He receives employee scores formatted as a single comma-separated string: `'80, 90, 85, 95, 88'`. ### Problem Requirements\nWrite a MySQL stored procedure named `CalculateAverageScore` that accepts a string parameter `score_list`. - Parse each individual score from the delimited string using string functions (`LOCATE`, `SUBSTRING`, `LENGTH`).\n\n- Calculate the total sum and count of valid scores. - Compute the average performance score formatted to 2 decimal places. - Output `\"Result\"` followed by `\"Average performance score: <score>\"`. ---\n### Procedure Specification\n```sql\nPROCEDURE CalculateAverageScore(IN score_list VARCHAR(255))\n```",
     "inputFormat": "No console input. Invoked via `CALL CalculateAverageScore('80, 90, 85, 95, 88');`.",
     "outputFormat": "The output prints 'Result' followed by 'Average performance score: 87.60'.",
@@ -291,19 +286,19 @@
         "expectedOutput": "Result\nAverage performance score: 87.60"
       }
     ],
-    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE CalculateAverageScore(IN score_list VARCHAR(255))\nBEGIN\n    -- Declare tracking variables for sum, count, and token extraction\n    -- Parse comma-separated scores in a loop\n    -- Output Result and average formatted to 2 decimals\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE CalculateAverageScore(IN score_list VARCHAR(255))\nBEGIN\n    DECLARE total_score DECIMAL(10,2) DEFAULT 0;\n    DECLARE score_count INT DEFAULT 0;\n    DECLARE average_score DECIMAL(10,2);\n    DECLARE remaining_scores VARCHAR(255);\n    DECLARE current_token VARCHAR(50);\n    DECLARE comma_pos INT;\n    \n    SET remaining_scores = score_list;\n    \n    WHILE LENGTH(remaining_scores) > 0 DO\n        SET comma_pos = LOCATE(',', remaining_scores);\n        IF comma_pos > 0 THEN\n            SET current_token = TRIM(SUBSTRING(remaining_scores, 1, comma_pos - 1));\n            SET remaining_scores = TRIM(SUBSTRING(remaining_scores, comma_pos + 1));\n        ELSE\n            SET current_token = TRIM(remaining_scores);\n            SET remaining_scores = '';\n        END IF;\n        \n        IF LENGTH(current_token) > 0 THEN\n            SET total_score = total_score + CAST(current_token AS DECIMAL(10,2));\n            SET score_count = score_count + 1;\n        END IF;\n    END WHILE;\n    \n    SET average_score = total_score / score_count;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('Average performance score: ', FORMAT(average_score, 2)) AS '';\nEND //\n\nDELIMITER ;\n",
+    "topic": "String Processing & Delimited Data Procedures",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (639).png - Screenshot (640).png, Screenshot 2026-10-20 210601.png",
     "explanation": "A WHILE loop splits the comma-separated string by finding comma positions with LOCATE, trims whitespace, casts tokens into decimal scores, accumulates the sum, and computes the 2-decimal average.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE CalculateAverageScore(IN score_list VARCHAR(255))\nBEGIN\n    DECLARE total_score DECIMAL(10,2) DEFAULT 0;\n    DECLARE score_count INT DEFAULT 0;\n    DECLARE average_score DECIMAL(10,2);\n    DECLARE remaining_scores VARCHAR(255);\n    DECLARE current_token VARCHAR(50);\n    DECLARE comma_pos INT;\n    \n    SET remaining_scores = score_list;\n    \n    WHILE LENGTH(remaining_scores) > 0 DO\n        SET comma_pos = LOCATE(',', remaining_scores);\n        IF comma_pos > 0 THEN\n            SET current_token = TRIM(SUBSTRING(remaining_scores, 1, comma_pos - 1));\n            SET remaining_scores = TRIM(SUBSTRING(remaining_scores, comma_pos + 1));\n        ELSE\n            SET current_token = TRIM(remaining_scores);\n            SET remaining_scores = '';\n        END IF;\n        \n        IF LENGTH(current_token) > 0 THEN\n            SET total_score = total_score + CAST(current_token AS DECIMAL(10,2));\n            SET score_count = score_count + 1;\n        END IF;\n    END WHILE;\n    \n    SET average_score = total_score / score_count;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('Average performance score: ', FORMAT(average_score, 2)) AS '';\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE CalculateAverageScore(IN score_list VARCHAR(255))\nBEGIN\n    -- Declare tracking variables for sum, count, and token extraction\n    -- Parse comma-separated scores in a loop\n    -- Output Result and average formatted to 2 decimals\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-011",
     "title": "Find Length of Longest Word in Sentence",
-    "topic": "String Processing & Delimited Data Procedures",
-    "difficulty": "Medium",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (641).png - Screenshot (642).png",
     "description": "Alice is developing a text processing script and needs to find the length of the longest word in a given sentence: `'PL/SQL is a powerful language'`. ### Problem Requirements\nWrite a MySQL stored procedure named `FindLongestWordLength` that accepts a string parameter `sentence`. - Iterate through each word in the sentence using space delimiter detection.\n\n- Determine the length of each word and track the maximum length encountered. - Output `\"Result\"` followed by `\"Length of the longest word: <length>\"`. ---\n### Procedure Specification\n```sql\nPROCEDURE FindLongestWordLength(IN sentence VARCHAR(255))\n```",
     "inputFormat": "No console input. Invoked via `CALL FindLongestWordLength('PL/SQL is a powerful language');`.",
     "outputFormat": "The output prints 'Result' followed by 'Length of the longest word: 8'.",
@@ -320,19 +315,19 @@
         "expectedOutput": "Result\nLength of the longest word: 8"
       }
     ],
-    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE FindLongestWordLength(IN sentence VARCHAR(255))\nBEGIN\n    -- Declare variables for tracking max word length\n    -- Traverse sentence tokenizing by spaces\n    -- Output Result and maximum word length\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE FindLongestWordLength(IN sentence VARCHAR(255))\nBEGIN\n    DECLARE max_len INT DEFAULT 0;\n    DECLARE remaining VARCHAR(255);\n    DECLARE current_word VARCHAR(100);\n    DECLARE space_pos INT;\n    \n    SET remaining = TRIM(sentence);\n    \n    WHILE LENGTH(remaining) > 0 DO\n        SET space_pos = LOCATE(' ', remaining);\n        IF space_pos > 0 THEN\n            SET current_word = SUBSTRING(remaining, 1, space_pos - 1);\n            SET remaining = TRIM(SUBSTRING(remaining, space_pos + 1));\n        ELSE\n            SET current_word = remaining;\n            SET remaining = '';\n        END IF;\n        \n        IF LENGTH(current_word) > max_len THEN\n            SET max_len = LENGTH(current_word);\n        END IF;\n    END WHILE;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('Length of the longest word: ', max_len) AS '';\nEND //\n\nDELIMITER ;\n",
+    "topic": "String Processing & Delimited Data Procedures",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (641).png - Screenshot (642).png",
     "explanation": "The procedure trims the input sentence and searches for space delimiters using LOCATE. In each iteration, it extracts the current word, compares its LENGTH against max_len, and outputs the highest length found ('powerful' has 8 characters).",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE FindLongestWordLength(IN sentence VARCHAR(255))\nBEGIN\n    DECLARE max_len INT DEFAULT 0;\n    DECLARE remaining VARCHAR(255);\n    DECLARE current_word VARCHAR(100);\n    DECLARE space_pos INT;\n    \n    SET remaining = TRIM(sentence);\n    \n    WHILE LENGTH(remaining) > 0 DO\n        SET space_pos = LOCATE(' ', remaining);\n        IF space_pos > 0 THEN\n            SET current_word = SUBSTRING(remaining, 1, space_pos - 1);\n            SET remaining = TRIM(SUBSTRING(remaining, space_pos + 1));\n        ELSE\n            SET current_word = remaining;\n            SET remaining = '';\n        END IF;\n        \n        IF LENGTH(current_word) > max_len THEN\n            SET max_len = LENGTH(current_word);\n        END IF;\n    END WHILE;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('Length of the longest word: ', max_len) AS '';\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE FindLongestWordLength(IN sentence VARCHAR(255))\nBEGIN\n    -- Declare variables for tracking max word length\n    -- Traverse sentence tokenizing by spaces\n    -- Output Result and maximum word length\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   },
   {
     "id": "dbms-012",
     "title": "Sentence Word Counter Using LOCATE",
-    "topic": "String Processing & Delimited Data Procedures",
-    "difficulty": "Medium",
-    "bank": "dbms",
-    "recommendedLanguage": "SQL",
-    "sourceScreenshot": "Screenshot (643).png - Screenshot (644).png",
     "description": "David is developing a text analysis tool and needs to count the number of words in a given sentence. The sentence is processed by repeatedly finding the position of spaces using the `LOCATE` function to determine word boundaries. ### Problem Requirements\nWrite a MySQL stored procedure named `CountWords` that takes a sentence as input (`IN sentence VARCHAR(255)`). - Trim leading and trailing spaces.\n\n- Identify space boundaries using `LOCATE(' ', ...)` in a loop. - Count the total number of words. - Test the procedure using the sentence `\"Hello World from MySQL\"` and output the total word count. ---\n### Procedure Specification\n```sql\nPROCEDURE CountWords(IN sentence VARCHAR(255))\n```",
     "inputFormat": "No console input. Invoked via `CALL CountWords('Hello World from MySQL');`.",
     "outputFormat": "The output prints 'Result' followed by 'Number of words in \"Hello World from MySQL\" is: 4'.",
@@ -349,9 +344,105 @@
         "expectedOutput": "Result\nNumber of words in \"Hello World from MySQL\" is: 4"
       }
     ],
-    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE CountWords(IN sentence VARCHAR(255))\nBEGIN\n    -- Trim sentence and count words using LOCATE(' ', ...)\n    -- Output Result and total count\nEND //\n\nDELIMITER ;\n",
-    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE CountWords(IN sentence VARCHAR(255))\nBEGIN\n    DECLARE word_count INT DEFAULT 0;\n    DECLARE remaining VARCHAR(255);\n    DECLARE space_pos INT;\n    \n    SET remaining = TRIM(sentence);\n    \n    IF LENGTH(remaining) > 0 THEN\n        SET word_count = 1;\n        SET space_pos = LOCATE(' ', remaining);\n        \n        WHILE space_pos > 0 DO\n            SET word_count = word_count + 1;\n            SET remaining = TRIM(SUBSTRING(remaining, space_pos + 1));\n            SET space_pos = LOCATE(' ', remaining);\n        END WHILE;\n    END IF;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('Number of words in \"', sentence, '\" is: ', word_count) AS '';\nEND //\n\nDELIMITER ;\n",
+    "topic": "String Processing & Delimited Data Procedures",
+    "difficulty": "Medium",
+    "sourceScreenshot": "Screenshot (643).png - Screenshot (644).png",
     "explanation": "The procedure trims the sentence and increments word_count each time a space boundary is located via LOCATE(' ', remaining), producing the total word count of 4.",
-    "extractionStatus": "VERIFIED_OCR"
+    "referenceSolution": "DELIMITER //\n\nCREATE PROCEDURE CountWords(IN sentence VARCHAR(255))\nBEGIN\n    DECLARE word_count INT DEFAULT 0;\n    DECLARE remaining VARCHAR(255);\n    DECLARE space_pos INT;\n    \n    SET remaining = TRIM(sentence);\n    \n    IF LENGTH(remaining) > 0 THEN\n        SET word_count = 1;\n        SET space_pos = LOCATE(' ', remaining);\n        \n        WHILE space_pos > 0 DO\n            SET word_count = word_count + 1;\n            SET remaining = TRIM(SUBSTRING(remaining, space_pos + 1));\n            SET space_pos = LOCATE(' ', remaining);\n        END WHILE;\n    END IF;\n    \n    SELECT 'Result' AS '';\n    SELECT CONCAT('Number of words in \"', sentence, '\" is: ', word_count) AS '';\nEND //\n\nDELIMITER ;\n",
+    "starterCode": "-- Write your MySQL stored procedure below\nDELIMITER //\n\nCREATE PROCEDURE CountWords(IN sentence VARCHAR(255))\nBEGIN\n    -- Trim sentence and count words using LOCATE(' ', ...)\n    -- Output Result and total count\nEND //\n\nDELIMITER ;\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
+  },
+  {
+    "id": "dbms-013",
+    "title": "Database Normalization: Decomposing Unnormalized Orders into 3NF",
+    "description": "### Problem Statement\nIn relational database design, **Normalization** is the systematic process of organizing data to reduce redundancy and eliminate update, insertion, and deletion anomalies.\n\nYou are given an unnormalized table `Unnormalized_Orders` containing sales data where transitive dependencies exist:\n- `OrderID -> CustomerID -> (CustomerName, CustomerCity)` (Transitive Dependency violating 3NF)\n- `OrderID, ProductID -> (Quantity, UnitPrice)` (Composite key dependency)\n\n#### Task\nWrite SQL DDL and DML statements to:\n1. Create normalized 3NF tables:\n   - `Customers (CustomerID INT PRIMARY KEY, CustomerName VARCHAR(100), CustomerCity VARCHAR(100))`\n   - `Products (ProductID INT PRIMARY KEY, ProductName VARCHAR(100), UnitPrice DECIMAL(10,2))`\n   - `Orders (OrderID INT PRIMARY KEY, CustomerID INT, OrderDate DATE, FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID))`\n   - `OrderItems (OrderID INT, ProductID INT, Quantity INT, PRIMARY KEY (OrderID, ProductID))`\n2. Populate the 3NF tables from the existing `Unnormalized_Orders` table.\n3. Query the normalized schema to display: `OrderID`, `CustomerName`, `CustomerCity`, `ProductName`, `Quantity`, and `(Quantity * UnitPrice) AS TotalCost`, sorted by `OrderID ASC`, `ProductName ASC`.\n",
+    "inputFormat": "A pre-existing populated table `Unnormalized_Orders` with columns: `OrderID`, `OrderDate`, `CustomerID`, `CustomerName`, `CustomerCity`, `ProductID`, `ProductName`, `UnitPrice`, `Quantity`.",
+    "outputFormat": "Result set of `OrderID`, `CustomerName`, `CustomerCity`, `ProductName`, `Quantity`, `TotalCost` from the normalized 3NF schema.",
+    "constraints": [
+      "Must satisfy 1NF (atomic values, primary key defined).",
+      "Must satisfy 2NF (no partial functional dependencies on composite primary key).",
+      "Must satisfy 3NF (no transitive functional dependencies X -> Y -> Z).",
+      "Column names in final SELECT: OrderID, CustomerName, CustomerCity, ProductName, Quantity, TotalCost"
+    ],
+    "sampleInput": "Unnormalized rows with Order 1001 for Customer C1 (Alice, New York) purchasing P10 (Laptop) and P20 (Mouse).",
+    "sampleOutput": "OrderID | CustomerName | CustomerCity | ProductName | Quantity | TotalCost\n1001    | Alice        | New York     | Laptop      | 1        | 1200.00\n1001    | Alice        | New York     | Mouse       | 2        | 50.00",
+    "testCases": [
+      {
+        "testIndex": 1,
+        "input": "Unnormalized Orders with 4 rows",
+        "expectedOutput": "1001|Alice|New York|Laptop|1|1200.00\n1001|Alice|New York|Mouse|2|50.00\n1002|Bob|Chicago|Keyboard|1|80.00\n1003|Charlie|San Jose|Monitor|2|600.00"
+      }
+    ],
+    "topic": "Database Normalization (1NF, 2NF, 3NF, BCNF)",
+    "difficulty": "Medium",
+    "sourceScreenshot": "DBMS Lab Syllabus - Normalization 1NF to BCNF",
+    "explanation": "### Normalization Steps:\n1. **1NF**: Every table cell contains single atomic values; each record has a unique identifier.\n2. **2NF**: Table is in 1NF and all non-key attributes are fully functionally dependent on the entire primary key (eliminates partial dependencies in composite key relations like `OrderItems`).\n3. **3NF**: Table is in 2NF and no non-key attribute is transitively dependent on the primary key (`OrderID -> CustomerID -> CustomerCity`). We decompose customer details into a separate `Customers` table, product details into `Products`, order level attributes into `Orders`, and line items into `OrderItems`.\n",
+    "referenceSolution": "-- Step 1: Create 3NF decomposed tables\nCREATE TABLE Customers (\n    CustomerID INT PRIMARY KEY,\n    CustomerName VARCHAR(100),\n    CustomerCity VARCHAR(100)\n);\n\nCREATE TABLE Products (\n    ProductID INT PRIMARY KEY,\n    ProductName VARCHAR(100),\n    UnitPrice DECIMAL(10,2)\n);\n\nCREATE TABLE Orders (\n    OrderID INT PRIMARY KEY,\n    CustomerID INT,\n    OrderDate DATE\n);\n\nCREATE TABLE OrderItems (\n    OrderID INT,\n    ProductID INT,\n    Quantity INT,\n    PRIMARY KEY (OrderID, ProductID)\n);\n\n-- Step 2: Populate normalized relations\nINSERT OR IGNORE INTO Customers (CustomerID, CustomerName, CustomerCity)\nSELECT DISTINCT CustomerID, CustomerName, CustomerCity FROM Unnormalized_Orders;\n\nINSERT OR IGNORE INTO Products (ProductID, ProductName, UnitPrice)\nSELECT DISTINCT ProductID, ProductName, UnitPrice FROM Unnormalized_Orders;\n\nINSERT OR IGNORE INTO Orders (OrderID, CustomerID, OrderDate)\nSELECT DISTINCT OrderID, CustomerID, OrderDate FROM Unnormalized_Orders;\n\nINSERT OR IGNORE INTO OrderItems (OrderID, ProductID, Quantity)\nSELECT OrderID, ProductID, Quantity FROM Unnormalized_Orders;\n\n-- Step 3: Query across 3NF tables\nSELECT \n    o.OrderID,\n    c.CustomerName,\n    c.CustomerCity,\n    p.ProductName,\n    oi.Quantity,\n    PRINTF('%.2f', oi.Quantity * p.UnitPrice) AS TotalCost\nFROM Orders o\nJOIN Customers c ON o.CustomerID = c.CustomerID\nJOIN OrderItems oi ON o.OrderID = oi.OrderID\nJOIN Products p ON oi.ProductID = p.ProductID\nORDER BY o.OrderID ASC, p.ProductName ASC;\n",
+    "starterCode": "-- Database Normalization (1NF, 2NF, 3NF) Challenge\n-- Unnormalized_Orders table is preloaded with sample data.\n\n-- Task 1: Create normalized tables: Customers, Products, Orders, OrderItems\n-- Task 2: Populate each table from Unnormalized_Orders using INSERT INTO ... SELECT DISTINCT\n-- Task 3: Output joined query: OrderID, CustomerName, CustomerCity, ProductName, Quantity, TotalCost\n\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
+  },
+  {
+    "id": "dbms-014",
+    "title": "Database Normalization: Boyce-Codd Normal Form (BCNF) Decomposition",
+    "description": "### Problem Statement\nA table is in **Boyce-Codd Normal Form (BCNF)** if and only if for every non-trivial functional dependency `X -> Y`, `X` is a **Super Key**. BCNF is a stricter version of 3NF that handles cases where candidate keys overlap.\n\nConsider a university advisory schema:\n`Student_Advisor_Subject(StudentID, Subject, AdvisorID, AdvisorRoom)`\nGiven functional dependencies:\n1. `StudentID, Subject -> AdvisorID` (A student has one advisor for a given subject)\n2. `AdvisorID -> Subject, AdvisorRoom` (Each advisor specializes in one subject and has a designated office room)\n\nCandidate keys are `(StudentID, Subject)` and `(StudentID, AdvisorID)`.\nIn dependency `AdvisorID -> Subject`, `AdvisorID` is NOT a super key! This violates BCNF and introduces anomalies:\n- **Deletion Anomaly**: If a student drops out, the record of the advisor and their room/subject is lost!\n- **Insertion Anomaly**: We cannot hire a new advisor until a student enrolls under them!\n\n#### Task\nWrite SQL statements to:\n1. Decompose the relation into two BCNF relations:\n   - `AdvisorDetails (AdvisorID INT PRIMARY KEY, Subject VARCHAR(100), AdvisorRoom VARCHAR(50))`\n   - `StudentAdvisor (StudentID INT, AdvisorID INT, PRIMARY KEY (StudentID, AdvisorID))`\n2. Populate the BCNF tables from `Student_Advisor_Subject`.\n3. Display all student-advisor pairings with their subject and office room, ordered by `StudentID ASC`, `AdvisorID ASC`.\n",
+    "inputFormat": "Pre-existing table `Student_Advisor_Subject` with columns `StudentID`, `Subject`, `AdvisorID`, `AdvisorRoom`.",
+    "outputFormat": "Result table with `StudentID`, `AdvisorID`, `Subject`, `AdvisorRoom` ordered by `StudentID ASC`.",
+    "constraints": [
+      "Must decompose to BCNF (every determinant must be a candidate/super key).",
+      "Eliminate insertion and deletion anomalies.",
+      "Preserve all relationships losslessly."
+    ],
+    "sampleInput": "Student 101 assigned to Advisor 501 (Physics, Room 302) and 502 (Math, Room 104).",
+    "sampleOutput": "StudentID | AdvisorID | Subject | AdvisorRoom\n101       | 501       | Physics | Room 302\n101       | 502       | Math    | Room 104",
+    "testCases": [
+      {
+        "testIndex": 1,
+        "input": "Student Advisor assignments",
+        "expectedOutput": "101|501|Physics|Room 302\n101|502|Math|Room 104\n102|501|Physics|Room 302\n103|503|Chemistry|Room 210"
+      }
+    ],
+    "topic": "Database Normalization (1NF, 2NF, 3NF, BCNF)",
+    "difficulty": "Hard",
+    "sourceScreenshot": "DBMS Lab Syllabus - BCNF Decomposition",
+    "explanation": "### BCNF Decomposition Principle:\nFor every functional dependency `X -> Y`, if `X` is not a super key, decompose the table `R` into:\n1. `R1 = (X U Y)` with primary key `X` (here `AdvisorDetails(AdvisorID, Subject, AdvisorRoom)`).\n2. `R2 = (R - Y)` with foreign key referencing `R1` (here `StudentAdvisor(StudentID, AdvisorID)`).\n\nBoth resulting tables are now in BCNF because:\n- In `AdvisorDetails`, `AdvisorID` is the primary/super key.\n- In `StudentAdvisor`, the only functional dependency is the trivial dependency of the composite key on itself.\n",
+    "referenceSolution": "-- Step 1: Create BCNF decomposed tables\nCREATE TABLE AdvisorDetails (\n    AdvisorID INT PRIMARY KEY,\n    Subject VARCHAR(100),\n    AdvisorRoom VARCHAR(50)\n);\n\nCREATE TABLE StudentAdvisor (\n    StudentID INT,\n    AdvisorID INT,\n    PRIMARY KEY (StudentID, AdvisorID),\n    FOREIGN KEY (AdvisorID) REFERENCES AdvisorDetails(AdvisorID)\n);\n\n-- Step 2: Populate BCNF relations losslessly\nINSERT OR IGNORE INTO AdvisorDetails (AdvisorID, Subject, AdvisorRoom)\nSELECT DISTINCT AdvisorID, Subject, AdvisorRoom FROM Student_Advisor_Subject;\n\nINSERT OR IGNORE INTO StudentAdvisor (StudentID, AdvisorID)\nSELECT DISTINCT StudentID, AdvisorID FROM Student_Advisor_Subject;\n\n-- Step 3: Query lossless join\nSELECT \n    sa.StudentID,\n    sa.AdvisorID,\n    ad.Subject,\n    ad.AdvisorRoom\nFROM StudentAdvisor sa\nJOIN AdvisorDetails ad ON sa.AdvisorID = ad.AdvisorID\nORDER BY sa.StudentID ASC, sa.AdvisorID ASC;\n",
+    "starterCode": "-- Boyce-Codd Normal Form (BCNF) Decomposition Challenge\n-- Pre-existing table: Student_Advisor_Subject(StudentID, Subject, AdvisorID, AdvisorRoom)\n\n-- Task 1: Create AdvisorDetails and StudentAdvisor tables\n-- Task 2: Insert distinct records from Student_Advisor_Subject\n-- Task 3: Query StudentID, AdvisorID, Subject, AdvisorRoom ordered by StudentID, AdvisorID\n\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
+  },
+  {
+    "id": "dbms-015",
+    "title": "Database Normalization: Eliminating Multi-Valued Dependencies (4NF)",
+    "description": "### Problem Statement\nA table is in **Fourth Normal Form (4NF)** if and only if it is in BCNF and contains **no non-trivial Multi-Valued Dependencies (MVDs)**.\nAn MVD `A ->> B` occurs when attribute `A` determines a set of values for `B` independently of other attributes `C`.\n\nConsider a software recruitment table:\n`DeveloperProfiles(DevID, Skill, Certification)`\nA developer's programming skills and professional certifications are completely independent of each other:\n- `DevID ->> Skill`\n- `DevID ->> Certification`\n\nIf Developer 1 has 2 skills (`Python`, `Go`) and 2 certifications (`AWS`, `GCP`), a single flat relation must store $2 \\times 2 = 4$ rows (Cartesian product of skills and certifications) to avoid partial representation. This leads to severe data redundancy and update anomalies!\n\n#### Task\nWrite SQL statements to:\n1. Decompose the relation into two 4NF relations:\n   - `DeveloperSkills (DevID INT, Skill VARCHAR(50), PRIMARY KEY (DevID, Skill))`\n   - `DeveloperCerts (DevID INT, Certification VARCHAR(100), PRIMARY KEY (DevID, Certification))`\n2. Populate the 4NF tables from `DeveloperProfiles`.\n3. For each developer, count their total distinct skills and total certifications:\n   `DevID`, `TotalSkills`, `TotalCertifications` ordered by `DevID ASC`.\n",
+    "inputFormat": "Pre-existing table `DeveloperProfiles` with columns `DevID`, `Skill`, `Certification`.",
+    "outputFormat": "Result table with `DevID`, `TotalSkills`, `TotalCertifications` ordered by `DevID ASC`.",
+    "constraints": [
+      "Must satisfy 4NF (eliminating multi-valued dependencies).",
+      "No Cartesian product explosion.",
+      "Use GROUP BY DevID to aggregate skill and cert counts."
+    ],
+    "sampleInput": "Dev 1 has skills (Python, Go) and certs (AWS, GCP).",
+    "sampleOutput": "DevID | TotalSkills | TotalCertifications\n1     | 2           | 2",
+    "testCases": [
+      {
+        "testIndex": 1,
+        "input": "DeveloperProfiles with 3 developers",
+        "expectedOutput": "1|2|2\n2|3|1\n3|1|2"
+      }
+    ],
+    "topic": "Database Normalization (1NF, 2NF, 3NF, BCNF)",
+    "difficulty": "Hard",
+    "sourceScreenshot": "DBMS Lab Syllabus - 4NF Multi-Valued Dependencies",
+    "explanation": "### 4NF Principle:\nWhen a relation has two or more independent multi-valued facts about an entity (e.g., `DevID ->> Skill` and `DevID ->> Certification`), it violates 4NF.\nBy decomposing `R(DevID, Skill, Certification)` into:\n1. `R1(DevID, Skill)`\n2. `R2(DevID, Certification)`\n\nWe eliminate the combinatorial product of rows, saving storage and guaranteeing clean ACID operations without redundancy.\n",
+    "referenceSolution": "-- Step 1: Create 4NF decomposed relations\nCREATE TABLE DeveloperSkills (\n    DevID INT,\n    Skill VARCHAR(50),\n    PRIMARY KEY (DevID, Skill)\n);\n\nCREATE TABLE DeveloperCerts (\n    DevID INT,\n    Certification VARCHAR(100),\n    PRIMARY KEY (DevID, Certification)\n);\n\n-- Step 2: Populate distinct facts\nINSERT OR IGNORE INTO DeveloperSkills (DevID, Skill)\nSELECT DISTINCT DevID, Skill FROM DeveloperProfiles;\n\nINSERT OR IGNORE INTO DeveloperCerts (DevID, Certification)\nSELECT DISTINCT DevID, Certification FROM DeveloperProfiles;\n\n-- Step 3: Aggregate count query\nSELECT \n    s.DevID,\n    COUNT(DISTINCT s.Skill) AS TotalSkills,\n    (SELECT COUNT(DISTINCT c.Certification) FROM DeveloperCerts c WHERE c.DevID = s.DevID) AS TotalCertifications\nFROM DeveloperSkills s\nGROUP BY s.DevID\nORDER BY s.DevID ASC;\n",
+    "starterCode": "-- Fourth Normal Form (4NF) Multi-Valued Dependency Elimination\n-- Pre-existing table: DeveloperProfiles(DevID, Skill, Certification)\n\n-- Task 1: Create DeveloperSkills and DeveloperCerts tables\n-- Task 2: Insert distinct records from DeveloperProfiles\n-- Task 3: Query DevID, TotalSkills, TotalCertifications ordered by DevID ASC\n\n",
+    "extractionStatus": "VERIFIED_OCR",
+    "bank": "dbms",
+    "recommendedLanguage": "SQL"
   }
 ]
