@@ -1056,3 +1056,166 @@ html.oled .w3-sql-prose .badge-link {
   font-size: 0.82rem;
   display: none;
 }
+
+/* Masterclass & Lab Handbook Granular Command Card & Output Styles */
+.w3-sql-prose,
+.w3-sql-prose *,
+.w3-sql-prose pre,
+.w3-sql-prose code,
+.w3-sql-prose table,
+.w3-sql-prose tr,
+.w3-sql-prose td,
+.w3-sql-prose th,
+.w3-sql-prose .command-card,
+.w3-sql-prose .output-table,
+.w3-sql-prose .question-title,
+.w3-sql-prose .quiz-option {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+.w3-sql-prose .command-card {
+  background: #04060a !important;
+  border: 1px solid #1a2233 !important;
+  border-left: 3px solid #38bdf8 !important;
+  border-radius: 0.65rem !important;
+  padding: 1.25rem 1.4rem !important;
+  margin: 1.35rem 0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: border-color 0.15s ease;
+}
+
+.w3-sql-prose .command-card:hover {
+  border-color: #2b3952 !important;
+  border-left-color: #60a5fa !important;
+}
+
+.w3-sql-prose .command-card.card-success {
+  border-left-color: #10b981 !important;
+}
+
+.w3-sql-prose .command-card.card-amber {
+  border-left-color: #f59e0b !important;
+}
+
+.w3-sql-prose .command-card.card-purple {
+  border-left-color: #a855f7 !important;
+}
+
+.w3-sql-prose .cmd-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.w3-sql-prose .cmd-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.w3-sql-prose .cmd-badge.badge-success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.w3-sql-prose .cmd-badge.badge-amber {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.w3-sql-prose .cmd-title {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  color: #f8fafc !important;
+  margin: 0 !important;
+  line-height: 1.35 !important;
+}
+
+.w3-sql-prose .cmd-desc {
+  font-size: 0.92rem !important;
+  color: #94a3b8 !important;
+  line-height: 1.6 !important;
+  margin: 0.4rem 0 0.85rem 0 !important;
+}
+
+.w3-sql-prose .cmd-desc b {
+  color: #e2e8f0 !important;
+}
+
+.w3-sql-prose .output-wrap {
+  margin-top: 0.9rem;
+  background: #020305;
+  border: 1px solid #141b27;
+  border-radius: 0.5rem;
+  padding: 0.75rem 0.9rem;
+  overflow-x: auto;
+}
+
+.w3-sql-prose .output-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #10b981;
+  margin-bottom: 0.55rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.w3-sql-prose table.output-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 0.82rem !important;
+  background: #000000 !important;
+  border: 1px solid #1a2333 !important;
+  margin: 0 !important;
+}
+
+.w3-sql-prose table.output-table th {
+  background: #090e18 !important;
+  color: #38bdf8 !important;
+  font-weight: 700 !important;
+  padding: 0.45rem 0.75rem !important;
+  border: 1px solid #1a2333 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+.w3-sql-prose table.output-table td {
+  padding: 0.42rem 0.75rem !important;
+  border: 1px solid #141b27 !important;
+  color: #cbd5e1 !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+}
+
+.w3-sql-prose table.output-table tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.015) !important;
+}
+
+.w3-sql-prose table.output-table tr:hover td {
+  background: rgba(56, 189, 248, 0.06) !important;
+  color: #ffffff !important;
+}
+
+.w3-sql-prose .status-ok {
+  color: #34d399 !important;
+  font-weight: 600;
+}
