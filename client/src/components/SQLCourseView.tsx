@@ -44,6 +44,7 @@ interface Lesson {
 interface SQLCourseViewProps {
   initialJumpId?: string;
   onNavigateToDBMS?: () => void;
+  onToggleSidebar?: () => void;
 }
 
 type TextScale = 'normal' | 'large' | 'xlarge';
@@ -73,7 +74,8 @@ const PRESET_QUERIES = [
 
 export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
   initialJumpId,
-  onNavigateToDBMS
+  onNavigateToDBMS,
+  onToggleSidebar
 }) => {
   const lessons: Lesson[] = useMemo(() => sqlCourseData as Lesson[], []);
 
@@ -349,9 +351,9 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
           {/* Logo & Course Info */}
           <div className="flex items-center gap-3">
             <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="hidden lg:flex p-2.5 rounded-xl border border-slate-200 dark:border-cyan-500/30 bg-slate-100 dark:bg-[#151d30] hover:bg-slate-200 dark:hover:bg-[#1c2740] text-emerald-600 dark:text-cyan-400 transition-all touch-manipulation min-h-[44px] min-w-[44px] items-center justify-center cursor-pointer"
-              title="Toggle Jump Points Sidebar"
+              onClick={onToggleSidebar}
+              className="hidden lg:flex p-2.5 rounded-xl border border-slate-200 dark:border-[#222222] bg-white dark:bg-black hover:bg-slate-100 dark:hover:bg-[#111111] text-emerald-600 dark:text-emerald-400 transition-all touch-manipulation min-h-[44px] min-w-[44px] items-center justify-center cursor-pointer"
+              title="Toggle Portal Sidebar"
             >
               <SlidersHorizontal className="w-5 h-5" />
             </button>
@@ -490,109 +492,32 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
         </div>
       </header>
 
-      {/* Main Layout Container */}
-      <div className="max-w-[1700px] mx-auto flex gap-8 px-4 sm:px-6 lg:px-8 py-6 items-start">
-        {/* Sticky Desktop Jump Points Sidebar */}
-        {isSidebarOpen && !isZenFullscreen && (
-          <aside className="hidden lg:block w-80 shrink-0 sticky top-24 max-h-[calc(100vh-7.5rem)] overflow-y-auto rounded-2xl border border-slate-200 dark:border-cyan-500/20 bg-white dark:bg-[#0f172a] p-4 shadow-xl scrollbar-thin">
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 dark:border-slate-800">
-              <div className="flex items-center gap-2 text-xs font-extrabold text-slate-900 dark:text-cyan-400 uppercase tracking-wider">
-                <Layers className="w-4 h-4 text-emerald-500" />
-                <span>Jump Points ({filteredCategories.reduce((acc, [_, l]) => acc + l.length, 0)})</span>
-              </div>
-              <button
-                onClick={() => {
-                  const allCollapsed = categories.every(([cat]) => collapsedCategories[cat]);
-                  const newState: Record<string, boolean> = {};
-                  categories.forEach(([cat]) => {
-                    newState[cat] = !allCollapsed;
-                  });
-                  setCollapsedCategories(newState);
-                }}
-                className="text-xs text-emerald-600 dark:text-cyan-400 hover:underline font-bold"
-              >
-                Toggle All
-              </button>
-            </div>
-
-            <div className="space-y-3.5 text-xs">
-              {filteredCategories.map(([categoryName, catLessons]) => {
-                const isCollapsed = !!collapsedCategories[categoryName];
-                return (
-                  <div key={categoryName} className="space-y-1.5">
-                    <button
-                      onClick={() => toggleCategory(categoryName)}
-                      className="w-full flex items-center justify-between py-1.5 px-2 text-left font-bold text-slate-800 dark:text-slate-200 hover:text-emerald-500 dark:hover:text-cyan-400 rounded-lg transition-colors group cursor-pointer"
-                    >
-                      <span className="truncate pr-1">{categoryName}</span>
-                      <div className="flex items-center gap-1.5 shrink-0 text-slate-400 group-hover:text-cyan-400">
-                        <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-[#1a233a] font-mono">
-                          {catLessons.length}
-                        </span>
-                        {isCollapsed ? (
-                          <ChevronRight className="w-4 h-4" />
-                        ) : (
-                          <ChevronDown className="w-4 h-4" />
-                        )}
-                      </div>
-                    </button>
-
-                    {!isCollapsed && (
-                      <div className="pl-2 border-l-2 border-slate-200 dark:border-cyan-500/20 space-y-1 ml-1.5">
-                        {catLessons.map(lesson => {
-                          const isActive = activeLessonId === lesson.id;
-                          const isBookmarked = bookmarkedIds.has(lesson.id);
-                          return (
-                            <button
-                              key={lesson.id}
-                              onClick={() => jumpToLesson(lesson.id)}
-                              className={`w-full flex items-center justify-between text-left px-2.5 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
-                                isActive
-                                  ? 'bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-600 dark:text-cyan-300 font-bold border-l-2 border-cyan-400 shadow-xs'
-                                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#162138] hover:text-slate-900 dark:hover:text-white'
-                              }`}
-                            >
-                              <span className="truncate">{lesson.navText}</span>
-                              {isBookmarked && (
-                                <BookmarkCheck className="w-3.5 h-3.5 text-amber-500 shrink-0 ml-1.5" />
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </aside>
-        )}
-
+      {/* Main Layout Container - Full Width Focused Reading (Jump points now integrated into portal sidebar) */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Main Content Column: Single-Page Continuous Reader */}
-        <main className="flex-1 min-w-0 space-y-10" onClick={handleContentClick}>
-          {/* Welcome Hero Banner */}
-          <div className="rounded-3xl border border-emerald-500/30 dark:border-cyan-500/30 bg-gradient-to-br from-emerald-900/30 via-slate-900/40 to-cyan-900/30 dark:from-[#0e1e2d] dark:via-[#0c1424] dark:to-[#12102e] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
-            <div className="absolute right-0 top-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+        <main className="w-full space-y-8" onClick={handleContentClick}>
+          {/* Welcome Hero Banner - Pure Pitch-Black OLED */}
+          <div className="rounded-3xl border border-slate-200 dark:border-[#1e1e1e] bg-white dark:bg-black p-6 sm:p-8 shadow-xl relative overflow-hidden">
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div className="space-y-2 max-w-3xl">
+              <div className="space-y-3 max-w-2xl">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Ad-Free Single-Page Course</span>
                   </span>
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                    77 Complete Topics
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                    {lessons.length} Complete Topics • Lab & Viva Syllabus
                   </span>
-                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
                     Touch & Fullscreen Ready
                   </span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                   SQL A-Z: The Complete Master Guide
                 </h2>
 
-                <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+                <p className="text-sm text-slate-600 dark:text-neutral-300 leading-relaxed">
                   Scroll continuously through every topic from basic SELECT statements to Joins, Subqueries, Stored Procedures, and Transactions. Tap any code example to run it live in the interactive SQLite database!
                 </p>
               </div>
@@ -600,7 +525,7 @@ export const SQLCourseView: React.FC<SQLCourseViewProps> = ({
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => setIsConsoleOpen(true)}
-                  className="px-5 py-3 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white shadow-lg shadow-cyan-500/25 flex items-center gap-2.5 transition-transform hover:scale-[1.02] cursor-pointer min-h-[48px]"
+                  className="px-5 py-3 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 flex items-center gap-2.5 transition-transform hover:scale-[1.02] cursor-pointer min-h-[48px]"
                 >
                   <Play className="w-4 h-4 fill-current" />
                   <span>Open SQL Console</span>

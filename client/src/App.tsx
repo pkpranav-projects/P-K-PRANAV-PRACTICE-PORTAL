@@ -479,9 +479,19 @@ export const App: React.FC = () => {
             bank3Solved={stats?.bank3Solved || 0}
             bank3Total={stats?.bank3Total || 56}
             bank4Solved={stats?.bank4Solved || 0}
-            bank4Total={stats?.bank4Total || 32}
+            bank4Total={stats?.bank4Total || 35}
             dbmsSolved={stats?.dbmsSolved || 0}
-            dbmsTotal={stats?.dbmsTotal || 12}
+            dbmsTotal={stats?.dbmsTotal || 15}
+            onSelectSQLTopic={(topicId) => {
+              navigateToTab('sql-course', topicId, true);
+              setTimeout(() => {
+                const el = document.getElementById(`sql-${topicId}`);
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }, 120);
+            }}
+            activeSQLTopicId={activeQuestionId}
           />
         )}
 
@@ -586,6 +596,7 @@ export const App: React.FC = () => {
                 <SQLCourseView
                   initialJumpId={activeQuestionId}
                   onNavigateToDBMS={() => navigateToTab('dbms', undefined, true)}
+                  onToggleSidebar={() => setIsSidebarCollapsed(prev => !prev)}
                 />
               )}
 
