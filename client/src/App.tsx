@@ -40,7 +40,9 @@ export const App: React.FC = () => {
   });
 
   const [theme, setTheme] = useState<'dark' | 'oled' | 'light' | 'system'>(() => {
-    return (localStorage.getItem('arena_theme') as any) || 'dark';
+    const saved = localStorage.getItem('arena_theme');
+    if (saved) return saved as any;
+    return 'oled'; // Default to soothing OLED pitch-black
   });
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
@@ -377,7 +379,7 @@ export const App: React.FC = () => {
   const allQuestionIds = questions.map((q) => q.id);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#1a1a1a] dark:text-[#eff1f6bf] flex flex-col transition-colors duration-200">
+    <div className={`min-h-screen ${theme === 'oled' ? 'dark oled bg-black text-neutral-200' : 'bg-slate-50 text-slate-900 dark:bg-[#1a1a1a] dark:text-[#eff1f6bf]'} flex flex-col transition-colors duration-200`}>
       {/* Authentic LeetCode Top Navigation Bar (Fixed 50px) - Hidden in Absolute Fullscreen or when user clicks Hide Top Bar */}
       {!shouldHideTopBar && (
         <LeetCodeNavbar

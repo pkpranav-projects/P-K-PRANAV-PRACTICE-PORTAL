@@ -388,6 +388,21 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
             </button>
           )}
 
+          {/* 1-Click OLED Pitch Black Toggle */}
+          <button
+            onClick={() => setTheme(theme === 'oled' ? 'dark' : 'oled')}
+            className={`flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+              theme === 'oled'
+                ? 'bg-black text-[#FFA116] border border-[#FFA116] shadow-[0_0_12px_rgba(255,161,22,0.35)] ring-1 ring-[#FFA116]'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:bg-[#1f1f1f] dark:hover:bg-[#282828] border border-slate-200 dark:border-[#383838]'
+            }`}
+            title={theme === 'oled' ? 'OLED Pitch Black Active (#000000). Click to switch to Dark.' : 'Switch to Pure Pitch Black OLED Mode (#000000)'}
+            aria-label="Toggle OLED Pitch Black Mode"
+          >
+            <span className={`w-2 h-2 rounded-full ${theme === 'oled' ? 'bg-[#FFA116] shadow-[0_0_6px_#FFA116]' : 'bg-neutral-500'}`} />
+            <span className="text-[11px] tracking-wide">OLED</span>
+          </button>
+
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}

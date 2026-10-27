@@ -123,61 +123,361 @@ html.dark body {
   box-shadow: 0 8px 20px -4px rgba(255, 161, 22, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* OLED Black Theme Overrides - Pure Pitch Black #000000 */
+/* =========================================================================
+   TRUE PURE PITCH BLACK OLED MODE (#000000) - EYE-SOOTHING & BATTERY-SAVING
+   ========================================================================= */
 html.oled,
-html.oled body {
+html.oled body,
+html.oled #root,
+html.oled main,
+html.oled div[class*="min-h-screen"] {
   background-color: #000000 !important;
-  color: #ededed !important;
+  color: #e5e7eb !important; /* Soothing soft gray-white, zero harsh eye-glare */
 }
 
-html.oled .bg-\[\#1a1a1a\],
-html.oled .dark\:bg-\[\#1a1a1a\],
-html.oled .dark\:bg-\[\#121212\] {
+/* Neutralize all hardcoded gray, slate, and navy backgrounds to pitch black */
+html.oled [class*="bg-[#1a1a1a]"],
+html.oled [class*="dark:bg-[#1a1a1a]"],
+html.oled [class*="bg-[#181818]"],
+html.oled [class*="dark:bg-[#181818]"],
+html.oled [class*="bg-[#121212]"],
+html.oled [class*="dark:bg-[#121212]"],
+html.oled [class*="bg-[#1e1e1e]"],
+html.oled [class*="dark:bg-[#1e1e1e]"],
+html.oled [class*="bg-[#212121]"],
+html.oled [class*="dark:bg-[#212121]"],
+html.oled [class*="bg-[#222222]"],
+html.oled [class*="dark:bg-[#222222]"],
+html.oled [class*="bg-[#252525]"],
+html.oled [class*="dark:bg-[#252525]"],
+html.oled [class*="bg-[#262626]"],
+html.oled [class*="dark:bg-[#262626]"],
+html.oled [class*="bg-[#282828]"],
+html.oled [class*="dark:bg-[#282828]"],
+html.oled [class*="bg-[#2a2a2a]"],
+html.oled [class*="dark:bg-[#2a2a2a]"],
+html.oled [class*="bg-[#1f1f1f]"],
+html.oled [class*="dark:bg-[#1f1f1f]"],
+html.oled [class*="bg-[#0a0e17]"],
+html.oled [class*="dark:bg-[#0a0e17]"],
+html.oled [class*="bg-[#0e1422]"],
+html.oled [class*="dark:bg-[#0e1422]"],
+html.oled [class*="bg-[#0e1628]"],
+html.oled [class*="dark:bg-[#0e1628]"],
+html.oled [class*="bg-[#121c33]"],
+html.oled [class*="dark:bg-[#121c33]"],
+html.oled [class*="bg-[#151e33]"],
+html.oled [class*="dark:bg-[#151e33]"],
+html.oled [class*="bg-[#151d30]"],
+html.oled [class*="dark:bg-[#151d30]"],
+html.oled [class*="bg-[#1b2640]"],
+html.oled [class*="dark:bg-[#1b2640]"],
+html.oled [class*="bg-[#1b2742]"],
+html.oled [class*="dark:bg-[#1b2742]"],
+html.oled [class*="bg-[#0a101d]"],
+html.oled [class*="dark:bg-[#0a101d]"],
+html.oled [class*="bg-[#080c14]"],
+html.oled [class*="dark:bg-[#080c14]"],
+html.oled [class*="bg-[#131b2e]"],
+html.oled [class*="dark:bg-[#131b2e]"],
+html.oled [class*="bg-[#0d1322]"],
+html.oled [class*="dark:bg-[#0d1322]"],
+html.oled [class*="bg-[#0b101d]"],
+html.oled [class*="dark:bg-[#0b101d]"],
+html.oled [class*="bg-[#070b14]"],
+html.oled [class*="dark:bg-[#070b14]"],
+html.oled [class*="bg-[#0c121e]"],
+html.oled [class*="dark:bg-[#0c121e]"],
+html.oled [class*="bg-[#090d16]"],
+html.oled [class*="dark:bg-[#090d16]"],
+html.oled [class*="bg-[#070b12]"],
+html.oled [class*="dark:bg-[#070b12]"],
+html.oled [class*="bg-[#111827]"],
+html.oled [class*="dark:bg-[#111827]"],
+html.oled [class*="bg-[#101726]"],
+html.oled [class*="dark:bg-[#101726]"],
+html.oled [class*="bg-[#121929]"],
+html.oled [class*="dark:bg-[#121929]"],
+html.oled [class*="bg-slate-900"],
+html.oled [class*="dark:bg-slate-900"],
+html.oled [class*="bg-slate-950"],
+html.oled [class*="dark:bg-slate-950"],
+html.oled [class*="bg-slate-800"],
+html.oled [class*="dark:bg-slate-800"],
+html.oled [class*="bg-neutral-900"],
+html.oled [class*="dark:bg-neutral-900"],
+html.oled [class*="bg-neutral-950"],
+html.oled [class*="dark:bg-neutral-950"],
+html.oled [class*="bg-zinc-900"],
+html.oled [class*="dark:bg-zinc-900"],
+html.oled [class*="bg-zinc-950"],
+html.oled [class*="dark:bg-zinc-950"],
+html.oled [class*="bg-gray-900"],
+html.oled [class*="dark:bg-gray-900"],
+html.oled [class*="bg-gray-950"],
+html.oled [class*="dark:bg-gray-950"] {
   background-color: #000000 !important;
 }
 
-/* OLED Card Tiles: Keep Distinct Outline and Elevation */
-html.oled .arena-card-tile {
-  border: 1px solid #3a3a3a !important;
-  background-color: #0c0c0c !important;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 4px 16px rgba(0, 0, 0, 0.8) !important;
+/* Top Navbars, Headers & Floating Bars */
+html.oled nav,
+html.oled header,
+html.oled .sticky,
+html.oled header.sticky,
+html.oled footer,
+html.oled aside,
+html.oled aside > div {
+  background-color: #000000 !important;
+  border-color: #1a1a1a !important;
+}
+
+/* Subtle, crisp hairline borders across all dark containers */
+html.oled [class*="border-[#383838]"],
+html.oled [class*="dark:border-[#383838]"],
+html.oled [class*="border-[#333333]"],
+html.oled [class*="dark:border-[#333333]"],
+html.oled [class*="border-[#282828]"],
+html.oled [class*="dark:border-[#282828]"],
+html.oled [class*="border-[#444]"],
+html.oled [class*="dark:border-[#444]"],
+html.oled [class*="border-slate-800"],
+html.oled [class*="dark:border-slate-800"],
+html.oled [class*="border-slate-700"],
+html.oled [class*="dark:border-slate-700"],
+html.oled [class*="border-cyan-500/20"],
+html.oled [class*="border-cyan-500/30"] {
+  border-color: #1c1c1c !important;
+}
+
+/* Cards & Section Tiles in OLED Mode */
+html.oled .arena-card-tile,
+html.oled section,
+html.oled article,
+html.oled section[id^="sql-"],
+html.oled div[class*="rounded-2xl"],
+html.oled div[class*="rounded-3xl"],
+html.oled div[class*="rounded-xl"] {
+  background-color: #000000 !important;
+  border-color: #1c1c1c !important;
+  box-shadow: 0 0 0 1px #111111, 0 4px 20px rgba(0, 0, 0, 0.95) !important;
+}
+
+html.oled section[id^="sql-"] > div:first-child,
+html.oled section[id^="sql-"] > div:last-child {
+  background-color: #000000 !important;
+  border-color: #141414 !important;
 }
 
 html.oled .arena-card-tile:hover {
   border-color: #FFA116 !important;
-  background-color: #141414 !important;
-  box-shadow: 0 0 18px rgba(255, 161, 22, 0.25) !important;
+  background-color: #050505 !important;
+  box-shadow: 0 0 18px rgba(255, 161, 22, 0.22) !important;
 }
 
-html.oled nav,
-html.oled .bg-\[\#282828\],
-html.oled .dark\:bg-\[\#282828\] {
-  background-color: #080808 !important;
-  border-color: #222222 !important;
-}
-
-html.oled aside,
-html.oled aside > div {
-  background-color: #000000 !important;
-  border-color: #222222 !important;
-}
-
+/* Tables in OLED Mode */
 html.oled table {
   background-color: #000000 !important;
+  border-color: #1a1a1a !important;
 }
 
-html.oled thead tr {
-  background-color: #0a0a0a !important;
+html.oled thead,
+html.oled thead tr,
+html.oled th {
+  background-color: #000000 !important;
+  border-color: #1a1a1a !important;
+  color: #9ca3af !important;
+}
+
+html.oled tbody tr {
+  background-color: #000000 !important;
+  border-color: #141414 !important;
+}
+
+html.oled tbody tr:nth-child(even) {
+  background-color: #020202 !important;
 }
 
 html.oled tbody tr:hover {
-  background-color: #0f0f0f !important;
+  background-color: #0a0a0a !important;
 }
 
+html.oled td {
+  border-color: #141414 !important;
+  color: #d1d5db !important;
+}
+
+/* Inputs, Textareas, Selects & Search Bars */
+html.oled input,
+html.oled textarea,
+html.oled select {
+  background-color: #000000 !important;
+  border-color: #222222 !important;
+  color: #f3f4f6 !important;
+}
+
+html.oled input:focus,
+html.oled textarea:focus,
+html.oled select:focus {
+  border-color: #FFA116 !important;
+  box-shadow: 0 0 0 1px #FFA116 !important;
+}
+
+/* Buttons in OLED Mode (neutral/secondary) */
+html.oled button[class*="bg-slate-100"],
+html.oled button[class*="bg-[#151e33]"],
+html.oled button[class*="bg-[#1f1f1f]"],
+html.oled button[class*="bg-[#2a2a2a]"],
+html.oled button[class*="bg-slate-200"] {
+  background-color: #080808 !important;
+  border-color: #222222 !important;
+  color: #d1d5db !important;
+}
+
+html.oled button[class*="bg-slate-100"]:hover,
+html.oled button[class*="bg-[#151e33]"]:hover,
+html.oled button[class*="bg-[#1f1f1f]"]:hover,
+html.oled button[class*="bg-[#2a2a2a]"]:hover,
+html.oled button[class*="bg-slate-200"]:hover {
+  background-color: #141414 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+/* Monaco Code Editor in OLED Mode */
 html.oled .monaco-editor,
 html.oled .monaco-editor-background,
-html.oled .monaco-editor .margin {
+html.oled .monaco-editor .margin,
+html.oled .monaco-editor .inputarea.ime-input {
   background-color: #000000 !important;
+}
+
+html.oled .monaco-editor .current-line {
+  background-color: #080808 !important;
+  border: 1px solid #1c1c1c !important;
+}
+
+html.oled .monaco-editor .line-numbers {
+  color: #4b5563 !important;
+}
+
+html.oled .monaco-editor .active-line-number {
+  color: #FFA116 !important;
+}
+
+/* W3Schools SQL Course Prose & Examples in OLED */
+html.oled .w3-sql-prose {
+  color: #d1d5db !important;
+}
+
+html.oled .w3-sql-prose h1 {
+  background: linear-gradient(135deg, #10b981 0%, #38bdf8 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+html.oled .w3-sql-prose h2 {
+  color: #f3f4f6 !important;
+  border-bottom: 1px solid #1c1c1c !important;
+}
+
+html.oled .w3-sql-prose h3 {
+  color: #e5e7eb !important;
+}
+
+html.oled .w3-sql-prose p,
+html.oled .w3-sql-prose li {
+  color: #cbd5e1 !important;
+}
+
+html.oled .w3-sql-prose .w3-example {
+  background: #000000 !important;
+  border: 1px solid #1e1e1e !important;
+  box-shadow: none !important;
+}
+
+html.oled .w3-sql-prose .w3-code {
+  background-color: #000000 !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #1c1c1c !important;
+  border-left: 4px solid #10b981 !important;
+  box-shadow: none !important;
+}
+
+html.oled .w3-sql-prose .w3-codespan,
+html.oled .w3-sql-prose code {
+  background-color: #0a0a0a !important;
+  color: #38bdf8 !important;
+  border: 1px solid #222222 !important;
+}
+
+html.oled .w3-sql-prose .w3-note,
+html.oled .w3-sql-prose .w3-panel {
+  background: #050505 !important;
+  border: 1px solid #1a1a1a !important;
+  border-left: 4px solid #06b6d4 !important;
+  color: #a5f3fc !important;
+}
+
+html.oled .w3-sql-prose table,
+html.oled .w3-sql-prose .ws-table-all {
+  background-color: #000000 !important;
+  border: 1px solid #1c1c1c !important;
+}
+
+html.oled .w3-sql-prose th {
+  background: #000000 !important;
+  border-bottom: 1px solid #1c1c1c !important;
+  color: #38bdf8 !important;
+}
+
+html.oled .w3-sql-prose td {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #141414 !important;
+  color: #cbd5e1 !important;
+}
+
+html.oled .w3-sql-prose tr:nth-child(even) td {
+  background-color: #030303 !important;
+}
+
+html.oled .w3-sql-prose tr:hover td {
+  background-color: #0c0c0c !important;
+}
+
+/* Modals, Dialogs, Overlays & Command Palette */
+html.oled .bg-black\/80,
+html.oled .bg-black\/75 {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+html.oled [role="dialog"],
+html.oled .fixed > div {
+  border-color: #1f1f1f !important;
+}
+
+html.oled pre,
+html.oled .markdown-body pre,
+html.oled [class*="select-text"] pre {
+  background-color: #000000 !important;
+  border: 1px solid #1c1c1c !important;
+  color: #e5e7eb !important;
+}
+
+/* Eye-Soothing Scrollbars in OLED Mode */
+html.oled ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+html.oled ::-webkit-scrollbar-track {
+  background: #000000 !important;
+}
+html.oled ::-webkit-scrollbar-thumb {
+  background-color: #222222 !important;
+  border: 2px solid #000000 !important;
+  border-radius: 6px !important;
+}
+html.oled ::-webkit-scrollbar-thumb:hover {
+  background-color: #333333 !important;
 }
 
 /* Mobile Safe Area & Touch Enhancements */

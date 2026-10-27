@@ -835,6 +835,16 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
     (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
   const editorTheme = theme === 'oled' ? 'oled-black' : isDark ? 'vs-dark' : 'vs';
 
+  // Dynamically update Monaco editor theme on theme changes
+  useEffect(() => {
+    try {
+      const monaco = (window as any).monaco;
+      if (monaco?.editor) {
+        monaco.editor.setTheme(editorTheme);
+      }
+    } catch {}
+  }, [editorTheme]);
+
   // Load question details
   const loadQuestion = useCallback(async () => {
     try {
