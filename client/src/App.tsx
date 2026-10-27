@@ -377,7 +377,7 @@ export const App: React.FC = () => {
   const allQuestionIds = questions.map((q) => q.id);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#1a1a1a] dark:text-[#eff1f6bf] flex flex-col select-none transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#1a1a1a] dark:text-[#eff1f6bf] flex flex-col transition-colors duration-200">
       {/* Authentic LeetCode Top Navigation Bar (Fixed 50px) - Hidden in Absolute Fullscreen or when user clicks Hide Top Bar */}
       {!shouldHideTopBar && (
         <LeetCodeNavbar

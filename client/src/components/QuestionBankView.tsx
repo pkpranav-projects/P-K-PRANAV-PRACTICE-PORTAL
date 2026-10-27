@@ -456,7 +456,7 @@ export const QuestionBankView: React.FC<QuestionBankViewProps> = ({
   };
 
   return (
-    <div className="space-y-6 pb-16 animate-fadeIn max-w-[1500px] mx-auto select-none">
+    <div className="space-y-6 pb-16 animate-fadeIn max-w-[1500px] mx-auto">
       {/* Top Header Row with Bank Switcher Pills + Pick Random Button */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Bank Selection Tabs (LeetCode style tab pills) */}

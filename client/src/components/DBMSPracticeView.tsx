@@ -286,7 +286,7 @@ export const DBMSPracticeView: React.FC<DBMSPracticeViewProps> = ({
   };
 
   return (
-    <div className="space-y-8 pb-16 animate-fadeIn max-w-[1500px] mx-auto select-none">
+    <div className="space-y-8 pb-16 animate-fadeIn max-w-[1500px] mx-auto">
       {/* 1. Header Hero Banner */}
       <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-emerald-950/80 via-slate-900 to-amber-950/40 border border-emerald-500/30 dark:border-emerald-500/20 shadow-2xl relative overflow-hidden">
         {/* Background glow decoration */}

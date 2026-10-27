@@ -23,7 +23,8 @@ import {
   Upload,
   Wand2,
   FileText,
-  ArrowLeft
+  ArrowLeft,
+  Copy
 } from 'lucide-react';
 import {
   QuestionDetail,
@@ -37,6 +38,8 @@ import { api } from '../services/api';
 import { soundManager } from '../services/sound';
 import { ScreenshotModal } from './ScreenshotModal';
 import { SolutionModal } from './SolutionModal';
+import { MarkdownRenderer } from './MarkdownRenderer';
+import { copyToClipboard } from '../utils/clipboard';
 
 interface BoilerplateTemplate {
   name: string;
@@ -224,41 +227,7 @@ function renderInlineMarkdown(text: string) {
 
 function FormattedContent({ text, className = '' }: { text: string; className?: string }) {
   if (!text) return null;
-  // Defensively strip any accidental input format / duplicate markdown sections
-  const clean = text.split(/###\s*Input(?:\s*Format)?/i)[0].trim();
-  const paragraphs = clean.split(/\n\s*\n/);
-
-  return (
-    <div className={`space-y-3 leading-relaxed ${className}`}>
-      {paragraphs.map((p, pIdx) => {
-        const lines = p.split('\n');
-        const isList = lines.every((l) => /^\s*[-*•]\s+/.test(l));
-        if (isList) {
-          return (
-            <ul key={pIdx} className="space-y-1.5 pl-1">
-              {lines.map((l, lIdx) => (
-                <li key={lIdx} className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
-                  <span>{renderInlineMarkdown(l.replace(/^\s*[-*•]\s+/, ''))}</span>
-                </li>
-              ))}
-            </ul>
-          );
-        }
-
-        return (
-          <p key={pIdx} className="text-slate-700 dark:text-slate-300">
-            {lines.map((l, lIdx) => (
-              <React.Fragment key={lIdx}>
-                {lIdx > 0 && <br />}
-                {renderInlineMarkdown(l)}
-              </React.Fragment>
-            ))}
-          </p>
-        );
-      })}
-    </div>
-  );
+  return <MarkdownRenderer content={text} className={className} />;
 }
 
 // Built-in Live Templates & Snippets (sout -> System.out.println, souf, serr, psvm, fori, etc.)
@@ -539,6 +508,58 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const autoSaveTimeoutRef = useRef<any>(null);
   const isSwitchingLanguageRef = useRef<boolean>(false);
+
+  // Question & test case copy states
+  const [copiedQuestion, setCopiedQuestion] = useState(false);
+  const [copiedTcInput, setCopiedTcInput] = useState<number | null>(null);
+  const [copiedTcOutput, setCopiedTcOutput] = useState<number | null>(null);
+
+  const handleCopyEntireQuestion = async () => {
+    if (!question) return;
+    const sections: string[] = [];
+    sections.push(`[${question.id}] ${question.title}`);
+    sections.push(`Difficulty: ${question.difficulty} | Topic: ${question.topic || 'General'}\n`);
+    sections.push(`Description:\n${question.description}\n`);
+    if (question.inputFormat) {
+      sections.push(`Input Format:\n${question.inputFormat}\n`);
+    }
+    if (question.outputFormat) {
+      sections.push(`Output Format:\n${question.outputFormat}\n`);
+    }
+    if (question.constraints && question.constraints.length > 0) {
+      sections.push(`Constraints:\n${question.constraints.map((c) => `- ${c}`).join('\n')}\n`);
+    }
+    if (question.testCases && question.testCases.length > 0) {
+      sections.push(`Sample Test Cases:`);
+      question.testCases.forEach((tc, idx) => {
+        if (!tc.isHidden) {
+          sections.push(`Test Case ${idx + 1}:\nInput:\n${tc.input}\nExpected Output:\n${tc.expectedOutput}\n`);
+        }
+      });
+    }
+    const fullText = sections.join('\n');
+    const success = await copyToClipboard(fullText);
+    if (success) {
+      setCopiedQuestion(true);
+      setTimeout(() => setCopiedQuestion(false), 2000);
+    }
+  };
+
+  const handleCopyTestCaseInput = async (inputStr: string, idx: number) => {
+    const success = await copyToClipboard(inputStr);
+    if (success) {
+      setCopiedTcInput(idx);
+      setTimeout(() => setCopiedTcInput(null), 2000);
+    }
+  };
+
+  const handleCopyTestCaseOutput = async (outputStr: string, idx: number) => {
+    const success = await copyToClipboard(outputStr);
+    if (success) {
+      setCopiedTcOutput(idx);
+      setTimeout(() => setCopiedTcOutput(null), 2000);
+    }
+  };
 
   // Memoized Monaco Editor configuration with fixed overflow widgets to prevent page jumps
   const editorOptions = useMemo<any>(() => ({
@@ -1364,55 +1385,65 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
           </div>
 
           {/* Tab Content Body */}
-          <div className="flex-1 overflow-y-auto p-5 space-y-6">
+          <div className="flex-1 overflow-y-auto p-5 space-y-6 select-text cursor-text">
             {leftTab === 'problem' && (
-              <div className="space-y-5 text-sm">
+              <div className="space-y-5 text-sm select-text">
                 {/* Description */}
-                <div className="space-y-2">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Description
-                  </h4>
-                  <FormattedContent text={question.description} className="text-sm" />
+                <div className="space-y-2 select-text">
+                  <div className="flex items-center justify-between pb-1">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      Description
+                    </h4>
+                    <button
+                      onClick={handleCopyEntireQuestion}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer shadow-xs"
+                      title="Copy full problem statement, formats, constraints and sample test cases (Ctrl+C)"
+                    >
+                      {copiedQuestion ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
+                      <span>{copiedQuestion ? 'Question Copied!' : 'Copy Full Question'}</span>
+                    </button>
+                  </div>
+                  <MarkdownRenderer content={question.description} className="text-sm select-text" />
                 </div>
 
                 {/* Input Format */}
                 {question.inputFormat && (
-                  <div className="space-y-2">
+                  <div className="space-y-2 select-text">
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                       Input Format
                     </h4>
-                    <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs font-mono">
-                      <FormattedContent text={question.inputFormat} />
+                    <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs font-mono select-text cursor-text">
+                      <MarkdownRenderer content={question.inputFormat} />
                     </div>
                   </div>
                 )}
 
                 {/* Output Format */}
                 {question.outputFormat && (
-                  <div className="space-y-2">
+                  <div className="space-y-2 select-text">
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                       Output Format
                     </h4>
-                    <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs font-mono">
-                      <FormattedContent text={question.outputFormat} />
+                    <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-xs font-mono select-text cursor-text">
+                      <MarkdownRenderer content={question.outputFormat} />
                     </div>
                   </div>
                 )}
 
                 {/* Constraints */}
                 {question.constraints && question.constraints.length > 0 && (
-                  <div className="space-y-2">
+                  <div className="space-y-2 select-text">
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                       Constraints
                     </h4>
-                    <ul className="grid grid-cols-1 gap-1.5 text-xs">
+                    <ul className="grid grid-cols-1 gap-1.5 text-xs select-text">
                       {question.constraints.map((c, i) => (
                         <li
                           key={i}
-                          className="flex items-center gap-2.5 font-mono px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+                          className="flex items-center gap-2.5 font-mono px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 select-text cursor-text"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />
-                          <span>{c}</span>
+                          <span className="select-text">{c}</span>
                         </li>
                       ))}
                     </ul>
@@ -1420,28 +1451,48 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                 )}
 
                 {/* Sample Overview */}
-                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-3">
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-3 select-text">
                   <div className="flex items-center justify-between">
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                       Sample 1
                     </h4>
                     <button
                       onClick={() => setCustomInput(question.sampleInput)}
-                      className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+                      className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:underline font-medium cursor-pointer"
                     >
                       Use as Custom Input
                     </button>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-1">
-                      <span className="text-[10px] text-slate-400 uppercase">Input</span>
-                      <pre className="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-mono text-slate-800 dark:text-slate-200 overflow-x-auto">
+                  <div className="grid grid-cols-2 gap-3 select-text">
+                    <div className="space-y-1 select-text">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] text-slate-400 uppercase">Input</span>
+                        <button
+                          onClick={() => handleCopyTestCaseInput(question.sampleInput, 999)}
+                          className="inline-flex items-center gap-1 text-[10px] text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 cursor-pointer"
+                          title="Copy Sample Input"
+                        >
+                          {copiedTcInput === 999 ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                          <span>{copiedTcInput === 999 ? 'Copied' : 'Copy'}</span>
+                        </button>
+                      </div>
+                      <pre className="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-mono text-slate-800 dark:text-slate-200 overflow-x-auto select-text cursor-text">
                         {question.sampleInput || '(no input)'}
                       </pre>
                     </div>
-                    <div className="space-y-1">
-                      <span className="text-[10px] text-slate-400 uppercase">Expected Output</span>
-                      <pre className="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-mono text-slate-800 dark:text-slate-200 overflow-x-auto">
+                    <div className="space-y-1 select-text">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] text-slate-400 uppercase">Expected Output</span>
+                        <button
+                          onClick={() => handleCopyTestCaseOutput(question.sampleOutput, 999)}
+                          className="inline-flex items-center gap-1 text-[10px] text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 cursor-pointer"
+                          title="Copy Sample Output"
+                        >
+                          {copiedTcOutput === 999 ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                          <span>{copiedTcOutput === 999 ? 'Copied' : 'Copy'}</span>
+                        </button>
+                      </div>
+                      <pre className="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-mono text-slate-800 dark:text-slate-200 overflow-x-auto select-text cursor-text">
                         {question.sampleOutput}
                       </pre>
                     </div>
@@ -1451,18 +1502,18 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             )}
 
             {leftTab === 'examples' && (
-              <div className="space-y-4">
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+              <div className="space-y-4 select-text cursor-text">
+                <p className="text-xs text-slate-500 dark:text-slate-400 select-text">
                   Every submission is rigorously compiled and executed against all {question.testCases.length} authentic test cases.
                 </p>
 
                 {question.testCases.map((tc, idx) => (
                   <div
                     key={idx}
-                    className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 space-y-2"
+                    className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 space-y-2 select-text"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                      <span className="text-xs font-bold text-slate-700 dark:text-slate-300 select-text">
                         Test Case {idx + 1} {tc.isHidden ? '(Hidden)' : '(Sample)'}
                       </span>
                       {!tc.isHidden && (
@@ -1471,7 +1522,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                             setCustomInput(tc.input);
                             setBottomTab('run');
                           }}
-                          className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+                          className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
                         >
                           Load to Runner
                         </button>
@@ -1479,20 +1530,40 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                     </div>
 
                     {tc.isHidden ? (
-                      <div className="p-3 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-xs text-slate-500 text-center font-mono">
+                      <div className="p-3 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-xs text-slate-500 text-center font-mono select-text">
                         🔒 Hidden Test Case (Evaluated on submission)
                       </div>
                     ) : (
-                      <div className="space-y-2 text-xs font-mono">
+                      <div className="space-y-2 text-xs font-mono select-text">
                         <div>
-                          <span className="text-[10px] text-slate-400 uppercase block mb-1">Input</span>
-                          <pre className="p-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 overflow-x-auto">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-[10px] text-slate-400 uppercase">Input</span>
+                            <button
+                              onClick={() => handleCopyTestCaseInput(tc.input, idx)}
+                              className="inline-flex items-center gap-1 text-[10px] text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 cursor-pointer"
+                              title="Copy Testcase Input"
+                            >
+                              {copiedTcInput === idx ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                              <span>{copiedTcInput === idx ? 'Copied' : 'Copy'}</span>
+                            </button>
+                          </div>
+                          <pre className="p-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 overflow-x-auto select-text cursor-text">
                             {tc.input}
                           </pre>
                         </div>
                         <div>
-                          <span className="text-[10px] text-slate-400 uppercase block mb-1">Expected Output</span>
-                          <pre className="p-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 overflow-x-auto">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-[10px] text-slate-400 uppercase">Expected Output</span>
+                            <button
+                              onClick={() => handleCopyTestCaseOutput(tc.expectedOutput, idx)}
+                              className="inline-flex items-center gap-1 text-[10px] text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 cursor-pointer"
+                              title="Copy Expected Output"
+                            >
+                              {copiedTcOutput === idx ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                              <span>{copiedTcOutput === idx ? 'Copied' : 'Copy'}</span>
+                            </button>
+                          </div>
+                          <pre className="p-2 rounded bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 overflow-x-auto select-text cursor-text">
                             {tc.expectedOutput}
                           </pre>
                         </div>
@@ -1504,8 +1575,8 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
             )}
 
             {leftTab === 'hints' && (
-              <div className="space-y-4">
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+              <div className="space-y-4 select-text cursor-text">
+                <p className="text-xs text-slate-500 dark:text-slate-400 select-text">
                   Need a hint without spoiling the entire solution? Reveal progressive hints one by one.
                 </p>
 
@@ -1515,16 +1586,16 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                     return (
                       <div
                         key={idx}
-                        className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2"
+                        className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2 select-text"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">
+                          <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 select-text">
                             Hint {idx + 1}
                           </span>
                           {!isRevealed && (
                             <button
                               onClick={() => setRevealedHints((prev) => ({ ...prev, [idx]: true }))}
-                              className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+                              className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer"
                             >
                               <Eye className="w-3 h-3" />
                               <span>Reveal</span>
@@ -1533,7 +1604,7 @@ export const ProblemWorkspaceView: React.FC<ProblemWorkspaceViewProps> = ({
                         </div>
 
                         {isRevealed ? (
-                          <div className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed animate-fadeIn">
+                          <div className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed animate-fadeIn select-text cursor-text">
                             {hint}
                           </div>
                         ) : (
