@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Minimize2 } from 'lucide-react';
+import { Minimize2, ChevronDown } from 'lucide-react';
 import { LeetCodeNavbar, LeetCodeTab } from './components/LeetCodeNavbar';
 import { LeetCodeSidebar } from './components/LeetCodeSidebar';
 import { LeetCodeDrawer } from './components/LeetCodeDrawer';
@@ -27,6 +27,8 @@ export const App: React.FC = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isSidebarFullyContracted, setIsSidebarFullyContracted] = useState(false);
   const [isAbsoluteFullscreen, setIsAbsoluteFullscreen] = useState(false);
+  const [isTopBarHidden, setIsTopBarHidden] = useState(false);
+  const shouldHideTopBar = isAbsoluteFullscreen || isTopBarHidden;
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [selectedBankFilter, setSelectedBankFilter] = useState<'bank1' | 'bank2' | 'bank3' | 'bank4' | 'dbms' | 'all'>('all');
   const [questionViewMode, setQuestionViewMode] = useState<'table' | 'cards' | 'topic'>(() => {
@@ -376,30 +378,51 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#1a1a1a] dark:text-[#eff1f6bf] flex flex-col select-none transition-colors duration-200">
-      {/* Authentic LeetCode Top Navigation Bar (Fixed 50px) */}
-      <LeetCodeNavbar
-        activeTab={activeTab}
-        setActiveTab={(tab) => navigateToTab(tab, undefined, true)}
-        dailyGoal={stats?.dailyGoal || 3}
-        solvedToday={stats?.solvedToday || 0}
-        totalSolved={stats?.solvedCount || 0}
-        totalQuestions={stats?.totalQuestions || 45}
-        systemHealth={systemHealth}
-        theme={theme}
-        setTheme={setTheme}
-        onOpenSettings={() => setIsSettingsOpen(true)}
-        onPickRandom={handlePickRandom}
-        activeQuestionId={activeQuestionId}
-        isAbsoluteFullscreen={isAbsoluteFullscreen}
-        onToggleAbsoluteFullscreen={toggleAbsoluteFullscreen}
-        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
-        onOpenShortcutsModal={() => setIsShortcutsOpen(true)}
-        isSoundEnabled={isSoundEnabled}
-        onToggleSound={toggleSound}
-        onBack={handleBack}
-        backLabel={getTabLabel(previousTab)}
-        onOpenMobileDrawer={() => setIsMobileDrawerOpen(true)}
-      />
+      {/* Authentic LeetCode Top Navigation Bar (Fixed 50px) - Hidden in Absolute Fullscreen or when user clicks Hide Top Bar */}
+      {!shouldHideTopBar && (
+        <LeetCodeNavbar
+          activeTab={activeTab}
+          setActiveTab={(tab) => navigateToTab(tab, undefined, true)}
+          dailyGoal={stats?.dailyGoal || 3}
+          solvedToday={stats?.solvedToday || 0}
+          totalSolved={stats?.solvedCount || 0}
+          totalQuestions={stats?.totalQuestions || 45}
+          systemHealth={systemHealth}
+          theme={theme}
+          setTheme={setTheme}
+          onOpenSettings={() => setIsSettingsOpen(true)}
+          onPickRandom={handlePickRandom}
+          activeQuestionId={activeQuestionId}
+          isAbsoluteFullscreen={isAbsoluteFullscreen}
+          onToggleAbsoluteFullscreen={toggleAbsoluteFullscreen}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          onOpenShortcutsModal={() => setIsShortcutsOpen(true)}
+          isSoundEnabled={isSoundEnabled}
+          onToggleSound={toggleSound}
+          onBack={handleBack}
+          backLabel={getTabLabel(previousTab)}
+          onOpenMobileDrawer={() => setIsMobileDrawerOpen(true)}
+          onHideTopBar={() => setIsTopBarHidden(true)}
+        />
+      )}
+
+      {/* Floating Restore Top Bar Pill (When user clicked Hide Top Bar, outside absolute fullscreen) */}
+      {isTopBarHidden && !isAbsoluteFullscreen && (
+        <div className="fixed top-2.5 left-1/2 -translate-x-1/2 z-[999] flex items-center gap-2 bg-white/95 dark:bg-[#1e1e1e]/95 border border-slate-300 dark:border-[#383838] px-3.5 py-1.5 rounded-full shadow-2xl text-xs text-slate-700 dark:text-neutral-300 backdrop-blur-md transition-all animate-in fade-in slide-in-from-top-2">
+          <span className="flex items-center gap-1.5 font-medium text-slate-900 dark:text-white">
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            Top Bar Hidden
+          </span>
+          <button
+            onClick={() => setIsTopBarHidden(false)}
+            className="ml-1 px-2.5 py-0.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-[#2a2a2a] dark:hover:bg-[#383838] text-amber-600 dark:text-amber-400 border border-slate-300 dark:border-[#444] transition-all flex items-center gap-1.5 font-medium text-[11px] cursor-pointer hover:scale-105"
+            title="Restore Top Bar"
+          >
+            <ChevronDown className="w-3.5 h-3.5" />
+            <span>Show Top Bar</span>
+          </button>
+        </div>
+      )}
 
       {/* Slide-out Mobile Navigation Drawer */}
       <LeetCodeDrawer
@@ -462,7 +485,9 @@ export const App: React.FC = () => {
 
         {/* Main Content Area */}
         <main
-          className={`flex-1 overflow-x-hidden min-h-[calc(100vh-50px)] ${
+          className={`flex-1 overflow-x-hidden ${
+            shouldHideTopBar ? 'min-h-screen pt-2' : 'min-h-[calc(100vh-50px)]'
+          } ${
             isAbsoluteFullscreen || isSidebarFullyContracted
               ? 'p-2.5 sm:p-4 lg:p-6 pb-20 md:pb-6 w-full max-w-none'
               : 'p-3 sm:p-6 lg:p-8 pb-20 md:pb-8 max-w-[1600px]'

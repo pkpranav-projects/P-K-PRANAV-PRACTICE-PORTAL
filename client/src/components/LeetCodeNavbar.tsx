@@ -16,7 +16,12 @@ import {
   Database,
   ArrowLeft,
   Menu,
-  BookOpen
+  BookOpen,
+  PanelTopClose,
+  Sparkles,
+  Timer,
+  GraduationCap,
+  BookmarkCheck
 } from 'lucide-react';
 import { PranavJavaSymbol } from './PranavJavaSymbol';
 import { SystemHealth } from '../types';
@@ -56,6 +61,7 @@ interface LeetCodeNavbarProps {
   onBack?: () => void;
   backLabel?: string;
   onOpenMobileDrawer?: () => void;
+  onHideTopBar?: () => void;
 }
 
 export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
@@ -67,7 +73,6 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
   theme,
   setTheme,
   onOpenSettings,
-  activeQuestionId,
   isAbsoluteFullscreen = false,
   onToggleAbsoluteFullscreen,
   onOpenCommandPalette,
@@ -76,10 +81,10 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
   onToggleSound,
   onBack,
   backLabel = 'Questions',
-  onOpenMobileDrawer
+  onOpenMobileDrawer,
+  onHideTopBar
 }) => {
-  const [isInterviewOpen, setIsInterviewOpen] = useState(false);
-  const [isStoreOpen, setIsStoreOpen] = useState(false);
+  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
 
   const toggleTheme = () => {
     if (theme === 'dark') setTheme('oled');
@@ -88,17 +93,24 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
     else setTheme('dark');
   };
 
+  const isMoreActive =
+    activeTab === 'exam' ||
+    activeTab === 'masterclass' ||
+    activeTab === 'curriculum' ||
+    activeTab === 'revision' ||
+    activeTab === 'dashboard';
+
   return (
-    <nav className="flex h-[50px] w-full items-center border-b border-slate-200 dark:border-[#383838] bg-white dark:bg-[#282828] text-slate-700 dark:text-[#eff1f6bf] select-none sticky top-0 z-50 transition-colors">
-      <div className="w-full max-w-[1700px] h-full mx-auto px-2.5 sm:px-6 flex items-center justify-between">
+    <nav className="flex h-[50px] w-full items-center border-b border-slate-200 dark:border-[#383838] bg-white dark:bg-[#242424] text-slate-700 dark:text-[#eff1f6bf] select-none sticky top-0 z-50 transition-colors shadow-xs">
+      <div className="w-full max-w-[1700px] h-full mx-auto px-2.5 sm:px-6 flex items-center justify-between gap-2">
         
-        {/* Left side: Hamburger (mobile), Logo, Back button, and Desktop Nav Tabs */}
-        <div className="flex items-center h-full gap-2 sm:gap-4 lg:gap-8 min-w-0">
+        {/* Left side: Hamburger, Brand Logo, Back button, and Core Desktop Tabs */}
+        <div className="flex items-center h-full gap-2 sm:gap-4 lg:gap-6 min-w-0 shrink-0">
           {/* Mobile Navigation Drawer Hamburger Button */}
           {onOpenMobileDrawer && (
             <button
               onClick={onOpenMobileDrawer}
-              className="lg:hidden p-1.5 rounded-lg text-slate-600 hover:text-slate-900 dark:text-neutral-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#333] transition-colors cursor-pointer"
+              className="lg:hidden p-1.5 rounded-lg text-slate-600 hover:text-slate-900 dark:text-neutral-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#333] transition-colors cursor-pointer shrink-0"
               title="Open Navigation Menu"
               aria-label="Open Navigation Menu"
             >
@@ -106,16 +118,13 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
             </button>
           )}
 
-          {/* Brand Logo with Symbol and PRANAV Practice Portal title */}
+          {/* Brand Logo with PK Symbol and PRANAV Practice Portal title */}
           <button
             onClick={() => setActiveTab('explore')}
             className="flex items-center gap-2 cursor-pointer focus:outline-none group pr-1 sm:pr-2 shrink-0"
             aria-label="PRANAV Practice Portal"
           >
-            {/* Custom PK Monogram Logo */}
             <PranavJavaSymbol className="h-[26px] w-[26px] sm:h-[28px] sm:w-[28px] flex-shrink-0 group-hover:scale-105 transition-transform" />
-
-            {/* Brand Typography: PRANAV Practice Portal (Responsive) */}
             <div className="flex items-baseline gap-1 whitespace-nowrap">
               <span className="text-slate-900 dark:text-white font-extrabold text-[15px] sm:text-[16px] tracking-tight font-sans">
                 PRANAV
@@ -142,13 +151,12 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
             </button>
           )}
 
-          {/* Navigation Links (Desktop only: hidden on mobile) */}
-          <div className="hidden lg:flex items-center h-full gap-5 text-sm font-medium">
-            
+          {/* Navigation Links (Desktop: Uncluttered & Guaranteed No Overlap) */}
+          <div className="hidden lg:flex items-center h-full gap-4 xl:gap-5 text-sm font-medium shrink-0">
             {/* Explore Tab */}
             <button
               onClick={() => setActiveTab('explore')}
-              className={`relative h-full flex items-center px-1 transition-colors ${
+              className={`relative h-full flex items-center px-1 transition-colors whitespace-nowrap shrink-0 ${
                 activeTab === 'explore'
                   ? 'text-slate-900 dark:text-white font-semibold'
                   : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
@@ -163,7 +171,7 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
             {/* Problems Tab */}
             <button
               onClick={() => setActiveTab('problems')}
-              className={`relative h-full flex items-center px-1 transition-colors ${
+              className={`relative h-full flex items-center px-1 transition-colors whitespace-nowrap shrink-0 ${
                 activeTab === 'problems'
                   ? 'text-slate-900 dark:text-white font-semibold'
                   : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
@@ -178,12 +186,12 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
             {/* DBMS & SQL Lab Tab */}
             <button
               onClick={() => setActiveTab('dbms')}
-              className={`relative h-full flex items-center gap-1.5 px-1 transition-colors ${
+              className={`relative h-full flex items-center gap-1.5 px-1 transition-colors whitespace-nowrap shrink-0 ${
                 activeTab === 'dbms'
                   ? 'text-slate-900 dark:text-white font-semibold'
                   : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
               }`}
-              title="DBMS & SQL Engineering Lab (Triggers, Stored Procedures, Schemas)"
+              title="DBMS & SQL Engineering Lab"
             >
               <Database className="w-3.5 h-3.5 text-amber-500" />
               <span>DBMS Lab</span>
@@ -198,12 +206,12 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
             {/* SQL Handbook Tab (W3Schools 77 Lessons Ad-Free) */}
             <button
               onClick={() => setActiveTab('sql-course')}
-              className={`relative h-full flex items-center gap-1.5 px-1 transition-colors ${
+              className={`relative h-full flex items-center gap-1.5 px-1 transition-colors whitespace-nowrap shrink-0 ${
                 activeTab === 'sql-course'
                   ? 'text-slate-900 dark:text-white font-semibold'
                   : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
               }`}
-              title="W3Schools SQL Master Handbook (77 Topics, Ad-Free Continuous Reader)"
+              title="W3Schools SQL Master Handbook (77 Topics, Continuous Reader)"
             >
               <BookOpen className="w-3.5 h-3.5 text-emerald-500" />
               <span>SQL Guide</span>
@@ -215,10 +223,10 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               )}
             </button>
 
-            {/* Contest Tab (Exam Simulator) */}
+            {/* Direct Contest Tab on Wide screens */}
             <button
               onClick={() => setActiveTab('exam')}
-              className={`relative h-full flex items-center px-1 transition-colors ${
+              className={`relative h-full hidden 2xl:flex items-center px-1 transition-colors whitespace-nowrap shrink-0 ${
                 activeTab === 'exam'
                   ? 'text-slate-900 dark:text-white font-semibold'
                   : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
@@ -230,10 +238,10 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               )}
             </button>
 
-            {/* Discuss Tab (Java Masterclass Encyclopedia) */}
+            {/* Direct Masterclass Tab on Wide screens */}
             <button
               onClick={() => setActiveTab('masterclass')}
-              className={`relative h-full flex items-center px-1 transition-colors ${
+              className={`relative h-full hidden 2xl:flex items-center px-1 transition-colors whitespace-nowrap shrink-0 ${
                 activeTab === 'masterclass'
                   ? 'text-slate-900 dark:text-white font-semibold'
                   : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
@@ -245,125 +253,113 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
               )}
             </button>
 
-            {/* Interview Dropdown (Curriculum 27 Guides & Revision) */}
-            <div className="relative h-full flex items-center">
+            {/* Unified More ▾ Dropdown (Organized, zero overlap) */}
+            <div className="relative h-full flex items-center shrink-0">
               <button
-                onClick={() => setIsInterviewOpen(!isInterviewOpen)}
-                onBlur={() => setTimeout(() => setIsInterviewOpen(false), 200)}
-                className={`relative h-full flex items-center gap-1 px-1 transition-colors ${
-                  activeTab === 'curriculum' || activeTab === 'revision'
+                onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
+                onBlur={() => setTimeout(() => setIsMoreMenuOpen(false), 200)}
+                className={`relative h-full flex items-center gap-1 px-1.5 transition-colors whitespace-nowrap ${
+                  isMoreActive
                     ? 'text-slate-900 dark:text-white font-semibold'
                     : 'text-slate-600 hover:text-slate-900 dark:text-[#eff1f6bf] dark:hover:text-white'
                 }`}
               >
-                <span>Interview</span>
+                <span>More</span>
                 <ChevronDown className="w-3.5 h-3.5 opacity-70" />
-                {(activeTab === 'curriculum' || activeTab === 'revision') && (
+                {isMoreActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
                 )}
               </button>
 
-              {isInterviewOpen && (
-                <div className="absolute top-[50px] left-0 w-52 bg-white dark:bg-[#282828] border border-slate-200 dark:border-[#383838] rounded-b-lg shadow-xl py-1 z-50 text-xs">
+              {isMoreMenuOpen && (
+                <div className="absolute top-[50px] left-0 w-56 bg-white dark:bg-[#282828] border border-slate-200 dark:border-[#383838] rounded-xl shadow-2xl py-1.5 z-50 text-xs animate-in fade-in slide-in-from-top-1">
+                  <button
+                    onClick={() => {
+                      setActiveTab('exam');
+                      setIsMoreMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3.5 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
+                  >
+                    <Timer className="w-4 h-4 text-rose-400" />
+                    <span>Contest / Timed Exam</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setActiveTab('masterclass');
+                      setIsMoreMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3.5 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
+                  >
+                    <Sparkles className="w-4 h-4 text-emerald-400" />
+                    <span>Java Masterclass (64 Methods)</span>
+                  </button>
+
                   <button
                     onClick={() => {
                       setActiveTab('curriculum');
-                      setIsInterviewOpen(false);
+                      setIsMoreMenuOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-[#eff1f6bf] hover:text-slate-900 dark:hover:text-white transition-colors"
+                    className="w-full text-left px-3.5 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
                   >
-                    Study Curriculum (27 Guides)
+                    <GraduationCap className="w-4 h-4 text-amber-500" />
+                    <span>Study Curriculum (27 Guides)</span>
                   </button>
+
                   <button
                     onClick={() => {
                       setActiveTab('revision');
-                      setIsInterviewOpen(false);
+                      setIsMoreMenuOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-[#eff1f6bf] hover:text-slate-900 dark:hover:text-white transition-colors"
+                    className="w-full text-left px-3.5 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
                   >
-                    Revision Queue
+                    <BookmarkCheck className="w-4 h-4 text-purple-400" />
+                    <span>Revision Queue</span>
                   </button>
-                </div>
-              )}
-            </div>
 
-            {/* Store (Gold/Orange Text) */}
-            <div className="relative h-full flex items-center">
-              <button
-                onClick={() => setIsStoreOpen(!isStoreOpen)}
-                onBlur={() => setTimeout(() => setIsStoreOpen(false), 200)}
-                className="relative h-full flex items-center gap-1 px-1 text-[#FFA116] hover:text-[#ffb342] transition-colors"
-              >
-                <span>Store</span>
-                <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-              </button>
+                  <div className="border-t border-slate-200 dark:border-[#383838] my-1" />
 
-              {isStoreOpen && (
-                <div className="absolute top-[50px] left-0 w-48 bg-white dark:bg-[#282828] border border-slate-200 dark:border-[#383838] rounded-b-lg shadow-xl py-1 z-50 text-xs">
                   <button
                     onClick={() => {
                       onOpenSettings();
-                      setIsStoreOpen(false);
+                      setIsMoreMenuOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-[#eff1f6bf] hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-2"
+                    className="w-full text-left px-3.5 py-2 hover:bg-slate-100 dark:hover:bg-[#333] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
                   >
-                    <Settings className="w-3.5 h-3.5" />
+                    <Settings className="w-4 h-4 text-slate-400" />
                     <span>Settings & Backup</span>
                   </button>
-                  <div className="px-4 py-2 text-[11px] text-slate-500 dark:text-neutral-400 border-t border-slate-200 dark:border-[#383838] flex items-center justify-between">
-                    <span>OpenJDK 27</span>
-                    <span className="text-emerald-500 dark:text-emerald-400 font-mono">SANDBOX</span>
-                  </div>
                 </div>
               )}
             </div>
-
-            {/* Quick Workspace Editor Resume (if active question) */}
-            {activeQuestionId && (
-              <button
-                onClick={() => setActiveTab('workspace')}
-                className={`relative h-full hidden xl:flex items-center gap-1.5 px-2 transition-colors ${
-                  activeTab === 'workspace'
-                    ? 'text-slate-900 dark:text-white font-semibold'
-                    : 'text-slate-500 dark:text-neutral-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                <Code2 className="w-3.5 h-3.5 text-amber-500" />
-                <span className="text-xs font-mono">{activeQuestionId}</span>
-                {activeTab === 'workspace' && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900 dark:bg-white rounded-t-sm" />
-                )}
-              </button>
-            )}
-
           </div>
         </div>
 
-        {/* Right side: Search + Timer + Flame + Sound + Shortcuts + Theme + Fullscreen + Profile */}
-        <div className="flex items-center gap-1 sm:gap-2">
+        {/* Right side: Search + Timer + Streak + Audio + Theme + Fullscreen + Hide Top Bar Button */}
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           
           {/* Mobile Search Button */}
           {onOpenCommandPalette && (
             <button
               onClick={onOpenCommandPalette}
-              className="md:hidden p-1.5 rounded text-slate-600 hover:text-slate-900 dark:text-neutral-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer"
-              title="Search questions & commands"
+              className="md:hidden p-1.5 rounded-lg text-slate-600 hover:text-slate-900 dark:text-neutral-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer"
+              title="Search questions & commands (Ctrl+K)"
               aria-label="Search"
             >
               <Search className="w-4 h-4" />
             </button>
           )}
 
-          {/* Quick Command Palette Search (Desktop) */}
+          {/* Quick Command Palette Search (Desktop: Safe max-width so it never collides) */}
           {onOpenCommandPalette && (
             <button
               onClick={onOpenCommandPalette}
-              className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#1f1f1f] dark:hover:bg-[#282828] border border-slate-200 dark:border-[#383838] text-slate-500 dark:text-neutral-400 hover:text-slate-800 dark:hover:text-white transition-colors cursor-pointer text-xs"
+              className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#1f1f1f] dark:hover:bg-[#282828] border border-slate-200 dark:border-[#383838] text-slate-500 dark:text-neutral-400 hover:text-slate-800 dark:hover:text-white transition-colors cursor-pointer text-xs max-w-[140px] xl:max-w-[170px]"
               title="Search questions & commands (Ctrl+K)"
             >
-              <Search className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-400" />
-              <span>Search...</span>
-              <kbd className="text-[10px] font-mono px-1 py-0.2 rounded bg-slate-200 dark:bg-[#2e2e2e] text-slate-600 dark:text-neutral-300 border border-slate-300 dark:border-[#444]">
+              <Search className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-400 shrink-0" />
+              <span className="truncate">Search...</span>
+              <kbd className="text-[10px] font-mono px-1 py-0.2 rounded bg-slate-200 dark:bg-[#2e2e2e] text-slate-600 dark:text-neutral-300 border border-slate-300 dark:border-[#444] shrink-0">
                 Ctrl+K
               </kbd>
             </button>
@@ -374,10 +370,10 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
 
           {/* Practice Streak Flame Indicator */}
           <div
-            className="flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-neutral-300 hover:text-slate-900 dark:hover:text-white cursor-pointer"
-            title="Practice Streak"
+            className="flex items-center gap-1 px-1.5 sm:px-2 py-1 rounded text-xs font-semibold text-slate-700 dark:text-neutral-300 hover:text-slate-900 dark:hover:text-white cursor-pointer"
+            title="Daily Practice Streak"
           >
-            <Flame className="w-4 h-4 fill-current text-orange-500" />
+            <Flame className="w-4 h-4 fill-current text-orange-500 shrink-0" />
             <span className="font-mono text-xs">{Math.max(1, solvedToday)}</span>
           </div>
 
@@ -385,28 +381,17 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
           {onToggleSound && (
             <button
               onClick={onToggleSound}
-              className="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer text-slate-600 dark:text-neutral-300"
-              title={isSoundEnabled ? 'Audio Effects: Enabled (Click to mute)' : 'Audio Effects: Muted (Click to enable)'}
+              className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer text-slate-600 dark:text-neutral-300 hidden sm:flex"
+              title={isSoundEnabled ? 'Audio Effects: Enabled (Click to mute)' : 'Audio Effects: Muted'}
             >
               {isSoundEnabled ? <Volume2 className="w-4 h-4 text-emerald-500 dark:text-emerald-400" /> : <VolumeX className="w-4 h-4 text-slate-400 dark:text-neutral-500" />}
-            </button>
-          )}
-
-          {/* Keyboard Shortcuts Cheatsheet */}
-          {onOpenShortcutsModal && (
-            <button
-              onClick={onOpenShortcutsModal}
-              className="p-1.5 rounded text-slate-500 hover:text-slate-800 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-[#383838] transition-colors cursor-pointer hidden sm:flex"
-              title="Keyboard Shortcuts Cheatsheet (?)"
-            >
-              <HelpCircle className="w-4 h-4" />
             </button>
           )}
 
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-1.5 rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-[#383838] transition-colors"
+            className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-[#383838] transition-colors cursor-pointer"
             title={`Theme: ${theme === 'oled' ? 'OLED Black' : theme.toUpperCase()} (Click to cycle)`}
           >
             {theme === 'dark' && <Moon className="w-4 h-4 text-neutral-300" />}
@@ -423,21 +408,13 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
           {onToggleAbsoluteFullscreen && (
             <button
               onClick={onToggleAbsoluteFullscreen}
-              className={`p-1.5 rounded transition-all duration-200 cursor-pointer ${
+              className={`p-1.5 rounded-lg transition-all duration-200 cursor-pointer ${
                 isAbsoluteFullscreen
                   ? 'bg-amber-100 text-amber-600 dark:bg-[#FFA116]/20 dark:text-[#FFA116] ring-1 ring-amber-400 dark:ring-[#FFA116]/60 shadow-sm'
                   : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-[#383838]'
               }`}
-              title={
-                isAbsoluteFullscreen
-                  ? 'Exit Absolute Fullscreen (Esc or Alt+Enter)'
-                  : 'Absolute Fullscreen (Contracts sidebar fully & edge-to-edge view)'
-              }
-              aria-label={
-                isAbsoluteFullscreen
-                  ? 'Exit Absolute Fullscreen'
-                  : 'Enter Absolute Fullscreen'
-              }
+              title="Absolute Fullscreen (Hides top bar & contracts sidebar)"
+              aria-label="Absolute Fullscreen"
             >
               {isAbsoluteFullscreen ? (
                 <Minimize2 className="w-4 h-4 text-amber-600 dark:text-[#FFA116]" />
@@ -447,16 +424,28 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
             </button>
           )}
 
-          {/* User Profile Solved Avatar (Clean circle with count) */}
+          {/* NEW: Dedicated Hide Top Bar Button */}
+          {onHideTopBar && (
+            <button
+              onClick={onHideTopBar}
+              className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-[#383838] transition-colors cursor-pointer"
+              title="Hide Top Bar (Full Screen Reading)"
+              aria-label="Hide Top Bar"
+            >
+              <PanelTopClose className="w-4 h-4 text-slate-400 hover:text-amber-400 transition-colors" />
+            </button>
+          )}
+
+          {/* Solved Progress Counter */}
           <button
             onClick={() => setActiveTab('dashboard')}
-            className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 pl-1 pr-2 py-0.5 rounded-full hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer shrink-0"
             title="View Dashboard Analytics"
           >
-            <div className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-[#383838] border border-emerald-300 dark:border-neutral-600 text-emerald-600 dark:text-emerald-400 font-bold text-[11px] flex items-center justify-center">
+            <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 border border-emerald-300 dark:border-emerald-500/40 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] flex items-center justify-center">
               ✓
             </div>
-            <span className="text-xs font-mono text-slate-600 dark:text-neutral-300">
+            <span className="text-xs font-mono text-slate-600 dark:text-neutral-300 font-semibold">
               {totalSolved}/{totalQuestions}
             </span>
           </button>
@@ -467,3 +456,5 @@ export const LeetCodeNavbar: React.FC<LeetCodeNavbarProps> = ({
     </nav>
   );
 };
+
+export default LeetCodeNavbar;
